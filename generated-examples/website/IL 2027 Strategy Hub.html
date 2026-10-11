@@ -1,0 +1,1568 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>IL 2027 Strategy Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=IBM+Plex+Mono:wght@500;600&family=Caveat:wght@700&display=swap">
+<style>
+/* Layout: IL shell (teal gradient nav) → page band → sticky section chips → alternating flat sections → ink footer.
+   Tokens from the bundled Innovation Labs design system. Light by default; Night via data-il="night". */
+:root{
+  --lilac:#E8D2F5;--route:#0095AC;--scrim:rgba(16,32,31,.45);
+  --teal:#0095AC;--teal-deep:#016462;--teal-ink:#016462;
+  --purple:#954BBC;--purple-ink:#6B2E8C;--purple-tint:#FBF6FE;
+  --surface-page:#F2F6F7;--surface:#FFFFFF;--surface-tint:#EAF7F7;--surface-ink:#10201F;
+  --ink:#10201F;--ink-muted:#3C5052;--ink-subtle:#4A5E60;--on-brand:#FFFFFF;--on-action:#FFFFFF;
+  --line:#AFC0C3;--line-soft:#D3DEE0;--line-control:#6F8689;
+  --action:#016462;--action-soft:rgba(0,149,172,.12);--focus-ring:#954BBC;
+  --positive:#2E7650;--positive-soft:#EEF7F1;--caution:#9A4F00;--caution-soft:#FFF6EA;--issue:#B0433A;--issue-soft:#FCEFEC;
+  --viz-1:#0095AC;--viz-2:#016462;--viz-ai:#954BBC;--viz-context:#AFC0C3;--viz-grid:#D3DEE0;
+  --hero:linear-gradient(115deg,#0095AC,#016462);
+  --shadow-hover:0 10px 26px rgba(16,32,31,.14);--shadow-nav:0 2px 14px rgba(16,32,31,.25);--shadow-raised:0 12px 34px rgba(16,32,31,.16);--shadow-sheet:0 -14px 40px rgba(16,32,31,.28);
+  --route-glow:none;
+  --f-display:"Poppins",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --f-hand:"Caveat","Segoe Print","Bradley Hand",cursive;
+  --content-max:1120px;--text-max:780px;--nav-h:64px;
+  --r-md:10px;--r-row:12px;--r-lg:16px;--r-panel:18px;--r-pill:999px;
+  color-scheme:light;
+}
+:root[data-il="night"]{
+  --teal:#2BC4DB;--teal-ink:#2BC4DB;--purple:#C48BEA;--purple-ink:#C48BEA;--purple-tint:#2B1A3A;
+  --surface-page:#031E1E;--surface:#0A3433;--surface-tint:#0F4442;--surface-ink:#001A1C;
+  --ink:#EAF6F6;--ink-muted:#9BBFC0;--ink-subtle:#7FA5A6;--on-action:#02201F;
+  --line:#1C5654;--line-soft:#164B49;--line-control:#4A9896;
+  --action:#2BC4DB;--action-soft:rgba(43,196,219,.14);--focus-ring:#C48BEA;
+  --positive:#74CC9A;--positive-soft:#123A2A;--caution:#F2B266;--caution-soft:#3A2A12;--issue:#F2958A;--issue-soft:#3D1F1E;
+  --viz-2:#8FD8E4;--viz-context:#3E6E6C;
+  --hero:linear-gradient(115deg,#016462,#031E1E);
+  --shadow-hover:0 10px 26px rgba(0,0,0,.40);--shadow-nav:0 2px 14px rgba(0,0,0,.45);--shadow-raised:0 12px 34px rgba(0,0,0,.45);--shadow-sheet:0 -14px 40px rgba(0,0,0,.50);
+  --route-glow:drop-shadow(0 0 6px rgba(43,196,219,.55));
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--surface-page);color:var(--ink-muted);font-family:var(--f-display);font-size:15px;line-height:1.62;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--f-display);color:var(--ink);margin:0;text-wrap:balance}
+p{margin:0}
+a{color:var(--teal-ink);font-weight:600;text-underline-offset:3px}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus-ring);outline-offset:2px;border-radius:6px}
+.wrap{max-width:var(--content-max);margin:0 auto;padding-inline:40px}
+@media (max-width:620px){.wrap{padding-inline:22px}}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---- labels ---- */
+.kicker,.label,.meta{font-family:var(--f-mono);text-transform:uppercase;letter-spacing:.09em;font-weight:600}
+.kicker{font-size:12px;color:var(--teal-ink)}
+.label{font-size:11.4px;color:var(--ink-subtle)}
+.meta{font-size:11px;color:var(--ink-subtle);font-weight:500}
+.hand{font-family:var(--f-hand);font-size:34px;line-height:1;color:var(--purple-ink);font-weight:700}
+
+/* ---- top nav ---- */
+.topnav{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:var(--hero);box-shadow:var(--shadow-nav)}
+.topnav .wrap{height:var(--nav-h);display:flex;align-items:center;gap:18px}
+.logo{display:flex;align-items:center;flex:none;color:#fff;text-decoration:none}
+.logo svg{height:24px;width:auto;display:block}
+.navlinks{display:flex;gap:4px;margin-left:auto;align-items:center}
+.navlinks a{color:#fff;text-decoration:none;font-size:13.2px;font-weight:600;padding:8px 12px;border-radius:var(--r-pill);white-space:nowrap}
+.navlinks a:hover{background:rgba(255,255,255,.14)}
+.navlinks a[aria-current="page"]{background:#fff;color:#016462}
+.navtools{display:flex;gap:8px;align-items:center;margin-left:8px}
+.seg{display:inline-flex;border:1.5px solid rgba(255,255,255,.55);border-radius:var(--r-pill);padding:2px}
+.seg button{border:0;background:transparent;color:#fff;font-size:12px;font-weight:600;padding:6px 11px;border-radius:var(--r-pill);cursor:pointer;min-height:32px}
+.seg button[aria-pressed="true"]{background:#fff;color:#016462}
+.menubtn{display:none;border:1.5px solid rgba(255,255,255,.7);background:transparent;color:#fff;border-radius:var(--r-pill);padding:8px 16px;font-size:13.2px;font-weight:600;cursor:pointer;min-height:40px}
+.menupanel{display:none}
+@media (max-width:1060px){
+  .navlinks{display:none}
+  .menubtn{display:inline-flex;margin-left:auto}
+  .menupanel.open{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;background:var(--surface);border-bottom:1.5px solid var(--line);padding:16px 22px;box-shadow:var(--shadow-raised)}
+  .menupanel a{display:flex;align-items:center;min-height:44px;padding:8px 14px;border:1.5px solid var(--line);border-radius:var(--r-row);text-decoration:none;color:var(--ink);font-weight:600;font-size:14px}
+  .menupanel a[aria-current="page"]{background:var(--action);color:var(--on-action);border-color:var(--action)}
+}
+.themebtn{display:none;border:1.5px solid rgba(255,255,255,.7);background:transparent;color:#fff;border-radius:999px;padding:0 14px;min-height:40px;font-size:13.2px;font-weight:600;cursor:pointer}
+@media (max-width:620px){.seg{display:none}.themebtn{display:inline-flex;align-items:center}.navtools{margin-left:0}.topnav .wrap{gap:10px}}
+@media (max-width:520px){.logo svg{height:22px;max-width:46vw}.menubtn{padding:0 14px;min-height:40px;align-items:center}}
+
+/* ---- page band ---- */
+.band{background:var(--hero);color:#fff;padding-block:56px 60px}
+.band .crumbs{font-size:12.3px;opacity:.9;margin-bottom:18px}
+.band .crumbs a{color:#fff;font-weight:600}
+.band h1{color:#fff;font-size:clamp(33.4px,5.2vw,67px);line-height:1.06;letter-spacing:-.025em;max-width:900px}
+.band h1 em{font-style:normal;color:var(--lilac)}
+.band .lead{color:#fff;max-width:var(--text-max);margin-top:18px;font-size:clamp(15.8px,1.6vw,19.4px)}
+.band .kicker{color:#fff;opacity:.92;margin-bottom:14px;display:block}
+
+/* ---- section chips ---- */
+.secnav{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--nav-h));z-index:30;background:var(--surface);border-bottom:1.5px solid var(--line-soft)}
+.secnav .wrap{display:flex;gap:8px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
+.secnav .wrap::-webkit-scrollbar{display:none}
+.secnav a{flex:none;text-decoration:none;font-size:13.2px;font-weight:600;color:var(--ink-muted);border:1.5px solid var(--line);border-radius:var(--r-pill);padding:6px 14px;background:var(--surface)}
+.secnav a.on{background:var(--action-soft);border-color:var(--teal);color:var(--teal-ink)}
+.secnav .prog{height:3px;background:var(--teal);width:0;transition:width .15s linear}
+
+/* ---- sections ---- */
+.sec{padding-block:88px;scroll-margin-top:calc(var(--nav-h) + 58px)}
+@media (max-width:620px){.sec{padding-block:60px}}
+.sec.white{background:var(--surface)}
+.sec.tint{background:var(--surface-tint)}
+.sec.page{background:var(--surface-page)}
+.sechead{max-width:var(--text-max);margin-bottom:40px}
+.sechead h2{font-size:clamp(28.2px,3.6vw,45.8px);line-height:1.12;letter-spacing:-.02em;margin-top:10px}
+.sechead h2 em{font-style:normal;color:var(--teal)}
+.sechead h2 em.ai{color:var(--purple)}
+.sechead .lead{margin-top:16px;font-size:clamp(15.8px,1.5vw,19.4px);line-height:1.55}
+.sub{margin-top:64px}
+.sub>h3{font-size:19.4px;margin-bottom:6px}
+.sub>p.intro{max-width:var(--text-max);margin-bottom:22px}
+.prose{max-width:72ch}
+.prose p+p{margin-top:12px}
+
+/* ---- grids & cards ---- */
+.g2,.g3,.g4{display:grid;gap:18px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:900px){.g3,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.g2,.g3,.g4{grid-template-columns:1fr}}
+.split{display:grid;grid-template-columns:1fr 1.2fr;gap:48px;align-items:start}
+@media (max-width:900px){.split{grid-template-columns:1fr;gap:32px}}
+.card{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--r-lg);padding:26px;min-width:0}
+.white .card,.card.on-white{background:var(--surface-tint);border-color:transparent}
+.card h3,.card h4{font-size:17px;line-height:1.3;margin-bottom:8px}
+.card p,.card li{font-size:14.1px}
+.card .label{display:block;margin-bottom:10px}
+.card.ai{background:var(--purple-tint);border:1.5px solid var(--purple)}
+.card.ai h3,.card.ai h4{color:var(--purple-ink)}
+.card.ai .label{color:var(--purple-ink)}
+.card.new{position:relative}
+ul.clean{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+ul.clean li{position:relative;padding-left:18px}
+ul.clean li::before{content:"";position:absolute;left:0;top:.68em;width:7px;height:7px;border-radius:50%;background:var(--teal)}
+.card.ai ul.clean li::before{background:var(--purple)}
+.qs{margin-top:12px;display:grid;gap:6px}
+.qs span{display:block;font-size:13.2px;font-style:italic;color:var(--ink-muted);padding-left:12px;border-left:2px solid var(--purple)}
+
+/* link cards (hub nav) */
+.linkcard{display:flex;flex-direction:column;gap:6px;text-decoration:none;color:inherit;font-weight:400;background:var(--surface);border:1.5px solid var(--line);border-top:5px solid var(--teal);border-radius:var(--r-lg);padding:22px 24px 24px;transition:transform .2s ease,box-shadow .2s ease;min-height:100%}
+.linkcard.deep{border-top-color:var(--teal-deep)}
+.linkcard.ai{border-top-color:var(--purple)}
+.linkcard:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover)}
+.linkcard h3{font-size:19.4px}
+.linkcard p{font-size:14.1px}
+.linkcard .go{margin-top:auto;padding-top:10px;font-size:13.2px;font-weight:600;color:var(--teal-ink)}
+
+/* chips */
+.chip{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:4px 10px;border-radius:var(--r-pill);border:1.5px solid var(--line);color:var(--ink-muted);background:var(--surface);white-space:nowrap}
+.chip.new{background:var(--purple-tint);border-color:var(--purple);color:var(--purple-ink)}
+.chip.est{border-style:dashed;color:var(--ink-muted)}
+.chip.caution{background:var(--caution-soft);border-color:var(--caution);color:var(--caution)}
+.chip.issue{background:var(--issue-soft);border-color:var(--issue);color:var(--issue)}
+.chip.pos{background:var(--positive-soft);border-color:var(--positive);color:var(--positive)}
+.chip.dec{background:var(--action-soft);border-color:var(--teal);color:var(--teal-ink)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+
+/* notes */
+.note{font-size:12.3px;line-height:1.55;color:var(--ink-subtle);margin-top:12px;padding:10px 12px;border-radius:var(--r-md);background:var(--surface-page)}
+.white .note{background:var(--surface)}
+.card .note{background:var(--surface-page)}
+.white .card .note{background:var(--surface)}
+.note b{color:var(--ink-muted)}
+.note.caution{background:var(--caution-soft);color:var(--ink-muted)}
+.note.caution b{color:var(--caution)}
+
+/* stats */
+.stat .n{font-size:clamp(38.7px,4.4vw,56.3px);font-weight:800;color:var(--teal);line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.stat .n small{font-size:.45em;font-weight:700;letter-spacing:0;margin-left:4px}
+.stat p{margin-top:10px;font-size:14.1px;color:var(--ink-muted)}
+.stat .meta{display:block;margin-top:8px}
+
+/* panels */
+.panel{background:var(--teal-deep);color:#fff;border-radius:var(--r-panel);padding:34px 36px}
+:root[data-il="night"] .panel{background:var(--surface-ink);border:1.5px solid var(--line)}
+.panel h3{color:#fff;font-size:22px;margin-bottom:10px}
+.panel p,.panel li{color:#fff}
+.panel .kicker{color:var(--lilac)}
+.panel ul.clean li::before{background:var(--lilac)}
+.panel.ink{background:var(--surface-ink)}
+@media (max-width:620px){.panel{padding:26px 22px}}
+.quote{font-size:clamp(20px,2.4vw,28px);line-height:1.35;font-weight:700;color:var(--ink);letter-spacing:-.01em;max-width:900px;text-wrap:balance}
+.panel .quote{color:#fff}
+
+/* steps */
+.steps{list-style:none;padding:0;margin:0;display:grid;gap:12px;counter-reset:s}
+.steps>li{display:grid;grid-template-columns:44px 1fr;gap:16px;align-items:start;background:var(--surface);border:1.5px solid var(--line);border-radius:var(--r-row);padding:16px 18px;counter-increment:s}
+.white .steps>li{background:var(--surface-tint);border-color:transparent}
+.steps>li::before{content:counter(s);width:36px;height:36px;border-radius:50%;background:var(--teal-deep);color:#fff;display:grid;place-items:center;font-weight:700;font-size:15px;font-variant-numeric:tabular-nums}
+:root[data-il="night"] .steps>li::before{background:var(--teal);color:#02201F}
+.steps>li.ai{background:var(--purple-tint);border:1.5px solid var(--purple)}
+.steps>li.ai::before{background:var(--purple);color:#fff}
+.steps>li b{color:var(--ink);display:block;font-size:15px}
+.steps>li.ai b{color:var(--purple-ink)}
+.steps>li span{font-size:14.1px}
+.steps.row{grid-template-columns:repeat(4,minmax(0,1fr))}
+.steps.row>li{grid-template-columns:1fr;gap:10px}
+@media (max-width:900px){.steps.row{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.steps.row{grid-template-columns:1fr}.steps.row>li{grid-template-columns:44px 1fr}}
+
+/* flow line */
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.flow span{font-size:13.2px;font-weight:600;padding:6px 12px;border-radius:var(--r-pill);background:var(--surface);border:1.5px solid var(--line);color:var(--ink)}
+.flow span.ai{background:var(--purple-tint);border-color:var(--purple);color:var(--purple-ink)}
+.flow i{font-style:normal;color:var(--ink-subtle)}
+.flow.not span{text-decoration:line-through;color:var(--ink-subtle);background:transparent;border-style:dashed}
+
+/* expand */
+details.x{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--r-row)}
+.white details.x{background:var(--surface-tint);border-color:transparent}
+details.x+details.x{margin-top:10px}
+details.x summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:16px 20px;font-weight:600;color:var(--ink);min-height:44px}
+details.x summary::-webkit-details-marker{display:none}
+details.x summary .sm{font-weight:400;font-size:13.2px;color:var(--ink-subtle);margin-left:auto;text-align:right}
+details.x summary::after{content:"+";flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--action-soft);color:var(--teal-ink);font-size:18px;font-weight:600;transition:transform .25s ease}
+details.x[open] summary::after{transform:rotate(45deg)}
+details.x .xb{padding:0 20px 20px;font-size:14.1px}
+details.x .xb p+p,details.x .xb p+ul,details.x .xb ul+p{margin-top:10px}
+
+/* buttons */
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 22px;border-radius:var(--r-pill);font-size:13.2px;font-weight:600;text-decoration:none;cursor:pointer;border:1.5px solid transparent}
+.btn.primary{background:var(--action);color:var(--on-action)}
+.btn.secondary{background:var(--surface);border-color:var(--line-control);color:var(--teal-ink)}
+.btn.secondary:hover{background:var(--action-soft)}
+.btn.onbrand{background:#fff;color:#016462}
+.btn.ghost{border-color:rgba(255,255,255,.75);color:#fff;background:transparent}
+.btn.ghost:hover{background:rgba(255,255,255,.12)}
+.deeper{display:inline-flex;align-items:center;gap:6px;background:var(--action-soft);color:var(--teal-ink);font-weight:600;font-size:13.2px;padding:8px 16px;border-radius:var(--r-pill);text-decoration:none;min-height:40px}
+.deeper::after{content:"↗"}
+
+/* tables */
+.tblw{overflow-x:auto;border:1.5px solid var(--line);border-radius:var(--r-row);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.1px}
+th,td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+th{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-subtle);font-weight:600;background:var(--surface-tint)}
+td{color:var(--ink-muted)}
+td:first-child{color:var(--ink);font-weight:600}
+tr:last-child td{border-bottom:0}
+td.r,th.r{text-align:right;font-variant-numeric:tabular-nums}
+td.est,th.est{color:var(--purple-ink)}
+tr.tot td{font-weight:700;color:var(--ink);background:var(--surface-tint)}
+@media (max-width:620px){
+  table.stack thead{display:none}
+  table.stack tr{display:block;border-bottom:1.5px solid var(--line)}
+  table.stack tr:last-child{border-bottom:0}
+  table.stack td{display:block;border:0;padding:6px 16px}
+  table.stack td:first-child{padding-top:14px}
+  table.stack td:last-child{padding-bottom:14px}
+  table.stack td[data-k]::before{content:attr(data-k);display:block;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-subtle)}
+}
+
+/* charts */
+.chart{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--r-lg);padding:24px}
+.white .chart{background:var(--surface-tint);border-color:transparent}
+.chart h4{font-size:17px;margin-bottom:4px}
+.chart svg{width:100%;height:auto;display:block;margin-top:14px;overflow:visible}
+.chart .t{font-family:var(--f-display);font-size:13px;fill:var(--ink-muted)}
+.chart .tv{font-family:var(--f-display);font-size:14px;font-weight:700;fill:var(--ink)}
+.chart .ta{font-family:var(--f-mono);font-size:11px;fill:var(--ink-subtle);letter-spacing:.06em}
+.legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12.3px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+
+/* timeline */
+.tl{list-style:none;margin:0;padding:0;position:relative;display:grid;gap:0}
+.tl li{display:grid;grid-template-columns:150px 22px 1fr;gap:14px;align-items:start;padding-bottom:20px;position:relative}
+.tl li::after{content:"";position:absolute;left:calc(150px + 14px + 10px);top:18px;bottom:0;width:2px;background:var(--line-soft)}
+.tl li:last-child::after{display:none}
+.tl .when{font-family:var(--f-mono);font-size:11.4px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--teal-ink);padding-top:3px;text-align:right}
+.tl .dot{width:14px;height:14px;border-radius:50%;background:var(--teal-deep);margin:5px 0 0 3px;position:relative;z-index:1}
+:root[data-il="night"] .tl .dot{background:var(--teal)}
+.tl li.est .dot{background:var(--surface);border:2px dashed var(--line-control)}
+.tl li.est .when{color:var(--ink-subtle)}
+.tl .what{font-size:14.1px}
+.tl .what b{color:var(--ink)}
+@media (max-width:620px){
+  .tl li{grid-template-columns:22px 1fr;gap:12px}
+  .tl li::after{left:10px}
+  .tl .when{grid-column:2;grid-row:1;text-align:left}
+  .tl .dot{grid-column:1;grid-row:1}
+  .tl .what{grid-column:2}
+}
+.segctl{display:inline-flex;border:1.5px solid var(--line-control);border-radius:var(--r-pill);padding:3px;background:var(--surface);margin-bottom:24px}
+.segctl button{border:0;background:transparent;padding:8px 18px;border-radius:var(--r-pill);font-weight:600;font-size:13.2px;color:var(--teal-ink);cursor:pointer;min-height:38px}
+.segctl button[aria-pressed="true"]{background:var(--action);color:var(--on-action)}
+
+/* ---- home hero ---- */
+.hero{background:var(--hero);color:#fff;padding-block:64px 72px}
+.hero .grid{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center}
+@media (max-width:900px){.hero .grid{grid-template-columns:1fr;gap:36px}}
+.hero h1{color:#fff;font-size:clamp(40.5px,5.4vw,76px);line-height:1.02;letter-spacing:-.03em}
+.hero h1 em{font-style:normal;color:var(--lilac);display:block}
+.hero .lead{color:#fff;font-size:clamp(15.8px,1.6vw,19.4px);margin-top:22px;max-width:46ch}
+.hero .kicker{color:#fff;display:block;margin-bottom:18px}
+.minimap{background:var(--surface);border-radius:var(--r-panel);padding:22px 22px 18px;box-shadow:var(--shadow-raised);color:var(--ink-muted)}
+.minimap .top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.minimap h2{font-size:17px}
+.minimap svg{width:100%;height:auto;display:block;margin-block:8px 4px}
+.minimap .mm-stop{cursor:pointer}
+.minimap ol{list-style:none;padding:0;margin:4px 0 14px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 16px;font-size:12.3px}
+.minimap ol li{display:flex;gap:8px}
+.minimap ol li b{font-variant-numeric:tabular-nums;color:var(--teal-ink);min-width:16px}
+@media (max-width:420px){.minimap ol{grid-template-columns:1fr}}
+
+/* ---- full map ---- */
+.mapfield{background:var(--surface-tint);border-radius:var(--r-panel);padding:28px 24px 24px;position:relative;overflow:hidden}
+:root[data-il="night"] .mapfield{background:var(--surface-page);border:1.5px solid var(--line)}
+.mapstage{position:relative;width:100%;aspect-ratio:1100/470}
+.mapstage svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.route-solid{stroke:var(--route);stroke-width:4;fill:none;stroke-linecap:round;filter:var(--route-glow)}
+.route-ahead{stroke:var(--line-control);stroke-width:4;fill:none;stroke-dasharray:2 10;stroke-linecap:round}
+.stem{stroke:var(--line);stroke-width:1.5}
+.contour{stroke:var(--teal);stroke-opacity:.09;stroke-width:1.5;fill:none}
+.stop{cursor:pointer;outline:none}
+.stop .halo{fill:var(--route);opacity:0}
+.stop .disc{fill:var(--teal-deep);stroke:var(--surface);stroke-width:4;transition:r .2s ease}
+.stop.ahead .disc{fill:var(--surface);stroke:var(--line-control);stroke-width:3}
+.stop.ahead .n{fill:var(--ink)}
+.stop.first .halo{opacity:.16}
+.stop.cur .disc{fill:var(--purple);stroke:var(--surface)}
+.stop.cur .n{fill:#fff}
+.stop.cur .halo{fill:var(--purple);opacity:.2}
+.stop .n{fill:#fff;font-family:var(--f-display);font-weight:700;font-size:17px;text-anchor:middle;dominant-baseline:central;pointer-events:none;font-variant-numeric:tabular-nums}
+.stop:hover .disc,.stop:focus-visible .disc{r:24}
+.stop:focus-visible .halo{opacity:.3}
+:root[data-il="night"] .stop .disc{stroke:var(--surface-page)}
+:root[data-il="night"] .stop:not(.ahead):not(.cur) .disc{fill:#016462;stroke:#2BC4DB;stroke-width:2.5}
+.mlabel{position:absolute;width:min(15.6%,172px);transform:translate(-50%,0);background:var(--surface);border:1.5px solid var(--line);border-radius:var(--r-md);padding:8px 10px;font-size:12.3px;line-height:1.35;cursor:pointer;text-align:left;transition:border-color .2s,box-shadow .2s}
+.mlabel.up{transform:translate(-50%,-100%)}
+.mlabel b{display:block;color:var(--ink);font-size:13.2px}
+.mlabel span{color:var(--ink-subtle)}
+.mlabel:hover{box-shadow:var(--shadow-hover)}
+.mlabel.cur{border-color:var(--purple);background:var(--purple-tint)}
+.mlabel.cur b{color:var(--purple-ink)}
+.mapdetail{margin-top:22px;display:grid;grid-template-columns:1fr 1.2fr;gap:36px;background:var(--surface);border:1.5px solid var(--line);border-radius:var(--r-lg);padding:28px}
+.mapdetail h3{font-size:clamp(22px,2.4vw,30px);line-height:1.15;margin:8px 0 10px}
+.mapdetail .kicker{color:var(--purple-ink)}
+.mapdetail .ctrl{display:flex;gap:8px;margin-top:20px;flex-wrap:wrap}
+.vroute{display:none}
+@media (max-width:820px){
+  .mapstage,.mapdetail,.mapfield .maphint{display:none}
+  .mapfield{padding:18px 16px}
+  .vroute{display:block;list-style:none;margin:0;padding:0}
+}
+.vroute li{display:grid;grid-template-columns:44px 1fr;gap:14px;position:relative;padding-bottom:12px}
+.vroute li::before{content:"";position:absolute;left:21px;top:40px;bottom:-4px;width:4px;background:var(--route);border-radius:2px}
+.vroute li:last-child::before{display:none}
+.vroute .vn{width:44px;height:44px;border-radius:50%;background:var(--teal-deep);color:#fff;display:grid;place-items:center;font-weight:700;border:4px solid var(--surface-tint);position:relative;z-index:1;font-variant-numeric:tabular-nums}
+:root[data-il="night"] .vroute .vn{border-color:var(--surface-page)}
+.vroute li.cur .vn{background:var(--purple)}
+.vroute button{all:unset;cursor:pointer;display:block;background:var(--surface);border:1.5px solid var(--line);border-radius:var(--r-md);padding:10px 14px;min-height:44px;box-sizing:border-box}
+.vroute button:focus-visible{outline:3px solid var(--focus-ring);outline-offset:2px}
+.vroute li.cur button{border-color:var(--purple);background:var(--purple-tint)}
+.vroute b{display:block;color:var(--ink);font-size:15px}
+.vroute span{font-size:13.2px;color:var(--ink-subtle)}
+
+/* sheet */
+.scrim{position:fixed;inset:0;background:var(--scrim);z-index:60;opacity:0;pointer-events:none;transition:opacity .25s}
+.scrim.open{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:61;background:var(--surface);border-radius:22px 22px 0 0;box-shadow:var(--shadow-sheet);padding:12px 22px calc(24px + env(safe-area-inset-bottom,0px));max-height:82vh;overflow:auto;transform:translateY(105%);transition:transform .3s cubic-bezier(.3,.1,.2,1)}
+.sheet.open{transform:translateY(0)}
+.sheet .grab{width:44px;height:5px;border-radius:3px;background:var(--line);margin:0 auto 14px}
+.sheet h3{font-size:22px;margin:6px 0 8px}
+.sheet .kicker{color:var(--purple-ink)}
+.sheet .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+
+/* footer */
+footer{background:var(--surface-ink);color:#B9CFCF;padding-block:48px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px;align-items:flex-start}
+footer p{font-size:12.3px;max-width:56ch;color:#B9CFCF}
+footer .logo svg{height:26px}
+footer nav{display:flex;flex-wrap:wrap;gap:6px 16px}
+footer nav a{color:#fff;font-size:13.2px;text-decoration:none}
+
+.refs{list-style:none;padding:0;margin:0;display:grid;gap:10px;font-size:13.2px}
+.refs li{display:grid;grid-template-columns:40px 1fr;gap:8px;min-width:0}
+.refs li span:first-child{font-family:var(--f-mono);color:var(--ink-subtle);font-size:12px}
+.refs a{word-break:break-word;font-weight:500}
+
+.view[hidden]{display:none!important}
+.mt18{margin-top:18px}.mt26{margin-top:26px}.mt40{margin-top:40px}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:620px){.twocol{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style>
+
+<template id="logo-tpl"><svg role="img" aria-label="Innovation Labs 2027" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 505.84 53.42"> <g> <g> <path fill="#fff" d="M90.71,9.72c-8.67,0-15.7,7.03-15.7,15.7,0,5.41,2.74,10.18,6.91,13,.11.07.22.14.33.22.85.64,1.41,1.65,1.41,2.8v.65h3.97v-.65c0-.33-.03-.65-.07-.98h.01l-2.04-11.67-.84.13,1.39,8.01c-.41-.55-.9-1.05-1.46-1.46-.18-.13-.37-.26-.56-.37-3.19-2.2-5.09-5.8-5.09-9.67,0-6.47,5.26-11.74,11.73-11.74s11.73,5.27,11.73,11.74c0,3.79-1.83,7.34-4.91,9.54-.37.21-.72.45-1.05.72-.44.36-.83.76-1.16,1.2l1.39-7.95-.85-.1-1.92,10.98c-.03.12-.04.25-.06.38l-.05.26s0,.06-.01.08l-.02.25v1.31h3.96v-1.08c.11-.92.57-1.72,1.25-2.28.19-.15.39-.29.61-.4,4.1-2.84,6.78-7.56,6.78-12.91,0-8.67-7.03-15.7-15.69-15.7Z"/> <rect fill="#fff" x="83.66" y="49.45" width="14.09" height="3.97"/> <polygon fill="#fff" points="83.66 43.79 83.66 47.76 97.75 47.76 97.75 43.79 87.63 43.79 83.66 43.79"/> <path fill="#fff" d="M90.57,25.34c.7,0,1.33.36,1.69.97.78,1.33,2.11,2.24,3.6,2.53l.85.1.6-3.44c-.14.04-.29.06-.45.06-.15,0-.29-.02-.42-.05-.53-.11-.98-.44-1.27-.93-.96-1.62-2.72-2.62-4.6-2.62s-3.64,1-4.6,2.62c-.24.41-.6.7-1.03.85-.2.08-.43.12-.66.12-.06,0-.12,0-.18-.01l.59,3.38.84-.13c1.38-.35,2.6-1.23,3.34-2.48.36-.61.99-.97,1.69-.97Z"/> <rect fill="#fff" y="10.28" width="4.76" height="30.03"/> <polygon fill="#fff" points="32.52 31.64 15.49 10.28 11.8 10.28 11.8 40.3 16.65 40.3 16.65 19.12 33.68 40.3 37.32 40.3 37.32 10.28 32.52 10.28 32.52 31.64"/> <polygon fill="#fff" points="65.14 31.64 48.11 10.28 44.42 10.28 44.42 40.3 49.27 40.3 49.27 19.12 66.3 40.3 69.94 40.3 69.94 10.28 65.14 10.28 65.14 31.64"/> <polygon fill="#fff" points="131.27 10.28 121.66 34.69 112.09 10.28 106.69 10.28 119.17 40.43 124.19 40.43 136.63 10.28 131.27 10.28"/> <path fill="#fff" d="M226.07,12.06c-.11-.07-.22-.14-.33-.22-.85-.64-1.41-1.67-1.41-2.82V0h-3.96v9.02c0,2.35,1.12,4.6,3,6.01.18.15.36.27.56.39,3.13,2.17,5.02,5.72,5.08,9.53-.28-.17-.51-.4-.69-.69-.96-1.64-2.72-2.65-4.6-2.65s-3.64,1.01-4.61,2.64c-.36.61-.99.98-1.69.98s-1.33-.36-1.69-.97c-.96-1.64-2.73-2.65-4.61-2.65s-3.65,1.01-4.6,2.64c-.23.39-.57.69-.98.84.02-3.8,1.85-7.34,4.91-9.55.37-.21.72-.45,1.05-.72,1.48-1.23,2.43-2.98,2.66-4.9l.03-.24V0h-3.97v9.44c-.11.92-.57,1.74-1.25,2.3-.2.16-.4.29-.62.4-4.1,2.85-6.78,7.6-6.78,13,0,8.73,7.03,15.8,15.7,15.8s15.7-7.07,15.7-15.8c0-5.45-2.74-10.25-6.91-13.09ZM217.29,36.95c-5.31,0-9.81-3.58-11.25-8.46,1.41-.33,2.65-1.23,3.41-2.5.36-.61.99-.98,1.69-.98s1.33.37,1.69.98c.96,1.62,2.73,2.64,4.61,2.64s3.64-1.02,4.6-2.64c.36-.61.99-.98,1.69-.98s1.33.37,1.69.98c.7,1.2,1.84,2.05,3.13,2.43-1.41,4.93-5.93,8.53-11.26,8.53Z"/> <path fill="#fff" d="M147.55,10.28l-13.47,30.03h5.1l2.83-6.3h16.25l2.88,6.3h5.1l-13.47-30.03h-5.23ZM143.82,29.63l6.35-14.29,6.35,14.29h-12.69Z"/> <polygon fill="#fff" points="163.41 14.61 173.28 14.61 173.28 40.31 178.13 40.31 178.13 14.61 187.95 14.61 187.95 10.28 163.41 10.28 163.41 14.61"/> <rect fill="#fff" x="191.85" y="10.28" width="4.76" height="30.03"/> <polygon fill="#fff" points="258.79 31.64 241.76 10.28 238.07 10.28 238.07 40.3 242.92 40.3 242.92 19.12 259.95 40.3 263.59 40.3 263.59 10.28 258.79 10.28 258.79 31.64"/> <polygon fill="#fff" points="286.63 10.28 281.82 10.28 281.82 40.3 302.45 40.3 302.45 35.85 286.63 35.85 286.63 10.28"/> <path fill="#fff" d="M394.15,30.97c-.33-6.25-6.02-7.91-12.02-8.74-3.95-.56-7.29-1.37-7.29-4.29s2.92-4.55,6.95-4.55c3.13.04,6.01,1.29,7.42,3.34l3.65-2.44c-2.53-4.03-6.86-5.06-11.2-5.06-5.4,0-11.62,2.4-11.58,8.62,0,6.43,5.66,7.94,11.62,8.75,4.2.56,7.68,1.67,7.68,4.93,0,3.78-3.99,4.98-7.59,4.98s-7.21-1.29-9.35-4.93l-3.6,2.4c2.74,5.06,7.16,6.82,12.91,6.82.56,0,1.11-.03,1.66-.07,2.2.07,6.34-1.49,7.46-2.29,4.1-2.9,3.15-7.34,3.28-7.48Z"/> <path fill="#fff" d="M318.2,10.28l-13.47,30.03h5.11l2.83-6.3h16.26l2.87,6.3h5.1l-13.47-30.03h-5.23ZM314.46,29.63l6.35-14.29,6.35,14.29h-12.69Z"/> <path fill="#fff" d="M360.47,24.82c2.83-1.16,4.16-3.43,4.16-5.96,0-5.96-4.51-8.58-10.21-8.58h-13.77v30.03h13.77c5.92,0,11.15-2.02,11.15-8.58,0-2.27-1.5-5.83-5.1-6.9ZM345.41,14.61h9.01c3.6,0,5.45,2.23,5.45,4.33,0,2.36-1.8,3.78-5.4,3.78h-9.05v-8.11ZM354.42,35.85h-9.01v-8.84h9.05c2.74,0,6.31,1.46,6.31,4.68s-3.69,4.16-6.35,4.16Z"/> </g> <g> <path fill="#fff" d="M405.73,36.02h19.16v4.68h-24.14v-7.56c0-5.71,4.47-9.02,12.16-9.02,4.12,0,6.92-1.85,6.92-4.6,0-3.01-2.45-4.77-6.62-4.77s-7.04,1.76-7.13,4.51h-5.15c.34-5.67,4.9-9.02,12.29-9.02s11.68,3.52,11.68,9.19c0,6.01-4.17,9.19-11.94,9.19-4.51,0-7.22,1.68-7.22,4.51v2.88Z"/> <path fill="#fff" d="M428.06,28.59v-5.88c0-7.56,5.28-12.67,13.06-12.67s13.06,5.11,13.06,12.67v5.88c0,7.52-5.28,12.63-13.06,12.63s-13.06-5.11-13.06-12.63ZM449.11,28.59v-5.88c0-4.72-3.18-7.9-7.99-7.9s-7.99,3.18-7.99,7.9v5.88c0,4.72,3.18,7.9,7.99,7.9s7.99-3.18,7.99-7.9Z"/> <path fill="#fff" d="M462.25,36.02h19.16v4.68h-24.14v-7.56c0-5.71,4.47-9.02,12.16-9.02,4.12,0,6.92-1.85,6.92-4.6,0-3.01-2.45-4.77-6.62-4.77s-7.04,1.76-7.13,4.51h-5.15c.34-5.67,4.9-9.02,12.29-9.02s11.68,3.52,11.68,9.19c0,6.01-4.17,9.19-11.94,9.19-4.51,0-7.22,1.68-7.22,4.51v2.88Z"/> <path fill="#fff" d="M505.84,10.64v2.88l-13.92,27.19h-5.75l13.19-25.34h-16.41v-4.72h22.89Z"/> </g> </g> </svg></template>
+
+<header class="topnav" id="top">
+  <div class="wrap">
+    <a class="logo" href="#home" aria-label="Innovation Labs 2027, strategy hub home" data-logo></a>
+    <nav class="navlinks" id="navlinks" aria-label="Main"></nav>
+    <button class="menubtn" id="menubtn" aria-expanded="false" aria-controls="menupanel">Menu</button>
+    <div class="navtools">
+      <div class="seg" role="group" aria-label="Theme">
+        <button id="th-light" aria-pressed="true">Light</button>
+        <button id="th-night" aria-pressed="false">Night</button>
+      </div>
+      <button class="themebtn" id="th-toggle" aria-label="Switch to Night theme">Night</button>
+    </div>
+  </div>
+  <nav class="menupanel" id="menupanel" aria-label="Main menu"></nav>
+</header>
+
+<!-- ================= HOME ================= -->
+<main class="view" data-view="home">
+  <section class="hero">
+    <div class="wrap grid">
+      <div>
+        <span class="kicker">Innovation Labs 2027 · Strategy hub</span>
+        <h1>Human cognition first. <em>AI amplification second.</em></h1>
+        <p class="lead">The 2027 revamp of the Innovation Labs pre-accelerator, consolidated: what the 2026 cohort told us, the bet we are making on how founders think, and the program, people and track built around it.</p>
+        <div class="btns">
+          <a class="btn onbrand" href="#map">Open the strategy map</a>
+          <a class="btn ghost" href="#evidence.hypothesis">Read the hypothesis</a>
+        </div>
+      </div>
+      <div class="minimap" aria-label="Compact strategy route">
+        <div class="top"><span class="kicker">The route</span><span class="meta">10 stops</span></div>
+        <h2>From what we heard to IL Beyond</h2>
+        <svg id="minimap-svg" viewBox="0 0 1100 470" role="img" aria-label="Route with ten numbered stops"></svg>
+        <ol id="minimap-list"></ol>
+        <a class="deeper" href="#map">Open full map</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec white">
+    <div class="wrap split">
+      <div class="sechead" style="margin:0">
+        <span class="kicker">The hypothesis</span>
+        <h2>Think first. <em class="ai">Then let AI challenge it.</em></h2>
+      </div>
+      <div>
+        <p class="quote">Founders who think first and use AI as a challenger produce better, more defensible work and own more of their reasoning than those who let AI write version one.</p>
+        <p class="note caution"><b>A reasoned bet, not a proof.</b> The evidence is recent and partly correlational. The Bootcamp 1 to Bootcamp 2 deliverable-quality measures and the AI-use log are how we find out.</p>
+        <div class="btns"><a class="deeper" href="#evidence">Go deeper · The evidence</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec page">
+    <div class="wrap">
+      <div class="sechead">
+        <span class="kicker">2026 in numbers</span>
+        <h2>Half the intake. <em>The same number of finalists.</em></h2>
+        <p class="lead">Intake halved between 2025 and 2026, and Demo Day still fielded 17 teams both years. That is the strongest argument for a smaller, better-supported cohort.</p>
+      </div>
+      <div class="g4">
+        <div class="card stat"><div class="n num">41</div><p>Teams accepted into the 2026 program, down from 80 in 2025.</p><span class="meta">Team funnel</span></div>
+        <div class="card stat"><div class="n num">17</div><p>Teams at Demo Day, in both 2025 and 2026.</p><span class="meta">Team funnel</span></div>
+        <div class="card stat"><div class="n num">~53<small>h</small></div><p>Of mentoring per team, from roughly 2,200 donated mentor hours.</p><span class="meta">Mentor retro, 7 July 2026</span><div class="hand" style="margin-top:10px">the number to defend</div></div>
+        <div class="card stat"><div class="n num">526</div><p>Mentor touchpoints, delivered by 221 people across 29 sessions.</p><span class="meta">Mentor retro, 7 July 2026</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec white">
+    <div class="wrap">
+      <div class="sechead">
+        <span class="kicker">Explore</span>
+        <h2>Pick a door.</h2>
+        <p class="lead">Each page covers one part of the revamp. Purple marks AI as challenger and what is new for 2027.</p>
+      </div>
+      <div class="g4" id="homecards"></div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= MAP ================= -->
+<main class="view" data-view="map" hidden>
+  <div class="band"><div class="wrap">
+    <div class="crumbs"><a href="#home">Hub</a> / Map</div>
+    <h1>One route through <em>the 2027 revamp.</em></h1>
+    <p class="lead">Ten stops, in the order the strategy builds: from what the 2026 cohort told us to the investment track that follows the program. Select a stop for the detail.</p>
+  </div></div>
+  <section class="sec page" style="padding-top:48px">
+    <div class="wrap">
+      <div class="mapfield">
+        <div class="mapstage" id="mapstage">
+          <svg id="map-svg" viewBox="0 0 1100 470" role="group" aria-label="Strategy route with ten stops"></svg>
+        </div>
+        <ol class="vroute" id="vroute"></ol>
+      </div>
+      <div class="mapdetail" id="mapdetail" aria-live="polite"></div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= FINDINGS ================= -->
+<main class="view" data-view="findings" hidden>
+  <div class="band"><div class="wrap">
+    <div class="crumbs"><a href="#home">Hub</a> / Findings</div>
+    <span class="kicker">2026 cohort interviews</span>
+    <h1>A sound program. <em>Seven gaps to close.</em></h1>
+    <p class="lead">Each edition is a new iteration based on the last. The findings from the 2026 cohort are improvement targets on a program that is fundamentally sound.</p>
+  </div></div>
+  <nav class="secnav" aria-label="On this page"><div class="wrap"></div><div class="prog"></div></nav>
+
+  <section class="sec page" id="findings.gaps" data-title="Structural gaps">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">What needs fixing</span><h2>Seven structural gaps.</h2></div>
+      <div class="g3">
+        <div class="card"><span class="chip issue">Gap</span><h3 class="mt18">Hardware teams are underserved</h3><p>The mentor pool is software-biased, so hardware teams are systematically left with less relevant help.</p></div>
+        <div class="card"><span class="chip issue">Gap</span><h3 class="mt18">Mentor advice contradicts itself</h3><p>There is no mechanism for teams to reconcile conflicting advice from different mentors.</p></div>
+        <div class="card"><span class="chip issue">Gap</span><h3 class="mt18">Bootcamps are compressed</h3><p>Hackathon, Bootcamp 1 and Bootcamp 2 ran on three consecutive weekends. One participant missed Bootcamp 1 because of the pileup; another asked for an extra week to act on conflicting feedback.</p></div>
+        <div class="card"><span class="chip issue">Gap</span><h3 class="mt18">Travel falls on non-Bucharest teams</h3><p>The travel burden lands disproportionately on teams from outside Bucharest.</p></div>
+        <div class="card"><span class="chip issue">Gap</span><h3 class="mt18">Online semifinals break continuity</h3><p>Earlier stages are in person. Participants found it backwards that Boost Day was physical while the Semifinals were online.</p></div>
+        <div class="card"><span class="chip issue">Gap</span><h3 class="mt18">Deliverables go unreviewed</h3><p>At least one team uploaded deliverables to Drive, was told they would be reviewed, and never got feedback.</p></div>
+        <div class="card"><span class="chip issue">Gap</span><h3 class="mt18">Hybrid Unplugged fails online</h3><p>Audio needed constant concentration and chat went unread. One participant waited 35 minutes to be called on, in a session that ended without reaching the online audience.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec white" id="findings.signals" data-title="What worked">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">What worked</span><h2>Community is the product. <em>Protect it.</em></h2><p class="lead">Networking and community are the dominant value driver across teams. Bootcamp 1 and the Pitch Prep Workshop are the highest-rated format elements, and the revamp uses them as the template for good.</p></div>
+      <div class="g3">
+        <div class="card"><span class="chip pos">Worked</span><h3 class="mt18">Networking and community</h3><p>The dominant value driver across teams.</p></div>
+        <div class="card"><span class="chip pos">Worked</span><h3 class="mt18">Bootcamp 1 and Pitch Prep</h3><p>The highest-rated format elements of 2026.</p></div>
+        <div class="card"><span class="chip pos">Worked</span><h3 class="mt18">Pre-recorded theory</h3><p>Teams watched at their own pace, paused, took notes, and brought questions to the Bootcamps and Office Hours.</p></div>
+        <div class="card"><span class="chip pos">Worked</span><h3 class="mt18">Unplugged Talks, done right</h3><p>Hosted at real company offices, about an hour long, heavy on Q&amp;A, with speakers who talked about what went wrong too.</p></div>
+        <div class="card"><span class="chip pos">Worked</span><h3 class="mt18">Outcomes after the program</h3><p>Multiple teams report investor inbound and ongoing mentor relationships.</p></div>
+        <div class="card"><span class="chip pos">Worked</span><h3 class="mt18">Hands-on impact</h3><p>A mentor spent two hours teaching a team to build their first website and paid for their first month of subscription. One introverted team member visibly opened up over the program.</p><p class="note">From the mentor retro.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec page" id="findings.coachability" data-title="Coachability">
+    <div class="wrap split">
+      <div class="sechead" style="margin:0"><span class="kicker">Coachability</span><h2>Feedback only works <em>if teams can hear it.</em></h2></div>
+      <div>
+        <ul class="clean">
+          <li>Some participants were notably arrogant and hard to coach, which created real friction.</li>
+          <li>Teams don't know how to analyse feedback: what to keep, what to ignore, what to act on.</li>
+          <li>The coachability interventions tried so far haven't clearly worked, which is an argument for changing the mechanism.</li>
+        </ul>
+        <p class="note"><b>Source.</b> The arrogance finding comes from direct observation, not the interview transcripts.</p>
+        <div class="btns"><a class="deeper" href="#people.coachability">Go deeper · The coaching response</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec white" id="findings.resolve" data-title="Before publishing">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">From all cohort feedback</span><h2>Four things to settle <em>alongside the revamp.</em></h2></div>
+      <div class="g2">
+        <div class="card"><span class="chip caution">Contradiction</span><h3 class="mt18">Travel burden versus the Regional Hub change</h3><p>The plan turns regional centers into pre-recruitment Hubs while the cohort already reported travel burden on non-Bucharest teams. Scaling as planned makes it worse unless offset by a stipend, hybrid attendance or clustered scheduling.</p><p class="note caution"><b>To resolve before publishing the revamp.</b></p></div>
+        <div class="card"><span class="chip dec">Mechanism</span><h3 class="mt18">Contradictory mentor advice needs its own fix</h3><p>Separate from the analog exercises. The mentor redesign addresses it with one shared, mentor-authored rubric.</p><a class="deeper mt18" href="#people">Go deeper · Mentors and coaches</a></div>
+        <div class="card"><span class="chip dec">Separate track</span><h3 class="mt18">Safeguarding is not a curriculum problem</h3><p>It needs its own fix, handled quietly and separately: a juror code of conduct and a reporting channel.</p></div>
+        <div class="card"><span class="chip pos">Keep</span><h3 class="mt18">Protect what is already working</h3><p>Use Bootcamp 1 and the Pitch Prep Workshop as the template for good, and don't let revamp energy dilute them.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec page" id="findings.generation" data-title="The generation">
+    <div class="wrap">
+      <div class="panel">
+        <span class="kicker">What we're seeing in the generation</span>
+        <p class="quote" style="margin-top:12px">This generation didn't get the device discipline that older builders or the next generation of schoolchildren are getting. The program can work around that gap or be one of the few places that closes it.</p>
+        <p style="margin-top:18px;max-width:72ch">The cohort, mostly mid-20s, were teenagers during the shift to phone-based, offload-everything defaults. What shows up in pitches and interviews is fluent, competent-sounding output with less underneath it, and less ownership of the thinking when pushed live.</p>
+      </div>
+      <p class="note mt18"><b>On the evidence.</b> Gerlich (2025) found younger participants showed higher AI dependence and lower critical-thinking scores than older ones in the same study. It is a correlational finding, and the revamp treats it as part of a bet. <a href="#evidence">See the evidence</a>.</p>
+    </div>
+  </section>
+</main>
+
+<!-- ================= EVIDENCE ================= -->
+<main class="view" data-view="evidence" hidden>
+  <div class="band"><div class="wrap">
+    <div class="crumbs"><a href="#home">Hub</a> / Evidence</div>
+    <span class="kicker">Research and evidence base</span>
+    <h1>A bet grounded in evidence. <em>Not a proof.</em></h1>
+    <p class="lead">Ordered by how directly it bears on our founders, adults in their mid-20s. We keep two things apart: how robust a finding is, and how well it transfers to what we do.</p>
+  </div></div>
+  <nav class="secnav" aria-label="On this page"><div class="wrap"></div><div class="prog"></div></nav>
+
+  <section class="sec page" id="evidence.problem" data-title="The problem">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">A · The problem</span><h2>Founders are offloading <em>the thinking step.</em></h2><p class="lead">Not only the writing. Interviews, competitive analysis and the pitch narrative go to AI, producing more polished output with less of the founder's own reasoning underneath.</p></div>
+      <div class="g4">
+        <div class="card stat on-white" style="background:var(--surface);border:1.5px solid var(--line)"><div class="n num">~55%</div><p>Lower neural connectivity, at most, in the ChatGPT group versus brain-only writers.</p><span class="meta">MIT Media Lab, 2025 [2]</span></div>
+        <div class="card stat" ><div class="n num">83%</div><p>Of ChatGPT users could not quote a sentence from the essay they had just written.</p><span class="meta">MIT Media Lab, 2025 [2]</span></div>
+        <div class="card stat"><div class="n num">666</div><p>Participants in Gerlich's study linking frequent AI use to lower critical thinking.</p><span class="meta">Gerlich, 2025 [3]</span></div>
+        <div class="card stat"><div class="n num">54</div><p>Participants, three groups, essays written over four months with EEG.</p><span class="meta">MIT Media Lab, 2025 [2]</span></div>
+      </div>
+      <div class="g2 mt26">
+        <div class="card"><div class="chips"><span class="chip">Adults</span><span class="chip caution">Preprint, under review</span></div><h3>MIT Media Lab, Your Brain on ChatGPT (2025)</h3><p>Connectivity scaled down as external support went up. ChatGPT-group essays clustered together, statistically homogeneous within each topic. The authors named the accumulated effect cognitive debt.</p><p class="note">We had access to the preprinted, under-review version of the study.</p></div>
+        <div class="card"><div class="chips"><span class="chip">Mixed ages</span><span class="chip caution">Correlational</span></div><h3>Gerlich, cognitive offloading and critical thinking (2025)</h3><p>A significant negative correlation between frequent AI-tool use and critical-thinking ability, mediated by cognitive offloading. Younger participants showed higher dependence and lower critical-thinking scores than older ones.</p></div>
+        <div class="card"><div class="chips"><span class="chip">Mechanism</span><span class="chip caution">Original finding, 2011</span></div><h3>The Google effect</h3><p>People forget information they are confident they can look up again, and remember where something is better than the thing itself. The plausible extension, not yet demonstrated, is that AI chat tools push this from facts to reasoning.</p><p class="note">Used as a mechanism, not as a recently reinforced finding.</p></div>
+        <div class="card"><div class="chips"><span class="chip">Practitioner literature</span><span class="chip dec">Teachable skill</span></div><h3>Why some founders' AI output is worse</h3><p>Prompt wording matters far less than the quality and specificity of the material and domain knowledge fed in. Output tracks the evidence, correction and iteration the founder brings, not the model. Feeding AI real source material and interrogating its output is context engineering, which is what we want to teach.</p><p class="note">Practitioner evidence, not peer-reviewed research [5][6].</p></div>
+      </div>
+      <div class="panel mt26"><span class="kicker">The core of the case</span><p class="quote" style="margin-top:10px">AI offloading has a measurable cost, it lands harder on younger users, and the antidote is not abstinence but doing your own thinking first and using the model as a challenger.</p></div>
+    </div>
+  </section>
+
+  <section class="sec white" id="evidence.cohort" data-title="Why this cohort">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">B · Why this cohort</span><h2>The risk concentrates <em>in the founders we serve.</em></h2><p class="lead">Our founders were teenagers during the shift to phone-based, offload-everything defaults. This context does not prove our interventions work. It explains why this group is exposed.</p></div>
+      <div class="g2">
+        <div class="card"><div class="chips"><span class="chip caution">Narrative book</span></div><h3>Haidt, The Anxious Generation (2024)</h3><p>Four harms (social deprivation, sleep disruption, attention fragmentation, addiction) track the smartphone era and concentrate in people who were adolescents during the transition. A threshold cited in Congressional testimony: 1 to 2 hours a day of social media shows no measurable harm, 3 to 4 hours does.</p><p class="note">A strong narrative rather than proof. Useful for framing, not as a causal claim.</p></div>
+        <div class="card"><div class="chips"><span class="chip caution">Policy reversal</span></div><h3>Sweden's reversal</h3><p>After about two decades of digitising classrooms, Swedish fourth-grade reading proficiency declined between the 2016 and 2021 assessments. In 2023 the government funded printed textbooks (about 685 million kronor) and moved to keep devices largely away from under-sixes.</p><p class="note">Not a controlled experiment. The causal link is the government's read and is contested. It signals institutional direction.</p></div>
+        <div class="card"><div class="chips"><span class="chip">Children, 3 to 11</span><span class="chip caution">Extrapolated</span></div><h3>Screen time and attention</h3><p>A longitudinal study of just over a thousand children linked screen use to weaker sustained attention and reading to stronger attention, with print reading tied to better comprehension than digital.</p><p class="note">We extrapolate that the same mechanism applies to people in their mid-20s.</p></div>
+        <div class="card"><div class="chips"><span class="chip issue">Counterweight</span></div><h3>School phone bans</h3><p>Positive results exist, but a review of about two dozen studies in a dozen countries judged the evidence weak and inconclusive, and found a short-term spike in disciplinary incidents in year one.</p><p class="note">The case for device discipline is real but not one-sided. Saying so keeps the rest credible.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec page" id="evidence.countermeasure" data-title="Analog-first">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">C · The countermeasure</span><h2>Force original thinking <em>before any model is opened.</em></h2><p class="lead">Read this research as mechanism and precedent: why paper-first and dialogic methods plausibly work, and where they already work in practice. Not as proof that they improve startup outcomes.</p></div>
+      <div class="g2">
+        <div class="card"><div class="chips"><span class="chip">Students</span><span class="chip caution">Mixed replication</span></div><h3>Handwriting versus typing</h3><p>Across several studies, laptop note-takers did worse on conceptual questions than longhand note-takers, apparently because laptops invite verbatim transcription while handwriting forces paraphrase and synthesis. The closest analog evidence to our setting.</p><p class="note">A 2019 replication and later work found the effect does not hold consistently. We treat the mechanism as plausible, not settled.</p></div>
+        <div class="card"><div class="chips"><span class="chip pos">Robust</span><span class="chip">Young children</span></div><h3>Embodied cognition</h3><p>In pre-literate children, the brain's reading circuit activates during letter perception only after handwriting practice, not after typing or tracing.</p><p class="note">Cited as a mechanism for why self-produced work is encoded differently, not as evidence about founders.</p></div>
+        <div class="card"><div class="chips"><span class="chip">Design inspiration</span></div><h3>Montessori, Waldorf, Reggio Emilia</h3><p>Concrete before abstract; authoring your own lesson books; the environment and visible documentation as a third teacher that makes a group's thinking legible in real time.</p><p class="note">Design inspiration and mechanism, not outcome evidence for adults. Keep that distinction explicit wherever this is presented.</p></div>
+        <div class="card"><div class="chips"><span class="chip pos">Adult professional method</span></div><h3>Design Sprint and Socratic seminar</h3><p>The GV Design Sprint starts with individual paper sketching (Crazy 8s) before any group or digital work, and is already named in our Module 2 deck. The Socratic seminar (live, unscripted, no notes, no slides) maps directly onto pitch Q&amp;A and mock-interview debriefs.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec white" id="evidence.limits" data-title="What it doesn't show">
+    <div class="wrap split">
+      <div class="sechead" style="margin:0"><span class="kicker">D · Limits</span><h2>What this evidence <em>does not show.</em></h2></div>
+      <div>
+        <p class="prose">None of it proves that paper-first exercises make founders build better companies. The strongest findings are about children and transfer weakly. The most relevant findings, on adults and AI, are recent and partly correlational. The chain from "handwriting aids encoding" to "better pitch, better product" is unvalidated.</p>
+        <p class="prose mt18">That is the reason to state the approach correctly: analog-first with AI as a challenger is a reasoned bet, grounded in a plausible cognitive mechanism, an adult professional precedent already in our curriculum, and our own observation of this cohort's fluent-but-shallow output.</p>
+        <p class="note"><b>How we settle it.</b> On our own teams: the share of teams whose deliverable quality improves between Bootcamp 1 and Bootcamp 2, and the AI-use log.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec page" id="evidence.hypothesis" data-title="The hypothesis">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">E · The hypothesis we test</span><h2>Three things we can act on.</h2></div>
+      <ol class="steps">
+        <li><div><b>The analog-first sequence</b><span>Offloading has a measurable cost and lands hardest on mid-20s founders. The countermeasure puts "build it yourself first" into specific existing blocks.</span></div></li>
+        <li class="ai"><div><b>Challenger skills and How AI Tricks You</b><span>Turn "use AI as an adversary, not an author" into something teachable.</span></div></li>
+        <li><div><b>The AI-risk register</b><span>Names the failure modes this design exists to prevent: fabricated research, fluency bias, idea homogenization.</span></div></li>
+      </ol>
+      <p class="prose mt26">The same logic runs through the parts that aren't about AI. Feedback is where thinking gets stress-tested, so the mentor redesign, the coaching response to low coachability and the smaller cohort all aim at fewer, better-supported teams who can absorb hard feedback rather than deflect it to a model.</p>
+      <div class="panel mt26"><span class="kicker">Stated plainly</span><p class="quote" style="margin-top:10px">Founders who think first and use AI as a challenger produce better, more defensible work and own more of their reasoning than those who let AI write version one.</p><p style="margin-top:14px">The Bootcamp 1 to Bootcamp 2 measures are how we find out.</p></div>
+    </div>
+  </section>
+
+  <section class="sec white" id="evidence.sources" data-title="Sources">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">Sources</span><h2>References.</h2><p class="lead">As cited in the 2027 revamp master notes.</p></div>
+      <ol class="refs" id="refs"></ol>
+    </div>
+  </section>
+</main>
+
+<!-- ================= PROGRAM ================= -->
+<main class="view" data-view="program" hidden>
+  <div class="band"><div class="wrap">
+    <div class="crumbs"><a href="#home">Hub</a> / Program</div>
+    <span class="kicker">Curriculum and pedagogy</span>
+    <h1>Build version one yourself. <em>Then let AI attack it.</em></h1>
+    <p class="lead">The 2026 curriculum as delivered, what changes for 2027, and how analog exercises and challenger skills slot into blocks that already exist, rather than adding new time.</p>
+  </div></div>
+  <nav class="secnav" aria-label="On this page"><div class="wrap"></div><div class="prog"></div></nav>
+
+  <section class="sec page" id="program.curriculum" data-title="2026 curriculum">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">2026 as delivered</span><h2>Theory on video. <em>In-person time for feedback.</em></h2><p class="lead">Theory was pre-recorded and grouped into modules so in-person time could go to feedback and mentoring instead of lecture. Participant interviews confirmed it works.</p></div>
+      <div class="g3">
+        <div class="card"><span class="label">Module 1</span><h3>UX and customer discovery</h3><p>Experimenting, user persona, competitive analysis.</p></div>
+        <div class="card"><span class="label">Module 2</span><h3>Business models and testing</h3><p>User journeys, prototyping and user testing.</p></div>
+        <div class="card"><span class="label">Module 3</span><h3>Pitch prep</h3><p>Also delivered as an Unplugged Talk.</p></div>
+      </div>
+      <p class="note mt18"><b>Not run in 2026</b> despite the 2025 template: Architecture and Tech Stack, Legal 101 for Startups. Investment and Termsheet moved to Unplugged (Talk 4, EGV Investment Prize). <b>Prerequisites:</b> Module 1 workshops and a 30-second elevator pitch before Bootcamp 1; Module 2 workshops before Bootcamp 2.</p>
+      <div class="sub">
+        <h3>Block by block</h3>
+        <details class="x"><summary>Module 1 in detail<span class="sm">Four blocks</span></summary><div class="xb"><p>UX versus UI (Norman, Krug, Nielsen-Norman). Customer Discovery built on Steve Blank's Four Steps to the Epiphany, with a 5-step process, a hypothesis template and interviewing via the Mom Test. Experiments: hypothesis-driven testing, Minimum Viable Experiment, landing page, Wizard of Oz, A/B, fake door and smoke tests, a light JTBD intro. Persona building.</p><p>Each block pairs with an "AI fit" and "AI limits" slide. Deliverables: personas, 10+ hypotheses, 10+ interviews, 1+ experiment.</p></div></details>
+        <details class="x"><summary>Bootcamp 1: competitive analysis<span class="sm">5+ competitors</span></summary><div class="xb"><p>Blue Ocean and Red Ocean with a recommended hybrid approach. Three competitor types: direct, indirect (including do nothing), and ecosystem threats. Sources: Dealroom, Product Hunt, AlternativeTo, G2 and Capterra, Perplexity. Lenses: positioning, moats, customer feedback and gaps. Structure: snapshot database, deep-dive one-pagers and a competitor-move changelog. Differentiation via ERRC.</p><p>Deliverable: 5+ competitors researched, 2+ indirect.</p></div></details>
+        <details class="x"><summary>Module 2: user testing<span class="sm">10+ users</span></summary><div class="xb"><p>Process lineage: Design Thinking, Lean, Double Diamond, Customer Development, Design Sprint. User testing versus usability testing. Think Aloud, lab usability, guerrilla and hallway testing, beta testing. Prototypes: static versus interactive, sketch, wireframe, mock-up.</p><p>Deliverables: wireframes and prototypes of main flows, tested with 10+ users.</p></div></details>
+        <details class="x"><summary>Bootcamp 2: business models and journeys<span class="sm">Plus pivoting</span></summary><div class="xb"><p>A value proposition framework tied to the Lean Model Canvas. Archetypes with real comps: subscription, usage-based, ads-based, marketplace, razor-and-blade, plus AI-era models (IP licensing, data monetisation, API and platform). Freemium versus free trial, combining models, a pilot-program checklist.</p><p>Customer journey (awareness, consideration, purchase, retention, advocacy) versus user journey (onboarding, activation, mastery, tied to JTBD). The bootcamp frames team culture around brutal honest feedback and teaches what pivoting is and isn't, with explicit triggers and anti-triggers.</p></div></details>
+        <details class="x"><summary>Workshop: how to make people care<span class="sm">Pitch craft</span></summary><div class="xb"><p>Framed as "pitching is dead in 2026, how to make people care in 2 minutes." Pitch types by why, what and format. Content checklist: problem, solution, differentiator, GTM, competition, team, traction, ask, business model, timeline. IL formats: IdeaJams, Hackathon 1-minute pitch, Boost Day 2-minute pitch, Semifinals and Demo Day. Q&amp;A handling and voice coaching.</p><p>Red flags: no value clarity in 30 seconds, huge market, no competition, buzzword overdose, reading slides, no clear ask.</p></div></details>
+        <details class="x"><summary>Unplugged Talks 2026<span class="sm">Weekly, Tuesdays</span></summary><div class="xb"><p>Mostly hosted at partner company offices. All 2026 workshops and talks remain on the Notion workspace; the full programme lives in the separate Unplugged curriculum sheet.</p><ul class="clean" style="margin-top:10px"><li>Creating Value, Andrei Pitis</li><li>The Product Loop is the Product, Vladimir Oane</li><li>How to Pitch, Flavia Husar</li><li>EGV Investment Prize, Key Steps and Procedures, Bogdan Pasca (Early Game Ventures) and Daniel Rosner</li><li>How to Do Networking and Build Relationships, Razvan Rughinis and Cristian Sandescu</li><li>How to Scale an App to Millions of Users, Laurentiu Balasa</li><li>Go to Market for Startups and Innovators, Diana Olar</li><li>Alumni Panels (talks 8 and 9)</li><li>Building Global Startups, Radu Georgescu</li></ul></div></details>
+        <details class="x"><summary>Program deliverables 2026<span class="sm">One Drive folder per team</span></summary><div class="xb"><ul class="clean"><li>Hypotheses to validate via interviews and experiments</li><li>Customer interviews, with transcripts and conclusions</li><li>User persona</li><li>Competitor analysis</li><li>Pre-recorded 30-second, 1-minute and 2-minute pitches</li><li>Updated slide decks</li><li>Tech demos</li></ul></div></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec white" id="program.additions" data-title="New for 2027">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">New for 2027</span><h2>Curriculum additions.</h2><p class="lead">Placed where they still change something: before the brutal-feedback block, at Orientation, and inside the bootcamps teams already rate highest.</p></div>
+      <div class="g2">
+        <div class="card"><span class="chip new">Moved earlier</span><h3 class="mt18">Back to Fundamentals (Cristi Munteanu)</h3><p>Ran online after the 2026 semifinals. For 2027 it moves before Bootcamp 2, ahead of the brutal-feedback block, where it addresses coachability while it can still change something.</p></div>
+        <div class="card ai"><span class="chip new">New</span><h3 class="mt18">Orientation, first Monday after the Hackathon</h3><ul class="clean"><li>How to be a mentee.</li><li>VC and partner open validation.</li><li>The program's AI position, stated once: not banned, not a ghostwriter, used as a challenger.</li><li>The integrity line: AI-fabricated interviews and competitors don't count.</li></ul><p class="note">The framing to remember: AI doesn't accelerate anything if you don't already know in detail what you want.</p></div>
+      </div>
+      <div class="sub">
+        <h3>Inside the bootcamps</h3>
+        <details class="x"><summary>Bootcamp 1: AI literacy and curation track<span class="sm">8 elements</span></summary><div class="xb"><ul class="clean">
+          <li><b>From doing to understanding and curating.</b> Build valuable things with AI rather than accept the first output.</li>
+          <li><b>Master prompt, project level.</b> A working prompt per startup that challenges ideas, requires sources, lists assumptions and asks about positioning first.</li>
+          <li><b>Deliverable ranking.</b> Rank and justify three anonymised 2026 deliverables (strong, mediocre, weak) before writing your own.</li>
+          <li><b>Fallacy identification.</b> Spot the unrelated cause-effect in an example deliverable. Optional: one fallacy a day through the app or WhatsApp group.</li>
+          <li><b>Competitive analysis exam.</b> Every data point needs a source. 30 minutes live, feedback on two or three teams, one worked example.</li>
+          <li><b>Pitch deck cross-review.</b> Teams answer questions on a deck they didn't write.</li>
+          <li><b>Competitive analysis feeds customer discovery,</b> taught explicitly.</li>
+          <li><b>Simple templates provided upfront,</b> so founders don't get starry-eyed at what the model hands them.</li>
+        </ul></div></details>
+        <details class="x"><summary>Bootcamp 1: customer discovery track<span class="sm">Interview guides in advance</span></summary><div class="xb"><ul class="clean"><li>Teams submit 5 hypotheses plus the experiments to validate them, with research.</li><li>Teams prepare and send an interview guide before the bootcamp.</li><li>Two or three guides are picked for live mock interviews in front of an audience, or get live feedback.</li></ul></div></details>
+        <details class="x"><summary>Bootcamp 2: stated expectations and a pivot session<span class="sm">Before, during, after</span></summary><div class="xb"><p>Communicated in advance: the customer discovery motion and lessons learnt; a complete competitive analysis and the decisions made because of it; the MVP user journey with its hypothesis.</p><ol class="steps mt18"><li><div><b>Before</b><span>Office hours plus online mentoring with hands-on mentors.</span></div></li><li><div><b>During</b><span>A working session to internalise feedback and pivot, with coach support. Teams share conclusions back with the core team.</span></div></li><li><div><b>After</b><span>A shortlist of teams at risk, with expectations stated explicitly. The cut lands a week later.</span></div></li></ol></div></details>
+        <details class="x"><summary>Sessions currently missing<span class="sm">4 sessions</span></summary><div class="xb"><ul class="clean"><li><b>Outreach and communication working session,</b> ideally with alumni, including mock cold calling, which worked when run with LilPath.</li><li><b>Tech-focused session</b> on building for current needs rather than for scale an MVP doesn't have yet, ideally from each team's technical mentor.</li><li><b>GTM and user acquisition, moved earlier.</b> Building is now the easy part; distribution isn't.</li><li><b>Themed pitches</b> on a specific theme or on progress since the last one, rather than a generic full pitch each time.</li></ul></div></details>
+        <details class="x"><summary>Unplugged additions and fixes<span class="sm">6 changes</span></summary><div class="xb"><ul class="clean"><li><b>Standing deliverable template:</b> what we planned, did, were surprised by, changed, asked AI, and verified. This is the AI-use log.</li><li><b>Alumni session</b> on getting your first pitch or first client, B2B and B2C versions.</li><li><b>Outreach session</b> with four or five real examples.</li><li><b>Fix the hybrid format:</b> commit to a format that works remotely, or stop treating the online audience as participating.</li><li><b>Shorten alumni panels</b> or run them in person. Two hours online felt distant.</li><li><b>Speaker vetting for AI stance,</b> so the program doesn't contradict itself from its own stage.</li></ul></div></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec page" id="program.sequence" data-title="Learning sequence">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">Analog pedagogy</span><h2>Four stages, <em class="ai">in this order.</em></h2><p class="lead">Founders are producing more content than ever, but less of it reflects their own thinking. The goal is not to reject AI. It is to make sure founders build their own thinking before AI amplifies it.</p></div>
+      <ol class="steps row">
+        <li><div><b>Think in analog</b><span>Write, sketch, colour-code and map assumptions on paper, before any external help.</span></div></li>
+        <li><div><b>Think together</b><span>Present unfinished work to peers, take real questions, defend the reasoning out loud.</span></div></li>
+        <li class="ai"><div><b>Challenge with AI</b><span>Only after an original version exists. AI challenges assumptions, finds blind spots, plays devil's advocate.</span></div></li>
+        <li><div><b>Human synthesis</b><span>The founder makes the final call. The output stays human-authored.</span></div></li>
+      </ol>
+      <div class="sub">
+        <h3>The workflow by the end of the program</h3>
+        <div class="flow" aria-label="Target workflow"><span>Observe</span><i>→</i><span>Think</span><i>→</i><span>Sketch</span><i>→</i><span>Discuss</span><i>→</i><span>Build</span><i>→</i><span class="ai">Challenge with AI</span><i>→</i><span>Synthesize</span><i>→</i><span>Decide</span></div>
+        <div class="flow not mt18" aria-label="Workflow we move away from"><span>Prompt</span><i>→</i><span>Copy</span><i>→</i><span>Present</span></div>
+      </div>
+      <div class="sub twocol">
+        <div class="card ai"><span class="label">AI is</span><p>A challenger, a critic, a devil's advocate, a reviewer, a stress tester, a debate partner, a perspective generator.</p></div>
+        <div class="card"><span class="label">AI is not</span><p>The founder, the product manager, the storyteller, the strategist.</p></div>
+      </div>
+      <div class="sub">
+        <h3>Worked example: building the pitch</h3>
+        <p class="intro">Today, many founders ask AI to write the pitch first. The new sequence:</p>
+        <ol class="steps">
+          <li><div><b>Write the pitch yourself.</b></div></li>
+          <li><div><b>Present it.</b></div></li>
+          <li><div><b>Get feedback from other founders.</b></div></li>
+          <li><div><b>Improve it yourself.</b></div></li>
+          <li class="ai"><div><b>Use AI to critique it.</b></div></li>
+          <li class="ai"><div><b>Let AI challenge the narrative, find the weaknesses, ask the hard questions.</b></div></li>
+          <li><div><b>Rewrite the pitch yourself.</b></div></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec white" id="program.insertion" data-title="Insertion map">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">Curriculum insertion map</span><h2>Analog goes into blocks <em>that already exist.</em></h2></div>
+      <div class="tblw">
+        <table class="stack">
+          <thead><tr><th>Existing block</th><th>Current format</th><th>Analog intervention</th><th>Model</th></tr></thead>
+          <tbody>
+            <tr><td>Bootcamp 1, mock interviews and mentoring</td><td data-k="Current">Interviews conducted and logged digitally</td><td data-k="Intervention">Phones and laptops away, paper notes only, group affinity-mapping on a physical wall right after</td><td data-k="Model">Pen-vs-laptop research plus Reggio Emilia</td></tr>
+            <tr><td>Module 1, persona building</td><td data-k="Current">Persona docs, likely AI-assisted</td><td data-k="Intervention">Physical persona card filled by hand from real interview quotes before any doc exists</td><td data-k="Model">Montessori</td></tr>
+            <tr><td>Bootcamp 2, business models</td><td data-k="Current">Value-prop canvas, digital</td><td data-k="Intervention">Canvas filled in physically first, transcribed digitally only after</td><td data-k="Model">Montessori plus Design Sprint</td></tr>
+            <tr><td>Pitch workshop</td><td data-k="Current">Script likely AI-drafted from the start</td><td data-k="Intervention">Hand-written first draft, one core message per index card, before any slide or AI tool</td><td data-k="Model">Waldorf</td></tr>
+            <tr><td>Pitch Q&amp;A prep</td><td data-k="Current">Scripted, rehearsed answers</td><td data-k="Intervention">Live, unscripted Q&amp;A drilling with mentors, no notes allowed</td><td data-k="Model">Socratic seminar</td></tr>
+            <tr><td>Early ideation</td><td data-k="Current">Jumps straight to digital drafts</td><td data-k="Intervention">Individual paper sketching round, Crazy 8s style, before group digital work</td><td data-k="Model">Design Sprint</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec page" id="program.exercises" data-title="Analog exercises">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">Additional analog exercises</span><h2>Ten exercises <em>to pilot from.</em></h2><p class="lead">Which ones to pilot first, and in which bootcamp, is still to be decided.</p></div>
+      <div class="g2">
+        <div class="card"><span class="label">Bootcamp 1</span><h3>Competitor war wall</h3><p>Printed competitor one-pagers on a physical wall. Teams sort them into direct, indirect and ecosystem columns and keep a paper changelog of competitor moves.</p></div>
+        <div class="card"><span class="label">Any block</span><h3>Card-sort feature prioritization</h3><p>Each feature on its own index card, physically placed on an effort-versus-impact grid.</p></div>
+        <div class="card"><span class="label">Module 2</span><h3>Paper prototyping station</h3><p>First prototype on paper, not Figma. Testers tap the paper screens and a teammate swaps in the next screen by hand.</p></div>
+        <div class="card"><span class="label">Bootcamp 2</span><h3>Journey mapping on butcher paper</h3><p>A long paper roll on the wall, customer and user journeys drawn by hand, sticky notes for touchpoints and pain points, walked through standing up.</p></div>
+        <div class="card"><span class="label">Bootcamp 2</span><h3>Pivot decision card</h3><p>Validation evidence on index cards, sorted against the printed trigger and anti-trigger list with a mentor present. Forces a documented yes or no.</p></div>
+        <div class="card"><span class="label">Hardware</span><h3>Hardware makerspace hour</h3><p>Breadboards, cardboard and form-factor mockups, run by dedicated hardware mentors. Also a direct fix for the hardware-mentor gap.</p></div>
+        <div class="card"><span class="label">Any block</span><h3>Silent brainstorm before discussion</h3><p>Everyone writes alone first, posts to a wall, then the group discusses. Stops the loudest voice anchoring the room.</p></div>
+        <div class="card"><span class="label">Pitch</span><h3>Elevator pitch swap</h3><p>A one-line pitch on an index card, swapped with a stranger team who pitch it back live using only the card.</p></div>
+        <div class="card"><span class="label">Pitch</span><h3>Red-flag bell round</h3><p>Low-stakes pitch practice where anyone rings a bell on hearing an item from the red-flags list. Enforced by peers, not a mentor.</p></div>
+        <div class="card"><span class="label">Semifinals or Demo Day</span><h3>Analog round on stage</h3><p>At least one round with printed boards or physical props instead of slides, even if judges join remotely.</p></div>
+      </div>
+      <div class="panel mt40"><span class="kicker">The hidden curriculum</span><p class="quote" style="margin-top:10px">Founders whose thinking gets stronger because of AI, rather than weaker through dependence on it.</p><p style="margin-top:14px;max-width:72ch">By the end, founders should trust their own intuition, reason independently, tolerate uncertainty, build ideas from first principles, defend their arguments, improve through critique rather than generation, and use AI intentionally instead of reflexively.</p></div>
+    </div>
+  </section>
+
+  <section class="sec white" id="program.challenger" data-title="Challenger skills">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">Challenger skills</span><h2>Teach AI as an adversary, <em class="ai">not a co-author.</em></h2><p class="lead">The same four-stage sequence, applied: build it on paper, discuss with peers, pressure-test it against an AI challenger, then bring both to a mentor for the final synthesis.</p></div>
+      <div class="g3">
+        <div class="card ai"><span class="label">mom-test-interrogator</span><p>Flags Mom Test violations in interview questions or transcripts: leading questions, would-you-buy-this hypotheticals, praise-fishing.</p><div class="qs"><span>Is this question leading the witness?</span><span>Did I praise-fish instead of getting a real answer?</span></div></div>
+        <div class="card ai"><span class="label">red-team-my-pitch</span><p>Runs a pitch script against the existing red-flags list, as a first pass before a mentor sees it.</p><div class="qs"><span>Where does this pitch go vague on value?</span><span>Am I hiding behind buzzwords?</span></div><p class="note">Has the most source material and is likely the fastest first build.</p></div>
+        <div class="card ai"><span class="label">blind-spot-competitor-hunt</span><p>Searches for competitors a team didn't list, especially indirect and ecosystem ones.</p><div class="qs"><span>Who am I actually competing with?</span><span>What's the do-nothing threat I'm missing?</span></div></div>
+        <div class="card ai"><span class="label">assumption-stress-test</span><p>Separates falsifiable, tested hypotheses from vague padding, the kind the "10+ hypotheses" requirement invites.</p><div class="qs"><span>Which of these are restated opinions?</span><span>Is this testable as written?</span></div></div>
+        <div class="card ai"><span class="label">juror-simulator</span><p>Generates hard live follow-up questions from gaps in a pitch, for solo rehearsal or for mentors preparing Bootcamp 2.</p><div class="qs"><span>What's a juror going to hit me with?</span><span>What exposes the weakest part?</span></div></div>
+        <div class="card"><span class="label">How mentors plug in</span><p>Mentors co-author the rubric each skill enforces. One shared, mentor-authored standard is the actual fix for contradictory advice. Sign-up forms get a field for AI and tooling competency, used for routing, not as a requirement.</p></div>
+      </div>
+      <p class="note caution mt18"><b>Risk, named up front.</b> Founders can learn to satisfy the rubric mechanically instead of reflecting. Mitigate by keeping output as a discussion prompt for the mentor session, not a pass or fail gate, and by varying prompts.</p>
+    </div>
+  </section>
+
+  <section class="sec page" id="program.course" data-title="How AI Tricks You">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">Proposed course</span><h2>How AI <em class="ai">tricks you.</em></h2><p class="lead">A standalone workshop or a new block inside Module 1, built in the same format as the existing decks.</p></div>
+      <ol class="steps">
+        <li><div><b>How AI flatters you</b><span>Fluency bias: polished output reads as more competent than it is. Most pitch red flags are what AI-flattened writing looks like.</span></div></li>
+        <li><div><b>What you lose when you offload</b><span>Cognitive debt, the critical-thinking correlation and its age skew, the Google effect extended from facts to reasoning.</span></div></li>
+        <li><div><b>How AI fails silently, here</b><span>Fabricated competitors and synthetic interviews, idea homogenization, AI as an invisible third mentor.</span></div></li>
+        <li class="ai"><div><b>Context engineering, the actual skill</b><span>Context poisoning, distraction, confusion and clash. Context clash is the mentor-contradiction problem applied to a machine. The Generator, Reflector, Curator loop: build, critique, refine.</span></div></li>
+        <li class="ai"><div><b>Practical exercise</b><span>Founders red-team their own real deliverable live with the challenger skills, mentor-supervised. Output is a discussion prompt, not a grade.</span></div></li>
+      </ol>
+      <p class="note mt18"><b>Deliverable:</b> an AI-use log per team, a plain statement of what was AI-assisted versus self-generated, which also operationalises the integrity rule.</p>
+    </div>
+  </section>
+
+  <section class="sec white" id="program.risks" data-title="AI risks">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">AI risks worth watching</span><h2>Five ways AI <em>fails quietly.</em></h2></div>
+      <div class="g3">
+        <div class="card"><span class="chip issue">Risk</span><h3 class="mt18">Fabricated research</h3><p>AI will produce a plausible competitor list or a synthetic interview that never happened. Needs a blunt integrity rule: transcripts traceable to a real person, competitor claims sourced.</p></div>
+        <div class="card"><span class="chip issue">Risk</span><h3 class="mt18">Fluency bias</h3><p>AI-polished output reads as more competent than it is. Mentors and jurors risk scoring polish over substance.</p></div>
+        <div class="card"><span class="chip issue">Risk</span><h3 class="mt18">Idea homogenization</h3><p>Similar models with similar framing push teams toward convergent business models and pitch language.</p></div>
+        <div class="card"><span class="chip issue">Risk</span><h3 class="mt18">AI as a silent extra mentor</h3><p>A third, invisible voice added to the contradictory-advice problem, from a source nobody can see or moderate.</p></div>
+        <div class="card"><span class="chip issue">Risk</span><h3 class="mt18">Data leakage and GDPR</h3><p>Interview transcripts contain personal data. Pasting them into consumer AI tools is a compliance problem for an EU-based program. Needs a plain data-handling rule.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= PEOPLE ================= -->
+<main class="view" data-view="people" hidden>
+  <div class="band"><div class="wrap">
+    <div class="crumbs"><a href="#home">Hub</a> / People</div>
+    <span class="kicker">Mentors and coaches</span>
+    <h1>A real team <em>around every startup.</em></h1>
+    <p class="lead">In 2026 the coach layer scaled. The mentor layer shrank and didn't get the same structural treatment. 2027 fixes the matching, the standard and the follow-through.</p>
+  </div></div>
+  <nav class="secnav" aria-label="On this page"><div class="wrap"></div><div class="prog"></div></nav>
+
+  <section class="sec page" id="people.landed" data-title="Where 2026 landed">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">Where 2026 landed</span><h2>Coaches doubled. <em>Mentors fell 21%.</em></h2><p class="lead">Half of the 18 coaches were IL alumni. The mentor drop is attributed to reduced engagement in Iasi and Timisoara after local NGO partnerships ended.</p></div>
+      <div class="split">
+        <div class="chart">
+          <h4>Mentors per edition</h4>
+          <p style="font-size:13.2px">Down from a 2025 peak of 280; 2027 is an estimate.</p>
+          <svg id="chart-mentors" viewBox="0 0 520 250" role="img" aria-label="Mentors: 2023 170, 2024 260, 2025 280, 2026 221, 2027 estimated 200"></svg>
+          <span class="meta">Community and mentor numbers · 2027 estimated</span>
+        </div>
+        <div class="g2">
+          <div class="card stat"><div class="n num">18</div><p>Coaches in 2026, up from 9. Half were IL alumni.</p></div>
+          <div class="card stat"><div class="n num">2,200</div><p>Hours donated by mentors, roughly.</p></div>
+          <div class="card stat"><div class="n num">1,280+</div><p>Mentorship hours delivered outside partner-company mentoring.</p></div>
+          <div class="card stat"><div class="n num">55%</div><p>Mentor retention: people who came to more than one event.</p></div>
+        </div>
+      </div>
+      <p class="note mt18"><b>Also from the retro:</b> 144 companies were present, and 29% of people wore more than one hat (mentor then juror, coach then mentor). Teams outside Bucharest were paired with local coaches where possible: 5 in Cluj, 2 in Iasi.</p>
+    </div>
+  </section>
+
+  <section class="sec white" id="people.problems" data-title="The problems">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">The problems</span><h2>Six reasons feedback <em>turned into noise.</em></h2></div>
+      <div class="g3">
+        <div class="card"><h3>Weak matching</h3><p>Mentors aren't matched well to teams, so some feedback is just noise.</p></div>
+        <div class="card"><h3>Missing context</h3><p>Some mentors lack the context and communication skills to be useful to a team.</p></div>
+        <div class="card"><h3>A corporate skew</h3><p>Fewer mentors have actually built a startup. More founders are needed in the room.</p></div>
+        <div class="card"><h3>Domain gaps</h3><p>Science, neurodivergence and agriculture need dedicated mentors with real experience.</p></div>
+        <div class="card"><h3>Unreviewed deliverables</h3><p>Deliverables aren't consistently evaluated or fed back on.</p></div>
+        <div class="card"><h3>Quiet teams</h3><p>Teams don't post enough, particularly those admitted on team or industry potential rather than idea strength.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec page" id="people.structure" data-title="New structure">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">New for 2027</span><h2>Hands-on mentors, <em>in small pods.</em></h2></div>
+      <div class="g3">
+        <div class="card"><span class="chip new">New</span><h3 class="mt18">Hands-on mentors, 2 to 3 per team</h3><p>One business and one tech, with one mentor across multiple teams. Addresses the tech-side gap that's been a struggle for two years.</p></div>
+        <div class="card"><span class="chip new">New</span><h3 class="mt18">PODS</h3><p>3 to 5 teams, one facilitator (core team or a trusted coach), 2 to 3 mentors, held for the whole program. 45 minutes to an hour weekly.</p></div>
+        <div class="card"><span class="chip new">New</span><h3 class="mt18">A vetted mentor core</h3><p>Admitted after a 30-minute conversation with the core team. Hands-on mentors evaluate deliverables, not just advise.</p></div>
+      </div>
+      <div class="sub">
+        <details class="x"><summary>More structure<span class="sm">6 mechanisms</span></summary><div class="xb"><ul class="clean">
+          <li><b>Mentor supply mapping:</b> extract the industry and business-or-tech split from the last two years, so 2027 knows which industries it can serve before promising them.</li>
+          <li><b>Kickoff meeting</b> for hands-on mentors and coaches before Bootcamp 1, framed as exclusive, doubling as networking.</li>
+          <li><b>A control mechanism for mismatch,</b> so a bad pairing is fixable rather than endured.</li>
+          <li><b>Mentors register interest</b> in a specific team during the Hackathon, before selection is final.</li>
+          <li><b>Hands-on alumni, if validated:</b> find relevant alumni per team, make a warm intro, see whether anything happens naturally.</li>
+          <li><b>For unusual teams,</b> start looking for the right mentor at the Hackathon, not after they're in.</li>
+        </ul></div></details>
+        <details class="x"><summary>Accountability loop<span class="sm">Weekly</span></summary><div class="xb"><ul class="clean"><li>Weekly coach checkpoint plus a form: what they did, discovered, changed, and what's next. The core team sees the form.</li><li>A weekly public status check in front of the other teams, which doubles as team bonding.</li><li>The coach journal, promoted more actively than in 2026.</li><li>A best-practice sharing loop between coaches.</li></ul></div></details>
+        <details class="x"><summary>Mentor tooling<span class="sm">Shared standard</span></summary><div class="xb"><ul class="clean"><li><b>Teach mentors to evaluate LLM output,</b> so feedback on AI-assisted work is consistent rather than personal.</li><li><b>High-level check prompts</b> mentors can run as a triage pass before reading closely.</li><li><b>A common slide guideline,</b> suggested by a participant after contradictory slide advice across two Pitch Prep sessions.</li></ul></div></details>
+        <details class="x"><summary>Supporting mechanisms<span class="sm">Matching and workshops</span></summary><div class="xb"><ul class="clean"><li><b>Mock interview matching:</b> teams describe who they need, the request goes to the IL community, every team gets at least one guaranteed interview. Prototyped at the recruitment bootcamp.</li><li><b>Match IL community members to teams</b> by description, industry or department.</li><li><b>A workshop on getting the most out of mentoring,</b> plus structured rather than free-form sessions.</li></ul></div></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec white" id="people.coachability" data-title="Coachability">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">Arrogance and low coachability</span><h2>A disposition issue <em>needs a different fix.</em></h2><p class="lead">Arrogance and entitlement show up as resistance to feedback specifically.</p></div>
+      <div class="panel"><span class="chip dec" style="background:#fff;border-color:#fff;color:#016462">Decision</span><h3 class="mt18">Keep the brutal feedback format. Add private 1:1 coaching alongside it.</h3><p style="max-width:72ch">Public, unsoftened group feedback stays for skill correction and culture. Private coaching sits next to it for the interpersonal and self-awareness work a public format can't do. Both, not a swap.</p><p class="note" style="background:rgba(255,255,255,.1);color:#fff"><b style="color:#fff">Depends on cohort size.</b> Private coaching only turns on once the cohort drops to about 25.</p></div>
+      <div class="g2 mt26">
+        <div class="card"><h3>Make coachability a selection criterion</h3><p>Arrogance and openness to feedback are visible early, at the hackathon and validation-bootcamp stage, if anyone is explicitly looking.</p></div>
+        <div class="card"><h3>Reuse the live mechanisms</h3><p>Socratic Q&amp;A, the red-flag bell round and unscripted pitch defense expose overconfidence faster and more credibly than a mentor saying so.</p></div>
+        <div class="card"><h3>Name it in culture-setting moments</h3><p>Bootcamp 2 opens with a "brutal honest feedback, ownership, no BS" framing. Make coachability an explicit stated value there.</p></div>
+        <div class="card"><h3>Approach it from the side</h3><p>Teams that can judge quality in someone else's work, through the mentee orientation and deliverable ranking, are better at hearing judgment of their own.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= COHORT ================= -->
+<main class="view" data-view="cohort" hidden>
+  <div class="band"><div class="wrap">
+    <div class="crumbs"><a href="#home">Hub</a> / Cohort and calendar</div>
+    <span class="kicker">Funnel, cohort, calendar, KPIs</span>
+    <h1>Fewer teams. <em>More attention for each.</em></h1>
+    <p class="lead">How the funnel moved, why the cohort is cut after Bootcamp 2 plus a week, what happens when in 2027, and what we measure.</p>
+  </div></div>
+  <nav class="secnav" aria-label="On this page"><div class="wrap"></div><div class="prog"></div></nav>
+
+  <section class="sec page" id="cohort.funnel" data-title="Team funnel">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">Team funnel</span><h2>Half the intake produced <em>the same number of finalists.</em></h2><p class="lead">Pre-registration grew 55%, driven by recruiting events going from 20 to 31 nationally and by the new AI Validation Bootcamp format.</p></div>
+      <div class="split">
+        <div class="chart">
+          <h4>Program intake versus Demo Day</h4>
+          <svg id="chart-funnel" viewBox="0 0 520 270" role="img" aria-label="Teams accepted into the program: 2025 80, 2026 41, 2027 estimated 40. Teams at Demo Day: 2025 17, 2026 17, 2027 estimated 12."></svg>
+          <div class="legend"><span><i style="background:var(--viz-1)"></i>Accepted into the program</span><span><i style="background:var(--viz-2)"></i>At Demo Day</span><span><i style="border:1.5px dashed var(--line-control)"></i>2027 estimate</span></div>
+          <span class="meta" style="display:block;margin-top:10px">Team funnel table · 2027 estimated</span>
+        </div>
+        <div>
+          <div class="g2">
+            <div class="card stat"><div class="n num">221</div><p>Teams applied in 2026, from 16 cities. 57% advanced within the Hackathon.</p></div>
+            <div class="card stat"><div class="n num">26<small>/ 15</small></div><p>Of the 41 program teams, Bucharest versus other cities.</p></div>
+          </div>
+          <details class="x mt18"><summary>The full funnel table<span class="sm">2025 · 2026 · 2027 est.</span></summary><div class="xb" style="padding:0 8px 8px">
+            <div class="tblw"><table>
+              <thead><tr><th>Indicator</th><th class="r">2025</th><th class="r">2026</th><th class="r">Change</th><th class="r est">2027 est.</th></tr></thead>
+              <tbody>
+                <tr><td>Teams pre-registered</td><td class="r">77</td><td class="r">119</td><td class="r">+55%</td><td class="r est">120</td></tr>
+                <tr><td>Individuals pre-registered</td><td class="r">20</td><td class="r">75</td><td class="r">+275%</td><td class="r est">75</td></tr>
+                <tr><td>Participants registered for Hackathons</td><td class="r">782</td><td class="r">638</td><td class="r">−18%</td><td class="r est">630</td></tr>
+                <tr><td>Teams registered for Hackathons</td><td class="r">262</td><td class="r">221</td><td class="r">−16%</td><td class="r est">220</td></tr>
+                <tr><td>Teams accepted, Hackathon phase 1</td><td class="r">228</td><td class="r">127</td><td class="r">−44%</td><td class="r est">100</td></tr>
+                <tr><td>Teams advancing, Hackathon phase 2</td><td class="r">148</td><td class="r">84</td><td class="r">−43%</td><td class="r est">80</td></tr>
+                <tr><td>Teams accepted into the program</td><td class="r">80</td><td class="r">41</td><td class="r">−49%</td><td class="r est">40</td></tr>
+                <tr><td>Teams reaching Semifinals</td><td class="r">42</td><td class="r">34</td><td class="r">−19%</td><td class="r est">25</td></tr>
+                <tr><td>Teams at Demo Day</td><td class="r">17</td><td class="r">17</td><td class="r">0%</td><td class="r est">12</td></tr>
+              </tbody>
+            </table></div>
+          </div></details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec white" id="cohort.sizing" data-title="Cohort sizing">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">Cohort sizing</span><h2>Cut after Bootcamp 2 <em>plus one week.</em></h2><p class="lead">Of the 41 teams in 2026, the read is that only around 25 were worth the program's full resources. The current structure spreads mentor time across all of them equally.</p></div>
+      <div class="split">
+        <div>
+          <h3 style="font-size:19.4px;margin-bottom:10px">Why the buffer week</h3>
+          <p class="prose">Cutting at the closing bell of Bootcamp 2 judges teams before they act on the feedback they just got. Teams said one week between bootcamps wasn't enough, especially when feedback was contradictory and they needed a day or two to agree on a direction. The buffer means the cut measures whether a team applied feedback.</p>
+          <p class="note caution"><b>Check before it becomes policy.</b> The roughly 16 teams that didn't clear the bar are said to skew non-Bucharest, but there were only 15 non-Bucharest teams out of 41. Test the claim against per-team evaluation data and the travel-burden confound. The argument for a smaller cohort doesn't need it.</p>
+        </div>
+        <div>
+          <h3 style="font-size:19.4px;margin-bottom:10px">The cut is not the only exit</h3>
+          <ol class="steps">
+            <li><div><b>Checkpoint two weeks after the Hackathon</b><span>For teams admitted on potential. If the startup still shows nothing, they drop or merge into another team.</span></div></li>
+            <li><div><b>Ongoing deliverable evaluation</b><span>Low quality two weeks running means out.</span></div></li>
+            <li><div><b>At-risk shortlist after Bootcamp 2</b><span>Expectations stated explicitly. The cut lands a week later.</span></div></li>
+          </ol>
+          <p class="note"><b>Same caveat as everywhere:</b> both continuous mechanisms need separate B2C, B2B, software and hardware criteria, or the rubric that underserved hardware teams will also cut them.</p>
+        </div>
+      </div>
+      <div class="g3 mt40">
+        <div class="card"><h3>Makes private coaching feasible</h3><p>Splitting mentor and coaching hours across 25 teams instead of 41 is a real increase in attention per team.</p></div>
+        <div class="card"><h3>Needs real criteria, not vibes</h3><p>Bootcamp 1 already produces comparable artifacts per team: interview evidence, hypothesis rigor, competitor research depth.</p></div>
+        <div class="card"><h3>Mentor access isn't the gap</h3><p>Non-Bucharest teams get the same mentors. The known gap is travel burden; check whether it drags down their output.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec page" id="cohort.calendar" data-title="Calendar">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">Program calendar</span><h2>What happens <em>when.</em></h2><p class="lead">The 2027 calendar is a proposal, pending university calendars. Dashed markers are estimates.</p></div>
+      <div class="segctl" role="group" aria-label="Calendar year"><button id="cal-27" aria-pressed="true">2027 proposed</button><button id="cal-26" aria-pressed="false">2026 delivered</button></div>
+      <ul class="tl" id="tl-27">
+        <li><span class="when">Oct 2026 – Feb 2027</span><span class="dot"></span><div class="what"><b>Pre-recruitment,</b> community buildup, partner alignment.</div></li>
+        <li><span class="when">24–25 Oct 2026</span><span class="dot"></span><div class="what"><b>Mini-Hackathon in Bucharest</b> with the student union SiSC (Cibernetică, Statistică și Informatică Economică).</div></li>
+        <li><span class="when">Nov 2026</span><span class="dot"></span><div class="what"><b>AI Validation Bootcamp</b> in Bucharest with LSAC.</div></li>
+        <li class="est"><span class="when">About 20–21 Mar</span><span class="dot"></span><div class="what"><b>National Hackathon,</b> Bucharest. Dates estimated.</div></li>
+        <li class="est"><span class="when">Mar – Apr</span><span class="dot"></span><div class="what"><b>Two-day bootcamps.</b> One week after the second, teams are evaluated and the cohort is cut.</div></li>
+        <li class="est"><span class="when">Mar – May</span><span class="dot"></span><div class="what"><b>Training program:</b> workshops, Unplugged Talks, 1:1 sessions, special workshops.</div></li>
+        <li class="est"><span class="when">End of Apr</span><span class="dot"></span><div class="what"><b>Boost days and Mentor cafés.</b> Teams are evaluated.</div></li>
+        <li class="est"><span class="when">Mid May</span><span class="dot"></span><div class="what"><b>Demo Day national semifinals.</b> Teams are evaluated.</div></li>
+        <li class="est"><span class="when">About 24 May</span><span class="dot"></span><div class="what"><b>Startup Fair and Demo Day final.</b> Dates estimated.</div></li>
+        <li class="est"><span class="when">From June</span><span class="dot"></span><div class="what"><b>Alumni community,</b> additional support, and <a href="#beyond">IL Beyond</a>.</div></li>
+      </ul>
+      <ul class="tl" id="tl-26" hidden>
+        <li><span class="when">Oct 2025 – Feb 2026</span><span class="dot"></span><div class="what"><b>Pre-recruitment,</b> community buildup, partner alignment.</div></li>
+        <li><span class="when">Nov 2025</span><span class="dot"></span><div class="what"><b>AI Validation Bootcamp</b> piloted in Bucharest with LSAC.</div></li>
+        <li><span class="when">Early Mar 2026</span><span class="dot"></span><div class="what"><b>Bootcamp replicated</b> in Iasi (twice), Cluj and Timisoara, with SAS societies, Cluj Startups and Tech Lounge.</div></li>
+        <li><span class="when">21–22 Mar</span><span class="dot"></span><div class="what"><b>National Hackathon,</b> Bucharest, at ETTI. Orientation the first Monday after.</div></li>
+        <li><span class="when">28–29 Mar</span><span class="dot"></span><div class="what"><b>Bootcamp 1,</b> hosted by eMAG, half the cohort per day. Office Hours online after.</div></li>
+        <li><span class="when">4–5 Apr</span><span class="dot"></span><div class="what"><b>Bootcamp 2,</b> hosted by Orange Romania.</div></li>
+        <li><span class="when">8–9 Apr</span><span class="dot"></span><div class="what"><b>Online mentoring sessions.</b></div></li>
+        <li><span class="when">22–23 Apr</span><span class="dot"></span><div class="what"><b>Pitching workshop.</b></div></li>
+        <li><span class="when">28–29 Apr</span><span class="dot"></span><div class="what"><b>Boost Day at Adobe,</b> the first eliminatory event. Written mentor feedback on pitches, new this year.</div></li>
+        <li><span class="when">13 May</span><span class="dot"></span><div class="what"><b>National Demo Day Semifinals,</b> online, 34 teams.</div></li>
+        <li><span class="when">25 May</span><span class="dot"></span><div class="what"><b>Startups Fair</b> (27 teams) and <b>Demo Day Grand Finale</b> (17 competing), Opera Nationala Bucuresti, 450+ invitees.</div></li>
+      </ul>
+      <p class="note"><b>2026 context.</b> Unplugged Talks ran weekly on Tuesdays throughout. Regional centers (Cluj-Napoca, Iasi, Sibiu, Timisoara) became Regional Hubs focused on pre-recruitment and talent scouting.</p>
+    </div>
+  </section>
+
+  <section class="sec white" id="cohort.recruitment" data-title="Recruitment">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">New for 2027</span><h2>Pre-program <em>and recruitment.</em></h2><p class="lead">For new candidate teams, and for teams from the last edition that pitched and engaged but didn't make the program.</p></div>
+      <div class="g2">
+        <div class="card"><span class="chip new">New</span><h3 class="mt18">iLabs.ro Academy</h3><p>Starts in October, in the app. An idea-validation journey: content, games, deliverables with mentor feedback, and 1:1 mentoring for active teams.</p></div>
+        <div class="card"><span class="chip new">New</span><h3 class="mt18">WhatsApp community</h3><p>Article sharing and guidance on first deliverables, for 2026 Hackathon participants and pre-registered teams.</p><p class="note caution"><b>Needs an owner.</b> Unowned since Gabriela left; to be named before the pre-program starts.</p></div>
+        <div class="card"><span class="chip new">New</span><h3 class="mt18">Industry deep dives</h3><p>An expert on the real challenges of an industry, then participants brainstorm and fast-validate ideas against it.</p></div>
+        <div class="card"><span class="chip new">New</span><h3 class="mt18">Idea selection support</h3><p>Surface unsexy industries that need automation and boring businesses that get a foot in the door. B2C for teams with a skillset or community; B2B where IL can supply enough business insight.</p></div>
+        <div class="card ai"><span class="chip new">Structure to be defined</span><h3 class="mt18">AI / B2C Recruitment Bootcamp</h3><p>Helps teams choose a problem and prototype with AI. An alternative worth testing: a critical-thinking-when-building-with-AI session, a low-stakes test of the program's AI stance. Also a live prototype for mentor assignment and mock-interview matching.</p></div>
+        <div class="card"><span class="chip new">New</span><h3 class="mt18">Hackathon team clustering</h3><p>The Lean Model Canvas deliverable is replaced by the problem statement plus competitive research. Teams cluster into four groups with their own two-week path:</p><ul class="clean mt18"><li>Any traction</li><li>High potential overall</li><li>High potential team, needs a pivot</li><li>High potential idea, needs people</li></ul></div>
+      </div>
+      <div class="g2 mt18">
+        <div class="card"><h3>Separate criteria by type</h3><p>B2C versus B2B, software versus hardware. A single rubric across all four is part of why hardware teams have been underserved.</p></div>
+        <div class="card"><h3>An alumni return path</h3><p>Three pipelines have no route into the next edition: teams that didn't make it, teams that want another run, and alumni who could return as coaches or mentors. Hackathon flagging covers the first; the other two need one.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec page" id="cohort.kpis" data-title="KPIs">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">KPI framework</span><h2>Carried forward, <em>plus what 2026 failed at.</em></h2></div>
+      <div class="card ai"><span class="chip new">New for 2027</span><h3 class="mt18">Deliverable quality and feedback delivery</h3><p>Nothing measured either in 2026. Candidates: the share of deliverables with mentor feedback returned within the deadline, and the share of teams whose deliverable quality improved between Bootcamp 1 and Bootcamp 2.</p></div>
+      <div class="g3 mt18">
+        <div class="card"><h3>Recruiting infrastructure</h3><p>Pre-Hackathon events, partner universities, ambassadors, student NGOs, and the qualified teams each brings.</p></div>
+        <div class="card"><h3>Team funnel</h3><p>As in the funnel table.</p></div>
+        <div class="card"><h3>After the program</h3><p>Teams with paying customers, teams receiving funding, teams still active at 3 and 6 months.</p></div>
+        <div class="card"><h3>Alumni</h3><p>Active reach, success stories, funding raised in the year and cumulatively, alumni companies giving back.</p></div>
+        <div class="card"><h3>Partnerships and community</h3><p>Sponsors, partner mentorship hours, challenges, credits, mentors, coaches, ecosystem events.</p></div>
+        <div class="card"><h3>Platform and press</h3><p>Engagement, journey completion, qualification after platform prep; press appearances and social reach.</p></div>
+      </div>
+      <div class="g4 mt26">
+        <div class="card stat"><div class="n num">43</div><p>Academic ambassadors, 2027 estimate (41 in 2026).</p></div>
+        <div class="card stat"><div class="n num">15</div><p>Junior ambassadors, 2027 estimate (11 in 2026).</p></div>
+        <div class="card stat"><div class="n num">25</div><p>Partner universities in 2026, up from 19 in 2023.</p></div>
+        <div class="card stat"><div class="n num">31</div><p>National recruiting events in 2026, up from 20.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= PARTNERS ================= -->
+<main class="view" data-view="partners" hidden>
+  <div class="band"><div class="wrap">
+    <div class="crumbs"><a href="#home">Hub</a> / Partners</div>
+    <span class="kicker">Partnerships</span>
+    <h1>Co-builders, <em>not logo sponsors.</em></h1>
+    <p class="lead">Innovation Labs is privately funded, so partnerships keep the program free for students and independent of public-sector agendas.</p>
+  </div></div>
+  <section class="sec page">
+    <div class="wrap">
+      <div class="split">
+        <div class="sechead" style="margin:0"><span class="kicker">What we look for</span><h2>Partners who add more than money, <em>and stay.</em></h2><p class="lead">Specialised mentor and decision-maker networks, anonymised data for teams to train models, cloud and hardware credits, and corporate client bases for B2B2B and B2B2C validation.</p></div>
+        <div class="g2">
+          <div class="card stat"><div class="n num">20</div><p>Partner companies in 2026.</p></div>
+          <div class="card stat"><div class="n num">12</div><p>Of them with us for four years or more.</p></div>
+        </div>
+      </div>
+      <p class="note mt18"><b>On the drop from the usual 25+:</b> a composition effect from winding down seven small regional partners, under 2 percent of fundraising. Not core attrition.</p>
+    </div>
+  </section>
+  <section class="sec white">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">What changes for 2027</span><h2>Four shifts.</h2></div>
+      <div class="g2">
+        <div class="card"><span class="chip new">New main partner</span><h3 class="mt18">PPC Romania and an Energy track</h3><p>Open Challenges co-defined from PPC's business-unit needs, piloted through a dedicated AI Validation Bootcamp in November. The template to replicate: a track, real challenges, and an early recruitment touchpoint.</p></div>
+        <div class="card"><span class="chip dec">Readiness-gated</span><h3 class="mt18">Open Challenges only when ready</h3><p>A challenge runs only when the partner brings an internal owner, usable data and a real budget, instead of promising widely and under-delivering.</p><p class="note"><b>Why:</b> 2026 ran zero Open Challenges.</p></div>
+        <div class="card"><span class="chip new">Always-on</span><h3 class="mt18">From event day to all year, through AILabsRO</h3><p>Year-round brand presence, branded scholarships, partner-led challenges and modules, and early access to a national talent pool.</p></div>
+        <div class="card"><span class="chip dec">Sustainability</span><h3 class="mt18">Centralised fundraising, multi-year anchors</h3><p>Fundraising stays centralised in Bucharest (regional is under 2 percent). Multi-year anchor commitments smooth CSR-cycle exposure; EU funds are selective supplements, not the backbone.</p></div>
+      </div>
+      <div class="btns"><a class="deeper" href="#beyond.egv">Go deeper · The EGV prize moves to IL Beyond</a></div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= IL BEYOND ================= -->
+<main class="view" data-view="beyond" hidden>
+  <div class="band"><div class="wrap">
+    <div class="crumbs"><a href="#home">Hub</a> / IL Beyond</div>
+    <span class="kicker">IL Beyond · New track</span>
+    <h1>Replace the cliff <em>with a slope.</em></h1>
+    <p class="lead">Reaching Demo Day was never the same as being fundable. IL Beyond takes the strongest teams from finalist to term sheet to money in the bank: Build, Sell, Raise.</p>
+  </div></div>
+  <nav class="secnav" aria-label="On this page"><div class="wrap"></div><div class="prog"></div></nav>
+
+  <section class="sec page" id="beyond.why" data-title="Why it exists">
+    <div class="wrap split">
+      <div class="sechead" style="margin:0"><span class="kicker">Why this exists</span><h2>Support stops <em>exactly when teams need it.</em></h2></div>
+      <div>
+        <ul class="clean">
+          <li>Many teams graduate with a good demo and a real story but aren't investable yet: no incorporation, no cap table, no repeatable sales motion, sometimes no stable founding team.</li>
+          <li>Most stop building the week the program ends, when the accountability structure disappears.</li>
+          <li>Many don't know the IL team is still willing to help, so the relationship goes quiet by default.</li>
+          <li>Even when help is available, many don't ask, assuming the door is closed or that asking means admitting they're stuck.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec white" id="beyond.objectives" data-title="Objectives">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">Objectives</span><h2>Measured in term sheets <em>and money that lands.</em></h2></div>
+      <div class="g2">
+        <div class="card stat"><div class="n num">≥2</div><p>Companies finish investment-ready for a EUR 300k to 500k pre-seed round, meaning they sign a term sheet.</p></div>
+        <div class="card stat"><div class="n num">≥1</div><p>Company reaches an actual investment process with EGV or another pre-seed institutional investor, meaning the money lands.</p></div>
+      </div>
+      <div class="sub">
+        <h3>The funnel, end to end</h3>
+        <p class="intro">Each decision about a team now carries forward instead of living in its own section.</p>
+        <ol class="steps">
+          <li><div><b>Hackathon</b><span>Teams cluster: any traction, high potential overall, high potential team (needs pivot), high potential idea (needs people).</span></div></li>
+          <li><div><b>Core program</b><span>Bootcamps 1 and 2 generate real artifacts per team: interview evidence, hypothesis rigor, competitor research depth, deliverable ranking, analog outputs.</span></div></li>
+          <li><div><b>The cut</b><span>After Bootcamp 2 plus a week, evaluated against those artifacts.</span></div></li>
+          <li><div><b>Demo Day or graduation</b><span>Or, for alumni from earlier years, however far they got.</span></div></li>
+          <li><div><b>IL Beyond</b><span>Open to this year's graduates and alumni from any past year. Selection reads the team's documentation rather than starting cold.</span></div></li>
+          <li class="ai"><div><b>S1 Build, S2 Sell, S3 Raise</b><span>Narrowing 6 to 3–4 to 2, ending in an actual investment.</span></div></li>
+        </ol>
+        <p class="note"><b>Team documentation.</b> Every artifact across the funnel is one running record per team. Not a new system: a naming and ownership decision, so what already lives in Notion, Drive and coach notes is tagged consistently.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec page" id="beyond.stages" data-title="Three stages">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">Three stages</span><h2>Build. Sell. <em>Raise.</em></h2></div>
+      <div class="g3">
+        <div class="card"><span class="label">S1 · July to September · 6 teams</span><h3>Build</h3><p>PMF and a defined technical moat. The IL MVP becomes a product real external users interact with.</p></div>
+        <div class="card"><span class="label">S2 · October to December · 3–4 teams</span><h3>Sell</h3><p>Sales and investment readiness, including incorporation. One or two teams should exit with a term sheet.</p></div>
+        <div class="card"><span class="label">S3 · January to February · 2 teams</span><h3>Raise</h3><p>From term sheet to money in the bank, with angels and VCs brought in as co-investors.</p></div>
+      </div>
+      <div class="sub">
+        <details class="x"><summary>Stage 1: Build, in detail<span class="sm">Outcome, deliverables, measures</span></summary><div class="xb">
+          <p><b>Outcome:</b> active users, customers or design partners with real external usage; clear ICP and use case; major technical assumptions tested; an identified moat and credible roadmap; the core team intact and committed; clear evidence the team shipped materially over the summer.</p>
+          <p><b>Losing a co-founder mid-stage</b> is not automatically disqualifying. The program adds support, such as co-founder matching or conflict mediation, rather than a penalty.</p>
+          <p><b>Deliverables</b> <span class="chip est">Drafted, to confirm</span></p>
+          <ul class="clean"><li>Updated pitch deck reflecting PMF evidence.</li><li>A one-page technical roadmap naming the moat and the 100x scaling risk.</li><li>A log of active users or customers with evidence: usage data, a signed pilot, testimonials.</li><li>A written core-team commitment on roles and full-time involvement.</li></ul>
+          <p><b>What we measure:</b> product milestones and real users; for software, iterations, integration and cybersecurity testing, benchmarks; for hardware, prototype maturity, reliability, BOM and COGS, manufacturing feasibility; execution velocity; B2B weekly users, activation and retention; B2C activation, D7 and D30 retention, repeat usage.</p>
+        </div></details>
+        <details class="x"><summary>Stage 2: Sell, in detail<span class="sm">Incorporate and sign</span></summary><div class="xb">
+          <p><b>Outcome:</b> incorporate the startup and sign commercial contracts while preparing for investment.</p>
+          <p><b>Deliverables</b> <span class="chip est">Drafted, to confirm</span></p>
+          <ul class="clean"><li>Incorporation documents, founder agreement, clean cap table.</li><li>At least one signed contract, LOI or purchase order.</li><li>A completed investor deck and a draft data room.</li><li>A financial model with key assumptions validated.</li></ul>
+          <p><b>Commercial evidence by type.</b> B2B SaaS and DevTools: paying customers, paid pilots, recurring revenue. Enterprise and deep tech: paid PoC, signed pilot, design partnership with a procurement path. Consumer: transactions, retention, willingness to pay. Hardware: paid prototype or pilot, purchase order, credible manufacturing and unit economics.</p>
+          <p><b>By November:</b> a mature deck, a draft data room, a clear round size and use of funds tied to milestones.</p>
+        </div></details>
+        <details class="x"><summary>Stage 3: Raise, in detail<span class="sm">Term sheet to cash</span></summary><div class="xb">
+          <p><b>Outcome:</b> investment signed, money in the bank. Reserved for teams already holding a term sheet.</p>
+          <p>Angels and VCs need to put money in at this stage. The EUR 20,000 angel bridge is IL's own contribution to help a team cross from term sheet to cash, alongside third-party investment, not instead of it.</p>
+          <ul class="clean"><li>EGV leads or co-leads where relevant, with a defined process for bringing in co-investors.</li><li>Angels and pre-seed VCs invited by sector and check-size fit.</li><li>A 48-hour warm intro window after any pitch or investor meeting.</li><li>Angels get access before the round is fully priced or oversubscribed.</li><li>Teams pitch at existing investor meetups such as Tech Angels and Bravva rather than only an IL-owned room.</li></ul>
+          <p class="note caution"><b>Next step:</b> validate this model directly with a handful of EGV's co-investors and independent angels in the Romanian ecosystem before building it out further.</p>
+        </div></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec white" id="beyond.egv" data-title="EGV prize">
+    <div class="wrap split">
+      <div class="sechead" style="margin:0"><span class="kicker">The EGV Investment Prize</span><h2>Moves from Demo Day <em>to the end of Raise.</em></h2></div>
+      <div>
+        <p class="prose"><b style="color:var(--ink)">Why.</b> A EUR 500,000 ticket offered on Demo Day night goes to a team that is usually not incorporated, has no repeatable sales motion, and cannot yet absorb it. That mismatch produced the prize not being awarded on stage in 2026.</p>
+        <p class="prose mt18"><b style="color:var(--ink)">What changes.</b> EGV's capital is deployed at the end of Stage 3, into a team with a signed term sheet, alongside IL's own EUR 20,000 angel bridge. EGV stays embedded through mentors, speakers, jury, the monthly founder dinner and co-defining the investment-ready bar.</p>
+        <p class="prose mt18"><b style="color:var(--ink)">What Demo Day keeps.</b> The recognition awards: Grand Prize, Best Emerging Start-up, Best Product, Public Vote. Demo Day stays the celebration and the doorway into IL Beyond.</p>
+        <p class="note caution"><b>Requires EGV's agreement</b> to reposition the prize, and clear communication to teams that the path to EGV capital now runs through IL Beyond.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec page" id="beyond.ready" data-title="Investment ready">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">Investment ready, defined</span><h2>Commercially, technically, <em>organisationally.</em></h2></div>
+      <div class="g3">
+        <div class="card"><span class="label">Commercially</span><ul class="clean"><li>Real users, design partners or customers.</li><li>Commercial validation fit to the business model.</li><li>A credible route to a scalable business, evidenced by a validated adoption channel or a small acquisition experiment.</li></ul><p class="note">The scalability bar should be calibrated against how EGV and partner VCs judge it in practice; at pre-seed even VCs mostly eyeball it.</p></div>
+        <div class="card"><span class="label">Tech</span><ul class="clean"><li>A functioning product or technically validated prototype.</li><li>Credible technical differentiation.</li><li>A plan to scale: what breaks at 100x.</li></ul></div>
+        <div class="card"><span class="label">Organisation</span><ul class="clean"><li>A stable, committed founding team.</li><li>An incorporated company with a clean equity structure.</li><li>IP owned by the company.</li><li>A clear use of the EUR 300k to 500k round.</li><li>An investment deck and a minimal data room.</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec white" id="beyond.selection" data-title="Selection and support">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">Selection for Stage 1</span><h2>Who gets in, <em>and what they get.</em></h2><p class="lead">Not limited to the current graduating cohort. A team from 2023 or 2024 still building and showing real progress is a legitimate candidate.</p></div>
+      <div class="split">
+        <div>
+          <ul class="clean">
+            <li>At least 2 full-time founders.</li>
+            <li>At least 1 technical founder capable of building the core technology.</li>
+            <li>Meaningful know-how, data advantage, IP, engineering complexity or defensible architecture.</li>
+            <li>Venture-scale potential and a reason why 300k to 500k would accelerate the company.</li>
+            <li>Coachability and motivation, reassessed fresh at this stage rather than carried over from the core program.</li>
+          </ul>
+          <p class="note"><b>Process:</b> a 1-hour interview plus a 1-hour coaching and feedback session with the core team and selected jury members, so selection gives something back. Homework and a follow-on interview are possible. <b>Second phase:</b> are founders shipping, selling, learning and deciding quickly; is traction getting stronger.</p>
+        </div>
+        <div>
+          <div class="card"><span class="label">What Innovation Labs provides</span><ul class="clean"><li>Direct team funding.</li><li>Accountability through periodic check-ups.</li><li>One dedicated coach plus help on demand.</li><li>Templates, an incorporation checklist, vetted providers.</li><li>Customer and investor introductions where possible.</li><li>Technical reviews.</li><li>Networking beyond the monthly founder dinner.</li></ul></div>
+          <details class="x mt18"><summary>Tracking cadence and the lead coach<span class="sm">Weekly to monthly</span></summary><div class="xb">
+            <ul class="clean"><li><b>Weekly:</b> an email from founders: committed, happened, key KPI, biggest learning, biggest blocker, next commitment.</li><li><b>Every 2 weeks:</b> a 30-minute check-in with the lead coach.</li><li><b>Monthly:</b> a board-meeting-like 1-hour review, and a founder dinner with the core team, lead coaches, teams and possibly EGV.</li></ul>
+            <p><b>Verification, not just trust:</b> load-bearing KPIs need evidence such as screenshots, analytics exports or signed documents.</p>
+            <p><b>The lead coach</b> follows the company for the whole accelerator and sits at a more senior level than a core-program coach, with real judgment on incorporation, cap tables and investor dynamics.</p>
+            <p class="note caution"><b>Still open:</b> whether the lead coach gets a percentage, for example an option inside the IL vehicle; owners for the tech and product reviews; whether IL pushes teams toward YC, Techstars or Seedcamp.</p>
+          </div></details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec page" id="beyond.budget" data-title="Budget">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">Budget</span><h2>Up to EUR 38,800 <em>per team.</em></h2></div>
+      <div class="g3">
+        <div class="card stat"><div class="n num">€8,400</div><p>S1 per team: EUR 2,000 a month stipend plus EUR 800 a month for operations.</p></div>
+        <div class="card stat"><div class="n num">€10,400</div><p>S2 per team: EUR 3,000 a month stipend, EUR 1,200 a month operations, EUR 2,000 legal and accounting set-up.</p></div>
+        <div class="card stat"><div class="n num">€20,000</div><p>S3 per team: angel investment, a bridge toward the EGV investment.</p></div>
+      </div>
+      <div class="sub">
+        <h3>Two funnel scenarios</h3>
+        <div class="tblw mt18"><table>
+          <thead><tr><th>Line</th><th class="r">6 → 4 → 2</th><th class="r">4 → 2 → 2</th></tr></thead>
+          <tbody>
+            <tr><td>Budget for teams</td><td class="r">€92,000</td><td class="r">€54,400</td></tr>
+            <tr><td>Coaches</td><td class="r">€10,400</td><td class="r">€6,400</td></tr>
+            <tr><td>Tech reviews</td><td class="r">€9,000</td><td class="r">€6,000</td></tr>
+            <tr><td>Product reviews</td><td class="r">€9,000</td><td class="r">€6,000</td></tr>
+            <tr><td>Legal</td><td class="r">€5,000</td><td class="r">€5,000</td></tr>
+            <tr><td>Indirect and management</td><td class="r">€25,080</td><td class="r">€15,560</td></tr>
+            <tr class="tot"><td>Total</td><td class="r">€150,480</td><td class="r">€93,360</td></tr>
+            <tr><td>Direct from angels</td><td class="r">€40,000</td><td class="r">€40,000</td></tr>
+            <tr class="tot"><td>Total with angels</td><td class="r">€190,480</td><td class="r">€133,360</td></tr>
+          </tbody>
+        </table></div>
+        <p class="note">Full breakdown and editable version in the budget sheet referenced by the master notes.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec white" id="beyond.kpis" data-title="KPIs and tools">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">Program-level KPIs</span><h2>One north star.</h2></div>
+      <div class="panel"><span class="kicker">North star</span><p class="quote" style="margin-top:10px">The percentage of accelerator companies that raise institutional or angel pre-seed capital, or reach equivalent self-sustaining commercial traction, within 12 months.</p></div>
+      <details class="x mt18"><summary>Supporting KPIs<span class="sm">Early draft</span></summary><div class="xb"><p>Progression between stages; share incorporated, with active external users, with commercial validation, with paid customers or pilots; investor-ready companies; companies entering fundraising and receiving term sheets; capital raised at 3, 6 and 12 months; survival at 12 months; founder satisfaction (secondary); customer or investor assessment of quality; acceptances into strong external accelerators; follow-on valuation, tracked much later.</p><p class="note">The list is an early draft and needs a second pass before it is final.</p></div></details>
+      <div class="sub">
+        <h3>Challenger skills, extended</h3>
+        <p class="intro">An investor deck and a real fundraise are the same category of high-stakes document the challenger skills were built to pressure-test.</p>
+        <div class="g4">
+          <div class="card ai"><span class="label">red-team-my-pitch</span><p>Runs against the investor deck the same way. No changes needed.</p></div>
+          <div class="card ai"><span class="label">juror-simulator</span><p>Becomes an investor Q&amp;A rehearsal, pointed at a real fundraise.</p></div>
+          <div class="card ai"><span class="label">data-room-auditor · new</span><p>Unsupported claims, missing source documents, numbers that differ between deck and model.</p></div>
+          <div class="card ai"><span class="label">cap-table-sanity-check · new</span><p>Equity that doesn't reflect contribution, missing IP assignment, unclear vesting.</p></div>
+        </div>
+        <p class="note mt18"><b>AI-use log for investment documents.</b> Added to Stage 2 and 3 deliverables, applied to every number and claim in the deck and data room before either goes out. Rubrics are checked against a standard EGV and IL's senior mentors agree on.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec page" id="beyond.research" data-title="Other programs">
+    <div class="wrap">
+      <div class="sechead"><span class="kicker">Research</span><h2>How other programs <em>handle this.</em></h2></div>
+      <div class="g2">
+        <div class="card"><span class="label">Closest direct comparison</span><h3>Techstars [22]</h3><p>A three-month cohort ending in Demo Day, with a defined USD 220,000 investment and lifetime access to the mentor and alumni network. Alumni average a first post-program raise above USD 1M.</p></div>
+        <div class="card"><span class="label">Closest in stated purpose</span><h3>EIC Pre-Accelerator [23]</h3><p>Raises deep-tech readiness for larger EIC or national funding, with a lump-sum grant (EUR 300k to 500k in 2025, rising to EUR 500k to 1M in 2027) plus coaching and pitching bootcamps.</p></div>
+        <div class="card"><span class="label">Aimed at this exact gap</span><h3>Mountside Ventures [24]</h3><p>Free investor-readiness programmes for pre-seed and seed companies raising in 3 to 12 months: templates, investor updates, a data room checklist, deck guidance.</p></div>
+        <div class="card"><span class="label">Closest on size and coaching</span><h3>Alchemist Accelerator [25]</h3><p>Six months for B2B and enterprise startups, about USD 25,000 to 30,000 for about 5 percent, capped near 25 teams, every founder paired with an experienced coach.</p></div>
+      </div>
+      <div class="g3 mt26">
+        <div class="card"><h3>Go where investors already are</h3><p>Romania has few active pre-seed investors, so the constraint is reaching them at all. Syncing with Tech Angels and Bravva beats assembling a new room.</p></div>
+        <div class="card"><h3>The 48-hour window</h3><p>One demo-day playbook finds investor attention converts best within 48 hours of a pitch, with follow-up rates dropping sharply after.</p></div>
+        <div class="card"><h3>Early angel access</h3><p>The best access happens before a round is public. Warm intros and commitments before an event avoid a bidding war and signal confidence.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div style="display:grid;gap:14px">
+      <a class="logo" href="#home" aria-label="Innovation Labs 2027" data-logo></a>
+      <p>Source: Innovation Labs 2027 Revamp Master Notes, including IL Beyond. Figures marked estimated are 2027 plans. Purple marks AI as challenger and what is new for 2027.</p>
+    </div>
+    <nav aria-label="Footer" id="footnav"></nav>
+  </div>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title"></div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var PAGES=[
+    {id:'home',t:'Hub'},{id:'map',t:'Map'},{id:'findings',t:'Findings'},{id:'evidence',t:'Evidence'},
+    {id:'program',t:'Program'},{id:'people',t:'People'},{id:'cohort',t:'Cohort'},{id:'partners',t:'Partners'},{id:'beyond',t:'IL Beyond'}
+  ];
+  var STOPS=[
+    {t:'What we heard',sub:'2026 cohort findings',go:'findings',gl:'The findings',lead:'A program that is fundamentally sound, with seven structural gaps to close.',pts:['Gaps: hardware teams underserved, contradictory mentor advice, compressed bootcamps, travel burden, online semifinals, unreviewed deliverables, a failing hybrid format.','What worked: community and networking, Bootcamp 1 and the Pitch Prep Workshop, pre-recorded theory, Unplugged Talks at company offices.','Coachability: some teams were hard to coach, and most don\'t know how to analyse feedback.']},
+    {t:'The bet',sub:'Think first, AI as challenger',go:'evidence',gl:'The evidence',ai:1,lead:'AI offloading has a measurable cost, it lands harder on younger users, and the antidote is doing your own thinking first.',pts:['MIT Media Lab (2025), Gerlich (2025), the Google effect and practitioner work on context engineering.','Analog-first rests on mechanism and precedent: handwriting research, embodied cognition, the Design Sprint and the Socratic seminar.','A reasoned bet, not a proof. It is settled on our own teams between Bootcamp 1 and Bootcamp 2.']},
+    {t:'The curriculum',sub:'2026 base, 2027 additions',go:'program.curriculum',gl:'The curriculum',lead:'Theory stays pre-recorded; in-person time goes to feedback. 2027 adds Orientation, an AI literacy track and a pivot session.',pts:['Back to Fundamentals moves before Bootcamp 2, where it still changes something.','Bootcamp 1 gains an AI literacy and curation track and a customer discovery track.','Bootcamp 2 gets stated expectations in advance and a dedicated pivot session.']},
+    {t:'Analog pedagogy',sub:'Four stages, in order',go:'program.sequence',gl:'The learning sequence',lead:'Human cognition first, AI amplification second.',pts:['Think in analog, think together, challenge with AI, human synthesis.','Interventions slot into six existing blocks rather than adding new time.','Ten analog exercises to pilot from, from the competitor war wall to the red-flag bell round.']},
+    {t:'Challenger skills',sub:'AI as adversary',go:'program.challenger',gl:'Challenger skills',ai:1,lead:'Teach founders to use AI as an adversary, not a co-author.',pts:['Five skills: mom-test-interrogator, red-team-my-pitch, blind-spot-competitor-hunt, assumption-stress-test, juror-simulator.','A proposed course, How AI Tricks You, ending in an AI-use log per team.','An AI-risk register: fabricated research, fluency bias, idea homogenization, a silent extra mentor, GDPR.']},
+    {t:'Mentors and coaches',sub:'A real team per startup',go:'people',gl:'Mentors and coaches',lead:'The coach layer scaled in 2026. The mentor layer now gets the same structural treatment.',pts:['2 to 3 hands-on mentors per team, one business and one tech, in PODS of 3 to 5 teams.','One shared, mentor-authored rubric as the fix for contradictory advice.','Brutal public feedback stays, with private 1:1 coaching alongside it.']},
+    {t:'The cohort',sub:'Cut after Bootcamp 2 + 1 week',go:'cohort.sizing',gl:'Cohort sizing',lead:'Half the intake produced the same number of finalists. 2027 concentrates resources on fewer teams.',pts:['Intake fell from 80 to 41 teams; Demo Day fielded 17 both years.','The cut lands a week after Bootcamp 2, so it measures whether teams applied feedback.','Earlier exits: a two-week checkpoint and ongoing deliverable evaluation.']},
+    {t:'Calendar and KPIs',sub:'What happens when',go:'cohort.calendar',gl:'The calendar',lead:'From the mini-Hackathon in October 2026 to Demo Day at the end of May 2027.',pts:['24–25 October 2026: mini-Hackathon with SiSC. November: AI Validation Bootcamp with LSAC.','About 20–21 March: national Hackathon. About 24 May: Startup Fair and Demo Day final.','New KPI: deliverable quality and feedback delivery.']},
+    {t:'Partnerships',sub:'Co-builders, not logos',go:'partners',gl:'Partnerships',lead:'Partners who add non-financial value and commit for the long run.',pts:['PPC Romania joins as a main partner with an Energy track.','Open Challenges run only when a partner is ready: an owner, usable data, a real budget.','Year-round presence through AILabsRO.']},
+    {t:'IL Beyond',sub:'Build, Sell, Raise',go:'beyond',gl:'IL Beyond',lead:'A track from finalist to fundable, ending in an actual investment.',pts:['S1 Build (6 teams), S2 Sell (3–4), S3 Raise (2), July to February.','The EGV Investment Prize moves from Demo Day to the end of Raise.','Up to EUR 38,800 per team, including a EUR 20,000 angel bridge.']}
+  ];
+  var REFS=[
+    ['1','Innovation Labs Official: TikTok, Instagram, Facebook. Linktree.','https://linktr.ee/InnovationLabs'],
+    ['2','N. Kosmyna et al., Your Brain on ChatGPT: Accumulation of Cognitive Debt when Using an AI Assistant for Essay Writing Task. arXiv:2506.08872.','https://doi.org/10.48550/arXiv.2506.08872'],
+    ['3','M. Gerlich, AI Tools in Society: Impacts on Cognitive Offloading and the Future of Critical Thinking. Societies 15(1), 2025.','https://doi.org/10.3390/soc15010006'],
+    ['4','B. Sparrow, J. Liu, D. M. Wegner, Google Effects on Memory. Science 333(6043), 2011.','https://doi.org/10.1126/science.1207745'],
+    ['5','D. Breunig, How Long Contexts Fail.','https://www.dbreunig.com/2025/06/22/how-contexts-fail-and-how-to-fix-them.html'],
+    ['6','D. Breunig, How to Fix Your Context.','https://www.dbreunig.com/2025/06/26/how-to-fix-your-context.html'],
+    ['7','V. Šmatera, Jonathan Haidt: The Anxious Generation. Politol. Časopis, 2025.','https://doi.org/10.5817/PC2024-3-300'],
+    ['8','C. Pele, Sweden brings more books and handwriting practice back to its tech-heavy schools. AP News.','https://apnews.com/article/sweden-digital-education-backlash-reading-writing-1dd964c628f76361c43dbf3964f7dbf4'],
+    ['9','T. Poulain et al., Performance on an attention test is positively related to reading but negatively related to watching TV and playing video games in children. BMC Pediatr. 25, 2025.','https://doi.org/10.1186/s12887-025-06260-w'],
+    ['10','M. Campbell et al., Evidence for and against banning mobile phones in schools: A scoping review. J. Psychol. Couns. Sch. 34(3), 2024.','https://doi.org/10.1177/20556365241270394'],
+    ['11','P. A. Mueller, D. M. Oppenheimer, The Pen Is Mightier Than the Keyboard. Psychol. Sci. 25(6), 2014.','https://doi.org/10.1177/0956797614524581'],
+    ['12','K. Morehead, J. Dunlosky, K. A. Rawson, How Much Mightier Is the Pen than the Keyboard for Note-Taking? Educ. Psychol. Rev. 31(3), 2019.','https://doi.org/10.1007/s10648-019-09468-2'],
+    ['13','K. H. James, L. Engelhardt, The effects of handwriting experience on functional brain development in pre-literate children. Trends Neurosci. Educ. 1(1), 2012.','https://doi.org/10.1016/j.tine.2012.08.001'],
+    ['14','From Concrete to Abstract: The Montessori Approach to Math and Science.','https://www.applebeemontessori.com/from-concrete-to-abstract-the-montessori-approach-to-math-and-science'],
+    ['15','E. V. Laski et al., What Makes Mathematics Manipulatives Effective? Sage Open 5(2), 2015.','https://doi.org/10.1177/2158244015589588'],
+    ['16','A School For The Future. Waldorf School of the Peninsula.','https://www.waldorfpeninsula.org/technology'],
+    ['17','M. Richtel, A Silicon Valley School That Doesn\'t Compute. The New York Times, 2011.','https://www.nytimes.com/2011/10/23/technology/at-waldorf-school-in-silicon-valley-technology-can-wait.html'],
+    ['18','Children and Place: Reggio Emilia\'s Environment As Third Teacher. Theory Pract.','https://www.tandfonline.com/doi/abs/10.1080/00405840709336547'],
+    ['19','The Design Sprint. GV.','https://www.gv.com/sprint'],
+    ['20','Using Socratic Seminars to Foster Critical Conversations. Street Law.','https://streetlaw.org/using-socratic-seminars-to-foster-critical-conversations/'],
+    ['21','Edutopia.','https://www.edutopia.org'],
+    ['22','Startup Accelerator Programs and Funding. Techstars.','https://www.techstars.com/accelerators'],
+    ['23','EIC Pre-Accelerator. European Innovation Council.','https://eic.ec.europa.eu/eic-funding-opportunities/eic-pre-accelerator_en'],
+    ['24','Free Pre-Seed and Seed Accelerator Programme. Mountside Ventures.','https://mountsideventures.com/accelerator'],
+    ['25','Alchemist Accelerator.','https://www.alchemistaccelerator.com']
+  ];
+  var esc=function(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')};
+
+  /* logo */
+  var logo=$('logo-tpl').innerHTML;
+  document.querySelectorAll('[data-logo]').forEach(function(a){a.innerHTML=logo});
+
+  /* nav */
+  var navHtml=PAGES.map(function(p){return '<a href="#'+p.id+'" data-page="'+p.id+'">'+p.t+'</a>'}).join('');
+  $('navlinks').innerHTML=navHtml;$('menupanel').innerHTML=navHtml;$('footnav').innerHTML=navHtml;
+  $('menubtn').addEventListener('click',function(){var o=$('menupanel').classList.toggle('open');this.setAttribute('aria-expanded',o)});
+  $('menupanel').addEventListener('click',function(e){if(e.target.closest('a')){$('menupanel').classList.remove('open');$('menubtn').setAttribute('aria-expanded','false')}});
+
+  /* theme */
+  function setTheme(t){
+    document.documentElement.setAttribute('data-il',t);
+    $('th-light').setAttribute('aria-pressed',t==='light');$('th-night').setAttribute('aria-pressed',t==='night');
+    var tb=$('th-toggle');tb.textContent=t==='night'?'Light':'Night';tb.setAttribute('aria-label','Switch to '+(t==='night'?'Light':'Night')+' theme');
+    try{localStorage.setItem('il-theme',t)}catch(e){}
+  }
+  $('th-toggle').onclick=function(){setTheme(document.documentElement.getAttribute('data-il')==='night'?'light':'night')};
+  $('th-light').onclick=function(){setTheme('light')};$('th-night').onclick=function(){setTheme('night')};
+  var saved='light';try{saved=localStorage.getItem('il-theme')||'light'}catch(e){}
+  setTheme(saved==='night'?'night':'light');
+
+  /* home cards */
+  var CARDS=[
+    ['map','Map','The whole revamp as one route, ten stops.','deep'],
+    ['findings','Findings','What the 2026 cohort told us: seven gaps, six things that worked.',''],
+    ['evidence','Evidence','The research behind analog-first, with its limits stated.','ai'],
+    ['program','Program','Curriculum, analog exercises, challenger skills and AI risks.','ai'],
+    ['people','People','Hands-on mentors, PODS, coaching and coachability.',''],
+    ['cohort','Cohort and calendar','The funnel, the cut, the 2027 calendar and KPIs.','deep'],
+    ['partners','Partners','Co-builders, the Energy track and readiness-gated challenges.',''],
+    ['beyond','IL Beyond','Build, Sell, Raise: from finalist to fundable.','deep']
+  ];
+  $('homecards').innerHTML=CARDS.map(function(c){return '<a class="linkcard '+c[3]+'" href="#'+c[0]+'"><span class="label">'+(c[0]==='map'?'Start here':'Page')+'</span><h3>'+c[1]+'</h3><p>'+c[2]+'</p><span class="go">Open '+c[1].toLowerCase()+' →</span></a>'}).join('');
+
+  /* refs */
+  $('refs').innerHTML=REFS.map(function(r){return '<li><span>['+r[0]+']</span><span>'+esc(r[1])+' <a href="'+r[2]+'" target="_blank" rel="noopener">'+esc(r[2].replace(/^https?:\/\//,''))+'</a></span></li>'}).join('');
+
+  /* ---------- route geometry ---------- */
+  var W=1100,N=STOPS.length,X0=80,X1=1020;
+  var P=STOPS.map(function(s,i){var x=X0+i*(X1-X0)/(N-1);var y=235+48*Math.sin(i/(N-1)*Math.PI*2.6-0.4);return [x,y]});
+  function seg(i){ // bezier from P[i] to P[i+1], Catmull-Rom
+    var p0=P[Math.max(i-1,0)],p1=P[i],p2=P[i+1],p3=P[Math.min(i+2,N-1)],k=1/6;
+    var c1=[p1[0]+(p2[0]-p0[0])*k,p1[1]+(p2[1]-p0[1])*k],c2=[p2[0]-(p3[0]-p1[0])*k,p2[1]-(p3[1]-p1[1])*k];
+    return 'C'+c1[0].toFixed(1)+' '+c1[1].toFixed(1)+' '+c2[0].toFixed(1)+' '+c2[1].toFixed(1)+' '+p2[0].toFixed(1)+' '+p2[1].toFixed(1);
+  }
+  function pathFrom(a,b){if(b<=a)return '';var d='M'+P[a][0].toFixed(1)+' '+P[a][1].toFixed(1);for(var i=a;i<b;i++)d+=seg(i);return d}
+  var BAND_UP=150,BAND_DN=320;
+  var lead0=['M',-40,P[0][1]+30,'Q',20,P[0][1]+20,P[0][0],P[0][1]].join(' ');
+  var tail=['M',P[N-1][0],P[N-1][1],'Q',1070,P[N-1][1]-10,1140,P[N-1][1]-26].join(' ');
+
+  function drawRoute(svg,sel,mini){
+    var r=mini?24:20,fs=mini?24:17;
+    var h='';
+    if(!mini){
+      h+='<path class="contour" d="M-20 70 C 250 20, 520 120, 820 60 S 1100 40 1140 90"/>';
+      h+='<path class="contour" d="M-20 430 C 260 390, 560 460, 860 400 S 1080 420 1140 380"/>';
+    }
+    if(!mini)P.forEach(function(p,i){var up=i%2===0;h+='<line class="stem" x1="'+p[0]+'" x2="'+p[0]+'" y1="'+(up?BAND_UP:BAND_DN)+'" y2="'+p[1]+'"/>'});
+    var all=sel<0;
+    h+='<path class="route-ahead" d="'+lead0+'"/><path class="route-ahead" d="'+pathFrom(0,N-1)+'"/><path class="route-ahead" d="'+tail+'"/>';
+    h+='<path class="route-solid" d="'+lead0+'"/>';
+    if(all)h+='<path class="route-solid" d="'+pathFrom(0,N-1)+'"/><path class="route-solid" d="'+tail+'"/>';
+    else if(sel>0)h+='<path class="route-solid" d="'+pathFrom(0,sel)+'"/>';
+    P.forEach(function(p,i){
+      var cls='stop'+(i===0?' first':'')+(i===sel?' cur':'')+(!all&&i>sel?' ahead':'');
+      h+='<g class="'+cls+(mini?' mm-stop':'')+'" data-i="'+i+'" tabindex="0" role="button" aria-label="Stop '+(i+1)+': '+esc(STOPS[i].t)+'"'+(i===sel?' aria-current="step"':'')+'>'+
+         '<circle class="halo" cx="'+p[0]+'" cy="'+p[1]+'" r="'+(r+14)+'"/>'+
+         '<circle class="disc" cx="'+p[0]+'" cy="'+p[1]+'" r="'+r+'"/>'+
+         '<text class="n" x="'+p[0]+'" y="'+(p[1]+1)+'" style="font-size:'+fs+'px">'+(i+1)+'</text></g>';
+    });
+    svg.innerHTML=h;
+  }
+
+  /* mini map */
+  var mm=$('minimap-svg');
+  drawRoute(mm,-1,true);
+  $('minimap-list').innerHTML=STOPS.map(function(s,i){return '<li><b>'+(i+1)+'</b><span>'+esc(s.t)+'</span></li>'}).join('');
+  function mmGo(e){var g=e.target.closest('.stop');if(!g)return;if(e.type==='keydown'&&e.key!=='Enter'&&e.key!==' ')return;e.preventDefault();location.hash='map.'+(+g.dataset.i+1)}
+  mm.addEventListener('click',mmGo);mm.addEventListener('keydown',mmGo);
+
+  /* full map */
+  var sel=0;
+  function labels(){
+    var st=$('mapstage');st.querySelectorAll('.mlabel').forEach(function(n){n.remove()});
+    P.forEach(function(p,i){
+      var up=(i%2===0);
+      var b=document.createElement('button');
+      b.className='mlabel'+(up?' up':'')+(i===sel?' cur':'');
+      b.dataset.i=i;
+      b.style.left=(p[0]/W*100)+'%';
+      b.style.top=((up?BAND_UP:BAND_DN)/470*100)+'%';
+      b.innerHTML='<b>'+esc(STOPS[i].t)+'</b><span>'+esc(STOPS[i].sub)+'</span>';
+      b.addEventListener('click',function(){select(i)});
+      st.appendChild(b);
+    });
+  }
+  function detailHtml(i){
+    var s=STOPS[i];
+    return '<div><span class="kicker">Stop '+(i+1)+' of '+N+'</span><h3>'+esc(s.t)+'</h3><p style="font-size:16px">'+esc(s.lead)+'</p>'+
+      '<div class="ctrl"><button class="btn secondary" data-step="-1" '+(i===0?'disabled':'')+'>← Previous</button><button class="btn secondary" data-step="1" '+(i===N-1?'disabled':'')+'>Next →</button></div></div>'+
+      '<div><ul class="clean">'+s.pts.map(function(t){return '<li>'+esc(t)+'</li>'}).join('')+'</ul><div class="btns" style="margin-top:20px"><a class="deeper" href="#'+s.go+'">Go deeper · '+esc(s.gl)+'</a></div></div>';
+  }
+  function renderMap(){
+    drawRoute($('map-svg'),sel,false);labels();
+    $('mapdetail').innerHTML=detailHtml(sel);
+    $('vroute').innerHTML=STOPS.map(function(s,i){return '<li class="'+(i===sel?'cur':'')+'"><span class="vn">'+(i+1)+'</span><button data-i="'+i+'"><b>'+esc(s.t)+'</b><span>'+esc(s.sub)+'</span></button></li>'}).join('');
+  }
+  function select(i){sel=Math.max(0,Math.min(N-1,i));renderMap();}
+  var msvg=$('map-svg');
+  function mapEv(e){var g=e.target.closest('.stop');if(!g)return;if(e.type==='keydown'&&e.key!=='Enter'&&e.key!==' ')return;e.preventDefault();select(+g.dataset.i);var f=msvg.querySelector('.stop[data-i="'+sel+'"]');if(f&&e.type==='keydown')f.focus()}
+  msvg.addEventListener('click',mapEv);msvg.addEventListener('keydown',mapEv);
+  $('mapdetail').addEventListener('click',function(e){var b=e.target.closest('[data-step]');if(b)select(sel+(+b.dataset.step))});
+  $('vroute').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;select(+b.dataset.i);openSheet(sel)});
+
+  /* sheet */
+  var lastFocus=null;
+  function openSheet(i){
+    var s=STOPS[i];lastFocus=document.activeElement;
+    $('sheet').innerHTML='<div class="grab"></div><span class="kicker">Stop '+(i+1)+' of '+N+'</span><h3 id="sheet-title">'+esc(s.t)+'</h3><p>'+esc(s.lead)+'</p><ul class="clean mt18">'+s.pts.map(function(t){return '<li>'+esc(t)+'</li>'}).join('')+'</ul>'+
+      '<div class="row"><a class="btn primary" href="#'+s.go+'">Go deeper · '+esc(s.gl)+'</a><button class="btn secondary" id="sheet-close">Close</button></div>'+
+      '<div class="row"><button class="btn secondary" data-sstep="-1" '+(i===0?'disabled':'')+'>← Previous</button><button class="btn secondary" data-sstep="1" '+(i===N-1?'disabled':'')+'>Next →</button></div>';
+    $('sheet').classList.add('open');$('scrim').classList.add('open');
+    setTimeout(function(){var c=$('sheet-close');if(c)c.focus()},50);
+  }
+  function closeSheet(){$('sheet').classList.remove('open');$('scrim').classList.remove('open');if(lastFocus&&lastFocus.focus)lastFocus.focus()}
+  $('scrim').addEventListener('click',closeSheet);
+  $('sheet').addEventListener('click',function(e){
+    if(e.target.id==='sheet-close')return closeSheet();
+    var b=e.target.closest('[data-sstep]');if(b){select(sel+(+b.dataset.sstep));openSheet(sel);return}
+    if(e.target.closest('a'))closeSheet();
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&$('sheet').classList.contains('open'))closeSheet()});
+
+  /* charts */
+  function css(v){return 'var(--'+v+')'}
+  (function funnel(){
+    var d=[['2025',80,17,0],['2026',41,17,0],['2027 est.',40,12,1]],max=90,h=190,base=225,svg=$('chart-funnel'),o='';
+    [0,20,40,60,80].forEach(function(v){var y=base-v/max*h;o+='<line x1="40" x2="510" y1="'+y+'" y2="'+y+'" stroke="'+css('viz-grid')+'" stroke-width="1"/><text class="ta" x="30" y="'+(y+4)+'" text-anchor="end">'+v+'</text>'});
+    d.forEach(function(r,i){
+      var gx=70+i*150,bw=52;
+      [[r[1],'viz-1'],[r[2],'viz-2']].forEach(function(b,j){
+        var x=gx+j*(bw+8),bh=b[0]/max*h,y=base-bh,est=r[3];
+        var path='M'+x+' '+base+'V'+(y+8)+'Q'+x+' '+y+' '+(x+8)+' '+y+'H'+(x+bw-8)+'Q'+(x+bw)+' '+y+' '+(x+bw)+' '+(y+8)+'V'+base+'Z';
+        o+='<path d="'+path+'" fill="'+(est?'var(--surface)':css(b[1]))+'" '+(est?'stroke="'+css(b[1])+'" stroke-width="2" stroke-dasharray="5 4"':'')+'/>';
+        o+='<text class="tv" x="'+(x+bw/2)+'" y="'+(y-8)+'" text-anchor="middle">'+(est?'~':'')+b[0]+'</text>';
+      });
+      o+='<text class="t" x="'+(gx+bw+4)+'" y="'+(base+24)+'" text-anchor="middle">'+r[0]+'</text>';
+    });
+    svg.innerHTML=o;
+  })();
+  (function mentors(){
+    var d=[['2023',170],['2024',260],['2025',280],['2026',221],['2027 est.',200,1]],max=300,h=170,base=205,svg=$('chart-mentors'),o='';
+    [0,100,200,300].forEach(function(v){var y=base-v/max*h;o+='<line x1="40" x2="510" y1="'+y+'" y2="'+y+'" stroke="'+css('viz-grid')+'" stroke-width="1"/><text class="ta" x="30" y="'+(y+4)+'" text-anchor="end">'+v+'</text>'});
+    d.forEach(function(r,i){
+      var bw=58,x=62+i*92,bh=r[1]/max*h,y=base-bh,est=r[2],focus=r[0]==='2026';
+      var path='M'+x+' '+base+'V'+(y+8)+'Q'+x+' '+y+' '+(x+8)+' '+y+'H'+(x+bw-8)+'Q'+(x+bw)+' '+y+' '+(x+bw)+' '+(y+8)+'V'+base+'Z';
+      var fill=est?'var(--surface)':(focus?css('viz-1'):css('viz-context'));
+      o+='<path d="'+path+'" fill="'+fill+'" '+(est?'stroke="'+css('viz-1')+'" stroke-width="2" stroke-dasharray="5 4"':'')+'/>';
+      o+='<text class="tv" x="'+(x+bw/2)+'" y="'+(y-8)+'" text-anchor="middle">'+(est?'~':'')+r[1]+'</text>';
+      o+='<text class="t" x="'+(x+bw/2)+'" y="'+(base+22)+'" text-anchor="middle">'+r[0]+'</text>';
+    });
+    svg.innerHTML=o;
+  })();
+
+  /* calendar toggle */
+  $('cal-27').onclick=function(){$('tl-27').hidden=false;$('tl-26').hidden=true;this.setAttribute('aria-pressed','true');$('cal-26').setAttribute('aria-pressed','false')};
+  $('cal-26').onclick=function(){$('tl-26').hidden=false;$('tl-27').hidden=true;this.setAttribute('aria-pressed','true');$('cal-27').setAttribute('aria-pressed','false')};
+
+  /* section chips */
+  document.querySelectorAll('main.view').forEach(function(v){
+    var nav=v.querySelector('.secnav .wrap');if(!nav)return;
+    nav.innerHTML=[].map.call(v.querySelectorAll('section[data-title]'),function(s){return '<a href="#'+s.id+'">'+s.dataset.title+'</a>'}).join('');
+  });
+
+  /* routing */
+  var current=null;
+  function route(){
+    var h=(location.hash||'#home').slice(1),parts=h.split('.'),page=parts[0];
+    if(!PAGES.some(function(p){return p.id===page}))page='home';
+    if(page!==current){
+      document.querySelectorAll('main.view').forEach(function(v){v.hidden=v.dataset.view!==page});
+      document.querySelectorAll('[data-page]').forEach(function(a){if(a.dataset.page===page)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+      current=page;
+      document.title=(page==='home'?'IL 2027 Strategy Hub':PAGES.filter(function(p){return p.id===page})[0].t+' · IL 2027 Strategy Hub');
+    }
+    if(page==='map'){var n=parseInt(parts[1],10);select(isNaN(n)?sel:n-1);window.scrollTo(0,0);return}
+    if(parts.length>1){var el=document.getElementById(h);if(el){requestAnimationFrame(function(){el.scrollIntoView({block:'start'})});return}}
+    window.scrollTo(0,0);
+    onScroll();
+  }
+  window.addEventListener('hashchange',route);
+
+  /* scroll spy + progress */
+  function onScroll(){
+    var v=document.querySelector('main.view:not([hidden])');if(!v)return;
+    var nav=v.querySelector('.secnav');if(!nav)return;
+    var secs=v.querySelectorAll('section[data-title]'),off=150,cur=null;
+    secs.forEach(function(s){if(s.getBoundingClientRect().top<off)cur=s.id});
+    nav.querySelectorAll('a').forEach(function(a){
+      var on=a.getAttribute('href')==='#'+cur;a.classList.toggle('on',on);
+      if(on&&a.dataset.on!=='1'){a.dataset.on='1';var w=nav.querySelector('.wrap');w.scrollTo({left:a.offsetLeft-w.clientWidth/2+a.clientWidth/2,behavior:'smooth'})}
+      if(!on)a.dataset.on='';
+    });
+    var r=v.getBoundingClientRect(),tot=v.offsetHeight-innerHeight,p=tot>0?Math.min(1,Math.max(0,-r.top/tot)):0;
+    var bar=nav.querySelector('.prog');if(bar)bar.style.width=(secs.length>6?p*100:0)+'%';
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+
+  renderMap();
+  route();
+})();
+</script>
+
+</body></html>

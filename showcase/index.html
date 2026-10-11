@@ -1,0 +1,802 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>ilabsro-design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600;700&family=Caveat:wght@700&display=swap">
+<style>
+/* Layout: IL website contract. Sticky teal nav → gradient hero with the plugin model → alternating flat sections, one job each → ink footer. Light default, Night via toggle. */
+:root{
+  --lilac:#E8D2F5;--route:#0095AC;
+  --teal:#0095AC;--teal-deep:#016462;--teal-ink:#016462;
+  --purple:#954BBC;--purple-ink:#6B2E8C;--purple-tint:#FBF6FE;
+  --surface-page:#F2F6F7;--surface:#FFFFFF;--surface-tint:#EAF7F7;--surface-ink:#10201F;
+  --ink:#10201F;--ink-muted:#3C5052;--ink-subtle:#4A5E60;
+  --on-brand:#FFFFFF;--on-action:#FFFFFF;
+  --line:#AFC0C3;--line-soft:#D3DEE0;--line-control:#6F8689;
+  --action:#016462;--action-soft:rgba(0,149,172,.12);
+  --focus-ring:#954BBC;
+  --caution:#9A4F00;--caution-soft:#FFF6EA;
+  --hero-a:#0095AC;--hero-b:#016462;
+  --shadow-hover:0 10px 26px rgba(16,32,31,.14);
+  --shadow-nav:0 2px 14px rgba(16,32,31,.25);
+  --shadow-raised:0 12px 34px rgba(16,32,31,.16);
+
+  --f-display:'Poppins',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
+  --f-hand:'Caveat','Segoe Print','Bradley Hand',cursive;
+
+  --s4:4px;--s8:8px;--s12:12px;--s16:16px;--s18:18px;--s22:22px;--s26:26px;--s40:40px;--s48:48px;--s64:64px;--s88:88px;
+  --r-sm:8px;--r-md:10px;--r-row:12px;--r-lg:16px;--r-panel:18px;--r-xl:22px;--r-pill:999px;
+  --content-max:1120px;--nav-h:64px;
+  color-scheme:light;
+}
+:root[data-theme="night"],:root[data-theme="dark"]{
+  --teal:#2BC4DB;--teal-ink:#2BC4DB;
+  --purple:#C48BEA;--purple-ink:#C48BEA;--purple-tint:#2B1A3A;
+  --surface-page:#031E1E;--surface:#0A3433;--surface-tint:#0F4442;--surface-ink:#001A1C;
+  --ink:#EAF6F6;--ink-muted:#9BBFC0;--ink-subtle:#7FA5A6;
+  --on-action:#02201F;
+  --line:#1C5654;--line-soft:#164B49;--line-control:#4A9896;
+  --action:#2BC4DB;--action-soft:rgba(43,196,219,.14);
+  --focus-ring:#C48BEA;
+  --caution:#F2B266;--caution-soft:#3A2A12;
+  --hero-a:#016462;--hero-b:#031E1E;
+  --shadow-hover:0 10px 26px rgba(0,0,0,.40);
+  --shadow-nav:0 2px 14px rgba(0,0,0,.45);
+  --shadow-raised:0 12px 34px rgba(0,0,0,.45);
+  color-scheme:dark;
+}
+/* fixed Night scope, used by the theme comparison tile and the deck preview */
+.night{
+  --teal:#2BC4DB;--teal-ink:#2BC4DB;--purple:#C48BEA;--purple-ink:#C48BEA;--purple-tint:#2B1A3A;
+  --surface-page:#031E1E;--surface:#0A3433;--surface-tint:#0F4442;
+  --ink:#EAF6F6;--ink-muted:#9BBFC0;--ink-subtle:#7FA5A6;--on-action:#02201F;
+  --line:#1C5654;--line-soft:#164B49;--line-control:#4A9896;--action:#2BC4DB;--action-soft:rgba(43,196,219,.14);
+}
+.lightscope{
+  --teal:#0095AC;--teal-ink:#016462;--purple:#954BBC;--purple-ink:#6B2E8C;--purple-tint:#FBF6FE;
+  --surface-page:#F2F6F7;--surface:#FFFFFF;--surface-tint:#EAF7F7;
+  --ink:#10201F;--ink-muted:#3C5052;--ink-subtle:#4A5E60;--on-action:#FFFFFF;
+  --line:#AFC0C3;--line-soft:#D3DEE0;--line-control:#6F8689;--action:#016462;--action-soft:rgba(0,149,172,.12);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 12px)}
+body{background:var(--surface-page);color:var(--ink);font-family:var(--f-display);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{margin:0;text-wrap:balance;color:var(--ink)}
+p{margin:0}
+a{color:var(--teal-ink)}
+:focus-visible{outline:3px solid var(--focus-ring);outline-offset:2px;border-radius:4px}
+.wrap{max-width:var(--content-max);margin:0 auto;padding-inline:var(--s40)}
+@media (max-width:620px){.wrap{padding-inline:var(--s22)}}
+
+.kicker{font-family:var(--f-mono);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-ink)}
+.meta{font-family:var(--f-mono);font-size:11px;font-weight:500;letter-spacing:.06em;color:var(--ink-subtle)}
+.lead{font-size:clamp(15.8px,1.6vw,19.4px);line-height:1.55;color:var(--ink-muted);max-width:62ch}
+.headline{font-size:clamp(28.2px,3.6vw,45.8px);line-height:1.08;letter-spacing:-.025em;font-weight:700}
+.headline em,.beat{font-style:normal;color:var(--teal-ink)}
+.note{font-size:12.3px;line-height:1.5;color:var(--ink-subtle)}
+code,.mono{font-family:var(--f-mono);font-size:.88em}
+
+/* ---------- nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:linear-gradient(115deg,var(--hero-a),var(--hero-b));box-shadow:var(--shadow-nav)}
+.nav .wrap{height:var(--nav-h);display:flex;align-items:center;gap:var(--s18)}
+.nav .logo{height:24px;flex:none;display:block}
+.nav .links{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0;justify-content:flex-end}
+.nav .links::-webkit-scrollbar{display:none}
+.nav .links a{flex:none;color:#fff;text-decoration:none;font-size:13.2px;font-weight:600;padding:7px 12px;border-radius:var(--r-pill);white-space:nowrap;transition:background .2s}
+.nav .links a:hover{background:rgba(255,255,255,.14)}
+.nav .links a.on{background:#fff;color:#016462}
+.seg{display:inline-flex;background:rgba(255,255,255,.14);border-radius:var(--r-pill);padding:3px;flex:none}
+.seg button{all:unset;cursor:pointer;font-size:12px;font-weight:600;color:#fff;padding:5px 11px;border-radius:var(--r-pill);min-height:24px;display:inline-flex;align-items:center}
+.seg button[aria-pressed="true"]{background:#fff;color:#016462}
+.seg button:focus-visible{outline:3px solid #fff;outline-offset:1px}
+.nav .wrap{max-width:1300px}
+@media (max-width:1339px){
+  .nav .wrap{flex-wrap:wrap;height:auto;min-height:var(--nav-h);padding-block:10px;row-gap:8px}
+  .nav .logo{margin-right:auto}
+  .nav .links{order:3;flex:1 1 100%;flex-wrap:wrap;justify-content:flex-start;overflow:visible;row-gap:4px}
+  html{scroll-padding-top:120px}
+}
+@media (max-width:1060px){.nav .wrap{gap:var(--s12)}.nav .links{justify-content:flex-start}}
+@media (max-width:520px){.nav .logo{height:22px}.nav .links{display:none}}
+
+/* ---------- hero */
+.hero{background:linear-gradient(115deg,var(--hero-a),var(--hero-b));color:#fff;padding-block:var(--s64) var(--s88)}
+.hero .wrap{display:grid;grid-template-columns:1fr 1.15fr;gap:var(--s48);align-items:center}
+.hero .kicker{color:#fff;opacity:.9}
+.hero h1{color:#fff;font-size:clamp(40.5px,7vw,81px);line-height:.98;letter-spacing:-.035em;font-weight:800;margin-block:var(--s16) var(--s18)}
+.hero h1 span{display:block;font-family:var(--f-mono);font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-top:var(--s12);opacity:.85}
+.hero .lead{color:#fff;opacity:.94;font-size:19.4px}
+.hero .facts{display:flex;flex-wrap:wrap;gap:var(--s8);margin-top:var(--s26)}
+.hero .facts span{font-family:var(--f-mono);font-size:11.4px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 11px;border-radius:var(--r-pill);border:1.5px solid rgba(255,255,255,.55)}
+/* the plugin model */
+.model{background:var(--surface);color:var(--ink);border-radius:var(--r-xl);padding:var(--s26);box-shadow:var(--shadow-raised);display:grid;gap:var(--s12)}
+.model .row{display:grid;grid-template-columns:118px 1fr;gap:var(--s16);align-items:start;padding:var(--s12) var(--s16);border-radius:var(--r-row);background:var(--surface-tint)}
+.model .row .k{font-family:var(--f-mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-ink);padding-top:3px}
+.model .row b{display:block;font-size:14.1px;font-weight:600}
+.model .row p{font-size:12.3px;color:var(--ink-muted);line-height:1.45;margin-top:2px}
+.model .row.base{background:var(--teal-deep);color:#fff}
+.model .row.base .k,.model .row.base p{color:#fff}
+.model .row.base p{opacity:.88}
+.model .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.model .eq{display:flex;align-items:center;gap:var(--s12);padding:var(--s4) var(--s16) 0;font-size:13.2px;color:var(--ink-muted)}
+.model .eq b{color:var(--ink)}
+.model .plus{font-family:var(--f-mono);color:var(--teal-ink);font-weight:700;text-align:center;line-height:1;margin-block:-6px}
+@media (max-width:900px){.hero .wrap{grid-template-columns:1fr}}
+@media (max-width:620px){.hero{padding-block:var(--s40) 60px}.model{padding:var(--s16)}.model .row{grid-template-columns:1fr;gap:4px}}
+
+/* ---------- chips, buttons, deeper */
+.chip{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:11.4px;font-weight:600;letter-spacing:.02em;padding:4px 10px;border-radius:var(--r-pill);background:var(--action-soft);color:var(--teal-ink);white-space:nowrap}
+.chip.lens{background:var(--surface);border:1.5px solid var(--line-control);color:var(--ink)}
+.chip.ai{background:var(--purple-tint);color:var(--purple-ink);border:1.5px solid var(--purple)}
+.chip.exp{background:transparent;border:1.5px dashed var(--line-control);color:var(--ink-muted)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;border-radius:var(--r-pill);font:600 13.2px var(--f-display);border:1.5px solid transparent;cursor:pointer;text-decoration:none}
+.btn.primary{background:var(--action);color:var(--on-action)}
+.btn.secondary{background:var(--surface);color:var(--teal-ink);border-color:var(--line-control)}
+.btn.secondary:hover{background:var(--action-soft)}
+.deeper{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:var(--r-pill);background:var(--action-soft);color:var(--teal-ink);font-size:13.2px;font-weight:600;white-space:nowrap}
+.deeper .dk{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;opacity:.85}
+.deeper::after{content:"↗"}
+
+/* ---------- sections */
+.sec{padding-block:var(--s88)}
+.sec.s{background:var(--surface)}
+.sec.t{background:var(--surface-tint)}
+.sec-head{display:grid;gap:var(--s12);margin-bottom:var(--s48);max-width:820px}
+.sec-head .num{font-family:var(--f-mono);font-size:12px;font-weight:600;color:var(--ink-subtle);letter-spacing:.08em}
+@media (max-width:620px){.sec{padding-block:60px}.sec-head{margin-bottom:var(--s40)}}
+.split{display:grid;grid-template-columns:1fr 1.2fr;gap:var(--s48);align-items:start}
+.split > *{min-width:0}
+@media (max-width:900px){.split{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--r-lg);padding:var(--s26)}
+.sec.s .card{background:var(--surface-tint);border-color:transparent}
+.points{list-style:none;margin:0;padding:0;display:grid;gap:var(--s12)}
+.points li{display:grid;grid-template-columns:22px 1fr;gap:var(--s8);font-size:14.1px;color:var(--ink-muted);line-height:1.5}
+.points li::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--teal);margin-top:7px;justify-self:center}
+.points li b{color:var(--ink);font-weight:600}
+.callout{display:grid;grid-template-columns:auto 1fr;gap:var(--s12);align-items:start;padding:var(--s16) var(--s18);border-radius:var(--r-row);background:var(--caution-soft);color:var(--ink);font-size:14.1px;line-height:1.5}
+.callout .tag{font-family:var(--f-mono);font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--caution);padding-top:2px}
+.ref{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s8);margin-bottom:var(--s16)}
+
+/* ---------- design system */
+.ds-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--s18)}
+.ds-grid > *{min-width:0}
+.c7{grid-column:span 7}.c5{grid-column:span 5}.c4{grid-column:span 4}.c8{grid-column:span 8}.c6{grid-column:span 6}.c12{grid-column:span 12}
+@media (max-width:900px){.c7,.c5,.c4,.c8,.c6{grid-column:span 12}}
+.ds-label{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s12);margin-bottom:var(--s18)}
+.ds-label h3{font-size:19.4px;font-weight:700;letter-spacing:-.01em}
+.sw{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s12)}
+.sw div{display:grid;gap:4px}
+.sw i{display:block;height:64px;border-radius:var(--r-md);border:1.5px solid var(--line-soft)}
+.sw b{font-size:13.2px;font-weight:600}
+.sw span{font-size:12.3px;color:var(--ink-subtle);line-height:1.4}
+.ratio{display:flex;height:14px;border-radius:var(--r-pill);overflow:hidden;margin-top:var(--s22)}
+.ratio i:nth-child(1){flex:60;background:var(--surface-tint);border:1.5px solid var(--line)}
+.ratio i:nth-child(2){flex:30;background:var(--teal)}
+.ratio i:nth-child(3){flex:10;background:var(--purple)}
+.ratio-k{display:flex;justify-content:space-between;margin-top:6px}
+.spec{display:grid;gap:var(--s18)}
+.spec .row{display:grid;grid-template-columns:120px 1fr;gap:var(--s16);align-items:baseline;padding-bottom:var(--s16);border-bottom:1.5px solid var(--line-soft)}
+.spec .row:last-child{border-bottom:0;padding-bottom:0}
+.spec .t1{font-size:clamp(26px,3vw,34px);font-weight:700;letter-spacing:-.025em;line-height:1.1}
+.spec .t2{font-family:var(--f-mono);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-ink)}
+.spec .t3{font-family:var(--f-hand);font-size:34px;color:var(--purple-ink);line-height:1}
+.spec .t4{font-size:15px;color:var(--ink-muted)}
+@media (max-width:620px){.spec .row{grid-template-columns:1fr;gap:4px}}
+.themes{display:grid;grid-template-columns:1fr 1fr;gap:var(--s12)}
+.tile{border-radius:var(--r-lg);padding:var(--s18);background:var(--surface-page);border:1.5px solid var(--line);display:grid;gap:var(--s12);color:var(--ink)}
+.tile .bar{height:18px;border-radius:6px;background:linear-gradient(115deg,#0095AC,#016462)}
+.night .bar{background:linear-gradient(115deg,#016462,#031E1E)}
+.tile .mini{background:var(--surface);border-radius:var(--r-md);padding:var(--s12);border:1.5px solid var(--line)}
+.tile .mini b{display:block;font-size:22px;font-weight:800;color:var(--teal);letter-spacing:-.02em;line-height:1}
+.tile .mini span{font-size:11px;color:var(--ink-muted)}
+.tile .cap{font-family:var(--f-mono);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-subtle)}
+.tile .btnmini{justify-self:start;font-size:11px;font-weight:600;padding:5px 12px;border-radius:var(--r-pill);background:var(--action);color:var(--on-action)}
+.comp{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s18)}
+.comp > *{min-width:0}
+@media (max-width:900px){.comp{grid-template-columns:1fr 1fr}}
+@media (max-width:620px){.comp{grid-template-columns:1fr}.themes{grid-template-columns:1fr}.sw{grid-template-columns:1fr 1fr}}
+.cbox{background:var(--surface-page);border-radius:var(--r-lg);padding:var(--s22);display:grid;gap:var(--s12);align-content:start}
+.cbox .cname{font-family:var(--f-mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-subtle)}
+.stat .n{font-size:clamp(38.7px,4.5vw,56.3px);font-weight:800;letter-spacing:-.03em;line-height:1;color:var(--teal)}
+.stat p{font-size:14.1px;color:var(--ink-muted);margin-top:6px}
+.navcard{background:var(--surface);border:1.5px solid var(--line);border-top:5px solid var(--teal);border-radius:var(--r-lg);padding:var(--s18);transition:transform .2s,box-shadow .2s}
+.navcard:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover)}
+.navcard h4{font-size:15px;font-weight:700}
+.navcard p{font-size:12.3px;color:var(--ink-muted);margin-top:2px}
+.aicard{background:var(--purple-tint);border:1.5px solid var(--purple);border-radius:var(--r-lg);padding:var(--s18)}
+.aicard h4{color:var(--purple-ink);font-size:15px}
+.aicard p{font-size:12.3px;color:var(--ink-muted);margin-top:2px}
+.expand{border:1.5px solid var(--line);border-radius:var(--r-row);background:var(--surface)}
+.expand button{all:unset;box-sizing:border-box;width:100%;display:flex;justify-content:space-between;align-items:center;gap:var(--s12);padding:12px 14px;cursor:pointer;font-size:14.1px;font-weight:600;min-height:44px}
+.expand button:focus-visible{outline:3px solid var(--focus-ring);outline-offset:2px;border-radius:var(--r-row)}
+.expand .pl{font-family:var(--f-mono);font-size:18px;color:var(--teal-ink);transition:transform .25s}
+.expand[data-open="true"] .pl{transform:rotate(45deg)}
+.expand .body{padding:0 14px 14px;font-size:12.3px;color:var(--ink-muted)}
+.radii{display:flex;flex-wrap:wrap;gap:var(--s12);align-items:end}
+.radii div{display:grid;gap:6px;justify-items:center}
+.radii i{display:block;width:46px;height:46px;background:var(--surface-tint);border:1.5px solid var(--teal)}
+.hand-note{position:relative}
+.hand-note svg{position:absolute;left:-46px;top:-6px;width:40px;height:30px}
+
+/* ---------- strategy hub frame + map */
+.frame{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--shadow-raised)}
+.fnav{display:flex;align-items:center;gap:var(--s16);padding:10px var(--s18);background:linear-gradient(115deg,var(--hero-a),var(--hero-b))}
+.fnav img{height:16px;flex:none}
+.fnav .fl{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;min-width:0}
+.fnav .fl span{flex:none;color:#fff;font-size:11.4px;font-weight:600;padding:4px 9px;border-radius:var(--r-pill)}
+.fnav .fl span.on{background:#fff;color:#016462}
+.mapwrap{background:var(--surface-tint);padding:var(--s26) var(--s26) var(--s18)}
+.maphead{display:flex;justify-content:space-between;align-items:end;gap:var(--s16);flex-wrap:wrap;margin-bottom:var(--s8)}
+.maphead h3{font-size:22px;font-weight:700;letter-spacing:-.015em}
+.map{position:relative;aspect-ratio:1000/330;max-width:100%}
+.map svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.stop{position:absolute;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;border:3px solid var(--surface);background:var(--teal-deep);color:#fff;font:700 12.5px var(--f-display);display:grid;place-items:center;cursor:pointer;padding:0;box-shadow:0 0 0 1.5px var(--teal-deep);transition:transform .2s,background .2s}
+.stop.ahead{background:var(--surface);color:var(--teal-ink);box-shadow:0 0 0 1.5px var(--line-control)}
+.stop:hover{transform:translate(-50%,-50%) scale(1.12)}
+.stop.cur{background:var(--purple);box-shadow:0 0 0 1.5px var(--purple),0 0 0 8px color-mix(in srgb,var(--purple) 18%,transparent);color:#fff}
+.lbl{position:absolute;transform:translateX(-50%);width:max-content;max-width:132px;background:var(--surface);border:1.5px solid var(--line-soft);border-radius:var(--r-md);padding:5px 9px;font-size:11.4px;font-weight:600;line-height:1.25;text-align:center;color:var(--ink);pointer-events:none}
+.lbl.up{transform:translate(-50%,calc(-100% - 24px))}
+.lbl.dn{transform:translate(-50%,24px)}
+.lbl.cur{border-color:var(--purple);color:var(--purple-ink)}
+.mapdetail{margin-top:var(--s16);background:var(--surface);border-radius:var(--r-lg);padding:var(--s18) var(--s22);display:grid;grid-template-columns:auto 1fr;gap:var(--s16);align-items:center;min-height:86px}
+.mapdetail .dn{width:40px;height:40px;border-radius:50%;background:var(--purple);color:#fff;display:grid;place-items:center;font-weight:700}
+.mapdetail h4{font-size:16px}
+.mapdetail p{font-size:13.2px;color:var(--ink-muted)}
+.mapdetail .sub{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-subtle)}
+.vroute{display:none;list-style:none;margin:0;padding:0;position:relative}
+.vroute::before{content:"";position:absolute;left:14px;top:16px;bottom:16px;width:4px;border-radius:2px;background:var(--route)}
+.vroute li{position:relative;display:grid;grid-template-columns:32px 1fr;gap:var(--s12);align-items:center;padding-block:7px}
+.vroute .vs{position:static;transform:none}
+.vroute .vs:hover{transform:scale(1.08)}
+.vroute b{font-size:14.1px;font-weight:600}
+.vroute li.cur b{color:var(--purple-ink)}
+@media (max-width:820px){.map{display:none}.vroute{display:block}.mapwrap{padding:var(--s18)}}
+
+/* ---------- deck */
+.deckzone{display:grid;grid-template-columns:min(330px,100%) 1fr;gap:var(--s48);align-items:center}
+.deckzone > *{min-width:0}
+@media (max-width:900px){.deckzone{grid-template-columns:1fr;justify-items:center}.deckzone .copy{justify-self:stretch}}
+@media (max-width:900px){.deckzone{grid-template-columns:minmax(0,1fr)}}
+.phone{width:100%;max-width:330px;aspect-ratio:330/620;background:#031E1E;border-radius:34px;padding:12px;box-shadow:var(--shadow-raised),0 0 0 1.5px #1C5654 inset;color:#EAF6F6}
+.screen{height:100%;border-radius:24px;background:#031E1E;display:flex;flex-direction:column;padding:16px 16px 14px;overflow:hidden;position:relative}
+.segs{display:flex;gap:3px}
+.segs i{flex:1;height:3px;border-radius:2px;background:#1C5654;transition:background .3s}
+.segs i.done{background:#0095AC}
+.segs i.cur{background:#2BC4DB}
+.chap{display:flex;justify-content:space-between;margin-top:9px;font:600 10px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:#9BBFC0}
+.chap b{color:#2BC4DB;font-weight:600}
+.slides{flex:1;position:relative;margin-top:14px}
+.screen{container-type:inline-size}
+.slides{min-height:0;overflow:hidden}
+.sl{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:10px;min-width:0;opacity:0;visibility:hidden;transform:translateX(18px);transition:opacity .35s,transform .45s cubic-bezier(.3,.1,.2,1),visibility 0s .45s}
+.sl.on{opacity:1;visibility:visible;transform:none;transition:opacity .35s,transform .45s cubic-bezier(.3,.1,.2,1)}
+.sl.before{transform:translateX(-18px)}
+.sl .k{font:600 10.5px var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:#2BC4DB}
+.sl h4{color:#EAF6F6;font-size:clamp(17px,8cqw,23px);line-height:1.12;letter-spacing:-.02em;font-weight:700;overflow-wrap:break-word;text-wrap:pretty}
+.sl h4 em{font-style:normal;color:#2BC4DB}
+.sl p{font-size:clamp(11px,4.4cqw,12.5px);color:#9BBFC0;line-height:1.5}
+.sl .deeper{align-self:flex-start;max-width:100%;background:rgba(43,196,219,.14);color:#2BC4DB;font-size:12px;padding:6px 12px;white-space:normal}
+.sl .btn{align-self:flex-start;max-width:100%;background:#2BC4DB;color:#02201F;border-radius:8px;min-height:40px;padding:0 16px;font-size:12.5px}
+.screen .chap{font-size:9.5px;letter-spacing:.12em}
+.screen .dnav{margin-top:10px}
+.dnav{display:flex;gap:8px}
+.dnav button{flex:1;min-height:44px;border-radius:8px;font:600 13.2px var(--f-display);cursor:pointer;border:1.5px solid #4A9896;background:transparent;color:#EAF6F6}
+.dnav button.nx{background:#2BC4DB;border-color:#2BC4DB;color:#02201F}
+.dnav button:disabled{opacity:.4;cursor:default}
+.dnav button:focus-visible{outline:3px solid #C48BEA;outline-offset:2px}
+.anatomy{list-style:none;margin:var(--s22) 0 0;padding:0;display:grid;gap:var(--s8)}
+.anatomy li{display:grid;grid-template-columns:28px 1fr;gap:var(--s12);align-items:center;padding:10px 14px;background:var(--surface-tint);border-radius:var(--r-row);font-size:14.1px}
+.anatomy .n{width:26px;height:26px;border-radius:50%;background:var(--teal-deep);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700}
+.meshspec{margin-top:var(--s22);background:var(--surface-ink);color:#EAF6F6;border-radius:var(--r-panel);padding:var(--s22)}
+.meshspec h4{color:#fff;font-size:15px;margin-bottom:var(--s8)}
+.meshspec p{font-size:13.2px;color:#C9DCDC;line-height:1.55}
+.meshspec ul{margin:var(--s12) 0 0;padding-left:18px;font-size:12.3px;color:#C9DCDC;display:grid;gap:3px}
+.meshspec ul li::marker{color:#E8D2F5}
+
+/* ---------- one-pager */
+.a4{container-type:inline-size;width:min(460px,100%);aspect-ratio:210/297;background:#F2F6F7;color:#10201F;border-radius:6px;box-shadow:var(--shadow-raised);overflow:hidden;display:flex;flex-direction:column;justify-self:center}
+.a4 .h{background:linear-gradient(115deg,#0095AC,#016462);color:#fff;padding:5.5cqw 6cqw 4.5cqw}
+.a4 .h .top{display:flex;justify-content:space-between;align-items:center}
+.a4 .h img{height:3.2cqw}
+.a4 .h .ey{font:700 1.5cqw var(--f-mono);letter-spacing:.08em;text-transform:uppercase}
+.a4 .h h4{color:#fff;font-size:6.6cqw;line-height:1;letter-spacing:-.03em;margin-top:3cqw}
+.a4 .h p{font-size:1.75cqw;line-height:1.45;margin-top:1.6cqw;opacity:.93}
+.a4 .m{flex:1;padding:2.6cqw 6cqw;display:flex;flex-direction:column;gap:2.2cqw}
+.a4 .lab{font:700 1.4cqw var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:#016462}
+.a4 .r{display:grid;gap:1.4cqw;margin-top:1cqw}
+.a4 .r3{grid-template-columns:repeat(3,1fr)}.a4 .r4{grid-template-columns:repeat(4,1fr)}
+.a4 .b{background:#EAF7F7;border-radius:1.6cqw;padding:1.4cqw 1.8cqw}
+.a4 .b strong{display:block;font-size:4cqw;font-weight:800;color:#0095AC;letter-spacing:-.03em;line-height:1}
+.a4 .b p{font-size:1.45cqw;line-height:1.4;color:#3C5052;margin-top:.7cqw}
+.a4 .b h5{margin:0;font-size:1.75cqw;line-height:1.2}
+.a4 .b .nn{display:grid;place-items:center;width:3.2cqw;height:3.2cqw;border-radius:50%;background:rgba(0,149,172,.16);color:#016462;font-size:1.6cqw;font-weight:700;margin-bottom:.8cqw}
+.a4 .b.ai{background:#FBF6FE;box-shadow:inset 0 0 0 .2cqw #954BBC}
+.a4 .b.ai h5{color:#6B2E8C}.a4 .b.ai .nn{background:rgba(149,75,188,.16);color:#6B2E8C}
+.a4 .b.top{border-top:.6cqw solid #0095AC}
+.a4 .b.top.d{border-top-color:#016462}.a4 .b.top.p{border-top-color:#954BBC}
+.a4 .f{background:linear-gradient(115deg,#016462,#0095AC);color:#fff;padding:2.6cqw 6cqw 2cqw}
+.a4 .f .k{font-size:1.7cqw;font-weight:600;opacity:.9}
+.a4 .f h5{margin:.5cqw 0 0;font-size:2.9cqw;line-height:1.1;letter-spacing:-.02em;color:#fff}
+.a4 .f .ft{display:flex;justify-content:space-between;gap:2cqw;font-size:1.15cqw;opacity:.8;margin-top:1.6cqw}
+.fit{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s12);margin-top:var(--s22)}
+.fit div{background:var(--surface);border-radius:var(--r-row);padding:var(--s16);border:1.5px solid var(--line-soft)}
+.fit b{display:block;font-size:22px;font-weight:800;color:var(--teal);letter-spacing:-.02em;line-height:1.1}
+.fit span{font-size:12.3px;color:var(--ink-muted)}
+@media (max-width:620px){.fit{grid-template-columns:1fr}}
+
+/* ---------- lenses */
+.fact-line{display:flex;flex-wrap:wrap;gap:var(--s8);align-items:center;margin-bottom:var(--s26)}
+.lenses{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s18)}
+.lenses > *{min-width:0}
+@media (max-width:900px){.lenses{grid-template-columns:1fr}}
+.lensc{background:var(--surface-tint);border-radius:var(--r-lg);padding:var(--s26);display:grid;gap:var(--s16);align-content:start}
+.lensc .lh{display:flex;justify-content:space-between;align-items:center;gap:var(--s8)}
+.lensc .lh b{font-size:19.4px;font-weight:700}
+.lensc blockquote{margin:0;font-size:17px;line-height:1.5;color:var(--ink);font-weight:500}
+.lensc .rule{font-size:12.3px;color:var(--ink-subtle);border-top:1.5px solid var(--line-soft);padding-top:var(--s12)}
+mark.f{background:var(--action-soft);color:var(--teal-ink);font-weight:600;padding:0 3px;border-radius:4px}
+.locked{margin-top:var(--s26);display:flex;flex-wrap:wrap;gap:var(--s8);align-items:center}
+
+/* ---------- combine */
+.combos{display:grid;gap:var(--s12)}
+.combo{display:grid;grid-template-columns:minmax(0,1.25fr) 26px minmax(0,1fr);gap:var(--s16);align-items:center;background:var(--surface);border:1.5px solid var(--line);border-radius:var(--r-lg);padding:var(--s18) var(--s22)}
+.combo .in{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.combo .in .p{font-family:var(--f-mono);font-weight:700;color:var(--ink-subtle)}
+.combo .ar{font-size:18px;color:var(--teal-ink);text-align:center}
+.combo .out b{display:block;font-size:15px;font-weight:600}
+.combo .out span{font-size:12.3px;color:var(--ink-muted)}
+@media (max-width:620px){.combo{grid-template-columns:1fr;gap:var(--s8)}.combo .ar{text-align:left;transform:rotate(90deg);width:20px}}
+.panel{background:var(--surface-ink);color:#EAF6F6;border-radius:var(--r-panel);padding:var(--s26)}
+.panel .kicker{color:#E8D2F5}
+.panel h3{color:#fff;font-size:22px;margin-top:var(--s8)}
+.panel ul{margin:var(--s16) 0 0;padding-left:18px;display:grid;gap:6px;font-size:14.1px;color:#C9DCDC}
+.panel ul li::marker{color:#E8D2F5}
+.panel .note{color:#9BBFC0;margin-top:var(--s16)}
+
+/* ---------- how to use */
+.prompts{display:grid;grid-template-columns:1fr 1fr;gap:var(--s18)}
+.prompts > *{min-width:0}
+@media (max-width:760px){.prompts{grid-template-columns:1fr}}
+.prompt{background:var(--surface-tint);border-radius:var(--r-lg);padding:var(--s22);display:grid;gap:var(--s12);align-content:space-between}
+.prompt q{quotes:"“" "”";font-size:16px;font-weight:500;line-height:1.45;color:var(--ink)}
+.prompt .pf{display:flex;justify-content:space-between;align-items:center;gap:var(--s8);flex-wrap:wrap}
+.copy{all:unset;cursor:pointer;font:600 12px var(--f-display);color:var(--teal-ink);padding:6px 12px;border-radius:var(--r-pill);border:1.5px solid var(--line-control);min-height:20px}
+.copy:hover{background:var(--action-soft)}
+.copy:focus-visible{outline:3px solid var(--focus-ring);outline-offset:2px}
+.notes3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s18);margin-top:var(--s48)}
+.notes3 > *{min-width:0}
+@media (max-width:900px){.notes3{grid-template-columns:1fr}}
+.n3{border-top:5px solid var(--teal);background:var(--surface);border-radius:var(--r-lg);padding:var(--s22);border-left:1.5px solid var(--line);border-right:1.5px solid var(--line);border-bottom:1.5px solid var(--line)}
+.n3.d{border-top-color:var(--teal-deep)}.n3.p{border-top-color:var(--purple)}
+.n3 .kicker{font-size:11px}
+.n3 h4{font-size:17px;margin-top:6px}
+.n3 p{font-size:14.1px;color:var(--ink-muted);margin-top:6px}
+
+footer{background:var(--surface-ink);color:#C9DCDC;padding-block:var(--s48)}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:var(--s18);flex-wrap:wrap}
+footer img{height:24px}
+footer p{font-size:12.3px}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+
+<nav class="nav" aria-label="Main">
+  <div class="wrap">
+    <img class="logo" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTGF5ZXJfMiIgZGF0YS1uYW1lPSJMYXllciAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MDUuODQgNTMuNDIiPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuY2xzLTEgewogICAgICAgIGZpbGw6ICNmZmY7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDxnIGlkPSJMYXllcl8xLTIiIGRhdGEtbmFtZT0iTGF5ZXIgMSI+CiAgICA8ZyBpZD0ibG9nb19JTF8yMDI0X2Z1bGxfLV9wcmltYXJ5IiBkYXRhLW5hbWU9ImxvZ28gSUwgMjAyNCBmdWxsIC0gcHJpbWFyeSI+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTkwLjcxLDkuNzJjLTguNjcsMC0xNS43LDcuMDMtMTUuNywxNS43LDAsNS40MSwyLjc0LDEwLjE4LDYuOTEsMTMsLjExLjA3LjIyLjE0LjMzLjIyLjg1LjY0LDEuNDEsMS42NSwxLjQxLDIuOHYuNjVoMy45N3YtLjY1YzAtLjMzLS4wMy0uNjUtLjA3LS45OGguMDFsLTIuMDQtMTEuNjctLjg0LjEzLDEuMzksOC4wMWMtLjQxLS41NS0uOS0xLjA1LTEuNDYtMS40Ni0uMTgtLjEzLS4zNy0uMjYtLjU2LS4zNy0zLjE5LTIuMi01LjA5LTUuOC01LjA5LTkuNjcsMC02LjQ3LDUuMjYtMTEuNzQsMTEuNzMtMTEuNzRzMTEuNzMsNS4yNywxMS43MywxMS43NGMwLDMuNzktMS44Myw3LjM0LTQuOTEsOS41NC0uMzcuMjEtLjcyLjQ1LTEuMDUuNzItLjQ0LjM2LS44My43Ni0xLjE2LDEuMmwxLjM5LTcuOTUtLjg1LS4xLTEuOTIsMTAuOThjLS4wMy4xMi0uMDQuMjUtLjA2LjM4bC0uMDUuMjZzMCwuMDYtLjAxLjA4bC0uMDIuMjV2MS4zMWgzLjk2di0xLjA4Yy4xMS0uOTIuNTctMS43MiwxLjI1LTIuMjguMTktLjE1LjM5LS4yOS42MS0uNCw0LjEtMi44NCw2Ljc4LTcuNTYsNi43OC0xMi45MSwwLTguNjctNy4wMy0xNS43LTE1LjY5LTE1LjdaIi8+CiAgICAgIDxyZWN0IGNsYXNzPSJjbHMtMSIgeD0iODMuNjYiIHk9IjQ5LjQ1IiB3aWR0aD0iMTQuMDkiIGhlaWdodD0iMy45NyIvPgogICAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iODMuNjYgNDMuNzkgODMuNjYgNDcuNzYgOTcuNzUgNDcuNzYgOTcuNzUgNDMuNzkgODcuNjMgNDMuNzkgODMuNjYgNDMuNzkiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNOTAuNTcsMjUuMzRjLjcsMCwxLjMzLjM2LDEuNjkuOTcuNzgsMS4zMywyLjExLDIuMjQsMy42LDIuNTNsLjg1LjEuNi0zLjQ0Yy0uMTQuMDQtLjI5LjA2LS40NS4wNi0uMTUsMC0uMjktLjAyLS40Mi0uMDUtLjUzLS4xMS0uOTgtLjQ0LTEuMjctLjkzLS45Ni0xLjYyLTIuNzItMi42Mi00LjYtMi42MnMtMy42NCwxLTQuNiwyLjYyYy0uMjQuNDEtLjYuNy0xLjAzLjg1LS4yLjA4LS40My4xMi0uNjYuMTItLjA2LDAtLjEyLDAtLjE4LS4wMWwuNTksMy4zOC44NC0uMTNjMS4zOC0uMzUsMi42LTEuMjMsMy4zNC0yLjQ4LjM2LS42MS45OS0uOTcsMS42OS0uOTdaIi8+CiAgICAgIDxyZWN0IGNsYXNzPSJjbHMtMSIgeT0iMTAuMjgiIHdpZHRoPSI0Ljc2IiBoZWlnaHQ9IjMwLjAzIi8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIzMi41MiAzMS42NCAxNS40OSAxMC4yOCAxMS44IDEwLjI4IDExLjggNDAuMyAxNi42NSA0MC4zIDE2LjY1IDE5LjEyIDMzLjY4IDQwLjMgMzcuMzIgNDAuMyAzNy4zMiAxMC4yOCAzMi41MiAxMC4yOCAzMi41MiAzMS42NCIvPgogICAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iNjUuMTQgMzEuNjQgNDguMTEgMTAuMjggNDQuNDIgMTAuMjggNDQuNDIgNDAuMyA0OS4yNyA0MC4zIDQ5LjI3IDE5LjEyIDY2LjMgNDAuMyA2OS45NCA0MC4zIDY5Ljk0IDEwLjI4IDY1LjE0IDEwLjI4IDY1LjE0IDMxLjY0Ii8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIxMzEuMjcgMTAuMjggMTIxLjY2IDM0LjY5IDExMi4wOSAxMC4yOCAxMDYuNjkgMTAuMjggMTE5LjE3IDQwLjQzIDEyNC4xOSA0MC40MyAxMzYuNjMgMTAuMjggMTMxLjI3IDEwLjI4Ii8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTIyNi4wNywxMi4wNmMtLjExLS4wNy0uMjItLjE0LS4zMy0uMjItLjg1LS42NC0xLjQxLTEuNjctMS40MS0yLjgyVjBoLTMuOTZ2OS4wMmMwLDIuMzUsMS4xMiw0LjYsMyw2LjAxLjE4LjE1LjM2LjI3LjU2LjM5LDMuMTMsMi4xNyw1LjAyLDUuNzIsNS4wOCw5LjUzLS4yOC0uMTctLjUxLS40LS42OS0uNjktLjk2LTEuNjQtMi43Mi0yLjY1LTQuNi0yLjY1cy0zLjY0LDEuMDEtNC42MSwyLjY0Yy0uMzYuNjEtLjk5Ljk4LTEuNjkuOThzLTEuMzMtLjM2LTEuNjktLjk3Yy0uOTYtMS42NC0yLjczLTIuNjUtNC42MS0yLjY1cy0zLjY1LDEuMDEtNC42LDIuNjRjLS4yMy4zOS0uNTcuNjktLjk4Ljg0LjAyLTMuOCwxLjg1LTcuMzQsNC45MS05LjU1LjM3LS4yMS43Mi0uNDUsMS4wNS0uNzIsMS40OC0xLjIzLDIuNDMtMi45OCwyLjY2LTQuOWwuMDMtLjI0VjBoLTMuOTd2OS40NGMtLjExLjkyLS41NywxLjc0LTEuMjUsMi4zLS4yLjE2LS40LjI5LS42Mi40LTQuMSwyLjg1LTYuNzgsNy42LTYuNzgsMTMsMCw4LjczLDcuMDMsMTUuOCwxNS43LDE1LjhzMTUuNy03LjA3LDE1LjctMTUuOGMwLTUuNDUtMi43NC0xMC4yNS02LjkxLTEzLjA5Wk0yMTcuMjksMzYuOTVjLTUuMzEsMC05LjgxLTMuNTgtMTEuMjUtOC40NiwxLjQxLS4zMywyLjY1LTEuMjMsMy40MS0yLjUuMzYtLjYxLjk5LS45OCwxLjY5LS45OHMxLjMzLjM3LDEuNjkuOThjLjk2LDEuNjIsMi43MywyLjY0LDQuNjEsMi42NHMzLjY0LTEuMDIsNC42LTIuNjRjLjM2LS42MS45OS0uOTgsMS42OS0uOThzMS4zMy4zNywxLjY5Ljk4Yy43LDEuMiwxLjg0LDIuMDUsMy4xMywyLjQzLTEuNDEsNC45My01LjkzLDguNTMtMTEuMjYsOC41M1oiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTQ3LjU1LDEwLjI4bC0xMy40NywzMC4wM2g1LjFsMi44My02LjNoMTYuMjVsMi44OCw2LjNoNS4xbC0xMy40Ny0zMC4wM2gtNS4yM1pNMTQzLjgyLDI5LjYzbDYuMzUtMTQuMjksNi4zNSwxNC4yOWgtMTIuNjlaIi8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIxNjMuNDEgMTQuNjEgMTczLjI4IDE0LjYxIDE3My4yOCA0MC4zMSAxNzguMTMgNDAuMzEgMTc4LjEzIDE0LjYxIDE4Ny45NSAxNC42MSAxODcuOTUgMTAuMjggMTYzLjQxIDEwLjI4IDE2My40MSAxNC42MSIvPgogICAgICA8cmVjdCBjbGFzcz0iY2xzLTEiIHg9IjE5MS44NSIgeT0iMTAuMjgiIHdpZHRoPSI0Ljc2IiBoZWlnaHQ9IjMwLjAzIi8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIyNTguNzkgMzEuNjQgMjQxLjc2IDEwLjI4IDIzOC4wNyAxMC4yOCAyMzguMDcgNDAuMyAyNDIuOTIgNDAuMyAyNDIuOTIgMTkuMTIgMjU5Ljk1IDQwLjMgMjYzLjU5IDQwLjMgMjYzLjU5IDEwLjI4IDI1OC43OSAxMC4yOCAyNTguNzkgMzEuNjQiLz4KICAgICAgPHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjI4Ni42MyAxMC4yOCAyODEuODIgMTAuMjggMjgxLjgyIDQwLjMgMzAyLjQ1IDQwLjMgMzAyLjQ1IDM1Ljg1IDI4Ni42MyAzNS44NSAyODYuNjMgMTAuMjgiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzk0LjE1LDMwLjk3Yy0uMzMtNi4yNS02LjAyLTcuOTEtMTIuMDItOC43NC0zLjk1LS41Ni03LjI5LTEuMzctNy4yOS00LjI5czIuOTItNC41NSw2Ljk1LTQuNTVjMy4xMy4wNCw2LjAxLDEuMjksNy40MiwzLjM0bDMuNjUtMi40NGMtMi41My00LjAzLTYuODYtNS4wNi0xMS4yLTUuMDYtNS40LDAtMTEuNjIsMi40LTExLjU4LDguNjIsMCw2LjQzLDUuNjYsNy45NCwxMS42Miw4Ljc1LDQuMi41Niw3LjY4LDEuNjcsNy42OCw0LjkzLDAsMy43OC0zLjk5LDQuOTgtNy41OSw0Ljk4cy03LjIxLTEuMjktOS4zNS00LjkzbC0zLjYsMi40YzIuNzQsNS4wNiw3LjE2LDYuODIsMTIuOTEsNi44Mi41NiwwLDEuMTEtLjAzLDEuNjYtLjA3LDIuMi4wNyw2LjM0LTEuNDksNy40Ni0yLjI5LDQuMS0yLjksMy4xNS03LjM0LDMuMjgtNy40OFoiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzE4LjIsMTAuMjhsLTEzLjQ3LDMwLjAzaDUuMTFsMi44My02LjNoMTYuMjZsMi44Nyw2LjNoNS4xbC0xMy40Ny0zMC4wM2gtNS4yM1pNMzE0LjQ2LDI5LjYzbDYuMzUtMTQuMjksNi4zNSwxNC4yOWgtMTIuNjlaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTM2MC40NywyNC44MmMyLjgzLTEuMTYsNC4xNi0zLjQzLDQuMTYtNS45NiwwLTUuOTYtNC41MS04LjU4LTEwLjIxLTguNThoLTEzLjc3djMwLjAzaDEzLjc3YzUuOTIsMCwxMS4xNS0yLjAyLDExLjE1LTguNTgsMC0yLjI3LTEuNS01LjgzLTUuMS02LjlaTTM0NS40MSwxNC42MWg5LjAxYzMuNiwwLDUuNDUsMi4yMyw1LjQ1LDQuMzMsMCwyLjM2LTEuOCwzLjc4LTUuNCwzLjc4aC05LjA1di04LjExWk0zNTQuNDIsMzUuODVoLTkuMDF2LTguODRoOS4wNWMyLjc0LDAsNi4zMSwxLjQ2LDYuMzEsNC42OHMtMy42OSw0LjE2LTYuMzUsNC4xNloiLz4KICAgIDwvZz4KICAgIDxnPgogICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik00MDUuNzMsMzYuMDJoMTkuMTZ2NC42OGgtMjQuMTR2LTcuNTZjMC01LjcxLDQuNDctOS4wMiwxMi4xNi05LjAyLDQuMTIsMCw2LjkyLTEuODUsNi45Mi00LjYsMC0zLjAxLTIuNDUtNC43Ny02LjYyLTQuNzdzLTcuMDQsMS43Ni03LjEzLDQuNTFoLTUuMTVjLjM0LTUuNjcsNC45LTkuMDIsMTIuMjktOS4wMnMxMS42OCwzLjUyLDExLjY4LDkuMTljMCw2LjAxLTQuMTcsOS4xOS0xMS45NCw5LjE5LTQuNTEsMC03LjIyLDEuNjgtNy4yMiw0LjUxdjIuODhaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTQyOC4wNiwyOC41OXYtNS44OGMwLTcuNTYsNS4yOC0xMi42NywxMy4wNi0xMi42N3MxMy4wNiw1LjExLDEzLjA2LDEyLjY3djUuODhjMCw3LjUyLTUuMjgsMTIuNjMtMTMuMDYsMTIuNjNzLTEzLjA2LTUuMTEtMTMuMDYtMTIuNjNaTTQ0OS4xMSwyOC41OXYtNS44OGMwLTQuNzItMy4xOC03LjktNy45OS03LjlzLTcuOTksMy4xOC03Ljk5LDcuOXY1Ljg4YzAsNC43MiwzLjE4LDcuOSw3Ljk5LDcuOXM3Ljk5LTMuMTgsNy45OS03LjlaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTQ2Mi4yNSwzNi4wMmgxOS4xNnY0LjY4aC0yNC4xNHYtNy41NmMwLTUuNzEsNC40Ny05LjAyLDEyLjE2LTkuMDIsNC4xMiwwLDYuOTItMS44NSw2LjkyLTQuNiwwLTMuMDEtMi40NS00Ljc3LTYuNjItNC43N3MtNy4wNCwxLjc2LTcuMTMsNC41MWgtNS4xNWMuMzQtNS42Nyw0LjktOS4wMiwxMi4yOS05LjAyczExLjY4LDMuNTIsMTEuNjgsOS4xOWMwLDYuMDEtNC4xNyw5LjE5LTExLjk0LDkuMTktNC41MSwwLTcuMjIsMS42OC03LjIyLDQuNTF2Mi44OFoiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNTA1Ljg0LDEwLjY0djIuODhsLTEzLjkyLDI3LjE5aC01Ljc1bDEzLjE5LTI1LjM0aC0xNi40MXYtNC43MmgyMi44OVoiLz4KICAgIDwvZz4KICA8L2c+Cjwvc3ZnPg==" alt="Innovation Labs 2027">
+    <div class="links" id="links">
+      <a href="#overview">Overview</a><a href="#system">Design system</a><a href="#website">Website</a><a href="#presentation">Presentation</a><a href="#onepager">One-pager</a><a href="#lenses">Tone lenses</a><a href="#combine">Combine</a><a href="#use">How to use</a>
+    </div>
+    <div class="seg" role="group" aria-label="Theme">
+      <button type="button" data-th="light" aria-pressed="true">Light</button><button type="button" data-th="night" aria-pressed="false">Night</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="overview">
+  <div class="wrap">
+    <div>
+      <div class="kicker">Innovation Labs · plugin v0.3.1</div>
+      <h1>ilabsro-design</h1>
+      <p class="lead">One Innovation Labs identity across websites, presentations, one-pagers and social posts. You pick what to make and how it should sound. The plugin keeps it on brand.</p>
+      <div class="facts"><span>4 output skills</span><span>3 tone lenses</span><span>1 design system</span><span>Light + Night</span></div>
+    </div>
+    <div class="model" aria-label="The plugin model">
+      <div class="row base"><div class="k">Design system</div><div><b>How Innovation Labs looks</b><p>Bundled rules and tokens. The portable source of truth.</p></div></div>
+      <div class="plus" aria-hidden="true">+</div>
+      <div class="row"><div class="k">Output skill</div><div><b>What you are making</b><div class="chips"><span class="chip">website-maker</span><span class="chip">presentation-maker</span><span class="chip">one-pager-maker</span><span class="chip">insta-post-maker</span></div></div></div>
+      <div class="plus" aria-hidden="true">+</div>
+      <div class="row"><div class="k">Tone lens</div><div><b>How the copy sounds</b><p>Zero or one per output.</p><div class="chips"><span class="chip lens">formal-lens</span><span class="chip lens">friendly-lens</span><span class="chip lens">jokey-lens</span></div></div></div>
+      <div class="eq"><span>Your source material decides</span><b>what it says.</b></div>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- ================= DESIGN SYSTEM ================= -->
+<section class="sec s" id="system">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Design system</span>
+      <h2 class="headline">Color and hierarchy. <em>Not texture.</em></h2>
+      <p class="lead">Teal on white, paper and pale-teal grounds. Bold Poppins headlines, mono labels, medium-rounded cards. Grounds stay flat; the only gradient is teal to deep teal.</p>
+    </div>
+
+    <div class="ds-grid">
+      <div class="card c7">
+        <div class="ds-label"><h3>Palette, by role</h3><span class="meta">60 · 30 · 10</span></div>
+        <div class="sw">
+          <div><i style="background:#0095AC"></i><b>teal</b><span>Brand fill, stat numerals, routes</span></div>
+          <div><i style="background:#016462"></i><b>teal-deep</b><span>Solid dark fill, gradient end, actions</span></div>
+          <div><i style="background:#954BBC"></i><b>purple</b><span>A role: AI as challenger, current step, focus</span></div>
+          <div><i style="background:#EAF7F7"></i><b>surface-tint</b><span>Baby-teal ground and cards</span></div>
+          <div><i style="background:#F2F6F7"></i><b>surface-page</b><span>Paper ground</span></div>
+          <div><i style="background:#10201F"></i><b>surface-ink</b><span>Footers, dark panels</span></div>
+        </div>
+        <div class="ratio" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="ratio-k meta"><span>Grounds 60%</span><span>Teal family 30%</span><span>Rest 10%</span></div>
+      </div>
+
+      <div class="card c5">
+        <div class="ds-label"><h3>Light and Night</h3><span class="meta">Same structure</span></div>
+        <div class="themes">
+          <div class="tile lightscope"><div class="bar"></div><div class="mini"><b>53 h</b><span>mentoring per team</span></div><span class="btnmini">Open the hub</span><span class="cap">Light · web, print</span></div>
+          <div class="tile night"><div class="bar"></div><div class="mini"><b>53 h</b><span>mentoring per team</span></div><span class="btnmini">Open the hub</span><span class="cap">Night · decks, maps</span></div>
+        </div>
+        <p class="note" style="margin-top:14px">Theme changes mood, never structure. Use the toggle in the top bar to switch this whole page.</p>
+      </div>
+
+      <div class="card c12">
+        <div class="ds-label"><h3>Type</h3><span class="meta">Three faces, three jobs</span></div>
+        <div class="spec">
+          <div class="row"><span class="meta">Poppins 700</span><div class="t1">The program works. <span class="beat">Teams told us why.</span></div></div>
+          <div class="row"><span class="meta">IBM Plex Mono</span><div class="t2">What worked · Innovation Labs 2027</div></div>
+          <div class="row"><span class="meta">Caveat 700</span><div class="t3">one human aside, once per screen</div></div>
+          <div class="row"><span class="meta">Poppins 400</span><div class="t4">Plain, confident sentences. Short. No hype words, no exclamation marks, no emoji.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-label" style="margin-top:var(--s64)"><h3>A few of the 17 components</h3><span class="meta">Rendered with the tokens</span></div>
+    <div class="comp">
+      <div class="cbox"><span class="cname">Button</span><div style="display:flex;flex-wrap:wrap;gap:8px"><span class="btn primary">Open the strategy hub</span><span class="btn secondary">See the calendar</span></div></div>
+      <div class="cbox"><span class="cname">Stat</span><div class="stat"><div class="n">53 h</div><p>of mentoring per team in 2026.</p><span class="meta">Mentor retro, July 2026</span></div></div>
+      <div class="cbox"><span class="cname">Card · link</span><div class="navcard"><h4>The curriculum</h4><p>Exercises and challenger skills</p></div></div>
+      <div class="cbox"><span class="cname">Card · AI</span><div class="aicard"><h4>Challenge with AI</h4><p>Only after a founder has produced an original version.</p></div></div>
+      <div class="cbox"><span class="cname">Chip · Deeper</span><div style="display:flex;flex-wrap:wrap;gap:8px"><span class="chip">Mentoring</span><span class="chip ai">AI</span><span class="chip exp">About 25 teams</span></div><span class="deeper"><span class="dk">Go deeper</span>The calendar</span></div>
+      <div class="cbox"><span class="cname">Expand</span>
+        <div class="expand" data-open="false"><button type="button" aria-expanded="false" id="ex1"><span>Why paper first?</span><span class="pl" aria-hidden="true">+</span></button><div class="body" hidden>It forces original thinking into existence before any model is opened.</div></div>
+        <div class="radii" aria-label="Radius tokens"><div><i style="border-radius:8px"></i><span class="meta">8</span></div><div><i style="border-radius:10px"></i><span class="meta">10</span></div><div><i style="border-radius:16px"></i><span class="meta">16</span></div><div><i style="border-radius:22px"></i><span class="meta">22</span></div><div><i style="border-radius:999px"></i><span class="meta">pill</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WEBSITE ================= -->
+<section class="sec t" id="website">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">website-maker</span>
+      <h2 class="headline">A hub to explore. <em>A route to follow.</em></h2>
+      <p class="lead">Strategy Hubs give a large source non-linear deep dives. The Map is the gateway: one calm route, numbered stops, detail on demand.</p>
+    </div>
+    <div class="ref"><span class="meta">Reference</span><span class="chip">IL2027 strategy hub</span><span class="note">Nine stops and nav taken from the bundled example, drawn with the Map Proposal pattern.</span></div>
+
+    <div class="frame">
+      <div class="fnav"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTGF5ZXJfMiIgZGF0YS1uYW1lPSJMYXllciAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MDUuODQgNTMuNDIiPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuY2xzLTEgewogICAgICAgIGZpbGw6ICNmZmY7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDxnIGlkPSJMYXllcl8xLTIiIGRhdGEtbmFtZT0iTGF5ZXIgMSI+CiAgICA8ZyBpZD0ibG9nb19JTF8yMDI0X2Z1bGxfLV9wcmltYXJ5IiBkYXRhLW5hbWU9ImxvZ28gSUwgMjAyNCBmdWxsIC0gcHJpbWFyeSI+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTkwLjcxLDkuNzJjLTguNjcsMC0xNS43LDcuMDMtMTUuNywxNS43LDAsNS40MSwyLjc0LDEwLjE4LDYuOTEsMTMsLjExLjA3LjIyLjE0LjMzLjIyLjg1LjY0LDEuNDEsMS42NSwxLjQxLDIuOHYuNjVoMy45N3YtLjY1YzAtLjMzLS4wMy0uNjUtLjA3LS45OGguMDFsLTIuMDQtMTEuNjctLjg0LjEzLDEuMzksOC4wMWMtLjQxLS41NS0uOS0xLjA1LTEuNDYtMS40Ni0uMTgtLjEzLS4zNy0uMjYtLjU2LS4zNy0zLjE5LTIuMi01LjA5LTUuOC01LjA5LTkuNjcsMC02LjQ3LDUuMjYtMTEuNzQsMTEuNzMtMTEuNzRzMTEuNzMsNS4yNywxMS43MywxMS43NGMwLDMuNzktMS44Myw3LjM0LTQuOTEsOS41NC0uMzcuMjEtLjcyLjQ1LTEuMDUuNzItLjQ0LjM2LS44My43Ni0xLjE2LDEuMmwxLjM5LTcuOTUtLjg1LS4xLTEuOTIsMTAuOThjLS4wMy4xMi0uMDQuMjUtLjA2LjM4bC0uMDUuMjZzMCwuMDYtLjAxLjA4bC0uMDIuMjV2MS4zMWgzLjk2di0xLjA4Yy4xMS0uOTIuNTctMS43MiwxLjI1LTIuMjguMTktLjE1LjM5LS4yOS42MS0uNCw0LjEtMi44NCw2Ljc4LTcuNTYsNi43OC0xMi45MSwwLTguNjctNy4wMy0xNS43LTE1LjY5LTE1LjdaIi8+CiAgICAgIDxyZWN0IGNsYXNzPSJjbHMtMSIgeD0iODMuNjYiIHk9IjQ5LjQ1IiB3aWR0aD0iMTQuMDkiIGhlaWdodD0iMy45NyIvPgogICAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iODMuNjYgNDMuNzkgODMuNjYgNDcuNzYgOTcuNzUgNDcuNzYgOTcuNzUgNDMuNzkgODcuNjMgNDMuNzkgODMuNjYgNDMuNzkiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNOTAuNTcsMjUuMzRjLjcsMCwxLjMzLjM2LDEuNjkuOTcuNzgsMS4zMywyLjExLDIuMjQsMy42LDIuNTNsLjg1LjEuNi0zLjQ0Yy0uMTQuMDQtLjI5LjA2LS40NS4wNi0uMTUsMC0uMjktLjAyLS40Mi0uMDUtLjUzLS4xMS0uOTgtLjQ0LTEuMjctLjkzLS45Ni0xLjYyLTIuNzItMi42Mi00LjYtMi42MnMtMy42NCwxLTQuNiwyLjYyYy0uMjQuNDEtLjYuNy0xLjAzLjg1LS4yLjA4LS40My4xMi0uNjYuMTItLjA2LDAtLjEyLDAtLjE4LS4wMWwuNTksMy4zOC44NC0uMTNjMS4zOC0uMzUsMi42LTEuMjMsMy4zNC0yLjQ4LjM2LS42MS45OS0uOTcsMS42OS0uOTdaIi8+CiAgICAgIDxyZWN0IGNsYXNzPSJjbHMtMSIgeT0iMTAuMjgiIHdpZHRoPSI0Ljc2IiBoZWlnaHQ9IjMwLjAzIi8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIzMi41MiAzMS42NCAxNS40OSAxMC4yOCAxMS44IDEwLjI4IDExLjggNDAuMyAxNi42NSA0MC4zIDE2LjY1IDE5LjEyIDMzLjY4IDQwLjMgMzcuMzIgNDAuMyAzNy4zMiAxMC4yOCAzMi41MiAxMC4yOCAzMi41MiAzMS42NCIvPgogICAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iNjUuMTQgMzEuNjQgNDguMTEgMTAuMjggNDQuNDIgMTAuMjggNDQuNDIgNDAuMyA0OS4yNyA0MC4zIDQ5LjI3IDE5LjEyIDY2LjMgNDAuMyA2OS45NCA0MC4zIDY5Ljk0IDEwLjI4IDY1LjE0IDEwLjI4IDY1LjE0IDMxLjY0Ii8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIxMzEuMjcgMTAuMjggMTIxLjY2IDM0LjY5IDExMi4wOSAxMC4yOCAxMDYuNjkgMTAuMjggMTE5LjE3IDQwLjQzIDEyNC4xOSA0MC40MyAxMzYuNjMgMTAuMjggMTMxLjI3IDEwLjI4Ii8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTIyNi4wNywxMi4wNmMtLjExLS4wNy0uMjItLjE0LS4zMy0uMjItLjg1LS42NC0xLjQxLTEuNjctMS40MS0yLjgyVjBoLTMuOTZ2OS4wMmMwLDIuMzUsMS4xMiw0LjYsMyw2LjAxLjE4LjE1LjM2LjI3LjU2LjM5LDMuMTMsMi4xNyw1LjAyLDUuNzIsNS4wOCw5LjUzLS4yOC0uMTctLjUxLS40LS42OS0uNjktLjk2LTEuNjQtMi43Mi0yLjY1LTQuNi0yLjY1cy0zLjY0LDEuMDEtNC42MSwyLjY0Yy0uMzYuNjEtLjk5Ljk4LTEuNjkuOThzLTEuMzMtLjM2LTEuNjktLjk3Yy0uOTYtMS42NC0yLjczLTIuNjUtNC42MS0yLjY1cy0zLjY1LDEuMDEtNC42LDIuNjRjLS4yMy4zOS0uNTcuNjktLjk4Ljg0LjAyLTMuOCwxLjg1LTcuMzQsNC45MS05LjU1LjM3LS4yMS43Mi0uNDUsMS4wNS0uNzIsMS40OC0xLjIzLDIuNDMtMi45OCwyLjY2LTQuOWwuMDMtLjI0VjBoLTMuOTd2OS40NGMtLjExLjkyLS41NywxLjc0LTEuMjUsMi4zLS4yLjE2LS40LjI5LS42Mi40LTQuMSwyLjg1LTYuNzgsNy42LTYuNzgsMTMsMCw4LjczLDcuMDMsMTUuOCwxNS43LDE1LjhzMTUuNy03LjA3LDE1LjctMTUuOGMwLTUuNDUtMi43NC0xMC4yNS02LjkxLTEzLjA5Wk0yMTcuMjksMzYuOTVjLTUuMzEsMC05LjgxLTMuNTgtMTEuMjUtOC40NiwxLjQxLS4zMywyLjY1LTEuMjMsMy40MS0yLjUuMzYtLjYxLjk5LS45OCwxLjY5LS45OHMxLjMzLjM3LDEuNjkuOThjLjk2LDEuNjIsMi43MywyLjY0LDQuNjEsMi42NHMzLjY0LTEuMDIsNC42LTIuNjRjLjM2LS42MS45OS0uOTgsMS42OS0uOThzMS4zMy4zNywxLjY5Ljk4Yy43LDEuMiwxLjg0LDIuMDUsMy4xMywyLjQzLTEuNDEsNC45My01LjkzLDguNTMtMTEuMjYsOC41M1oiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTQ3LjU1LDEwLjI4bC0xMy40NywzMC4wM2g1LjFsMi44My02LjNoMTYuMjVsMi44OCw2LjNoNS4xbC0xMy40Ny0zMC4wM2gtNS4yM1pNMTQzLjgyLDI5LjYzbDYuMzUtMTQuMjksNi4zNSwxNC4yOWgtMTIuNjlaIi8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIxNjMuNDEgMTQuNjEgMTczLjI4IDE0LjYxIDE3My4yOCA0MC4zMSAxNzguMTMgNDAuMzEgMTc4LjEzIDE0LjYxIDE4Ny45NSAxNC42MSAxODcuOTUgMTAuMjggMTYzLjQxIDEwLjI4IDE2My40MSAxNC42MSIvPgogICAgICA8cmVjdCBjbGFzcz0iY2xzLTEiIHg9IjE5MS44NSIgeT0iMTAuMjgiIHdpZHRoPSI0Ljc2IiBoZWlnaHQ9IjMwLjAzIi8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIyNTguNzkgMzEuNjQgMjQxLjc2IDEwLjI4IDIzOC4wNyAxMC4yOCAyMzguMDcgNDAuMyAyNDIuOTIgNDAuMyAyNDIuOTIgMTkuMTIgMjU5Ljk1IDQwLjMgMjYzLjU5IDQwLjMgMjYzLjU5IDEwLjI4IDI1OC43OSAxMC4yOCAyNTguNzkgMzEuNjQiLz4KICAgICAgPHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjI4Ni42MyAxMC4yOCAyODEuODIgMTAuMjggMjgxLjgyIDQwLjMgMzAyLjQ1IDQwLjMgMzAyLjQ1IDM1Ljg1IDI4Ni42MyAzNS44NSAyODYuNjMgMTAuMjgiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzk0LjE1LDMwLjk3Yy0uMzMtNi4yNS02LjAyLTcuOTEtMTIuMDItOC43NC0zLjk1LS41Ni03LjI5LTEuMzctNy4yOS00LjI5czIuOTItNC41NSw2Ljk1LTQuNTVjMy4xMy4wNCw2LjAxLDEuMjksNy40MiwzLjM0bDMuNjUtMi40NGMtMi41My00LjAzLTYuODYtNS4wNi0xMS4yLTUuMDYtNS40LDAtMTEuNjIsMi40LTExLjU4LDguNjIsMCw2LjQzLDUuNjYsNy45NCwxMS42Miw4Ljc1LDQuMi41Niw3LjY4LDEuNjcsNy42OCw0LjkzLDAsMy43OC0zLjk5LDQuOTgtNy41OSw0Ljk4cy03LjIxLTEuMjktOS4zNS00LjkzbC0zLjYsMi40YzIuNzQsNS4wNiw3LjE2LDYuODIsMTIuOTEsNi44Mi41NiwwLDEuMTEtLjAzLDEuNjYtLjA3LDIuMi4wNyw2LjM0LTEuNDksNy40Ni0yLjI5LDQuMS0yLjksMy4xNS03LjM0LDMuMjgtNy40OFoiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzE4LjIsMTAuMjhsLTEzLjQ3LDMwLjAzaDUuMTFsMi44My02LjNoMTYuMjZsMi44Nyw2LjNoNS4xbC0xMy40Ny0zMC4wM2gtNS4yM1pNMzE0LjQ2LDI5LjYzbDYuMzUtMTQuMjksNi4zNSwxNC4yOWgtMTIuNjlaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTM2MC40NywyNC44MmMyLjgzLTEuMTYsNC4xNi0zLjQzLDQuMTYtNS45NiwwLTUuOTYtNC41MS04LjU4LTEwLjIxLTguNThoLTEzLjc3djMwLjAzaDEzLjc3YzUuOTIsMCwxMS4xNS0yLjAyLDExLjE1LTguNTgsMC0yLjI3LTEuNS01LjgzLTUuMS02LjlaTTM0NS40MSwxNC42MWg5LjAxYzMuNiwwLDUuNDUsMi4yMyw1LjQ1LDQuMzMsMCwyLjM2LTEuOCwzLjc4LTUuNCwzLjc4aC05LjA1di04LjExWk0zNTQuNDIsMzUuODVoLTkuMDF2LTguODRoOS4wNWMyLjc0LDAsNi4zMSwxLjQ2LDYuMzEsNC42OHMtMy42OSw0LjE2LTYuMzUsNC4xNloiLz4KICAgIDwvZz4KICAgIDxnPgogICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik00MDUuNzMsMzYuMDJoMTkuMTZ2NC42OGgtMjQuMTR2LTcuNTZjMC01LjcxLDQuNDctOS4wMiwxMi4xNi05LjAyLDQuMTIsMCw2LjkyLTEuODUsNi45Mi00LjYsMC0zLjAxLTIuNDUtNC43Ny02LjYyLTQuNzdzLTcuMDQsMS43Ni03LjEzLDQuNTFoLTUuMTVjLjM0LTUuNjcsNC45LTkuMDIsMTIuMjktOS4wMnMxMS42OCwzLjUyLDExLjY4LDkuMTljMCw2LjAxLTQuMTcsOS4xOS0xMS45NCw5LjE5LTQuNTEsMC03LjIyLDEuNjgtNy4yMiw0LjUxdjIuODhaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTQyOC4wNiwyOC41OXYtNS44OGMwLTcuNTYsNS4yOC0xMi42NywxMy4wNi0xMi42N3MxMy4wNiw1LjExLDEzLjA2LDEyLjY3djUuODhjMCw3LjUyLTUuMjgsMTIuNjMtMTMuMDYsMTIuNjNzLTEzLjA2LTUuMTEtMTMuMDYtMTIuNjNaTTQ0OS4xMSwyOC41OXYtNS44OGMwLTQuNzItMy4xOC03LjktNy45OS03LjlzLTcuOTksMy4xOC03Ljk5LDcuOXY1Ljg4YzAsNC43MiwzLjE4LDcuOSw3Ljk5LDcuOXM3Ljk5LTMuMTgsNy45OS03LjlaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTQ2Mi4yNSwzNi4wMmgxOS4xNnY0LjY4aC0yNC4xNHYtNy41NmMwLTUuNzEsNC40Ny05LjAyLDEyLjE2LTkuMDIsNC4xMiwwLDYuOTItMS44NSw2LjkyLTQuNiwwLTMuMDEtMi40NS00Ljc3LTYuNjItNC43N3MtNy4wNCwxLjc2LTcuMTMsNC41MWgtNS4xNWMuMzQtNS42Nyw0LjktOS4wMiwxMi4yOS05LjAyczExLjY4LDMuNTIsMTEuNjgsOS4xOWMwLDYuMDEtNC4xNyw5LjE5LTExLjk0LDkuMTktNC41MSwwLTcuMjIsMS42OC03LjIyLDQuNTF2Mi44OFoiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNTA1Ljg0LDEwLjY0djIuODhsLTEzLjkyLDI3LjE5aC01Ljc1bDEzLjE5LTI1LjM0aC0xNi40MXYtNC43MmgyMi44OVoiLz4KICAgIDwvZz4KICA8L2c+Cjwvc3ZnPg==" alt=""><div class="fl"><span class="on">Map</span><span>Research</span><span>Vision</span><span>Curriculum</span><span>People</span><span>Year ahead</span><span>Calendar</span><span>Partners</span><span>Slides</span></div></div>
+      <div class="mapwrap">
+        <div class="maphead"><div><div class="kicker">The route</div><h3>Nine stops, one story</h3></div><span class="note">Select a stop</span></div>
+        <div class="map" id="map">
+          <svg viewBox="0 0 1000 330" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M30 210 C 160 380, 260 0, 400 150 S 640 330, 760 140 S 930 40, 975 160" fill="none" stroke="var(--line-soft)" stroke-width="1.5" opacity=".7" transform="translate(0,-60)"/>
+            <path id="rtAll" d="M40 175 C 140 60, 230 60, 320 165 S 520 280, 620 165 S 820 50, 960 160" fill="none" stroke="var(--line-control)" stroke-width="3" stroke-dasharray="7 8" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+            <path id="rtDone" d="M40 175 C 140 60, 230 60, 320 165 S 520 280, 620 165 S 820 50, 960 160" fill="none" stroke="var(--route)" stroke-width="4" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+          </svg>
+        </div>
+        <ol class="vroute" id="vroute"></ol>
+        <div class="mapdetail" aria-live="polite" id="mapdetail"></div>
+      </div>
+    </div>
+
+    <div class="split" style="margin-top:var(--s48)">
+      <ul class="points">
+        <li><span><b>Route first.</b> One 4px line, numbered stop discs, labels alternating above and below. Purple marks only the selected stop; the route ahead is dashed.</span></li>
+        <li><span><b>Same journey on a phone.</b> Under 820px the map becomes a vertical route and detail opens in a bottom sheet.</span></li>
+        <li><span><b>Map and Hub share one model.</b> Same stop names and order, Map in the Hub's navigation, light and night kept in step.</span></li>
+      </ul>
+      <div class="callout"><span class="tag">Rule</span><span>Websites and maps never use the animated mesh, dotted paper or radial glows. A few large, faint contour curves are the most a map background gets. The mesh belongs to presentations.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PRESENTATION ================= -->
+<section class="sec s" id="presentation">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">presentation-maker</span>
+      <h2 class="headline">The catchy front door. <em>The Hub holds the rest.</em></h2>
+      <p class="lead">Pitch-like decks, phone-first and Night by default. Each slide carries one story beat and can end with a "Go deeper" link into the matching Hub page.</p>
+    </div>
+    <div class="ref"><span class="meta">Reference</span><span class="chip">IL2027 pitch</span><span class="note">Slide titles and chapters from the bundled example. Try Back and Next.</span></div>
+
+    <div class="deckzone">
+      <div class="phone"><div class="screen">
+        <div class="segs" id="segs"></div>
+        <div class="chap"><b id="chap">Where we start</b><span id="cnt">1 / 6</span></div>
+        <div class="slides" id="slides">
+          <div class="sl"><span class="k">Innovation Labs 2027</span><h4>Analog first.<br><em>AI second.</em></h4><p>A story about how founders think, and what we are changing so they keep doing it.</p></div>
+          <div class="sl"><span class="k">Where we start</span><h4>221 teams applied.<br><em>17 stood on stage.</em></h4></div>
+          <div class="sl"><span class="k">The idea</span><h4>AI never produces version one.<br><em>It improves version one.</em></h4></div>
+          <div class="sl"><span class="k">The year</span><h4>Fewer teams.<br><em>More attention each.</em></h4><span class="deeper"><span class="dk">Go deeper</span>The cohort</span></div>
+          <div class="sl"><span class="k">The year</span><h4>The 2027 calendar,<br><em>in short.</em></h4><span class="deeper"><span class="dk">Go deeper</span>The calendar</span></div>
+          <div class="sl"><span class="k">Go deeper</span><h4>Build version one<br><em>yourself.</em></h4><span class="btn">Open the strategy hub</span></div>
+        </div>
+        <div class="dnav"><button type="button" id="bk">Back</button><button type="button" class="nx" id="nx">Next</button></div>
+      </div></div>
+
+      <div class="copy">
+        <ol class="anatomy" aria-label="Slide anatomy">
+          <li><span class="n">1</span><span>Mono kicker naming the chapter</span></li>
+          <li><span class="n">2</span><span>Two-beat title, second beat in teal</span></li>
+          <li><span class="n">3</span><span>At most one pattern: 3 cards, 3 stats, steps, a timeline or two columns</span></li>
+          <li><span class="n">4</span><span>Detail behind a tap, then one "Go deeper" pill</span></li>
+        </ol>
+        <div class="meshspec">
+          <h4>The playable network, presentations only</h4>
+          <p>Decks may run a springy network behind the slides when the story is about connection, community or the cohort. It is not drawn here, because this page is a website.</p>
+          <ul>
+            <li>Teal nodes near 55%, lines near 26%, purple tap ripples</li>
+            <li>Vignetted so text sits on calm ground</li>
+            <li>Paused under reduced motion, never on every slide</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ONE-PAGER ================= -->
+<section class="sec t" id="onepager">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">one-pager-maker</span>
+      <h2 class="headline">One page. <em>One thesis.</em></h2>
+      <p class="lead">A4, print-safe, Light. One headline, one lead, then a few modular blocks and a clear bottom line.</p>
+    </div>
+    <div class="ref"><span class="meta">Reference</span><span class="chip">IL2027 vision one-pager</span><span class="note">The one-pager that ships with the plugin, shown without its old dotted ground. A partner brief uses the same pattern with formal-lens.</span></div>
+
+    <div class="split">
+      <div class="a4" role="img" aria-label="Preview of the 2027 Vision one-pager">
+        <div class="h">
+          <div class="top"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTGF5ZXJfMiIgZGF0YS1uYW1lPSJMYXllciAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MDUuODQgNTMuNDIiPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuY2xzLTEgewogICAgICAgIGZpbGw6ICNmZmY7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDxnIGlkPSJMYXllcl8xLTIiIGRhdGEtbmFtZT0iTGF5ZXIgMSI+CiAgICA8ZyBpZD0ibG9nb19JTF8yMDI0X2Z1bGxfLV9wcmltYXJ5IiBkYXRhLW5hbWU9ImxvZ28gSUwgMjAyNCBmdWxsIC0gcHJpbWFyeSI+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTkwLjcxLDkuNzJjLTguNjcsMC0xNS43LDcuMDMtMTUuNywxNS43LDAsNS40MSwyLjc0LDEwLjE4LDYuOTEsMTMsLjExLjA3LjIyLjE0LjMzLjIyLjg1LjY0LDEuNDEsMS42NSwxLjQxLDIuOHYuNjVoMy45N3YtLjY1YzAtLjMzLS4wMy0uNjUtLjA3LS45OGguMDFsLTIuMDQtMTEuNjctLjg0LjEzLDEuMzksOC4wMWMtLjQxLS41NS0uOS0xLjA1LTEuNDYtMS40Ni0uMTgtLjEzLS4zNy0uMjYtLjU2LS4zNy0zLjE5LTIuMi01LjA5LTUuOC01LjA5LTkuNjcsMC02LjQ3LDUuMjYtMTEuNzQsMTEuNzMtMTEuNzRzMTEuNzMsNS4yNywxMS43MywxMS43NGMwLDMuNzktMS44Myw3LjM0LTQuOTEsOS41NC0uMzcuMjEtLjcyLjQ1LTEuMDUuNzItLjQ0LjM2LS44My43Ni0xLjE2LDEuMmwxLjM5LTcuOTUtLjg1LS4xLTEuOTIsMTAuOThjLS4wMy4xMi0uMDQuMjUtLjA2LjM4bC0uMDUuMjZzMCwuMDYtLjAxLjA4bC0uMDIuMjV2MS4zMWgzLjk2di0xLjA4Yy4xMS0uOTIuNTctMS43MiwxLjI1LTIuMjguMTktLjE1LjM5LS4yOS42MS0uNCw0LjEtMi44NCw2Ljc4LTcuNTYsNi43OC0xMi45MSwwLTguNjctNy4wMy0xNS43LTE1LjY5LTE1LjdaIi8+CiAgICAgIDxyZWN0IGNsYXNzPSJjbHMtMSIgeD0iODMuNjYiIHk9IjQ5LjQ1IiB3aWR0aD0iMTQuMDkiIGhlaWdodD0iMy45NyIvPgogICAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iODMuNjYgNDMuNzkgODMuNjYgNDcuNzYgOTcuNzUgNDcuNzYgOTcuNzUgNDMuNzkgODcuNjMgNDMuNzkgODMuNjYgNDMuNzkiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNOTAuNTcsMjUuMzRjLjcsMCwxLjMzLjM2LDEuNjkuOTcuNzgsMS4zMywyLjExLDIuMjQsMy42LDIuNTNsLjg1LjEuNi0zLjQ0Yy0uMTQuMDQtLjI5LjA2LS40NS4wNi0uMTUsMC0uMjktLjAyLS40Mi0uMDUtLjUzLS4xMS0uOTgtLjQ0LTEuMjctLjkzLS45Ni0xLjYyLTIuNzItMi42Mi00LjYtMi42MnMtMy42NCwxLTQuNiwyLjYyYy0uMjQuNDEtLjYuNy0xLjAzLjg1LS4yLjA4LS40My4xMi0uNjYuMTItLjA2LDAtLjEyLDAtLjE4LS4wMWwuNTksMy4zOC44NC0uMTNjMS4zOC0uMzUsMi42LTEuMjMsMy4zNC0yLjQ4LjM2LS42MS45OS0uOTcsMS42OS0uOTdaIi8+CiAgICAgIDxyZWN0IGNsYXNzPSJjbHMtMSIgeT0iMTAuMjgiIHdpZHRoPSI0Ljc2IiBoZWlnaHQ9IjMwLjAzIi8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIzMi41MiAzMS42NCAxNS40OSAxMC4yOCAxMS44IDEwLjI4IDExLjggNDAuMyAxNi42NSA0MC4zIDE2LjY1IDE5LjEyIDMzLjY4IDQwLjMgMzcuMzIgNDAuMyAzNy4zMiAxMC4yOCAzMi41MiAxMC4yOCAzMi41MiAzMS42NCIvPgogICAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iNjUuMTQgMzEuNjQgNDguMTEgMTAuMjggNDQuNDIgMTAuMjggNDQuNDIgNDAuMyA0OS4yNyA0MC4zIDQ5LjI3IDE5LjEyIDY2LjMgNDAuMyA2OS45NCA0MC4zIDY5Ljk0IDEwLjI4IDY1LjE0IDEwLjI4IDY1LjE0IDMxLjY0Ii8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIxMzEuMjcgMTAuMjggMTIxLjY2IDM0LjY5IDExMi4wOSAxMC4yOCAxMDYuNjkgMTAuMjggMTE5LjE3IDQwLjQzIDEyNC4xOSA0MC40MyAxMzYuNjMgMTAuMjggMTMxLjI3IDEwLjI4Ii8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTIyNi4wNywxMi4wNmMtLjExLS4wNy0uMjItLjE0LS4zMy0uMjItLjg1LS42NC0xLjQxLTEuNjctMS40MS0yLjgyVjBoLTMuOTZ2OS4wMmMwLDIuMzUsMS4xMiw0LjYsMyw2LjAxLjE4LjE1LjM2LjI3LjU2LjM5LDMuMTMsMi4xNyw1LjAyLDUuNzIsNS4wOCw5LjUzLS4yOC0uMTctLjUxLS40LS42OS0uNjktLjk2LTEuNjQtMi43Mi0yLjY1LTQuNi0yLjY1cy0zLjY0LDEuMDEtNC42MSwyLjY0Yy0uMzYuNjEtLjk5Ljk4LTEuNjkuOThzLTEuMzMtLjM2LTEuNjktLjk3Yy0uOTYtMS42NC0yLjczLTIuNjUtNC42MS0yLjY1cy0zLjY1LDEuMDEtNC42LDIuNjRjLS4yMy4zOS0uNTcuNjktLjk4Ljg0LjAyLTMuOCwxLjg1LTcuMzQsNC45MS05LjU1LjM3LS4yMS43Mi0uNDUsMS4wNS0uNzIsMS40OC0xLjIzLDIuNDMtMi45OCwyLjY2LTQuOWwuMDMtLjI0VjBoLTMuOTd2OS40NGMtLjExLjkyLS41NywxLjc0LTEuMjUsMi4zLS4yLjE2LS40LjI5LS42Mi40LTQuMSwyLjg1LTYuNzgsNy42LTYuNzgsMTMsMCw4LjczLDcuMDMsMTUuOCwxNS43LDE1LjhzMTUuNy03LjA3LDE1LjctMTUuOGMwLTUuNDUtMi43NC0xMC4yNS02LjkxLTEzLjA5Wk0yMTcuMjksMzYuOTVjLTUuMzEsMC05LjgxLTMuNTgtMTEuMjUtOC40NiwxLjQxLS4zMywyLjY1LTEuMjMsMy40MS0yLjUuMzYtLjYxLjk5LS45OCwxLjY5LS45OHMxLjMzLjM3LDEuNjkuOThjLjk2LDEuNjIsMi43MywyLjY0LDQuNjEsMi42NHMzLjY0LTEuMDIsNC42LTIuNjRjLjM2LS42MS45OS0uOTgsMS42OS0uOThzMS4zMy4zNywxLjY5Ljk4Yy43LDEuMiwxLjg0LDIuMDUsMy4xMywyLjQzLTEuNDEsNC45My01LjkzLDguNTMtMTEuMjYsOC41M1oiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTQ3LjU1LDEwLjI4bC0xMy40NywzMC4wM2g1LjFsMi44My02LjNoMTYuMjVsMi44OCw2LjNoNS4xbC0xMy40Ny0zMC4wM2gtNS4yM1pNMTQzLjgyLDI5LjYzbDYuMzUtMTQuMjksNi4zNSwxNC4yOWgtMTIuNjlaIi8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIxNjMuNDEgMTQuNjEgMTczLjI4IDE0LjYxIDE3My4yOCA0MC4zMSAxNzguMTMgNDAuMzEgMTc4LjEzIDE0LjYxIDE4Ny45NSAxNC42MSAxODcuOTUgMTAuMjggMTYzLjQxIDEwLjI4IDE2My40MSAxNC42MSIvPgogICAgICA8cmVjdCBjbGFzcz0iY2xzLTEiIHg9IjE5MS44NSIgeT0iMTAuMjgiIHdpZHRoPSI0Ljc2IiBoZWlnaHQ9IjMwLjAzIi8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIyNTguNzkgMzEuNjQgMjQxLjc2IDEwLjI4IDIzOC4wNyAxMC4yOCAyMzguMDcgNDAuMyAyNDIuOTIgNDAuMyAyNDIuOTIgMTkuMTIgMjU5Ljk1IDQwLjMgMjYzLjU5IDQwLjMgMjYzLjU5IDEwLjI4IDI1OC43OSAxMC4yOCAyNTguNzkgMzEuNjQiLz4KICAgICAgPHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjI4Ni42MyAxMC4yOCAyODEuODIgMTAuMjggMjgxLjgyIDQwLjMgMzAyLjQ1IDQwLjMgMzAyLjQ1IDM1Ljg1IDI4Ni42MyAzNS44NSAyODYuNjMgMTAuMjgiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzk0LjE1LDMwLjk3Yy0uMzMtNi4yNS02LjAyLTcuOTEtMTIuMDItOC43NC0zLjk1LS41Ni03LjI5LTEuMzctNy4yOS00LjI5czIuOTItNC41NSw2Ljk1LTQuNTVjMy4xMy4wNCw2LjAxLDEuMjksNy40MiwzLjM0bDMuNjUtMi40NGMtMi41My00LjAzLTYuODYtNS4wNi0xMS4yLTUuMDYtNS40LDAtMTEuNjIsMi40LTExLjU4LDguNjIsMCw2LjQzLDUuNjYsNy45NCwxMS42Miw4Ljc1LDQuMi41Niw3LjY4LDEuNjcsNy42OCw0LjkzLDAsMy43OC0zLjk5LDQuOTgtNy41OSw0Ljk4cy03LjIxLTEuMjktOS4zNS00LjkzbC0zLjYsMi40YzIuNzQsNS4wNiw3LjE2LDYuODIsMTIuOTEsNi44Mi41NiwwLDEuMTEtLjAzLDEuNjYtLjA3LDIuMi4wNyw2LjM0LTEuNDksNy40Ni0yLjI5LDQuMS0yLjksMy4xNS03LjM0LDMuMjgtNy40OFoiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzE4LjIsMTAuMjhsLTEzLjQ3LDMwLjAzaDUuMTFsMi44My02LjNoMTYuMjZsMi44Nyw2LjNoNS4xbC0xMy40Ny0zMC4wM2gtNS4yM1pNMzE0LjQ2LDI5LjYzbDYuMzUtMTQuMjksNi4zNSwxNC4yOWgtMTIuNjlaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTM2MC40NywyNC44MmMyLjgzLTEuMTYsNC4xNi0zLjQzLDQuMTYtNS45NiwwLTUuOTYtNC41MS04LjU4LTEwLjIxLTguNThoLTEzLjc3djMwLjAzaDEzLjc3YzUuOTIsMCwxMS4xNS0yLjAyLDExLjE1LTguNTgsMC0yLjI3LTEuNS01LjgzLTUuMS02LjlaTTM0NS40MSwxNC42MWg5LjAxYzMuNiwwLDUuNDUsMi4yMyw1LjQ1LDQuMzMsMCwyLjM2LTEuOCwzLjc4LTUuNCwzLjc4aC05LjA1di04LjExWk0zNTQuNDIsMzUuODVoLTkuMDF2LTguODRoOS4wNWMyLjc0LDAsNi4zMSwxLjQ2LDYuMzEsNC42OHMtMy42OSw0LjE2LTYuMzUsNC4xNloiLz4KICAgIDwvZz4KICAgIDxnPgogICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik00MDUuNzMsMzYuMDJoMTkuMTZ2NC42OGgtMjQuMTR2LTcuNTZjMC01LjcxLDQuNDctOS4wMiwxMi4xNi05LjAyLDQuMTIsMCw2LjkyLTEuODUsNi45Mi00LjYsMC0zLjAxLTIuNDUtNC43Ny02LjYyLTQuNzdzLTcuMDQsMS43Ni03LjEzLDQuNTFoLTUuMTVjLjM0LTUuNjcsNC45LTkuMDIsMTIuMjktOS4wMnMxMS42OCwzLjUyLDExLjY4LDkuMTljMCw2LjAxLTQuMTcsOS4xOS0xMS45NCw5LjE5LTQuNTEsMC03LjIyLDEuNjgtNy4yMiw0LjUxdjIuODhaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTQyOC4wNiwyOC41OXYtNS44OGMwLTcuNTYsNS4yOC0xMi42NywxMy4wNi0xMi42N3MxMy4wNiw1LjExLDEzLjA2LDEyLjY3djUuODhjMCw3LjUyLTUuMjgsMTIuNjMtMTMuMDYsMTIuNjNzLTEzLjA2LTUuMTEtMTMuMDYtMTIuNjNaTTQ0OS4xMSwyOC41OXYtNS44OGMwLTQuNzItMy4xOC03LjktNy45OS03LjlzLTcuOTksMy4xOC03Ljk5LDcuOXY1Ljg4YzAsNC43MiwzLjE4LDcuOSw3Ljk5LDcuOXM3Ljk5LTMuMTgsNy45OS03LjlaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTQ2Mi4yNSwzNi4wMmgxOS4xNnY0LjY4aC0yNC4xNHYtNy41NmMwLTUuNzEsNC40Ny05LjAyLDEyLjE2LTkuMDIsNC4xMiwwLDYuOTItMS44NSw2LjkyLTQuNiwwLTMuMDEtMi40NS00Ljc3LTYuNjItNC43N3MtNy4wNCwxLjc2LTcuMTMsNC41MWgtNS4xNWMuMzQtNS42Nyw0LjktOS4wMiwxMi4yOS05LjAyczExLjY4LDMuNTIsMTEuNjgsOS4xOWMwLDYuMDEtNC4xNyw5LjE5LTExLjk0LDkuMTktNC41MSwwLTcuMjIsMS42OC03LjIyLDQuNTF2Mi44OFoiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNTA1Ljg0LDEwLjY0djIuODhsLTEzLjkyLDI3LjE5aC01Ljc1bDEzLjE5LTI1LjM0aC0xNi40MXYtNC43MmgyMi44OVoiLz4KICAgIDwvZz4KICA8L2c+Cjwvc3ZnPg==" alt=""><span class="ey">The 2027 Vision</span></div>
+          <h4>Analog first.<br>AI second.</h4>
+          <p>Founders are handing the thinking to AI. In 2027, Innovation Labs makes them do their own thinking first, then turns AI on that work as a critic.</p>
+        </div>
+        <div class="m">
+          <div><span class="lab">Why now</span><div class="r r3">
+            <div class="b"><strong>+567%</strong><p>phone-free events worldwide across 2024 and 2025.</p></div>
+            <div class="b"><strong>Up to 55%</strong><p>less brain connectivity in ChatGPT users than in people writing unassisted.</p></div>
+            <div class="b"><strong>83%</strong><p>of ChatGPT users could not quote their own essay back.</p></div>
+          </div></div>
+          <div><span class="lab">The learning loop</span><div class="r r4">
+            <div class="b"><span class="nn">1</span><h5>Think in analog</h5><p>Build version one yourself, on paper.</p></div>
+            <div class="b"><span class="nn">2</span><h5>Think together</h5><p>Discuss it with peers.</p></div>
+            <div class="b ai"><span class="nn">3</span><h5>Challenge with AI</h5><p>AI argues against your version.</p></div>
+            <div class="b"><span class="nn">4</span><h5>Human synthesis</h5><p>The founder decides. Then repeat.</p></div>
+          </div></div>
+          <div><span class="lab">What changes in 2027</span><div class="r r3">
+            <div class="b top"><h5>Mentors and coaches</h5><p>Two to three hands-on mentors per team, one business and one tech.</p></div>
+            <div class="b top d"><h5>A smaller cohort</h5><p>About 25 teams after Bootcamp 2 plus a week.</p></div>
+            <div class="b top p"><h5>The curriculum</h5><p>An Orientation, an AI literacy track, a buffer week.</p></div>
+          </div></div>
+        </div>
+        <div class="f"><div class="k">In short</div><h5>Build it on paper. Discuss it. Let AI argue with it. Repeat.</h5><div class="ft"><span>Innovation Labs 2027: The Vision</span><span>Research figures: Eventbrite; MIT Media Lab, preprint under review.</span></div></div>
+      </div>
+
+      <div>
+        <h3 style="font-size:22px;letter-spacing:-.015em">Asked for one page? It fits on one page.</h3>
+        <p class="lead" style="margin-top:10px;font-size:16px">When a request says one page, the output must not spill onto a second. The skill prioritizes, compresses and cuts lower-priority detail, then points to the Hub for the rest. It never solves overflow by shrinking text into unreadable density.</p>
+        <div class="fit">
+          <div><b>1</b><span>thesis per page</span></div>
+          <div><b>3–5</b><span>supporting modules</span></div>
+          <div><b>15 mm</b><span>margins, 12-column grid</span></div>
+        </div>
+        <ul class="points" style="margin-top:var(--s26)">
+          <li><span><b>Print-safe cards.</b> Filled with surface-tint instead of borders, no glows, no transparency over photos.</span></li>
+          <li><span><b>Real links only.</b> The call to action uses the current Hub URL you supply, never an old artifact link found in the source.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LENSES ================= -->
+<section class="sec s" id="lenses">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Tone lenses</span>
+      <h2 class="headline">One message. <em>Three voices.</em></h2>
+      <p class="lead">A lens changes the voice. The facts, the structure and the look stay exactly where they were.</p>
+    </div>
+    <div class="fact-line"><span class="meta">Source fact</span><span class="chip">about 25 teams</span><span class="chip">after Bootcamp 2</span><span class="chip">53 hours per team in 2026</span></div>
+    <div class="lenses">
+      <article class="lensc"><div class="lh"><b>Formal</b><span class="chip lens">formal-lens</span></div>
+        <blockquote>In 2027, Innovation Labs will focus on <mark class="f">about 25 teams</mark> <mark class="f">after Bootcamp 2</mark>, so each receives more than the <mark class="f">53 hours of mentoring</mark> delivered per team in 2026.</blockquote>
+        <p class="rule">Precise and concise. Confident without hype, no corporate filler.</p></article>
+      <article class="lensc"><div class="lh"><b>Friendly</b><span class="chip lens">friendly-lens</span></div>
+        <blockquote>From 2027 we're keeping things smaller: <mark class="f">about 25 teams</mark> <mark class="f">after Bootcamp 2</mark>, so every team gets more than the <mark class="f">53 hours of mentoring</mark> they had in 2026.</blockquote>
+        <p class="rule">Warm and direct. Contractions welcome, never childish.</p></article>
+      <article class="lensc"><div class="lh"><b>Jokey</b><span class="chip lens">jokey-lens</span></div>
+        <blockquote>Fewer teams, more mentor per team. <mark class="f">About 25 teams</mark> continue <mark class="f">after Bootcamp 2</mark>, and each gets more than the <mark class="f">53 hours</mark> of 2026. The math is on your side.</blockquote>
+        <p class="rule">One light line is enough. If humor costs clarity, it goes.</p></article>
+    </div>
+    <div class="locked"><span class="meta">Every lens keeps</span><span class="chip">facts</span><span class="chip">numbers</span><span class="chip">claims</span><span class="chip">structure</span><span class="chip">visual identity</span></div>
+  </div>
+</section>
+
+<!-- ================= COMBINE ================= -->
+<section class="sec t" id="combine">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">How skills combine</span>
+      <h2 class="headline">The skill sets the format. <em>The lens sets the tone.</em></h2>
+    </div>
+    <div class="split">
+      <div class="combos">
+        <div class="combo"><div class="in"><span class="chip">website-maker</span></div><div class="ar" aria-hidden="true">→</div><div class="out"><b>Strategy Hub and Map</b><span>Source-rich deep dives, calm route</span></div></div>
+        <div class="combo"><div class="in"><span class="chip">presentation-maker</span><span class="p">+</span><span class="chip lens">friendly-lens</span></div><div class="ar" aria-hidden="true">→</div><div class="out"><b>Founder-facing strategy deck</b><span>Pitchy story that links to the Hub</span></div></div>
+        <div class="combo"><div class="in"><span class="chip">one-pager-maker</span><span class="p">+</span><span class="chip lens">formal-lens</span></div><div class="ar" aria-hidden="true">→</div><div class="out"><b>Partner one-pager</b><span>One clear page, partner-ready voice</span></div></div>
+        <div class="combo"><div class="in"><span class="chip">insta-post-maker</span><span class="p">+</span><span class="chip lens">jokey-lens</span></div><div class="ar" aria-hidden="true">→</div><div class="out"><b>Social post or carousel</b><span>One message per card. Experimental skill.</span></div></div>
+      </div>
+      <aside class="panel">
+        <span class="kicker">The rule of one</span>
+        <h3>For a normal task, use</h3>
+        <ul>
+          <li>one output skill</li>
+          <li>zero or one tone lens</li>
+          <li>one design system</li>
+        </ul>
+        <p class="note">Stack several output skills only when you ask for a multi-format campaign.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOW TO USE ================= -->
+<section class="sec s" id="use">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">How to use</span>
+      <h2 class="headline">Attach your source. <em>Say what you need.</em></h2>
+      <p class="lead">Name the format and, if it matters, the audience. The plugin picks the skill and only says what your source says.</p>
+    </div>
+    <div class="prompts">
+      <div class="prompt"><q>Turn this strategy into an Innovation Labs Strategy Hub.</q><div class="pf"><span class="chip">website-maker</span><button type="button" class="copy">Copy</button></div></div>
+      <div class="prompt"><q>Make this strategy into a catchy 7-slide presentation and link to the Hub.</q><div class="pf"><span class="chip">presentation-maker</span><button type="button" class="copy">Copy</button></div></div>
+      <div class="prompt"><q>Make a partner one-pager from this strategy.</q><div class="pf"><span class="chip">one-pager-maker + formal-lens</span><button type="button" class="copy">Copy</button></div></div>
+      <div class="prompt"><q>Turn this update into a 5-card Instagram carousel.</q><div class="pf"><span class="chip">insta-post-maker</span><button type="button" class="copy">Copy</button></div></div>
+    </div>
+
+    <div class="notes3">
+      <div class="n3"><span class="kicker">Built in</span><h4>Portable design rules</h4><p>The plugin carries its own Innovation Labs design system and tokens, so it works even when the native Innovation Labs Design System is not installed.</p></div>
+      <div class="n3 d"><span class="kicker">Optional</span><h4>Native Claude Design System</h4><p>Select it alongside the plugin for a richer editor and runtime of the same rules. It mirrors the bundled spec and never overrides it.</p></div>
+      <div class="n3 p"><span class="kicker">Optional</span><h4>Humanizer, last</h4><p>The public Humanizer skill can polish narrative copy once structure is approved. Not a dependency, and not for tables, labels, citations or numbers.</p></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTGF5ZXJfMiIgZGF0YS1uYW1lPSJMYXllciAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MDUuODQgNTMuNDIiPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuY2xzLTEgewogICAgICAgIGZpbGw6ICNmZmY7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDxnIGlkPSJMYXllcl8xLTIiIGRhdGEtbmFtZT0iTGF5ZXIgMSI+CiAgICA8ZyBpZD0ibG9nb19JTF8yMDI0X2Z1bGxfLV9wcmltYXJ5IiBkYXRhLW5hbWU9ImxvZ28gSUwgMjAyNCBmdWxsIC0gcHJpbWFyeSI+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTkwLjcxLDkuNzJjLTguNjcsMC0xNS43LDcuMDMtMTUuNywxNS43LDAsNS40MSwyLjc0LDEwLjE4LDYuOTEsMTMsLjExLjA3LjIyLjE0LjMzLjIyLjg1LjY0LDEuNDEsMS42NSwxLjQxLDIuOHYuNjVoMy45N3YtLjY1YzAtLjMzLS4wMy0uNjUtLjA3LS45OGguMDFsLTIuMDQtMTEuNjctLjg0LjEzLDEuMzksOC4wMWMtLjQxLS41NS0uOS0xLjA1LTEuNDYtMS40Ni0uMTgtLjEzLS4zNy0uMjYtLjU2LS4zNy0zLjE5LTIuMi01LjA5LTUuOC01LjA5LTkuNjcsMC02LjQ3LDUuMjYtMTEuNzQsMTEuNzMtMTEuNzRzMTEuNzMsNS4yNywxMS43MywxMS43NGMwLDMuNzktMS44Myw3LjM0LTQuOTEsOS41NC0uMzcuMjEtLjcyLjQ1LTEuMDUuNzItLjQ0LjM2LS44My43Ni0xLjE2LDEuMmwxLjM5LTcuOTUtLjg1LS4xLTEuOTIsMTAuOThjLS4wMy4xMi0uMDQuMjUtLjA2LjM4bC0uMDUuMjZzMCwuMDYtLjAxLjA4bC0uMDIuMjV2MS4zMWgzLjk2di0xLjA4Yy4xMS0uOTIuNTctMS43MiwxLjI1LTIuMjguMTktLjE1LjM5LS4yOS42MS0uNCw0LjEtMi44NCw2Ljc4LTcuNTYsNi43OC0xMi45MSwwLTguNjctNy4wMy0xNS43LTE1LjY5LTE1LjdaIi8+CiAgICAgIDxyZWN0IGNsYXNzPSJjbHMtMSIgeD0iODMuNjYiIHk9IjQ5LjQ1IiB3aWR0aD0iMTQuMDkiIGhlaWdodD0iMy45NyIvPgogICAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iODMuNjYgNDMuNzkgODMuNjYgNDcuNzYgOTcuNzUgNDcuNzYgOTcuNzUgNDMuNzkgODcuNjMgNDMuNzkgODMuNjYgNDMuNzkiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNOTAuNTcsMjUuMzRjLjcsMCwxLjMzLjM2LDEuNjkuOTcuNzgsMS4zMywyLjExLDIuMjQsMy42LDIuNTNsLjg1LjEuNi0zLjQ0Yy0uMTQuMDQtLjI5LjA2LS40NS4wNi0uMTUsMC0uMjktLjAyLS40Mi0uMDUtLjUzLS4xMS0uOTgtLjQ0LTEuMjctLjkzLS45Ni0xLjYyLTIuNzItMi42Mi00LjYtMi42MnMtMy42NCwxLTQuNiwyLjYyYy0uMjQuNDEtLjYuNy0xLjAzLjg1LS4yLjA4LS40My4xMi0uNjYuMTItLjA2LDAtLjEyLDAtLjE4LS4wMWwuNTksMy4zOC44NC0uMTNjMS4zOC0uMzUsMi42LTEuMjMsMy4zNC0yLjQ4LjM2LS42MS45OS0uOTcsMS42OS0uOTdaIi8+CiAgICAgIDxyZWN0IGNsYXNzPSJjbHMtMSIgeT0iMTAuMjgiIHdpZHRoPSI0Ljc2IiBoZWlnaHQ9IjMwLjAzIi8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIzMi41MiAzMS42NCAxNS40OSAxMC4yOCAxMS44IDEwLjI4IDExLjggNDAuMyAxNi42NSA0MC4zIDE2LjY1IDE5LjEyIDMzLjY4IDQwLjMgMzcuMzIgNDAuMyAzNy4zMiAxMC4yOCAzMi41MiAxMC4yOCAzMi41MiAzMS42NCIvPgogICAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iNjUuMTQgMzEuNjQgNDguMTEgMTAuMjggNDQuNDIgMTAuMjggNDQuNDIgNDAuMyA0OS4yNyA0MC4zIDQ5LjI3IDE5LjEyIDY2LjMgNDAuMyA2OS45NCA0MC4zIDY5Ljk0IDEwLjI4IDY1LjE0IDEwLjI4IDY1LjE0IDMxLjY0Ii8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIxMzEuMjcgMTAuMjggMTIxLjY2IDM0LjY5IDExMi4wOSAxMC4yOCAxMDYuNjkgMTAuMjggMTE5LjE3IDQwLjQzIDEyNC4xOSA0MC40MyAxMzYuNjMgMTAuMjggMTMxLjI3IDEwLjI4Ii8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTIyNi4wNywxMi4wNmMtLjExLS4wNy0uMjItLjE0LS4zMy0uMjItLjg1LS42NC0xLjQxLTEuNjctMS40MS0yLjgyVjBoLTMuOTZ2OS4wMmMwLDIuMzUsMS4xMiw0LjYsMyw2LjAxLjE4LjE1LjM2LjI3LjU2LjM5LDMuMTMsMi4xNyw1LjAyLDUuNzIsNS4wOCw5LjUzLS4yOC0uMTctLjUxLS40LS42OS0uNjktLjk2LTEuNjQtMi43Mi0yLjY1LTQuNi0yLjY1cy0zLjY0LDEuMDEtNC42MSwyLjY0Yy0uMzYuNjEtLjk5Ljk4LTEuNjkuOThzLTEuMzMtLjM2LTEuNjktLjk3Yy0uOTYtMS42NC0yLjczLTIuNjUtNC42MS0yLjY1cy0zLjY1LDEuMDEtNC42LDIuNjRjLS4yMy4zOS0uNTcuNjktLjk4Ljg0LjAyLTMuOCwxLjg1LTcuMzQsNC45MS05LjU1LjM3LS4yMS43Mi0uNDUsMS4wNS0uNzIsMS40OC0xLjIzLDIuNDMtMi45OCwyLjY2LTQuOWwuMDMtLjI0VjBoLTMuOTd2OS40NGMtLjExLjkyLS41NywxLjc0LTEuMjUsMi4zLS4yLjE2LS40LjI5LS42Mi40LTQuMSwyLjg1LTYuNzgsNy42LTYuNzgsMTMsMCw4LjczLDcuMDMsMTUuOCwxNS43LDE1LjhzMTUuNy03LjA3LDE1LjctMTUuOGMwLTUuNDUtMi43NC0xMC4yNS02LjkxLTEzLjA5Wk0yMTcuMjksMzYuOTVjLTUuMzEsMC05LjgxLTMuNTgtMTEuMjUtOC40NiwxLjQxLS4zMywyLjY1LTEuMjMsMy40MS0yLjUuMzYtLjYxLjk5LS45OCwxLjY5LS45OHMxLjMzLjM3LDEuNjkuOThjLjk2LDEuNjIsMi43MywyLjY0LDQuNjEsMi42NHMzLjY0LTEuMDIsNC42LTIuNjRjLjM2LS42MS45OS0uOTgsMS42OS0uOThzMS4zMy4zNywxLjY5Ljk4Yy43LDEuMiwxLjg0LDIuMDUsMy4xMywyLjQzLTEuNDEsNC45My01LjkzLDguNTMtMTEuMjYsOC41M1oiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTQ3LjU1LDEwLjI4bC0xMy40NywzMC4wM2g1LjFsMi44My02LjNoMTYuMjVsMi44OCw2LjNoNS4xbC0xMy40Ny0zMC4wM2gtNS4yM1pNMTQzLjgyLDI5LjYzbDYuMzUtMTQuMjksNi4zNSwxNC4yOWgtMTIuNjlaIi8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIxNjMuNDEgMTQuNjEgMTczLjI4IDE0LjYxIDE3My4yOCA0MC4zMSAxNzguMTMgNDAuMzEgMTc4LjEzIDE0LjYxIDE4Ny45NSAxNC42MSAxODcuOTUgMTAuMjggMTYzLjQxIDEwLjI4IDE2My40MSAxNC42MSIvPgogICAgICA8cmVjdCBjbGFzcz0iY2xzLTEiIHg9IjE5MS44NSIgeT0iMTAuMjgiIHdpZHRoPSI0Ljc2IiBoZWlnaHQ9IjMwLjAzIi8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIyNTguNzkgMzEuNjQgMjQxLjc2IDEwLjI4IDIzOC4wNyAxMC4yOCAyMzguMDcgNDAuMyAyNDIuOTIgNDAuMyAyNDIuOTIgMTkuMTIgMjU5Ljk1IDQwLjMgMjYzLjU5IDQwLjMgMjYzLjU5IDEwLjI4IDI1OC43OSAxMC4yOCAyNTguNzkgMzEuNjQiLz4KICAgICAgPHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjI4Ni42MyAxMC4yOCAyODEuODIgMTAuMjggMjgxLjgyIDQwLjMgMzAyLjQ1IDQwLjMgMzAyLjQ1IDM1Ljg1IDI4Ni42MyAzNS44NSAyODYuNjMgMTAuMjgiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzk0LjE1LDMwLjk3Yy0uMzMtNi4yNS02LjAyLTcuOTEtMTIuMDItOC43NC0zLjk1LS41Ni03LjI5LTEuMzctNy4yOS00LjI5czIuOTItNC41NSw2Ljk1LTQuNTVjMy4xMy4wNCw2LjAxLDEuMjksNy40MiwzLjM0bDMuNjUtMi40NGMtMi41My00LjAzLTYuODYtNS4wNi0xMS4yLTUuMDYtNS40LDAtMTEuNjIsMi40LTExLjU4LDguNjIsMCw2LjQzLDUuNjYsNy45NCwxMS42Miw4Ljc1LDQuMi41Niw3LjY4LDEuNjcsNy42OCw0LjkzLDAsMy43OC0zLjk5LDQuOTgtNy41OSw0Ljk4cy03LjIxLTEuMjktOS4zNS00LjkzbC0zLjYsMi40YzIuNzQsNS4wNiw3LjE2LDYuODIsMTIuOTEsNi44Mi41NiwwLDEuMTEtLjAzLDEuNjYtLjA3LDIuMi4wNyw2LjM0LTEuNDksNy40Ni0yLjI5LDQuMS0yLjksMy4xNS03LjM0LDMuMjgtNy40OFoiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzE4LjIsMTAuMjhsLTEzLjQ3LDMwLjAzaDUuMTFsMi44My02LjNoMTYuMjZsMi44Nyw2LjNoNS4xbC0xMy40Ny0zMC4wM2gtNS4yM1pNMzE0LjQ2LDI5LjYzbDYuMzUtMTQuMjksNi4zNSwxNC4yOWgtMTIuNjlaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTM2MC40NywyNC44MmMyLjgzLTEuMTYsNC4xNi0zLjQzLDQuMTYtNS45NiwwLTUuOTYtNC41MS04LjU4LTEwLjIxLTguNThoLTEzLjc3djMwLjAzaDEzLjc3YzUuOTIsMCwxMS4xNS0yLjAyLDExLjE1LTguNTgsMC0yLjI3LTEuNS01LjgzLTUuMS02LjlaTTM0NS40MSwxNC42MWg5LjAxYzMuNiwwLDUuNDUsMi4yMyw1LjQ1LDQuMzMsMCwyLjM2LTEuOCwzLjc4LTUuNCwzLjc4aC05LjA1di04LjExWk0zNTQuNDIsMzUuODVoLTkuMDF2LTguODRoOS4wNWMyLjc0LDAsNi4zMSwxLjQ2LDYuMzEsNC42OHMtMy42OSw0LjE2LTYuMzUsNC4xNloiLz4KICAgIDwvZz4KICAgIDxnPgogICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik00MDUuNzMsMzYuMDJoMTkuMTZ2NC42OGgtMjQuMTR2LTcuNTZjMC01LjcxLDQuNDctOS4wMiwxMi4xNi05LjAyLDQuMTIsMCw2LjkyLTEuODUsNi45Mi00LjYsMC0zLjAxLTIuNDUtNC43Ny02LjYyLTQuNzdzLTcuMDQsMS43Ni03LjEzLDQuNTFoLTUuMTVjLjM0LTUuNjcsNC45LTkuMDIsMTIuMjktOS4wMnMxMS42OCwzLjUyLDExLjY4LDkuMTljMCw2LjAxLTQuMTcsOS4xOS0xMS45NCw5LjE5LTQuNTEsMC03LjIyLDEuNjgtNy4yMiw0LjUxdjIuODhaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTQyOC4wNiwyOC41OXYtNS44OGMwLTcuNTYsNS4yOC0xMi42NywxMy4wNi0xMi42N3MxMy4wNiw1LjExLDEzLjA2LDEyLjY3djUuODhjMCw3LjUyLTUuMjgsMTIuNjMtMTMuMDYsMTIuNjNzLTEzLjA2LTUuMTEtMTMuMDYtMTIuNjNaTTQ0OS4xMSwyOC41OXYtNS44OGMwLTQuNzItMy4xOC03LjktNy45OS03LjlzLTcuOTksMy4xOC03Ljk5LDcuOXY1Ljg4YzAsNC43MiwzLjE4LDcuOSw3Ljk5LDcuOXM3Ljk5LTMuMTgsNy45OS03LjlaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTQ2Mi4yNSwzNi4wMmgxOS4xNnY0LjY4aC0yNC4xNHYtNy41NmMwLTUuNzEsNC40Ny05LjAyLDEyLjE2LTkuMDIsNC4xMiwwLDYuOTItMS44NSw2LjkyLTQuNiwwLTMuMDEtMi40NS00Ljc3LTYuNjItNC43N3MtNy4wNCwxLjc2LTcuMTMsNC41MWgtNS4xNWMuMzQtNS42Nyw0LjktOS4wMiwxMi4yOS05LjAyczExLjY4LDMuNTIsMTEuNjgsOS4xOWMwLDYuMDEtNC4xNyw5LjE5LTExLjk0LDkuMTktNC41MSwwLTcuMjIsMS42OC03LjIyLDQuNTF2Mi44OFoiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNTA1Ljg0LDEwLjY0djIuODhsLTEzLjkyLDI3LjE5aC01Ljc1bDEzLjE5LTI1LjM0aC0xNi40MXYtNC43MmgyMi44OVoiLz4KICAgIDwvZz4KICA8L2c+Cjwvc3ZnPg==" alt="Innovation Labs 2027">
+    <p>ilabsro-design v0.3.1 · Innovation Labs design plugin</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var root=document.documentElement;
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* theme */
+  var btns=document.querySelectorAll('.seg button');
+  function setTheme(t){
+    if(t==='night')root.setAttribute('data-theme','night');else root.setAttribute('data-theme','light');
+    btns.forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.th===t));});
+    try{localStorage.setItem('il-theme',t);}catch(e){}
+  }
+  var saved=null;try{saved=localStorage.getItem('il-theme');}catch(e){}
+  setTheme(saved==='night'?'night':'light');
+  btns.forEach(function(b){b.addEventListener('click',function(){setTheme(b.dataset.th);});});
+
+  /* nav scrollspy */
+  var links=[].slice.call(document.querySelectorAll('#links a'));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
+  function spy(){
+    var y=window.scrollY+120,cur=0;
+    secs.forEach(function(s,i){if(s&&s.offsetTop<=y)cur=i;});
+    links.forEach(function(a,i){a.classList.toggle('on',i===cur);if(i===cur)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current');});
+  }
+  window.addEventListener('scroll',spy,{passive:true});spy();
+
+  /* expand */
+  document.querySelectorAll('.expand').forEach(function(x){
+    var b=x.querySelector('button'),body=x.querySelector('.body');
+    b.addEventListener('click',function(){var o=x.dataset.open!=='true';x.dataset.open=o;b.setAttribute('aria-expanded',o);body.hidden=!o;});
+  });
+
+  /* map */
+  var STOPS=[
+    ['What we looked at','2026 and the research','We looked at two things: our own 2026 program, and the research on AI and thinking.'],
+    ['What we found','What worked, what requests a fix','The 2026 findings are the improvement targets for a program that is fundamentally sound.'],
+    ['The idea','Analog first, AI second','AI never produces version one. It improves version one.'],
+    ['The curriculum','Exercises and challenger skills','Analog moves into existing blocks, so no new time is added.'],
+    ['The people','Mentors, coaches, feedback','A real team around every startup.'],
+    ['The cohort','Focused, with more mentoring','A focused cohort of about 25 teams, set one week after Bootcamp 2.'],
+    ['The calendar','What happens when','From the AI Validation Bootcamp with SiSC in October 2026 to Demo Day in May 2027.'],
+    ['The partners','A track and real challenges','Partners who add more than money, and stay for years.'],
+    ['Share it','The slides','The same story, in a format you can send.']
+  ];
+  var map=document.getElementById('map'),path=document.getElementById('rtDone'),vr=document.getElementById('vroute'),det=document.getElementById('mapdetail');
+  var L=path.getTotalLength(),pts=[],stopEls=[],lblEls=[],vEls=[],sel=2;
+  for(var i=0;i<STOPS.length;i++){
+    var p=path.getPointAtLength(L*(0.02+0.96*i/(STOPS.length-1)));pts.push(p);
+    var b=document.createElement('button');b.type='button';b.className='stop';b.textContent=i+1;
+    b.style.left=(p.x/10)+'%';b.style.top=(p.y/3.3)+'%';b.setAttribute('aria-label','Stop '+(i+1)+': '+STOPS[i][0]);
+    (function(k){b.addEventListener('click',function(){select(k);});})(i);
+    map.appendChild(b);stopEls.push(b);
+    var l=document.createElement('div');l.className='lbl '+(i%2?'dn':'up');l.textContent=STOPS[i][0];
+    l.style.left=(p.x/10)+'%';l.style.top=(p.y/3.3)+'%';l.setAttribute('aria-hidden','true');
+    map.appendChild(l);lblEls.push(l);
+    var li=document.createElement('li');var vb=document.createElement('button');vb.type='button';vb.className='stop vs';vb.textContent=i+1;vb.setAttribute('aria-label','Stop '+(i+1)+': '+STOPS[i][0]);
+    (function(k){vb.addEventListener('click',function(){select(k);});})(i);
+    var tx=document.createElement('b');tx.textContent=STOPS[i][0];li.appendChild(vb);li.appendChild(tx);vr.appendChild(li);vEls.push(li);
+  }
+  function select(k){
+    sel=k;
+    var frac=0.02+0.96*k/(STOPS.length-1);
+    path.style.strokeDasharray=L+' '+L;path.style.strokeDashoffset=String(L-L*frac);
+    if(!reduce)path.style.transition='stroke-dashoffset .35s cubic-bezier(.3,.1,.2,1)';
+    stopEls.forEach(function(e,i){e.classList.toggle('cur',i===k);e.classList.toggle('ahead',i>k);e.setAttribute('aria-pressed',String(i===k));});
+    lblEls.forEach(function(e,i){e.classList.toggle('cur',i===k);});
+    vEls.forEach(function(e,i){e.classList.toggle('cur',i===k);var vb=e.querySelector('.stop');vb.classList.toggle('cur',i===k);vb.classList.toggle('ahead',i>k);});
+    det.innerHTML='';
+    var n=document.createElement('div');n.className='dn';n.textContent=k+1;
+    var c=document.createElement('div');
+    var s=document.createElement('div');s.className='sub';s.textContent=STOPS[k][1];
+    var h=document.createElement('h4');h.textContent=STOPS[k][0];
+    var pp=document.createElement('p');pp.textContent=STOPS[k][2];
+    c.appendChild(s);c.appendChild(h);c.appendChild(pp);det.appendChild(n);det.appendChild(c);
+  }
+  select(sel);
+
+  /* deck */
+  var sl=[].slice.call(document.querySelectorAll('#slides .sl')),segs=document.getElementById('segs'),chap=document.getElementById('chap'),cnt=document.getElementById('cnt');
+  var CH=['Where we start','Where we start','The idea','The year','The year','Go deeper'],cur=0;
+  sl.forEach(function(){segs.appendChild(document.createElement('i'));});
+  var bk=document.getElementById('bk'),nx=document.getElementById('nx');
+  function go(k){
+    cur=Math.max(0,Math.min(sl.length-1,k));
+    sl.forEach(function(s,i){s.classList.toggle('on',i===cur);s.classList.toggle('before',i<cur);s.setAttribute('aria-hidden',String(i!==cur));});
+    [].forEach.call(segs.children,function(s,i){s.className=i<cur?'done':(i===cur?'cur':'');});
+    chap.textContent=CH[cur];cnt.textContent=(cur+1)+' / '+sl.length;
+    bk.disabled=cur===0;nx.disabled=cur===sl.length-1;
+  }
+  bk.addEventListener('click',function(){go(cur-1);});nx.addEventListener('click',function(){go(cur+1);});
+  go(0);
+
+  /* copy */
+  document.querySelectorAll('.copy').forEach(function(b){
+    b.addEventListener('click',function(){
+      var q=b.closest('.prompt').querySelector('q'),txt=q.textContent;
+      function done(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy';},1600);}
+      function fallback(){var r=document.createRange();r.selectNodeContents(q);var s=window.getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selected';setTimeout(function(){b.textContent='Copy';},1600);}
+      try{navigator.clipboard.writeText(txt).then(done,fallback);}catch(e){fallback();}
+    });
+  });
+})();
+</script>
+
+</body></html>

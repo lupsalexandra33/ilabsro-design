@@ -1,0 +1,121 @@
+/* Innovation Labs portable token subset synced from the native Claude Design System, 2026-10-11. */
+:root,
+[data-theme="light"] {
+  --lilac: #E8D2F5;
+  --route: #0095AC;
+  --scrim: rgba(16,32,31,.45);
+  --teal: #0095AC;
+  --teal-deep: #016462;
+  --teal-ink: #016462;
+  --purple: #954BBC;
+  --purple-ink: #6B2E8C;
+  --purple-tint: #FBF6FE;
+  --logo-ink: #2B6363;
+  --surface-page: #F2F6F7;
+  --surface: #FFFFFF;
+  --surface-tint: #EAF7F7;
+  --surface-ink: #10201F;
+  --ink: #10201F;
+  --ink-muted: #3C5052;
+  --ink-subtle: #4A5E60;
+  --on-brand: #FFFFFF;
+  --on-action: #FFFFFF;
+  --line: #AFC0C3;
+  --line-soft: #D3DEE0;
+  --line-control: #6F8689;
+  --action: #016462;
+  --action-soft: rgba(0,149,172,.12);
+  --focus-ring: #954BBC;
+  --focus-ring-on-brand: #FFFFFF;
+  --positive: #2E7650;
+  --positive-soft: #EEF7F1;
+  --caution: #9A4F00;
+  --caution-soft: #FFF6EA;
+  --issue: #B0433A;
+  --issue-soft: #FCEFEC;
+  --viz-1: #0095AC;
+  --viz-2: #016462;
+  --viz-ai: #954BBC;
+  --viz-context: #AFC0C3;
+  --viz-grid: #D3DEE0;
+
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-18: 18px;
+  --space-22: 22px;
+  --space-26: 26px;
+  --space-40: 40px;
+  --space-48: 48px;
+  --space-64: 64px;
+  --space-88: 88px;
+
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-row: 12px;
+  --radius-lg: 16px;
+  --radius-panel: 18px;
+  --radius-xl: 22px;
+  --radius-pill: 999px;
+
+  --border-card: 1.5px;
+  --border-accent: 5px;
+  --border-focus: 3px;
+
+  --content-max: 1120px;
+  --text-max: 780px;
+  --slide-max: 760px;
+  --nav-height: 64px;
+
+  --shadow-hover: 0 10px 26px rgba(16,32,31,.14);
+  --shadow-nav: 0 2px 14px rgba(16,32,31,.25);
+  --shadow-raised: 0 12px 34px rgba(16,32,31,.16);
+  --shadow-sheet: 0 -14px 40px rgba(16,32,31,.28);
+}
+
+[data-theme="night"] {
+  --lilac: #E8D2F5;
+  --route: #0095AC;
+  --scrim: rgba(0,208,222,.70);
+  --teal: #2BC4DB;
+  --teal-deep: #016462;
+  --teal-ink: #2BC4DB;
+  --purple: #C48BEA;
+  --purple-ink: #C48BEA;
+  --purple-tint: #2B1A3A;
+  --logo-ink: #FFFFFF;
+  --surface-page: #031E1E;
+  --surface: #0A3433;
+  --surface-tint: #0F4442;
+  --surface-ink: #001A1C;
+  --ink: #EAF6F6;
+  --ink-muted: #9BBFC0;
+  --ink-subtle: #7FA5A6;
+  --on-brand: #FFFFFF;
+  --on-action: #02201F;
+  --line: #1C5654;
+  --line-soft: #164B49;
+  --line-control: #4A9896;
+  --action: #2BC4DB;
+  --action-soft: rgba(43,196,219,.14);
+  --focus-ring: #C48BEA;
+  --focus-ring-on-brand: #FFFFFF;
+  --positive: #74CC9A;
+  --positive-soft: #123A2A;
+  --caution: #F2B266;
+  --caution-soft: #3A2A12;
+  --issue: #F2958A;
+  --issue-soft: #3D1F1E;
+  --viz-1: #0095AC;
+  --viz-2: #8FD8E4;
+  --viz-ai: #954BBC;
+  --viz-context: #3E6E6C;
+  --viz-grid: #D3DEE0;
+
+  --shadow-hover: 0 10px 26px rgba(0,0,0,.40);
+  --shadow-nav: 0 2px 14px rgba(0,0,0,.45);
+  --shadow-raised: 0 12px 34px rgba(0,0,0,.45);
+  --shadow-sheet: 0 -14px 40px rgba(0,0,0,.50);
+}

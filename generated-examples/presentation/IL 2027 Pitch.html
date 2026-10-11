@@ -1,0 +1,556 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>IL 2027 Pitch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=IBM+Plex+Mono:wght@500;600&family=Caveat:wght@700&display=swap">
+<style>
+/* Layout: phone-first Night deck. Segmented progress on top, one story beat per slide in a 760px column,
+   Back / Next in the thumb zone, detail behind "+" taps, playable network behind selected slides only.
+   Tokens: Innovation Labs design system, Night theme. Deliberately single-theme (presentation default). */
+:root{
+  --teal:#2BC4DB;--teal-deep:#016462;--brand:#0095AC;--purple:#C48BEA;--purple-tint:#2B1A3A;--lilac:#E8D2F5;
+  --surface-page:#031E1E;--surface:#0A3433;--surface-tint:#0F4442;--surface-ink:#001A1C;
+  --ink:#EAF6F6;--ink-muted:#9BBFC0;--ink-subtle:#7FA5A6;--on-action:#02201F;
+  --line:#1C5654;--line-soft:#164B49;--line-control:#4A9896;
+  --action:#2BC4DB;--action-soft:rgba(43,196,219,.14);
+  --caution:#F2B266;--caution-soft:#3A2A12;--issue:#F2958A;--issue-soft:#3D1F1E;--positive:#74CC9A;--positive-soft:#123A2A;
+  --f-display:'Poppins',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --f-hand:'Caveat','Segoe Print','Bradley Hand',cursive;
+  --slide-max:760px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--surface-page);color:var(--ink);font-family:var(--f-display);font-size:15px;line-height:1.5;display:flex;flex-direction:column;overflow:hidden;-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--purple);outline-offset:2px;border-radius:6px}
+
+/* playable network, restrained: full on a few slides, faint elsewhere */
+.net{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;opacity:.18;transition:opacity .6s ease}
+body[data-mesh="on"] .net{opacity:.9}
+.net canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.net::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 85% at 50% 40%,rgba(3,30,30,.35) 0%,rgba(3,30,30,.82) 62%,var(--surface-page) 100%)}
+
+.top{position:relative;z-index:2;padding:12px 16px 0;display:flex;flex-direction:column;gap:8px}
+.segs{display:flex;gap:3px}
+.segs i{flex:1;height:3px;border-radius:2px;background:var(--line);transition:background .3s}
+.segs i.done{background:var(--brand)}
+.segs i.cur{background:var(--teal)}
+.chap{display:flex;justify-content:space-between;gap:12px;font:600 11px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted)}
+.chap b{color:var(--teal);font-weight:600}
+
+.stage{position:relative;z-index:1;flex:1;min-height:0;touch-action:none}
+.slide{pointer-events:none;position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;padding:20px 16px 28px;visibility:hidden;opacity:0;transform:translateX(28px);transition:opacity .35s,transform .45s cubic-bezier(.3,.1,.2,1),visibility 0s .45s;display:flex}
+.slide[data-pos="before"]{transform:translateX(-28px)}
+.slide[data-pos="on"]{visibility:visible;opacity:1;transform:none;transition:opacity .35s,transform .45s cubic-bezier(.3,.1,.2,1),visibility 0s}
+.in{pointer-events:auto;touch-action:pan-y;margin:auto;width:100%;max-width:var(--slide-max);display:flex;flex-direction:column;gap:18px;min-width:0}
+@media (min-width:900px){.slide{padding:32px 48px}.in{gap:22px}}
+
+.logo svg{height:30px;width:auto;max-width:72vw;display:block}
+.kick{font:600 12px/1.2 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--teal)}
+.big{font-weight:700;font-size:clamp(30px,8.4vw,60px);line-height:1.08;margin:0;text-wrap:balance;letter-spacing:-.015em}
+.big em{font-style:normal;color:var(--teal)}
+.big .ai{color:var(--purple)}
+.cover .big{font-size:clamp(40px,11.5vw,84px);line-height:1.02;letter-spacing:-.025em}
+.cover .big span{display:block}
+.sub{font-size:clamp(16px,4.2vw,19.4px);color:var(--ink-muted);margin:0;max-width:60ch;text-wrap:pretty}
+.sub b{color:var(--ink);font-weight:600}
+.fine{font-size:12.3px;color:var(--ink-subtle);margin:0;max-width:64ch}
+
+.stats{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))}
+.stat,.card{background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:16px;min-width:0}
+.stat .n{font-weight:800;font-size:clamp(40px,10.5vw,56px);line-height:1;color:var(--teal);font-variant-numeric:tabular-nums;letter-spacing:-.03em;white-space:nowrap}
+.stat .n small{font-size:.5em;font-weight:700;color:var(--ink-muted);letter-spacing:0}
+.stat p{margin:10px 0 0;font-size:14.1px;color:var(--ink-muted)}
+.src{display:block;margin-top:8px;font:500 11px/1.3 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-subtle)}
+.cards{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr))}
+.card h3{margin:0 0 6px;font-size:17px;font-weight:600;line-height:1.3}
+.card p{margin:0;font-size:14.1px;color:var(--ink-muted)}
+.card .src{margin:0 0 8px}
+
+.two{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+.col{border-radius:10px;padding:16px;border:1.5px solid var(--line);background:var(--surface);min-width:0}
+.col h3{margin:0 0 12px;font:600 12px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--positive)}
+.col.gap h3{color:var(--issue)}
+.col.is{border-color:var(--purple);background:var(--purple-tint)}
+.col.is h3{color:var(--purple)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{padding:6px 12px;border-radius:999px;background:var(--surface-tint);font-size:14.1px}
+.col.gap .chips span{background:transparent;border:1px dashed var(--line-control);color:var(--ink-muted)}
+
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.steps li{display:grid;grid-template-columns:40px 1fr;gap:14px;position:relative;padding-bottom:16px;min-width:0}
+.steps li:last-child{padding-bottom:0}
+.steps li::before{content:"";position:absolute;left:19px;top:40px;bottom:0;width:2px;background:var(--line)}
+.steps li:last-child::before{display:none}
+.steps .num{width:40px;height:40px;border-radius:50%;background:var(--surface-tint);border:2px solid var(--brand);display:grid;place-items:center;font:600 14px/1 var(--f-mono);color:var(--teal)}
+.steps li.ai .num{border-color:var(--purple);color:var(--purple);background:var(--purple-tint)}
+.steps li.ai h3{color:var(--purple)}
+.steps h3{margin:7px 0 2px;font-size:17px;font-weight:600;line-height:1.3}
+.steps p{margin:0;font-size:14.1px;color:var(--ink-muted)}
+.steps li>div{min-width:0}
+
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13.2px}
+.flow span{padding:5px 10px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
+.flow span.ai{border-color:var(--purple);color:var(--purple);background:var(--purple-tint)}
+.flow.not span{text-decoration:line-through;color:var(--ink-subtle);background:transparent;border-style:dashed}
+.flow .lbl{font:600 11px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-subtle);border:0;background:none;padding:0 4px 0 0;text-decoration:none}
+
+.tl{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.tl li{display:grid;grid-template-columns:118px 1fr;gap:14px;padding:11px 0;border-top:1px solid var(--line);min-width:0}
+.tl li:last-child{border-bottom:1px solid var(--line)}
+.tl .w{font:600 11.4px/1.4 var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--teal)}
+.tl li.est .w{color:var(--ink-subtle)}
+.tl li.est .w::before{content:"";display:inline-block;width:8px;height:8px;border:1.5px dashed var(--line-control);border-radius:50%;margin-right:6px;vertical-align:0}
+.tl li.key{background:linear-gradient(90deg,var(--purple-tint),transparent);border-radius:6px}
+.tl li.key .w{color:var(--purple)}
+.tl .t{font-size:15px;min-width:0}
+.tl .t span{display:block;color:var(--ink-muted);font-size:13.2px}
+@media (max-width:380px){.tl li{grid-template-columns:92px 1fr}}
+
+.insight{border:1.5px dashed var(--caution);background:var(--caution-soft);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.insight .il{font:600 11px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--caution)}
+.insight p{margin:0;font-size:14.1px;color:var(--ink)}
+.insight p i{font-style:normal;color:var(--ink-muted)}
+
+.deep{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:8px 16px;border:1px solid var(--brand);border-radius:999px;font-size:13.2px;background:var(--action-soft)}
+.deep .dk{color:var(--ink-muted)}
+.deep .dv{font-weight:600;color:var(--teal)}
+.deep::after{content:"\2197";color:var(--teal)}
+
+.hint{display:inline-flex;align-items:center;gap:10px;font:600 12px/1.3 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted)}
+.hint i{display:inline-block;width:28px;height:2px;background:var(--teal);position:relative}
+.hint i::after{content:"";position:absolute;right:0;top:-3px;width:7px;height:7px;border-top:2px solid var(--teal);border-right:2px solid var(--teal);transform:rotate(45deg)}
+.tip{display:inline-flex;align-items:center;gap:8px;font:600 11px/1.3 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-subtle)}
+.tip b{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;border:1px solid var(--brand);color:var(--teal);font-weight:600;font-size:13px}
+.hw{font-family:var(--f-hand);font-weight:700;font-size:30px;line-height:1;color:var(--lilac)}
+
+.go{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))}
+.go a{display:block;background:var(--surface);border:1.5px solid var(--line);border-top:5px solid var(--brand);border-radius:10px;padding:12px 14px;min-width:0;transition:transform .2s,border-color .2s}
+.go a.ai{border-top-color:var(--purple)}
+.go a:hover{transform:translateY(-2px);border-color:var(--brand)}
+.go b{display:block;font-weight:600;font-size:15px}
+.go span{display:block;font-size:13.2px;color:var(--ink-muted);margin-top:2px}
+.main-cta{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;background:var(--action);color:var(--on-action);font-weight:600;border-radius:8px;padding:13px 20px;min-height:48px;font-size:15px}
+.main-cta::after{content:"\2197"}
+
+.bottom{position:relative;z-index:2;display:flex;align-items:center;gap:12px;padding:10px 16px calc(12px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);background:rgba(3,30,30,.94)}
+.bottom .ct{flex:1;text-align:center;font:600 12px/1 var(--f-mono);letter-spacing:.1em;color:var(--ink-muted);font-variant-numeric:tabular-nums}
+.nb{min-width:92px;min-height:44px;padding:12px 18px;border-radius:8px;border:1px solid var(--line);background:var(--surface);font-weight:600;cursor:pointer}
+.nb.pri{background:var(--action);border-color:var(--action);color:var(--on-action)}
+.nb:disabled{opacity:.35;cursor:default}
+
+/* tap to open */
+.tap{cursor:pointer;position:relative;-webkit-user-select:none;user-select:none}
+.tap::after{content:"+";position:absolute;top:10px;right:10px;width:26px;height:26px;border-radius:50%;border:1px solid var(--brand);display:grid;place-items:center;font:600 16px/1 var(--f-mono);color:var(--teal);background:var(--action-soft);transition:transform .25s,background .25s}
+.tap[aria-expanded="true"]::after{transform:rotate(45deg);background:var(--teal);color:var(--on-action)}
+.tap:hover{border-color:var(--brand)}
+.card.tap,.stat.tap{padding-right:44px}
+.steps li.tap{padding-right:34px}
+.steps li.tap::after{top:6px;right:0}
+.tl li.tap{padding-right:38px;grid-template-rows:auto auto}
+.tl li.tap::after{top:9px;right:4px}
+.xb{display:grid;grid-template-rows:0fr;visibility:hidden;transition:grid-template-rows .3s ease,visibility 0s .3s}
+.xb>div{overflow:hidden;min-height:0}
+.tap[aria-expanded="true"] .xb{grid-template-rows:1fr;visibility:visible;transition:grid-template-rows .3s ease,visibility 0s}
+.xb p{margin:10px 0 0;padding-top:10px;border-top:1px dashed var(--line);font-size:14.1px;line-height:1.55;color:var(--ink)}
+.more{display:flex;flex-direction:column;gap:8px}
+.mk{font:600 11px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-subtle)}
+.row{background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:12px 44px 12px 16px;min-width:0}
+.row h4{margin:0;font-size:15px;font-weight:600;line-height:1.35}
+.row.tap::after{top:9px}
+.more.ai .mk{color:var(--purple)}
+.more.ai .row{background:var(--purple-tint);border-color:rgba(196,139,234,.4)}
+.more.ai .row.tap::after{border-color:var(--purple);color:var(--purple);background:rgba(196,139,234,.12)}
+.more.ai .row.tap[aria-expanded="true"]::after{background:var(--purple);color:var(--on-action)}
+
+@media (prefers-reduced-motion:reduce){.net{display:none}.slide,.slide[data-pos="on"],.segs i,.xb,.tap::after,.go a{transition:none}}
+</style>
+
+<div class="net" aria-hidden="true"><canvas id="web"></canvas></div>
+<header class="top"><div class="segs" id="segs" aria-hidden="true"></div><div class="chap"><span id="chap"></span><span id="chapn"></span></div></header>
+<main class="stage" id="stage" aria-live="polite"></main>
+<nav class="bottom" aria-label="Slides"><button class="nb" id="prev" type="button">Back</button><div class="ct" id="ct"></div><button class="nb pri" id="next" type="button">Next</button></nav>
+
+<script>
+function ILWeb(cv,o){
+  o=o||{};
+  var ctx=cv.getContext('2d'),FIX=o.fixed||null,WK=o.world||1;
+  var COL=o.col||'43,196,219',HOT=o.hot||'196,139,234',GL=o.glow||'200,248,255';
+  var DENS=o.density||.3,LA=o.lineA||.26;
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W=0,H=0,DPR=1,nodes=[],edges=[],ripples=[],grab=-1,running=false,last=0,t0=performance.now();
+  var ptr={x:-999,y:-999,vx:0,vy:0,on:false};
+  var cam={x:0,f:0};
+  var seed=o.seed||7;function rnd(){seed=(seed*16807)%2147483647;return seed/2147483647;}
+  var base=[],MAXN=Math.round(300*WK);
+  for(var i=0;i<MAXN;i++)base.push([rnd(),rnd(),.6+rnd()*.8,rnd()*6.283]);
+
+  function layout(){
+    var r=cv.getBoundingClientRect();
+    var nw=FIX?FIX.w:Math.round(r.width),nh=FIX?FIX.h:Math.round(r.height);
+    if(nw<10||nh<10)return false;
+    if(nw===W&&nh===H&&nodes.length)return true;
+    W=nw;H=nh;DPR=Math.min(2,window.devicePixelRatio||1);
+    cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);ctx.setTransform(DPR,0,0,DPR,0,0);
+    var cnt=Math.min(MAXN,Math.round(DENS*(W*H)/10000*WK)),ww=W*WK;
+    nodes=base.slice(0,cnt).map(function(b){var x=b[0]*ww,y=b[1]*H;return{hx:x,hy:y,x:x,y:y,vx:0,vy:0,ax:0,ay:0,d:b[2],ph:b[3],g:0,h:0};});
+    edges=[];var seen={},cap=Math.max(W,H)*.45;cap*=cap;
+    for(var i=0;i<nodes.length;i++){
+      var a=nodes[i],ds=[];
+      for(var j=0;j<nodes.length;j++){if(i!==j){var dx=a.hx-nodes[j].hx,dy=a.hy-nodes[j].hy;ds.push([dx*dx+dy*dy,j]);}}
+      ds.sort(function(p,q){return p[0]-q[0];});
+      for(var k=0;k<3&&k<ds.length;k++){var jj=ds[k][1],key=i<jj?i+'-'+jj:jj+'-'+i;
+        if(!seen[key]&&ds[k][0]<cap){seen[key]=1;edges.push({a:i,b:jj,L:Math.sqrt(ds[k][0])});}}
+    }
+    return true;
+  }
+
+  function rgba(c,a){return 'rgba('+c+','+a.toFixed(3)+')';}
+
+  function frame(now){
+    if(!running)return;
+    requestAnimationFrame(frame);
+    if(!cv.getClientRects().length)return;
+    if(!layout())return;
+    var dt=Math.min(40,now-(last||now-16));last=now;
+    var f=Math.max(.4,dt/16.7),t=(now-t0)/1000;
+    var camT=cam.f*(WK-1)*W;cam.x+=(camT-cam.x)*Math.min(1,.08*f);
+    var wpx=ptr.x+cam.x,wpy=ptr.y,R=Math.max(80,Math.min(W,H)*.22);
+    var i,j,n,e,A,B;
+    for(i=ripples.length-1;i>=0;i--)if(now-ripples[i].t>1900)ripples.splice(i,1);
+    for(i=0;i<nodes.length;i++){
+      n=nodes[i];
+      var hx=n.hx+(reduce?0:Math.sin(t*.45+n.ph)*6),hy=n.hy+(reduce?0:Math.cos(t*.37+n.ph)*6);
+      n.ax=(hx-n.x)*.012;n.ay=(hy-n.y)*.012;
+    }
+    for(i=0;i<edges.length;i++){
+      e=edges[i];A=nodes[e.a];B=nodes[e.b];
+      var dx=B.x-A.x,dy=B.y-A.y,L=Math.sqrt(dx*dx+dy*dy)||1,F=(L-e.L)*.01;
+      A.ax+=dx/L*F;A.ay+=dy/L*F;B.ax-=dx/L*F;B.ay-=dy/L*F;
+    }
+    for(i=0;i<nodes.length;i++){
+      n=nodes[i];
+      if(ptr.on&&grab<0){
+        var px=n.x-wpx,py=n.y-wpy,d=Math.sqrt(px*px+py*py)||1;
+        if(d<R){var s=1-d/R,s2=s*s;n.ax+=px/d*s2*1.9+ptr.vx*s2*.05;n.ay+=py/d*s2*1.9+ptr.vy*s2*.05;if(s*.9>n.g)n.g=s*.9;}
+      }
+      for(j=0;j<ripples.length;j++){
+        var r=ripples[j],age=(now-r.t)/1000,rad=age*(r.big?800:520),amp=1-age/1.85;
+        var rx=n.x-r.x,ry=n.y-r.y,rd=Math.sqrt(rx*rx+ry*ry)||1,dl=Math.abs(rd-rad);
+        if(dl<60&&amp>0){var q=(1-dl/60)*amp;n.ax+=rx/rd*q*(r.big?2.8:1.6);n.ay+=ry/rd*q*(r.big?2.8:1.6);if(q*.95>n.g)n.g=q*.95;if(q>n.h)n.h=q;}
+      }
+    }
+    ptr.vx*=.8;ptr.vy*=.8;
+    var damp=Math.pow(.88,f),gd=Math.pow(.95,f),hd=Math.pow(.93,f);
+    for(i=0;i<nodes.length;i++){
+      n=nodes[i];
+      if(i===grab){n.x=wpx;n.y=wpy;n.vx=0;n.vy=0;n.g=1;continue;}
+      n.vx=Math.max(-40,Math.min(40,(n.vx+n.ax*f)*damp));n.vy=Math.max(-40,Math.min(40,(n.vy+n.ay*f)*damp));
+      n.x+=n.vx*f;n.y+=n.vy*f;n.g*=gd;n.h*=hd;
+    }
+
+    ctx.clearRect(0,0,W,H);
+    var cx=cam.x,vis=function(x,y){return x-cx>-30&&x-cx<W+30&&y>-30&&y<H+30;};
+    ctx.lineCap='round';
+    ctx.beginPath();
+    for(i=0;i<edges.length;i++){
+      e=edges[i];A=nodes[e.a];B=nodes[e.b];
+      if(A.g>.06||B.g>.06)continue;
+      if(!vis(A.x,A.y)&&!vis(B.x,B.y))continue;
+      ctx.moveTo(A.x-cx,A.y);ctx.lineTo(B.x-cx,B.y);
+    }
+    ctx.strokeStyle=rgba(COL,LA);ctx.lineWidth=1;ctx.stroke();
+    for(i=0;i<edges.length;i++){
+      e=edges[i];A=nodes[e.a];B=nodes[e.b];
+      var gm=Math.max(A.g,B.g);
+      if(gm<=.06)continue;
+      if(!vis(A.x,A.y)&&!vis(B.x,B.y))continue;
+      var hot=Math.max(A.h,B.h)>.3;
+      ctx.beginPath();ctx.moveTo(A.x-cx,A.y);ctx.lineTo(B.x-cx,B.y);
+      ctx.strokeStyle=rgba(hot?HOT:GL,Math.min(.95,LA+gm*.7));ctx.lineWidth=1+gm*1.4;ctx.stroke();
+    }
+    for(i=0;i<nodes.length;i++){
+      n=nodes[i];if(!vis(n.x,n.y))continue;
+      var x=n.x-cx,y=n.y,rr=1+n.d*1.2;
+      if(n.g>.05||i===grab){
+        var hh=n.h>.3||i===grab;
+        ctx.fillStyle=rgba(hh?HOT:GL,.2*n.g);ctx.beginPath();ctx.arc(x,y,rr+4+12*n.g,0,6.283);ctx.fill();
+        ctx.fillStyle=rgba(hh?HOT:GL,.5+.5*n.g);ctx.beginPath();ctx.arc(x,y,rr+1.2*n.g,0,6.283);ctx.fill();
+      }else{
+        ctx.fillStyle=rgba(COL,.55);ctx.beginPath();ctx.arc(x,y,rr,0,6.283);ctx.fill();
+      }
+    }
+    if(ptr.on){
+      var gr=ctx.createRadialGradient(ptr.x,ptr.y,0,ptr.x,ptr.y,R);
+      gr.addColorStop(0,rgba(GL,.12));gr.addColorStop(1,rgba(GL,0));
+      ctx.fillStyle=gr;ctx.beginPath();ctx.arc(ptr.x,ptr.y,R,0,6.283);ctx.fill();
+    }
+  }
+
+  function pulse(sx,sy,big){ripples.push({x:sx+cam.x,y:sy,t:performance.now(),big:!!big});if(ripples.length>10)ripples.shift();}
+
+  function bind(target,opt){
+    var ign=(opt&&opt.ignore)||'a,button,[role="button"],summary,input,textarea,select';
+    function pos(e){
+      var r=cv.getBoundingClientRect(),kx=(FIX?FIX.w:r.width)/(r.width||1),ky=(FIX?FIX.h:r.height)/(r.height||1);
+      return[(e.clientX-r.left)*kx,(e.clientY-r.top)*ky];
+    }
+    target.addEventListener('pointermove',function(e){
+      var p=pos(e);ptr.vx=p[0]-ptr.x;ptr.vy=p[1]-ptr.y;if(!ptr.on){ptr.vx=0;ptr.vy=0;}
+      ptr.x=p[0];ptr.y=p[1];ptr.on=true;
+    },{passive:true});
+    target.addEventListener('pointerdown',function(e){
+      var p=pos(e);ptr.x=p[0];ptr.y=p[1];ptr.on=true;ptr.vx=0;ptr.vy=0;
+      if(e.target.closest&&e.target.closest(ign))return;
+      pulse(p[0],p[1],true);
+      var best=-1,bd=48*48,wx=p[0]+cam.x;
+      for(var i=0;i<nodes.length;i++){var dx=nodes[i].x-wx,dy=nodes[i].y-p[1],dd=dx*dx+dy*dy;if(dd<bd){bd=dd;best=i;}}
+      grab=best;
+    });
+    function up(e){grab=-1;if(e.pointerType==='touch')ptr.on=false;}
+    target.addEventListener('pointerup',up);
+    target.addEventListener('pointercancel',up);
+    target.addEventListener('pointerleave',function(){ptr.on=false;grab=-1;});
+  }
+
+  function start(){if(running)return;running=true;requestAnimationFrame(frame);}
+  start();
+  return{stop:function(){running=false;},pulse:pulse,bind:bind,start:start,setCam:function(f){cam.f=Math.max(0,Math.min(1,f));},isGrabbing:function(){return grab>=0;}};
+}
+
+</script>
+<script>
+const LOGO=`<svg role="img" aria-label="Innovation Labs 2027" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 505.84 53.42"> <g> <g> <path fill="#fff" d="M90.71,9.72c-8.67,0-15.7,7.03-15.7,15.7,0,5.41,2.74,10.18,6.91,13,.11.07.22.14.33.22.85.64,1.41,1.65,1.41,2.8v.65h3.97v-.65c0-.33-.03-.65-.07-.98h.01l-2.04-11.67-.84.13,1.39,8.01c-.41-.55-.9-1.05-1.46-1.46-.18-.13-.37-.26-.56-.37-3.19-2.2-5.09-5.8-5.09-9.67,0-6.47,5.26-11.74,11.73-11.74s11.73,5.27,11.73,11.74c0,3.79-1.83,7.34-4.91,9.54-.37.21-.72.45-1.05.72-.44.36-.83.76-1.16,1.2l1.39-7.95-.85-.1-1.92,10.98c-.03.12-.04.25-.06.38l-.05.26s0,.06-.01.08l-.02.25v1.31h3.96v-1.08c.11-.92.57-1.72,1.25-2.28.19-.15.39-.29.61-.4,4.1-2.84,6.78-7.56,6.78-12.91,0-8.67-7.03-15.7-15.69-15.7Z"/> <rect fill="#fff" x="83.66" y="49.45" width="14.09" height="3.97"/> <polygon fill="#fff" points="83.66 43.79 83.66 47.76 97.75 47.76 97.75 43.79 87.63 43.79 83.66 43.79"/> <path fill="#fff" d="M90.57,25.34c.7,0,1.33.36,1.69.97.78,1.33,2.11,2.24,3.6,2.53l.85.1.6-3.44c-.14.04-.29.06-.45.06-.15,0-.29-.02-.42-.05-.53-.11-.98-.44-1.27-.93-.96-1.62-2.72-2.62-4.6-2.62s-3.64,1-4.6,2.62c-.24.41-.6.7-1.03.85-.2.08-.43.12-.66.12-.06,0-.12,0-.18-.01l.59,3.38.84-.13c1.38-.35,2.6-1.23,3.34-2.48.36-.61.99-.97,1.69-.97Z"/> <rect fill="#fff" y="10.28" width="4.76" height="30.03"/> <polygon fill="#fff" points="32.52 31.64 15.49 10.28 11.8 10.28 11.8 40.3 16.65 40.3 16.65 19.12 33.68 40.3 37.32 40.3 37.32 10.28 32.52 10.28 32.52 31.64"/> <polygon fill="#fff" points="65.14 31.64 48.11 10.28 44.42 10.28 44.42 40.3 49.27 40.3 49.27 19.12 66.3 40.3 69.94 40.3 69.94 10.28 65.14 10.28 65.14 31.64"/> <polygon fill="#fff" points="131.27 10.28 121.66 34.69 112.09 10.28 106.69 10.28 119.17 40.43 124.19 40.43 136.63 10.28 131.27 10.28"/> <path fill="#fff" d="M226.07,12.06c-.11-.07-.22-.14-.33-.22-.85-.64-1.41-1.67-1.41-2.82V0h-3.96v9.02c0,2.35,1.12,4.6,3,6.01.18.15.36.27.56.39,3.13,2.17,5.02,5.72,5.08,9.53-.28-.17-.51-.4-.69-.69-.96-1.64-2.72-2.65-4.6-2.65s-3.64,1.01-4.61,2.64c-.36.61-.99.98-1.69.98s-1.33-.36-1.69-.97c-.96-1.64-2.73-2.65-4.61-2.65s-3.65,1.01-4.6,2.64c-.23.39-.57.69-.98.84.02-3.8,1.85-7.34,4.91-9.55.37-.21.72-.45,1.05-.72,1.48-1.23,2.43-2.98,2.66-4.9l.03-.24V0h-3.97v9.44c-.11.92-.57,1.74-1.25,2.3-.2.16-.4.29-.62.4-4.1,2.85-6.78,7.6-6.78,13,0,8.73,7.03,15.8,15.7,15.8s15.7-7.07,15.7-15.8c0-5.45-2.74-10.25-6.91-13.09ZM217.29,36.95c-5.31,0-9.81-3.58-11.25-8.46,1.41-.33,2.65-1.23,3.41-2.5.36-.61.99-.98,1.69-.98s1.33.37,1.69.98c.96,1.62,2.73,2.64,4.61,2.64s3.64-1.02,4.6-2.64c.36-.61.99-.98,1.69-.98s1.33.37,1.69.98c.7,1.2,1.84,2.05,3.13,2.43-1.41,4.93-5.93,8.53-11.26,8.53Z"/> <path fill="#fff" d="M147.55,10.28l-13.47,30.03h5.1l2.83-6.3h16.25l2.88,6.3h5.1l-13.47-30.03h-5.23ZM143.82,29.63l6.35-14.29,6.35,14.29h-12.69Z"/> <polygon fill="#fff" points="163.41 14.61 173.28 14.61 173.28 40.31 178.13 40.31 178.13 14.61 187.95 14.61 187.95 10.28 163.41 10.28 163.41 14.61"/> <rect fill="#fff" x="191.85" y="10.28" width="4.76" height="30.03"/> <polygon fill="#fff" points="258.79 31.64 241.76 10.28 238.07 10.28 238.07 40.3 242.92 40.3 242.92 19.12 259.95 40.3 263.59 40.3 263.59 10.28 258.79 10.28 258.79 31.64"/> <polygon fill="#fff" points="286.63 10.28 281.82 10.28 281.82 40.3 302.45 40.3 302.45 35.85 286.63 35.85 286.63 10.28"/> <path fill="#fff" d="M394.15,30.97c-.33-6.25-6.02-7.91-12.02-8.74-3.95-.56-7.29-1.37-7.29-4.29s2.92-4.55,6.95-4.55c3.13.04,6.01,1.29,7.42,3.34l3.65-2.44c-2.53-4.03-6.86-5.06-11.2-5.06-5.4,0-11.62,2.4-11.58,8.62,0,6.43,5.66,7.94,11.62,8.75,4.2.56,7.68,1.67,7.68,4.93,0,3.78-3.99,4.98-7.59,4.98s-7.21-1.29-9.35-4.93l-3.6,2.4c2.74,5.06,7.16,6.82,12.91,6.82.56,0,1.11-.03,1.66-.07,2.2.07,6.34-1.49,7.46-2.29,4.1-2.9,3.15-7.34,3.28-7.48Z"/> <path fill="#fff" d="M318.2,10.28l-13.47,30.03h5.11l2.83-6.3h16.26l2.87,6.3h5.1l-13.47-30.03h-5.23ZM314.46,29.63l6.35-14.29,6.35,14.29h-12.69Z"/> <path fill="#fff" d="M360.47,24.82c2.83-1.16,4.16-3.43,4.16-5.96,0-5.96-4.51-8.58-10.21-8.58h-13.77v30.03h13.77c5.92,0,11.15-2.02,11.15-8.58,0-2.27-1.5-5.83-5.1-6.9ZM345.41,14.61h9.01c3.6,0,5.45,2.23,5.45,4.33,0,2.36-1.8,3.78-5.4,3.78h-9.05v-8.11ZM354.42,35.85h-9.01v-8.84h9.05c2.74,0,6.31,1.46,6.31,4.68s-3.69,4.16-6.35,4.16Z"/> </g> <g> <path fill="#fff" d="M405.73,36.02h19.16v4.68h-24.14v-7.56c0-5.71,4.47-9.02,12.16-9.02,4.12,0,6.92-1.85,6.92-4.6,0-3.01-2.45-4.77-6.62-4.77s-7.04,1.76-7.13,4.51h-5.15c.34-5.67,4.9-9.02,12.29-9.02s11.68,3.52,11.68,9.19c0,6.01-4.17,9.19-11.94,9.19-4.51,0-7.22,1.68-7.22,4.51v2.88Z"/> <path fill="#fff" d="M428.06,28.59v-5.88c0-7.56,5.28-12.67,13.06-12.67s13.06,5.11,13.06,12.67v5.88c0,7.52-5.28,12.63-13.06,12.63s-13.06-5.11-13.06-12.63ZM449.11,28.59v-5.88c0-4.72-3.18-7.9-7.99-7.9s-7.99,3.18-7.99,7.9v5.88c0,4.72,3.18,7.9,7.99,7.9s7.99-3.18,7.99-7.9Z"/> <path fill="#fff" d="M462.25,36.02h19.16v4.68h-24.14v-7.56c0-5.71,4.47-9.02,12.16-9.02,4.12,0,6.92-1.85,6.92-4.6,0-3.01-2.45-4.77-6.62-4.77s-7.04,1.76-7.13,4.51h-5.15c.34-5.67,4.9-9.02,12.29-9.02s11.68,3.52,11.68,9.19c0,6.01-4.17,9.19-11.94,9.19-4.51,0-7.22,1.68-7.22,4.51v2.88Z"/> <path fill="#fff" d="M505.84,10.64v2.88l-13.92,27.19h-5.75l13.19-25.34h-16.41v-4.72h22.89Z"/> </g> </g> </svg>`;
+const H='https://claude.ai/artifact/RwocwwRsbsyPvWA7moz6jX';
+const deep=(page,label)=>'<a class="deep" href="'+H+'#'+page+'" target="_blank" rel="noopener"><span class="dk">Go deeper</span><span class="dv">'+label+'</span></a>';
+const XB=x=>'<div class="xb"><div><p>'+x+'</p></div></div>';
+const TAP=' role="button" tabindex="0" aria-expanded="false"';
+const card=(h,p,x,src)=>'<div class="card'+(x?' tap"'+TAP:'"')+'>'+(src?'<span class="src">'+src+'</span>':'')+'<h3>'+h+'</h3><p>'+p+'</p>'+(x?XB(x):'')+'</div>';
+const stat=(n,p,src,x)=>'<div class="stat'+(x?' tap"'+TAP:'"')+'><div class="n">'+n+'</div><p>'+p+'</p>'+(src?'<span class="src">'+src+'</span>':'')+(x?XB(x):'')+'</div>';
+const step=(n,h,p,x,ai)=>'<li class="'+(ai?'ai ':'')+(x?'tap':'')+'"'+(x?TAP:'')+'><span class="num">'+n+'</span><div><h3>'+h+'</h3>'+(p?'<p>'+p+'</p>':'')+(x?XB(x):'')+'</div></li>';
+const tl=(w,t,sub,cls)=>'<li class="'+(cls||'')+'"><span class="w">'+w+'</span><span class="t">'+t+(sub?'<span>'+sub+'</span>':'')+'</span></li>';
+const more=(label,rows,ai)=>'<div class="more'+(ai?' ai':'')+'"><div class="mk">'+label+'</div>'+rows.map(r=>'<div class="row tap"'+TAP+'><h4>'+r[0]+'</h4>'+XB(r[1])+'</div>').join('')+'</div>';
+const insight=prompt=>'<div class="insight" role="note"><span class="il">Team insight needed · Flavia, Daniel or Ana</span><p>Placeholder. <i>'+prompt+'</i></p></div>';
+
+const S=[
+{ch:'Innovation Labs 2027',cls:'cover',mesh:'on',html:`
+  <div class="logo">${LOGO}</div>
+  <div class="kick">The 2027 revamp</div>
+  <h1 class="big"><span>Human cognition first.</span><span class="ai">AI amplification second.</span></h1>
+  <p class="sub">What the 2026 cohort taught us, the bet we are making on how founders think, and what happens after Demo Day.</p>
+  <div class="hint"><i></i>Swipe or tap Start</div>
+  <div class="tip"><b>+</b>Drag the web behind. Open anything with a plus.</div>`},
+
+{ch:'Where we start',html:`
+  <div class="kick">2026 in one breath</div>
+  <h2 class="big">Half the intake. <em>The same number of finalists.</em></h2>
+  <div class="stats">
+    ${stat('80→41','teams in the program, 2025 to 2026.','Team funnel','221 teams applied from 16 cities and 57% advanced within the Hackathon. The 41 program teams split 26 Bucharest and 15 other cities. Pre-registration grew 55%, from 77 to 119 teams.')}
+    ${stat('17','teams at Demo Day, in both years.','Team funnel','The 2026 Grand Finale ran on 25 May at Opera Nationala Bucuresti, with 450+ invitees and 27 teams exhibiting at the Startups Fair.')}
+    ${stat('~53<small>h</small>','of mentoring per team.','Mentor retro, 7 July 2026','Roughly 2,200 hours donated by 221 mentors, across 526 touchpoints and 29 sessions. It is the number to defend in any conversation about cohort size, and it grows if the cohort shrinks.')}
+  </div>
+  ${deep('cohort.funnel','The funnel')}`},
+
+{ch:'Where we start',html:`
+  <div class="kick">What 2026 told us</div>
+  <h2 class="big">The program works. <em>Seven gaps to close.</em></h2>
+  <div class="two">
+    <div class="col"><h3>Worked</h3><div class="chips"><span>Community and networking</span><span>Bootcamp 1</span><span>Pitch Prep Workshop</span><span>Pre-recorded theory</span><span>Talks at real offices</span></div></div>
+    <div class="col gap"><h3>Needs fixing</h3><div class="chips"><span>Hardware teams underserved</span><span>Contradictory mentor advice</span><span>Three weekends in a row</span><span>Travel burden outside Bucharest</span><span>Online semifinals</span><span>Deliverables without feedback</span><span>Hybrid sessions</span></div></div>
+  </div>
+  ${more('Two moments from the record',[
+    ['A mentor who went hands-on','From the mentor retro: a mentor spent two hours teaching a team to build their first website and paid for their first month of subscription. One introverted team member visibly opened up over the program.'],
+    ['A session that never reached the online room','One participant waited 35 minutes to be called on, in a hybrid session that ended without ever reaching the online audience.']
+  ])}
+  ${insight('Add one real moment from the 2026 cohort that shows what worked or what broke, in the words of the person who saw it.')}
+  ${deep('findings','Findings')}`},
+
+{ch:'The problem',html:`
+  <div class="kick">The problem</div>
+  <h2 class="big">Founders are offloading <em>the thinking step.</em></h2>
+  <p class="sub">Interviews, competitive analysis, the pitch narrative. <b>More polished output, with less of their own reasoning underneath.</b></p>
+  <div class="stats">
+    ${stat('~55<small>%</small>','weaker brain connectivity, at most, in the ChatGPT group than in unaided writers.','MIT Media Lab, 2025','54 participants in three groups (ChatGPT, search engine, brain only) wrote essays over four months while EEG measured brain activity. Connectivity fell as outside support rose. The authors call the effect cognitive debt.')}
+    ${stat('83<small>%</small>','of ChatGPT users could not quote a sentence from the essay they had just written.','MIT Media Lab, 2025','Their essays also clustered together, statistically homogeneous within each topic.')}
+    ${stat('666','participants. Frequent AI use went with weaker critical thinking, and younger people were more dependent.','Gerlich, 2025','A significant negative correlation, mediated by cognitive offloading. Younger participants showed higher dependence and lower critical-thinking scores than older ones.')}
+  </div>
+  <p class="fine">The MIT study is a preprint under review. Gerlich's finding is a correlation. That is why we also measure the effect on our own teams.</p>
+  ${deep('evidence.problem','The evidence')}`},
+
+{ch:'The idea',html:`
+  <div class="kick">The idea</div>
+  <h2 class="big">AI doesn't write version one. <span class="ai">It challenges it.</span></h2>
+  <ol class="steps">
+    ${step(1,'Think in analog','Write, sketch and map assumptions on paper first.')}
+    ${step(2,'Think together','Show unfinished work to peers and defend it out loud.')}
+    ${step(3,'Challenge with AI','Only once an original version exists.','Its job is to challenge assumptions, find blind spots, propose alternatives, play devil\'s advocate and generate counterarguments. It does not author.',true)}
+    ${step(4,'Human synthesis','The founder makes the final call and owns the reasoning.')}
+  </ol>
+  <div class="flow"><span class="lbl">By May</span><span>Observe</span><span>Think</span><span>Sketch</span><span>Discuss</span><span>Build</span><span class="ai">Challenge with AI</span><span>Synthesize</span><span>Decide</span></div>
+  <div class="flow not"><span class="lbl">Not</span><span>Prompt</span><span>Copy</span><span>Present</span></div>
+  <p class="hw">AI doesn't accelerate anything if you don't already know in detail what you want.</p>
+  ${deep('program.sequence','The learning sequence')}`},
+
+{ch:'The program',html:`
+  <div class="kick">In the room</div>
+  <h2 class="big">Paper first, <em>inside blocks we already run.</em></h2>
+  <div class="cards">
+    ${card('Paper-only interviews','Phones and laptops away, then affinity-mapping on a physical wall.','Applied to the Bootcamp 1 mock interviews. Modelled on the pen-versus-laptop research and Reggio Emilia.','Bootcamp 1')}
+    ${card('Competitor war wall','Printed one-pagers sorted into direct, indirect and ecosystem.','Teams move cards between columns as a group and keep a running paper changelog of competitor moves across the bootcamp.','Bootcamp 1')}
+    ${card('Red-flag bell round','Anyone rings the bell the moment they hear a red flag.','Live, low-stakes pitch practice in front of peers. Self-enforced by peers instead of policed by a mentor.','Pitch practice')}
+  </div>
+  <p class="sub">No new time is added. The analog step goes into existing blocks.</p>
+  ${more('Then AI as the challenger',[
+    ['Five challenger skills','mom-test-interrogator, red-team-my-pitch, blind-spot-competitor-hunt, assumption-stress-test and juror-simulator. Each pressure-tests work a founder already built. Output is a discussion prompt for the mentor session, not a pass or fail gate.'],
+    ['How AI Tricks You','A proposed course in five blocks: how AI flatters you, what you lose when you offload, how AI fails silently, context engineering, and a live exercise red-teaming a real deliverable. It ends in an AI-use log per team.'],
+    ['The integrity line','AI-fabricated interviews and competitors don\'t count. Real people and real sources, or the deliverable is invalid.']
+  ],true)}
+  ${deep('program.exercises','The exercises')}`},
+
+{ch:'The people',mesh:'on',html:`
+  <div class="kick">Mentors and coaches</div>
+  <h2 class="big">Fewer contradictions. <em>More hands-on help.</em></h2>
+  <div class="cards">
+    ${card('Hands-on mentors','Two to three per team, one business and one tech. They evaluate deliverables, not just advise.','A vetted mentor core, admitted after a 30-minute conversation with the core team. Mentors can register interest in a specific team during the Hackathon.')}
+    ${card('PODS','Three to five teams, one facilitator, two to three mentors, held for the whole program.','The facilitator is core team or a trusted coach. 45 minutes to one hour, weekly.')}
+    ${card('One shared rubric','Mentors co-author the standard each challenger skill enforces.','One mentor-authored standard, checked consistently across teams, is the fix for the contradictory-advice gap.')}
+  </div>
+  ${more('How we stay close',[
+    ['Coachability','Keep the brutal feedback format public and unsoftened, and add private 1:1 coaching alongside it. Make coachability an explicit stated value at Bootcamp 2, and a selection criterion.'],
+    ['The accountability loop','A weekly checkpoint with the coach plus a form: what they did, what they discovered, what they changed, what is next. A weekly public status check in front of the other teams.']
+  ])}
+  ${insight('Add a real mentoring moment that shows why matching, or one shared standard, matters.')}
+  ${deep('people.structure','The mentor system')}`},
+
+{ch:'The year',html:`
+  <div class="kick">The 2027 year</div>
+  <h2 class="big">A smaller cohort. <em>A week to act on feedback.</em></h2>
+  <ul class="tl">
+    ${tl('24–25 Oct 2026','Mini-Hackathon in Bucharest','With SiSC. Pre-program starts in October, in the app.')}
+    ${tl('Nov 2026','AI Validation Bootcamp','In Bucharest, with LSAC.')}
+    ${tl('About 20–21 Mar','National Hackathon','In Bucharest. Teams cluster into four paths.','est')}
+    ${tl('Mar – Apr','Two bootcamps, then a buffer week','The cohort is cut one week after Bootcamp 2.','key')}
+    ${tl('End of Apr','Boost days and mentor cafés','Teams are evaluated.')}
+    ${tl('Mid May','Demo Day national semifinals','Teams are evaluated.')}
+    ${tl('About 24 May','Startup Fair and Demo Day final','','est')}
+    ${tl('From June','Alumni community and IL Beyond')}
+  </ul>
+  <p class="fine">Dates marked about are estimates. The 2027 calendar is a proposal, pending university calendars.</p>
+  ${more('Why cut later, and smaller',[
+    ['The buffer week','Teams in 2026 said one week between bootcamps was not enough to implement feedback. Cutting a week after Bootcamp 2 measures whether a team applied the feedback, not where it stood on the day.'],
+    ['The cohort','Of the 41 teams in 2026, the read is that around 25 were worth the program\'s full resources. The 2027 estimate is 40 teams accepted into the program and 12 at Demo Day.'],
+    ['Not the only exit','Deliverables are evaluated on an ongoing basis, with a checkpoint two weeks after the Hackathon for teams admitted on potential. After Bootcamp 2, at-risk teams hear the expectations explicitly before the cut.']
+  ])}
+  ${deep('cohort.calendar','The calendar')}`},
+
+{ch:'After Demo Day',mesh:'on',html:`
+  <div class="kick">IL Beyond</div>
+  <h2 class="big">Demo Day is the doorway. <em>Not the finish line.</em></h2>
+  <p class="sub">Reaching the finals was never the same as being fundable. IL Beyond <b>replaces that cliff with a slope.</b></p>
+  <ol class="steps">
+    ${step('S1','Build · July to September','6 teams. Product-market fit and a technical moat.')}
+    ${step('S2','Sell · October to December','3 to 4 teams. Incorporate, sign contracts, get investment-ready.')}
+    ${step('S3','Raise · January to February','2 teams. From term sheet to money in the bank, with angels and VCs co-investing.')}
+  </ol>
+  ${more('Open for the details',[
+    ['The objectives','At least 2 companies sign a term sheet for a EUR 300k to 500k pre-seed round. At least 1 reaches an actual investment with EGV or another pre-seed institutional investor.'],
+    ['The EGV Investment Prize moves here','It leaves the Demo Day stage and is deployed at the end of Stage 3, alongside IL\'s own EUR 20,000 angel bridge. The recognition awards stay at Demo Day. This needs EGV\'s agreement.'],
+    ['Who can apply','This year\'s graduates and alumni from any past year. Up to EUR 38,800 per team across all three stages.']
+  ])}
+  ${insight('Add what actually happened to a team after Demo Day that convinced us to build this track.')}
+  ${deep('beyond','IL Beyond')}`},
+
+{ch:'The test',html:`
+  <div class="kick">The test</div>
+  <h2 class="big">Analog-first is a bet. <em>We will measure it.</em></h2>
+  <p class="sub">None of the evidence proves paper-first exercises build better companies. So we settle it on our own teams.</p>
+  <ol class="steps">
+    ${step(1,'Deliverable quality','Share of teams whose deliverables improve between Bootcamp 1 and Bootcamp 2.')}
+    ${step(2,'Feedback on time','Share of deliverables that get mentor feedback within the deadline.','Nothing measured either of these in 2026, and that is what 2026 measurably failed at.')}
+    ${step(3,'The AI-use log','On every submission: what we planned, what we asked AI, what we verified.','The full template: what we planned, what we did, what surprised us, what we changed, what we asked AI, and what we verified.',true)}
+  </ol>
+  ${more('Open for the limits',[
+    ['What the evidence does not show','The strongest findings are about children and transfer weakly. The most relevant findings, on adults and AI, are recent and partly correlational. The chain from handwriting aiding encoding to a better pitch is unvalidated.'],
+    ['The handwriting caveat','Laptop note-takers did worse on conceptual questions in several studies, but a 2019 replication found the effect does not hold up consistently. We treat the mechanism as plausible, not settled.']
+  ])}
+  ${deep('evidence.hypothesis','The hypothesis')}`},
+
+{ch:'Go deeper',cls:'cover',mesh:'on',html:`
+  <div class="logo">${LOGO}</div>
+  <div class="kick">The strategy hub</div>
+  <h2 class="big">This was the front door. <em>The hub has the rest.</em></h2>
+  <p class="sub">Every number, source and open decision lives in the hub. Pick a page.</p>
+  <div class="go">
+    <a href="${H}#map" target="_blank" rel="noopener"><b>Strategy map</b><span>The revamp as one route</span></a>
+    <a href="${H}#findings" target="_blank" rel="noopener"><b>Findings</b><span>What 2026 told us</span></a>
+    <a class="ai" href="${H}#evidence" target="_blank" rel="noopener"><b>Evidence</b><span>The research and its limits</span></a>
+    <a class="ai" href="${H}#program" target="_blank" rel="noopener"><b>Program</b><span>Sequence, exercises, AI skills</span></a>
+    <a href="${H}#people" target="_blank" rel="noopener"><b>People</b><span>Mentors, coaches, coachability</span></a>
+    <a href="${H}#cohort" target="_blank" rel="noopener"><b>Cohort</b><span>Funnel, calendar, KPIs</span></a>
+    <a href="${H}#partners" target="_blank" rel="noopener"><b>Partners</b><span>Co-builders and the Energy track</span></a>
+    <a href="${H}#beyond" target="_blank" rel="noopener"><b>IL Beyond</b><span>Build, Sell, Raise</span></a>
+  </div>
+  <a class="main-cta" href="${H}" target="_blank" rel="noopener">Open the strategy hub</a>`}
+];
+
+const $=id=>document.getElementById(id);
+const N=S.length;
+let cur=0,first=true;
+const reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+const web=reduce?null:ILWeb($('web'),{world:3.2,density:1.1,seed:7,lineA:.26});
+if(web){web.bind(document);document.addEventListener('visibilitychange',()=>{document.hidden?web.stop():web.start();});}
+
+$('stage').innerHTML=S.map((s,i)=>'<section class="slide '+(s.cls||'')+'" id="s'+i+'" aria-label="Slide '+(i+1)+' of '+N+'" data-pos="after"><div class="in">'+s.html+'</div></section>').join('');
+$('segs').innerHTML=S.map(()=>'<i></i>').join('');
+
+function render(){
+  document.querySelectorAll('.slide').forEach((el,i)=>{
+    el.dataset.pos=i<cur?'before':(i>cur?'after':'on');
+    el.setAttribute('aria-hidden',i===cur?'false':'true');
+    if(i===cur)el.scrollTop=0;
+    else el.querySelectorAll('.tap[aria-expanded="true"]').forEach(t=>t.setAttribute('aria-expanded','false'));
+  });
+  document.querySelectorAll('#segs i').forEach((el,i)=>{el.className=i<cur?'done':(i===cur?'cur':'');});
+  document.body.dataset.mesh=S[cur].mesh||'low';
+  $('chap').innerHTML='<b>'+S[cur].ch+'</b>';
+  $('chapn').textContent=String(cur+1).padStart(2,'0')+' / '+String(N).padStart(2,'0');
+  $('prev').disabled=cur===0;
+  $('next').disabled=cur===N-1;
+  $('next').textContent=cur===0?'Start':'Next';
+  if(web){web.setCam(cur/(N-1));if(!first&&S[cur].mesh==='on')web.pulse(innerWidth/2,innerHeight*.45,true);}
+  first=false;
+  try{history.replaceState(null,'','#'+(cur+1));}catch(e){}
+}
+function go(i){cur=Math.max(0,Math.min(N-1,i));render();}
+$('prev').addEventListener('click',()=>go(cur-1));
+$('next').addEventListener('click',()=>go(cur+1));
+function toggle(el){
+  const open=el.getAttribute('aria-expanded')!=='true';
+  el.setAttribute('aria-expanded',open?'true':'false');
+  if(open)setTimeout(()=>{try{el.scrollIntoView({block:'nearest',behavior:reduce?'auto':'smooth'});}catch(e){}},320);
+}
+$('stage').addEventListener('click',e=>{if(e.target.closest('a'))return;const t=e.target.closest('.tap');if(t)toggle(t);});
+document.addEventListener('keydown',e=>{
+  const t=e.target.closest&&e.target.closest('.tap');
+  if(t&&(e.key==='Enter'||e.key===' ')){e.preventDefault();toggle(t);return;}
+  if(e.key==='ArrowRight'||e.key==='PageDown')go(cur+1);
+  else if(e.key==='ArrowLeft'||e.key==='PageUp')go(cur-1);
+  else if(e.key==='Home')go(0);
+  else if(e.key==='End')go(N-1);
+});
+let tx=0,ty=0,tt=0,noNav=false;
+$('stage').addEventListener('touchstart',e=>{const t=e.changedTouches[0];tx=t.clientX;ty=t.clientY;tt=Date.now();noNav=web?web.isGrabbing():false;},{passive:true});
+$('stage').addEventListener('touchend',e=>{
+  if(noNav)return;
+  const t=e.changedTouches[0],dx=t.clientX-tx,dy=t.clientY-ty;
+  if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.5&&Date.now()-tt<900)go(dx<0?cur+1:cur-1);
+},{passive:true});
+const n0=parseInt((location.hash||'').replace('#',''),10);if(n0>=1&&n0<=N)cur=n0-1;
+window.addEventListener('hashchange',()=>{const n=parseInt((location.hash||'').replace('#',''),10);if(n>=1&&n<=N&&n-1!==cur){cur=n-1;render();}});
+render();
+</script>
+
+</body></html>
