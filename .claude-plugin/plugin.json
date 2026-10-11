@@ -1,7 +1,7 @@
 {
   "name": "ilabsro-design",
   "displayName": "Innovation Labs Design",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Portable Innovation Labs design plugin: synced design system, website/presentation/one-pager/social skills and tone lenses. v0.3.1 only tightens one-pager page-count and final-link handling.",
   "author": {
     "name": "Innovation Labs"
