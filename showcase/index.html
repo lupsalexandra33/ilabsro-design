@@ -1,801 +1,878 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>ilabsro-design</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600;700&family=Caveat:wght@700&display=swap">
 <style>
-/* Layout: IL website contract. Sticky teal nav → gradient hero with the plugin model → alternating flat sections, one job each → ink footer. Light default, Night via toggle. */
-:root{
-  --lilac:#E8D2F5;--route:#0095AC;
-  --teal:#0095AC;--teal-deep:#016462;--teal-ink:#016462;
-  --purple:#954BBC;--purple-ink:#6B2E8C;--purple-tint:#FBF6FE;
-  --surface-page:#F2F6F7;--surface:#FFFFFF;--surface-tint:#EAF7F7;--surface-ink:#10201F;
-  --ink:#10201F;--ink-muted:#3C5052;--ink-subtle:#4A5E60;
-  --on-brand:#FFFFFF;--on-action:#FFFFFF;
-  --line:#AFC0C3;--line-soft:#D3DEE0;--line-control:#6F8689;
-  --action:#016462;--action-soft:rgba(0,149,172,.12);
-  --focus-ring:#954BBC;
-  --caution:#9A4F00;--caution-soft:#FFF6EA;
-  --hero-a:#0095AC;--hero-b:#016462;
-  --shadow-hover:0 10px 26px rgba(16,32,31,.14);
-  --shadow-nav:0 2px 14px rgba(16,32,31,.25);
-  --shadow-raised:0 12px 34px rgba(16,32,31,.16);
+/* Showcase for the ilabsro-design plugin v0.4. Hub look: gradient band nav, big Poppins, flat sections,
+   gradient on hero and bands only. Theme and accent switch the whole page. */
+/* Innovation Labs tokens v0.4
+   Look = the Strategy Hub (teal band, big Poppins, serpentine route, soft panels).
+   Two axes switch the same layout:
+     data-theme  = light | night
+     data-accent = purple | yellow     (the accent role: new, AI, current step, focus, hand note)
+   Gradients are tokens now. See BRAND_ELEMENTS.md for when to use them. */
 
-  --f-display:'Poppins',system-ui,-apple-system,'Segoe UI',sans-serif;
-  --f-mono:'IBM Plex Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
-  --f-hand:'Caveat','Segoe Print','Bradley Hand',cursive;
+:root,
+[data-theme="light"] {
+  /* brand */
+  --teal: #0095AC;
+  --teal-deep: #016462;
+  --teal-ink: #016462;
+  --header: #007F86;          /* top band */
+  --hero-a: #068499;          /* hero gradient start */
+  --hero-b: #065F5C;          /* hero gradient end */
+  --bright: #72ECE7;          /* highlight words on teal fields */
+  --route: #0095AC;
+  --logo-ink: #2B6363;
 
-  --s4:4px;--s8:8px;--s12:12px;--s16:16px;--s18:18px;--s22:22px;--s26:26px;--s40:40px;--s48:48px;--s64:64px;--s88:88px;
-  --r-sm:8px;--r-md:10px;--r-row:12px;--r-lg:16px;--r-panel:18px;--r-xl:22px;--r-pill:999px;
-  --content-max:1120px;--nav-h:64px;
-  color-scheme:light;
-}
-:root[data-theme="night"],:root[data-theme="dark"]{
-  --teal:#2BC4DB;--teal-ink:#2BC4DB;
-  --purple:#C48BEA;--purple-ink:#C48BEA;--purple-tint:#2B1A3A;
-  --surface-page:#031E1E;--surface:#0A3433;--surface-tint:#0F4442;--surface-ink:#001A1C;
-  --ink:#EAF6F6;--ink-muted:#9BBFC0;--ink-subtle:#7FA5A6;
-  --on-action:#02201F;
-  --line:#1C5654;--line-soft:#164B49;--line-control:#4A9896;
-  --action:#2BC4DB;--action-soft:rgba(43,196,219,.14);
-  --focus-ring:#C48BEA;
-  --caution:#F2B266;--caution-soft:#3A2A12;
-  --hero-a:#016462;--hero-b:#031E1E;
-  --shadow-hover:0 10px 26px rgba(0,0,0,.40);
-  --shadow-nav:0 2px 14px rgba(0,0,0,.45);
-  --shadow-raised:0 12px 34px rgba(0,0,0,.45);
-  color-scheme:dark;
-}
-/* fixed Night scope, used by the theme comparison tile and the deck preview */
-.night{
-  --teal:#2BC4DB;--teal-ink:#2BC4DB;--purple:#C48BEA;--purple-ink:#C48BEA;--purple-tint:#2B1A3A;
-  --surface-page:#031E1E;--surface:#0A3433;--surface-tint:#0F4442;
-  --ink:#EAF6F6;--ink-muted:#9BBFC0;--ink-subtle:#7FA5A6;--on-action:#02201F;
-  --line:#1C5654;--line-soft:#164B49;--line-control:#4A9896;--action:#2BC4DB;--action-soft:rgba(43,196,219,.14);
-}
-.lightscope{
-  --teal:#0095AC;--teal-ink:#016462;--purple:#954BBC;--purple-ink:#6B2E8C;--purple-tint:#FBF6FE;
-  --surface-page:#F2F6F7;--surface:#FFFFFF;--surface-tint:#EAF7F7;
-  --ink:#10201F;--ink-muted:#3C5052;--ink-subtle:#4A5E60;--on-action:#FFFFFF;
-  --line:#AFC0C3;--line-soft:#D3DEE0;--line-control:#6F8689;--action:#016462;--action-soft:rgba(0,149,172,.12);
+  /* surfaces (flat: alternate page / alt / tint) */
+  --surface-page: #FFFFFF;
+  --surface-alt: #F4FBFB;
+  --surface: #FFFFFF;
+  --surface-tint: #EAF7F7;
+  --surface-ink: #10201F;
+
+  /* text */
+  --ink: #10201F;
+  --ink-muted: #3C5052;
+  --ink-subtle: #4A5E60;
+  --on-brand: #FFFFFF;
+
+  /* lines */
+  --line: #D6E4E5;
+  --line-soft: #E3EDEE;
+  --line-control: #6F8689;
+  --line-strong: #9CC3C6;
+
+  /* actions */
+  --action: #007A8C;
+  --on-action: #FFFFFF;
+  --action-soft: rgba(0,149,172,.12);
+  --focus-ring: var(--ax);
+
+  /* accent role, default purple */
+  --ax: #954BBC;
+  --ax-ink: #6B2E8C;
+  --ax-tint: #F1E7F8;
+  --ax-soft: rgba(149,75,188,.14);
+  --ax-on: #FFFFFF;
+  --ax-deep: #6B2E8C;
+  --ax-grad: linear-gradient(115deg, #A45CC9 0%, #6B2E8C 100%);
+  --lilac: #E8D2F5;
+
+  /* status */
+  --positive: #2D7A57; --positive-soft: #E6F4EC;
+  --caution: #7A5200;  --caution-soft: #FFF3D6;
+  --issue: #A8453A;    --issue-soft: #FBECE9;
+
+  /* data viz */
+  --viz-1: #0095AC; --viz-2: #016462; --viz-ai: var(--ax); --viz-context: #AFC0C3; --viz-grid: #D3DEE0;
+
+  /* gradients */
+  --grad-brand: linear-gradient(115deg, var(--hero-a), var(--hero-b));
+  --grad-band: linear-gradient(115deg, var(--header), #006B6E);
+  --grad-accent: var(--ax-grad);
+  --grad-surface: linear-gradient(180deg, #F4FBFB 0%, #E4F4F4 100%);
+  --mesh-blue:
+    radial-gradient(60% 55% at 38% 0%, #B8E3EC 0%, transparent 72%),
+    radial-gradient(55% 60% at 0% 100%, #94D4DC 0%, transparent 72%),
+    radial-gradient(55% 60% at 100% 100%, #90D4DE 0%, transparent 72%),
+    radial-gradient(35% 40% at 100% 40%, #C5E8EF 0%, transparent 70%), #FFFFFF;
+  --mesh-green:
+    radial-gradient(60% 55% at 40% 0%, #A9DAC2 0%, transparent 72%),
+    radial-gradient(55% 60% at 0% 100%, #83C3A4 0%, transparent 72%),
+    radial-gradient(55% 60% at 100% 85%, #91D1B3 0%, transparent 72%),
+    radial-gradient(40% 40% at 0% 25%, #CEE9DE 0%, transparent 70%), #FFFFFF;
+  --mesh-yellow:
+    radial-gradient(55% 50% at 35% 0%, #FDD49F 0%, transparent 72%),
+    radial-gradient(55% 60% at 0% 100%, #FAB579 0%, transparent 72%),
+    radial-gradient(55% 60% at 100% 100%, #FBBF45 0%, transparent 70%),
+    radial-gradient(40% 45% at 100% 40%, #FDD2AD 0%, transparent 70%),
+    radial-gradient(45% 40% at 0% 0%, #FEFAD2 0%, transparent 70%), #FFFEF6;
+  --mesh-purple:
+    radial-gradient(55% 55% at 0% 0%, #E2DCED 0%, transparent 70%),
+    radial-gradient(55% 60% at 0% 100%, #BBABD3 0%, transparent 72%),
+    radial-gradient(55% 60% at 100% 100%, #A794C6 0%, transparent 72%),
+    radial-gradient(35% 40% at 100% 40%, #E7DBEB 0%, transparent 70%), #FFFFFF;
+  --mesh-classic:
+    radial-gradient(45% 45% at 0% 100%, #0095AC 0%, transparent 70%),
+    radial-gradient(40% 40% at 100% 0%, #6FCFDD 0%, transparent 70%),
+    radial-gradient(40% 40% at 0% 15%, #C9B8F0 0%, transparent 70%),
+    radial-gradient(40% 40% at 100% 100%, #B79AE6 0%, transparent 70%),
+    radial-gradient(40% 35% at 45% 60%, #C9F3E6 0%, transparent 70%), #FFFFFF;
+  --mesh: var(--mesh-blue);   /* default page mesh; the accent swaps it, see below */
+
+  /* spacing */
+  --space-4: 4px; --space-8: 8px; --space-12: 12px; --space-16: 16px; --space-18: 18px;
+  --space-22: 22px; --space-26: 26px; --space-40: 40px; --space-48: 48px; --space-64: 64px; --space-88: 88px;
+
+  /* radius (hub look: roomy) */
+  --radius-xs: 4px; --radius-sm: 8px; --radius-md: 12px; --radius-row: 14px;
+  --radius-lg: 18px; --radius-panel: 22px; --radius-xl: 24px; --radius-pill: 999px;
+
+  --border-card: 1px; --border-accent: 5px; --border-focus: 3px;
+  --content-max: 1180px; --text-max: 780px; --slide-max: 760px; --nav-height: 58px;
+
+  --shadow-hover: 0 10px 28px rgba(1,100,98,.13);
+  --shadow-nav: 0 2px 14px rgba(16,32,31,.25);
+  --shadow-raised: 0 14px 40px rgba(1,100,98,.13);
+  --shadow-sheet: 0 -14px 40px rgba(16,32,31,.28);
+
+  --font: Poppins, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --hand: Caveat, "Segoe Print", "Bradley Hand", cursive;
 }
 
+/* Yellow accent. Fill is the template yellow, ink is a dark gold that holds 4.5:1 on white,
+   and the label on a yellow fill is dark, never white. */
+[data-accent="purple"] { --mesh: var(--mesh-purple); }
+[data-accent="yellow"] {
+  --ax: #FBBF45;
+  --ax-ink: #7A4B00;
+  --ax-tint: #FFF6DA;
+  --ax-soft: rgba(251,191,69,.22);
+  --ax-on: #10201F;
+  --ax-deep: #BF822B;
+  --ax-grad: linear-gradient(115deg, #FDD49F 0%, #FBBF45 55%, #F9A751 100%);
+  --lilac: #FEFAD2;
+  --focus-ring: #BF822B;
+  --mesh: var(--mesh-yellow);
+}
+
+[data-theme="night"] {
+  --teal: #2BC4DB;
+  --teal-deep: #016462;
+  --teal-ink: #72ECE7;
+  --header: #061B1B;
+  --hero-a: #0B8F91;
+  --hero-b: #073A39;
+  --bright: #72ECE7;
+  --route: #72ECE7;
+  --logo-ink: #FFFFFF;
+
+  --surface-page: #061B1B;
+  --surface-alt: #0A2928;
+  --surface: #0D3A39;
+  --surface-tint: #0F4443;
+  --surface-ink: #001A1C;
+
+  --ink: #FFFFFF;
+  --ink-muted: #B9CECE;
+  --ink-subtle: #8FB1B2;
+
+  --line: rgba(195,240,240,.16);
+  --line-soft: rgba(195,240,240,.10);
+  --line-control: rgba(195,240,240,.38);
+  --line-strong: rgba(195,240,240,.38);
+
+  --action: #1AB7BE;
+  --on-action: #04201F;
+  --action-soft: rgba(43,196,219,.14);
+
+  --ax: #C48BEA;
+  --ax-ink: #D2A8EE;
+  --ax-tint: rgba(149,75,188,.22);
+  --ax-soft: rgba(196,139,234,.18);
+  --ax-on: #1B0F26;
+  --ax-deep: #954BBC;
+  --ax-grad: linear-gradient(115deg, #C48BEA 0%, #954BBC 100%);
+
+  --positive: #8FD3B1; --positive-soft: rgba(45,122,87,.26);
+  --caution: #F2D58A;  --caution-soft: rgba(160,120,20,.24);
+  --issue: #F1A39A;    --issue-soft: rgba(176,74,63,.22);
+
+  --viz-2: #8FD8E4; --viz-context: #3E6E6C;
+
+  --grad-band: linear-gradient(115deg, #061B1B, #0A2928);
+  --grad-surface: linear-gradient(180deg, #061B1B 0%, #0A2928 100%);
+  /* Night meshes are teal glows on near-black teal. */
+  --mesh-night:
+    radial-gradient(60% 55% at 15% 0%, rgba(11,143,145,.55) 0%, transparent 70%),
+    radial-gradient(55% 60% at 100% 100%, rgba(7,58,57,.9) 0%, transparent 72%), #061B1B;
+  --mesh: var(--mesh-night);
+
+  --shadow-hover: 0 10px 28px rgba(0,0,0,.40);
+  --shadow-nav: 0 2px 14px rgba(0,0,0,.45);
+  --shadow-raised: 0 14px 40px rgba(0,0,0,.45);
+  --shadow-sheet: 0 -14px 40px rgba(0,0,0,.50);
+}
+[data-theme="night"][data-accent="yellow"] {
+  --ax: #FBBF45;
+  --ax-ink: #F6D27A;
+  --ax-tint: rgba(251,191,69,.16);
+  --ax-soft: rgba(251,191,69,.18);
+  --ax-on: #2A1B00;
+  --ax-deep: #BF822B;
+  --ax-grad: linear-gradient(115deg, #FBBF45 0%, #F9A751 100%);
+  --focus-ring: #FBBF45;
+  --lilac: #FEFAD2;
+}
+
+/* Aliases so v0.3 files keep working. Prefer the new names. */
+:root, [data-theme] {
+  --purple: var(--ax);
+  --purple-ink: var(--ax-ink);
+  --purple-tint: var(--ax-tint);
+}
+
+/* Innovation Labs base components v0.4. Needs TOKENS.css first.
+   Class names follow the Strategy Hub. Everything reads tokens, so light/night and purple/yellow
+   switch with data-theme and data-accent on <html>. */
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 12px)}
-body{background:var(--surface-page);color:var(--ink);font-family:var(--f-display);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
-h1,h2,h3,h4{margin:0;text-wrap:balance;color:var(--ink)}
-p{margin:0}
-a{color:var(--teal-ink)}
-:focus-visible{outline:3px solid var(--focus-ring);outline-offset:2px;border-radius:4px}
-.wrap{max-width:var(--content-max);margin:0 auto;padding-inline:var(--s40)}
-@media (max-width:620px){.wrap{padding-inline:var(--s22)}}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--surface-page);color:var(--ink);font:400 16px/1.6 var(--font);transition:background .18s ease,color .18s ease}
+h1,h2,h3,h4,p,ul,ol{margin:0}
+h1,h2,h3,h4{text-wrap:balance}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus-ring);outline-offset:3px;border-radius:6px}
+.wrap{max-width:var(--content-max);margin:0 auto;padding-inline:28px}
 
-.kicker{font-family:var(--f-mono);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-ink)}
-.meta{font-family:var(--f-mono);font-size:11px;font-weight:500;letter-spacing:.06em;color:var(--ink-subtle)}
-.lead{font-size:clamp(15.8px,1.6vw,19.4px);line-height:1.55;color:var(--ink-muted);max-width:62ch}
-.headline{font-size:clamp(28.2px,3.6vw,45.8px);line-height:1.08;letter-spacing:-.025em;font-weight:700}
-.headline em,.beat{font-style:normal;color:var(--teal-ink)}
-.note{font-size:12.3px;line-height:1.5;color:var(--ink-subtle)}
-code,.mono{font-family:var(--f-mono);font-size:.88em}
+/* type */
+.eyebrow,.meta,.kicker{font:600 11.5px/1.3 var(--mono);letter-spacing:.09em;text-transform:uppercase}
+.meta,.kicker{color:var(--teal-ink)}
+.display{font-weight:800;font-size:clamp(44px,6.3vw,92px);line-height:.98;letter-spacing:-.05em}
+.display em,.hl{font-style:normal;color:var(--bright)}
+.hl-ax{color:var(--ax)}
+.title-xl{font-weight:700;font-size:clamp(32px,4vw,52px);line-height:1.05;letter-spacing:-.035em}
+.lead{font-size:18px;line-height:1.65;color:var(--ink-muted);max-width:760px}
+.hand{font:700 clamp(28px,4vw,38px)/1 var(--hand);color:var(--ax-ink);display:inline-block;transform:rotate(-2deg)}
 
-/* ---------- nav */
-.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:linear-gradient(115deg,var(--hero-a),var(--hero-b));box-shadow:var(--shadow-nav)}
-.nav .wrap{height:var(--nav-h);display:flex;align-items:center;gap:var(--s18)}
-.nav .logo{height:24px;flex:none;display:block}
-.nav .links{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0;justify-content:flex-end}
-.nav .links::-webkit-scrollbar{display:none}
-.nav .links a{flex:none;color:#fff;text-decoration:none;font-size:13.2px;font-weight:600;padding:7px 12px;border-radius:var(--r-pill);white-space:nowrap;transition:background .2s}
-.nav .links a:hover{background:rgba(255,255,255,.14)}
-.nav .links a.on{background:#fff;color:#016462}
-.seg{display:inline-flex;background:rgba(255,255,255,.14);border-radius:var(--r-pill);padding:3px;flex:none}
-.seg button{all:unset;cursor:pointer;font-size:12px;font-weight:600;color:#fff;padding:5px 11px;border-radius:var(--r-pill);min-height:24px;display:inline-flex;align-items:center}
-.seg button[aria-pressed="true"]{background:#fff;color:#016462}
-.seg button:focus-visible{outline:3px solid #fff;outline-offset:1px}
-.nav .wrap{max-width:1300px}
-@media (max-width:1339px){
-  .nav .wrap{flex-wrap:wrap;height:auto;min-height:var(--nav-h);padding-block:10px;row-gap:8px}
-  .nav .logo{margin-right:auto}
-  .nav .links{order:3;flex:1 1 100%;flex-wrap:wrap;justify-content:flex-start;overflow:visible;row-gap:4px}
-  html{scroll-padding-top:120px}
-}
-@media (max-width:1060px){.nav .wrap{gap:var(--s12)}.nav .links{justify-content:flex-start}}
-@media (max-width:520px){.nav .logo{height:22px}.nav .links{display:none}}
+/* top band */
+.shell{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--grad-band);color:#fff;border-bottom:1px solid rgba(255,255,255,.14);box-shadow:var(--shadow-nav)}
+.nav{max-width:1220px;margin:0 auto;padding:10px 28px;display:flex;align-items:center;gap:20px}
+.brand{display:block;flex:0 0 auto;line-height:0;color:#fff}
+.logo{height:22px;width:auto;display:block}
+.navlinks{display:flex;gap:2px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
+.navlinks::-webkit-scrollbar{display:none}
+.navlinks a{color:#fff;text-decoration:none;padding:9px 14px;border-radius:999px;white-space:nowrap;font-weight:500;font-size:14.5px}
+.navlinks a:hover{background:rgba(255,255,255,.14)}
+.navlinks a[aria-current="page"]{background:rgba(255,255,255,.2);font-weight:700}
 
-/* ---------- hero */
-.hero{background:linear-gradient(115deg,var(--hero-a),var(--hero-b));color:#fff;padding-block:var(--s64) var(--s88)}
-.hero .wrap{display:grid;grid-template-columns:1fr 1.15fr;gap:var(--s48);align-items:center}
-.hero .kicker{color:#fff;opacity:.9}
-.hero h1{color:#fff;font-size:clamp(40.5px,7vw,81px);line-height:.98;letter-spacing:-.035em;font-weight:800;margin-block:var(--s16) var(--s18)}
-.hero h1 span{display:block;font-family:var(--f-mono);font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-top:var(--s12);opacity:.85}
-.hero .lead{color:#fff;opacity:.94;font-size:19.4px}
-.hero .facts{display:flex;flex-wrap:wrap;gap:var(--s8);margin-top:var(--s26)}
-.hero .facts span{font-family:var(--f-mono);font-size:11.4px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:6px 11px;border-radius:var(--r-pill);border:1.5px solid rgba(255,255,255,.55)}
-/* the plugin model */
-.model{background:var(--surface);color:var(--ink);border-radius:var(--r-xl);padding:var(--s26);box-shadow:var(--shadow-raised);display:grid;gap:var(--s12)}
-.model .row{display:grid;grid-template-columns:118px 1fr;gap:var(--s16);align-items:start;padding:var(--s12) var(--s16);border-radius:var(--r-row);background:var(--surface-tint)}
-.model .row .k{font-family:var(--f-mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-ink);padding-top:3px}
-.model .row b{display:block;font-size:14.1px;font-weight:600}
-.model .row p{font-size:12.3px;color:var(--ink-muted);line-height:1.45;margin-top:2px}
-.model .row.base{background:var(--teal-deep);color:#fff}
-.model .row.base .k,.model .row.base p{color:#fff}
-.model .row.base p{opacity:.88}
-.model .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.model .eq{display:flex;align-items:center;gap:var(--s12);padding:var(--s4) var(--s16) 0;font-size:13.2px;color:var(--ink-muted)}
-.model .eq b{color:var(--ink)}
-.model .plus{font-family:var(--f-mono);color:var(--teal-ink);font-weight:700;text-align:center;line-height:1;margin-block:-6px}
-@media (max-width:900px){.hero .wrap{grid-template-columns:1fr}}
-@media (max-width:620px){.hero{padding-block:var(--s40) 60px}.model{padding:var(--s16)}.model .row{grid-template-columns:1fr;gap:4px}}
+/* segmented control: theme, accent, year/month */
+.seg{display:inline-flex;border:1px solid rgba(255,255,255,.3);border-radius:999px;overflow:hidden;flex:0 0 auto}
+.seg button{border:0;background:transparent;color:#fff;padding:8px 14px;cursor:pointer;font-weight:600;font-size:13.5px;min-height:36px;display:inline-flex;align-items:center;gap:7px}
+.seg button[aria-pressed="true"]{background:#fff;color:#04504F}
+.seg .sw{width:10px;height:10px;border-radius:50%;background:#954BBC}
+.seg .sw.y{background:#FBBF45}
+.seg.on-page{border-color:var(--line-strong)}
+.seg.on-page button{color:var(--ink)}
+.seg.on-page button[aria-pressed="true"]{background:var(--action);color:var(--on-action)}
 
-/* ---------- chips, buttons, deeper */
-.chip{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:11.4px;font-weight:600;letter-spacing:.02em;padding:4px 10px;border-radius:var(--r-pill);background:var(--action-soft);color:var(--teal-ink);white-space:nowrap}
-.chip.lens{background:var(--surface);border:1.5px solid var(--line-control);color:var(--ink)}
-.chip.ai{background:var(--purple-tint);color:var(--purple-ink);border:1.5px solid var(--purple)}
-.chip.exp{background:transparent;border:1.5px dashed var(--line-control);color:var(--ink-muted)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;border-radius:var(--r-pill);font:600 13.2px var(--f-display);border:1.5px solid transparent;cursor:pointer;text-decoration:none}
+/* buttons, pills, tags */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:10px 18px;border-radius:12px;border:1.5px solid transparent;font-weight:700;font-size:15px;text-decoration:none;cursor:pointer;background:none;transition:transform .18s ease,filter .18s ease,background .18s ease}
 .btn.primary{background:var(--action);color:var(--on-action)}
-.btn.secondary{background:var(--surface);color:var(--teal-ink);border-color:var(--line-control)}
-.btn.secondary:hover{background:var(--action-soft)}
-.deeper{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:var(--r-pill);background:var(--action-soft);color:var(--teal-ink);font-size:13.2px;font-weight:600;white-space:nowrap}
-.deeper .dk{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;opacity:.85}
-.deeper::after{content:"↗"}
+.btn.primary:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.btn.ghost{border-color:var(--line-strong);color:var(--ink)}
+.btn.ghost:hover{background:var(--surface-tint)}
+.btn.accent{background:var(--ax);color:var(--ax-on)}
+.btn.light{background:#fff;color:#04504F}
+.btn.small{min-height:38px;padding:7px 14px;font-size:14px}
+.pill{display:inline-flex;align-items:center;gap:6px;font:600 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;border-radius:999px;border:1px solid var(--line-strong);white-space:nowrap}
+.pill.new{color:var(--ax-ink);background:var(--ax-tint);border-color:transparent}
+.tag{display:inline-block;font:600 11px/1.2 var(--mono);letter-spacing:.05em;text-transform:uppercase;padding:5px 9px;border-radius:8px;white-space:nowrap}
+.t-ok{color:var(--positive);background:var(--positive-soft)}
+.t-warn{color:var(--caution);background:var(--caution-soft)}
+.t-info{color:var(--teal-ink);background:var(--surface-tint)}
+.t-new{color:var(--ax-ink);background:var(--ax-tint)}
+.chip{display:inline-block;padding:8px 14px;border-radius:999px;font-weight:600;font-size:14px;background:var(--surface-tint);border:1px solid var(--line)}
+.chip.on{background:var(--action);color:var(--on-action);border-color:transparent}
 
-/* ---------- sections */
-.sec{padding-block:var(--s88)}
-.sec.s{background:var(--surface)}
-.sec.t{background:var(--surface-tint)}
-.sec-head{display:grid;gap:var(--s12);margin-bottom:var(--s48);max-width:820px}
-.sec-head .num{font-family:var(--f-mono);font-size:12px;font-weight:600;color:var(--ink-subtle);letter-spacing:.08em}
-@media (max-width:620px){.sec{padding-block:60px}.sec-head{margin-bottom:var(--s40)}}
-.split{display:grid;grid-template-columns:1fr 1.2fr;gap:var(--s48);align-items:start}
-.split > *{min-width:0}
-@media (max-width:900px){.split{grid-template-columns:1fr}}
-.card{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--r-lg);padding:var(--s26)}
-.sec.s .card{background:var(--surface-tint);border-color:transparent}
-.points{list-style:none;margin:0;padding:0;display:grid;gap:var(--s12)}
-.points li{display:grid;grid-template-columns:22px 1fr;gap:var(--s8);font-size:14.1px;color:var(--ink-muted);line-height:1.5}
-.points li::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--teal);margin-top:7px;justify-self:center}
-.points li b{color:var(--ink);font-weight:600}
-.callout{display:grid;grid-template-columns:auto 1fr;gap:var(--s12);align-items:start;padding:var(--s16) var(--s18);border-radius:var(--r-row);background:var(--caution-soft);color:var(--ink);font-size:14.1px;line-height:1.5}
-.callout .tag{font-family:var(--f-mono);font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--caution);padding-top:2px}
-.ref{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s8);margin-bottom:var(--s16)}
+/* hero: gradient first, mesh variants swap the ground */
+.hero{background:var(--grad-brand);color:#fff;position:relative;overflow:hidden}
+.hero>*{position:relative;z-index:1}
+.hero .lede{font-size:clamp(18px,1.9vw,22px);line-height:1.55;max-width:640px;color:rgba(255,255,255,.93)}
+.hero.mesh{background:var(--mesh);color:var(--ink)}
+.hero.mesh .lede{color:var(--ink-muted)}
+.hero.mesh .display em{color:var(--teal-ink)}
+.hero.ax-grad{background:var(--ax-grad);color:var(--ax-on)}
+.bg-mesh-blue{background:var(--mesh-blue)}
+.bg-mesh-green{background:var(--mesh-green)}
+.bg-mesh-yellow{background:var(--mesh-yellow)}
+.bg-mesh-purple{background:var(--mesh-purple)}
+.bg-mesh-classic{background:var(--mesh-classic)}
+.bg-grad-brand{background:var(--grad-brand);color:#fff}
+.bg-grad-accent{background:var(--ax-grad);color:var(--ax-on)}
+/* brand elements: one per view, never behind body text */
+.el{position:absolute;pointer-events:none;user-select:none;max-width:none}
+.el-sm{width:clamp(56px,8vw,96px)}.el-md{width:clamp(110px,16vw,200px)}.el-lg{width:clamp(180px,26vw,360px)}
 
-/* ---------- design system */
-.ds-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--s18)}
-.ds-grid > *{min-width:0}
-.c7{grid-column:span 7}.c5{grid-column:span 5}.c4{grid-column:span 4}.c8{grid-column:span 8}.c6{grid-column:span 6}.c12{grid-column:span 12}
-@media (max-width:900px){.c7,.c5,.c4,.c8,.c6{grid-column:span 12}}
-.ds-label{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s12);margin-bottom:var(--s18)}
-.ds-label h3{font-size:19.4px;font-weight:700;letter-spacing:-.01em}
-.sw{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s12)}
-.sw div{display:grid;gap:4px}
-.sw i{display:block;height:64px;border-radius:var(--r-md);border:1.5px solid var(--line-soft)}
-.sw b{font-size:13.2px;font-weight:600}
-.sw span{font-size:12.3px;color:var(--ink-subtle);line-height:1.4}
-.ratio{display:flex;height:14px;border-radius:var(--r-pill);overflow:hidden;margin-top:var(--s22)}
-.ratio i:nth-child(1){flex:60;background:var(--surface-tint);border:1.5px solid var(--line)}
-.ratio i:nth-child(2){flex:30;background:var(--teal)}
-.ratio i:nth-child(3){flex:10;background:var(--purple)}
-.ratio-k{display:flex;justify-content:space-between;margin-top:6px}
-.spec{display:grid;gap:var(--s18)}
-.spec .row{display:grid;grid-template-columns:120px 1fr;gap:var(--s16);align-items:baseline;padding-bottom:var(--s16);border-bottom:1.5px solid var(--line-soft)}
-.spec .row:last-child{border-bottom:0;padding-bottom:0}
-.spec .t1{font-size:clamp(26px,3vw,34px);font-weight:700;letter-spacing:-.025em;line-height:1.1}
-.spec .t2{font-family:var(--f-mono);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-ink)}
-.spec .t3{font-family:var(--f-hand);font-size:34px;color:var(--purple-ink);line-height:1}
-.spec .t4{font-size:15px;color:var(--ink-muted)}
-@media (max-width:620px){.spec .row{grid-template-columns:1fr;gap:4px}}
-.themes{display:grid;grid-template-columns:1fr 1fr;gap:var(--s12)}
-.tile{border-radius:var(--r-lg);padding:var(--s18);background:var(--surface-page);border:1.5px solid var(--line);display:grid;gap:var(--s12);color:var(--ink)}
-.tile .bar{height:18px;border-radius:6px;background:linear-gradient(115deg,#0095AC,#016462)}
-.night .bar{background:linear-gradient(115deg,#016462,#031E1E)}
-.tile .mini{background:var(--surface);border-radius:var(--r-md);padding:var(--s12);border:1.5px solid var(--line)}
-.tile .mini b{display:block;font-size:22px;font-weight:800;color:var(--teal);letter-spacing:-.02em;line-height:1}
-.tile .mini span{font-size:11px;color:var(--ink-muted)}
-.tile .cap{font-family:var(--f-mono);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-subtle)}
-.tile .btnmini{justify-self:start;font-size:11px;font-weight:600;padding:5px 12px;border-radius:var(--r-pill);background:var(--action);color:var(--on-action)}
-.comp{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s18)}
-.comp > *{min-width:0}
-@media (max-width:900px){.comp{grid-template-columns:1fr 1fr}}
-@media (max-width:620px){.comp{grid-template-columns:1fr}.themes{grid-template-columns:1fr}.sw{grid-template-columns:1fr 1fr}}
-.cbox{background:var(--surface-page);border-radius:var(--r-lg);padding:var(--s22);display:grid;gap:var(--s12);align-content:start}
-.cbox .cname{font-family:var(--f-mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-subtle)}
-.stat .n{font-size:clamp(38.7px,4.5vw,56.3px);font-weight:800;letter-spacing:-.03em;line-height:1;color:var(--teal)}
-.stat p{font-size:14.1px;color:var(--ink-muted);margin-top:6px}
-.navcard{background:var(--surface);border:1.5px solid var(--line);border-top:5px solid var(--teal);border-radius:var(--r-lg);padding:var(--s18);transition:transform .2s,box-shadow .2s}
-.navcard:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover)}
-.navcard h4{font-size:15px;font-weight:700}
-.navcard p{font-size:12.3px;color:var(--ink-muted);margin-top:2px}
-.aicard{background:var(--purple-tint);border:1.5px solid var(--purple);border-radius:var(--r-lg);padding:var(--s18)}
-.aicard h4{color:var(--purple-ink);font-size:15px}
-.aicard p{font-size:12.3px;color:var(--ink-muted);margin-top:2px}
-.expand{border:1.5px solid var(--line);border-radius:var(--r-row);background:var(--surface)}
-.expand button{all:unset;box-sizing:border-box;width:100%;display:flex;justify-content:space-between;align-items:center;gap:var(--s12);padding:12px 14px;cursor:pointer;font-size:14.1px;font-weight:600;min-height:44px}
-.expand button:focus-visible{outline:3px solid var(--focus-ring);outline-offset:2px;border-radius:var(--r-row)}
-.expand .pl{font-family:var(--f-mono);font-size:18px;color:var(--teal-ink);transition:transform .25s}
-.expand[data-open="true"] .pl{transform:rotate(45deg)}
-.expand .body{padding:0 14px 14px;font-size:12.3px;color:var(--ink-muted)}
-.radii{display:flex;flex-wrap:wrap;gap:var(--s12);align-items:end}
-.radii div{display:grid;gap:6px;justify-items:center}
-.radii i{display:block;width:46px;height:46px;background:var(--surface-tint);border:1.5px solid var(--teal)}
-.hand-note{position:relative}
-.hand-note svg{position:absolute;left:-46px;top:-6px;width:40px;height:30px}
+/* sections, cards, panels */
+.sec{padding-block:76px;background:var(--surface-page)}
+.sec.alt{background:var(--surface-alt)}
+.sec.tint{background:var(--surface-tint)}
+.card{background:var(--surface-tint);border:1px solid var(--line);border-radius:var(--radius-lg);padding:22px;min-width:0;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+.alt .card,.card.on-tint{background:var(--surface)}
+.card.hov:hover,a.card:hover{transform:translateY(-2px);box-shadow:var(--shadow-hover);border-color:var(--line-strong)}
+.card h3,.card h4{margin:8px 0}
+.card p{color:var(--ink-muted);font-size:15px;line-height:1.55}
+.card.edge{border-top:var(--border-accent) solid var(--teal)}
+.card.edge.deep{border-top-color:var(--teal-deep)}
+.card.edge.ax{border-top-color:var(--ax)}
+.card.ai{background:var(--ax-tint);border-color:var(--ax);}
+.card.ai h3,.card.ai h4{color:var(--ax-ink)}
+.card.glass{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.28);backdrop-filter:blur(8px);color:#fff}
+.panel{background:var(--grad-brand);color:#fff;border-radius:var(--radius-panel);padding:30px 32px}
+.panel .meta{color:var(--bright)}
+.panel p{font-size:clamp(19px,2.2vw,25px);line-height:1.45;font-weight:600;letter-spacing:-.01em;margin-top:10px}
+.panel.ax{background:var(--ax-grad);color:var(--ax-on)}
+.panel.ax .meta{color:var(--ax-on);opacity:.8}
+.callout{border-radius:var(--radius-lg);padding:20px 24px;background:var(--surface-tint);border:1px solid var(--line)}
+.callout.warn{background:var(--caution-soft);border-color:transparent}
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.stat-n{font:800 clamp(44px,6vw,76px)/1 var(--font);letter-spacing:-.045em;color:var(--teal-ink);font-variant-numeric:tabular-nums}
+.stat-n small{display:block;font:500 14px/1.4 var(--font);letter-spacing:0;color:var(--ink-muted);margin-top:8px}
 
-/* ---------- strategy hub frame + map */
-.frame{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--shadow-raised)}
-.fnav{display:flex;align-items:center;gap:var(--s16);padding:10px var(--s18);background:linear-gradient(115deg,var(--hero-a),var(--hero-b))}
-.fnav img{height:16px;flex:none}
-.fnav .fl{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;min-width:0}
-.fnav .fl span{flex:none;color:#fff;font-size:11.4px;font-weight:600;padding:4px 9px;border-radius:var(--r-pill)}
-.fnav .fl span.on{background:#fff;color:#016462}
-.mapwrap{background:var(--surface-tint);padding:var(--s26) var(--s26) var(--s18)}
-.maphead{display:flex;justify-content:space-between;align-items:end;gap:var(--s16);flex-wrap:wrap;margin-bottom:var(--s8)}
-.maphead h3{font-size:22px;font-weight:700;letter-spacing:-.015em}
-.map{position:relative;aspect-ratio:1000/330;max-width:100%}
-.map svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.stop{position:absolute;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;border:3px solid var(--surface);background:var(--teal-deep);color:#fff;font:700 12.5px var(--f-display);display:grid;place-items:center;cursor:pointer;padding:0;box-shadow:0 0 0 1.5px var(--teal-deep);transition:transform .2s,background .2s}
-.stop.ahead{background:var(--surface);color:var(--teal-ink);box-shadow:0 0 0 1.5px var(--line-control)}
-.stop:hover{transform:translate(-50%,-50%) scale(1.12)}
-.stop.cur{background:var(--purple);box-shadow:0 0 0 1.5px var(--purple),0 0 0 8px color-mix(in srgb,var(--purple) 18%,transparent);color:#fff}
-.lbl{position:absolute;transform:translateX(-50%);width:max-content;max-width:132px;background:var(--surface);border:1.5px solid var(--line-soft);border-radius:var(--r-md);padding:5px 9px;font-size:11.4px;font-weight:600;line-height:1.25;text-align:center;color:var(--ink);pointer-events:none}
-.lbl.up{transform:translate(-50%,calc(-100% - 24px))}
-.lbl.dn{transform:translate(-50%,24px)}
-.lbl.cur{border-color:var(--purple);color:var(--purple-ink)}
-.mapdetail{margin-top:var(--s16);background:var(--surface);border-radius:var(--r-lg);padding:var(--s18) var(--s22);display:grid;grid-template-columns:auto 1fr;gap:var(--s16);align-items:center;min-height:86px}
-.mapdetail .dn{width:40px;height:40px;border-radius:50%;background:var(--purple);color:#fff;display:grid;place-items:center;font-weight:700}
-.mapdetail h4{font-size:16px}
-.mapdetail p{font-size:13.2px;color:var(--ink-muted)}
-.mapdetail .sub{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-subtle)}
-.vroute{display:none;list-style:none;margin:0;padding:0;position:relative}
-.vroute::before{content:"";position:absolute;left:14px;top:16px;bottom:16px;width:4px;border-radius:2px;background:var(--route)}
-.vroute li{position:relative;display:grid;grid-template-columns:32px 1fr;gap:var(--s12);align-items:center;padding-block:7px}
-.vroute .vs{position:static;transform:none}
-.vroute .vs:hover{transform:scale(1.08)}
-.vroute b{font-size:14.1px;font-weight:600}
-.vroute li.cur b{color:var(--purple-ink)}
-@media (max-width:820px){.map{display:none}.vroute{display:block}.mapwrap{padding:var(--s18)}}
+/* expand */
+details.acc{border:1px solid var(--line);border-radius:14px;background:var(--surface-tint)}
+.alt details.acc{background:var(--surface)}
+details.acc+details.acc{margin-top:10px}
+details.acc summary{cursor:pointer;padding:15px 20px;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:12px;align-items:center}
+details.acc summary::-webkit-details-marker{display:none}
+details.acc summary::after{content:"+";font:600 20px/1 var(--mono);color:var(--ax-ink);flex:0 0 auto;transition:transform .2s}
+details.acc[open] summary::after{transform:rotate(45deg)}
+.accbody{padding:0 20px 20px;color:var(--ink-muted);font-size:15px}
 
-/* ---------- deck */
-.deckzone{display:grid;grid-template-columns:min(330px,100%) 1fr;gap:var(--s48);align-items:center}
-.deckzone > *{min-width:0}
-@media (max-width:900px){.deckzone{grid-template-columns:1fr;justify-items:center}.deckzone .copy{justify-self:stretch}}
-@media (max-width:900px){.deckzone{grid-template-columns:minmax(0,1fr)}}
-.phone{width:100%;max-width:330px;aspect-ratio:330/620;background:#031E1E;border-radius:34px;padding:12px;box-shadow:var(--shadow-raised),0 0 0 1.5px #1C5654 inset;color:#EAF6F6}
-.screen{height:100%;border-radius:24px;background:#031E1E;display:flex;flex-direction:column;padding:16px 16px 14px;overflow:hidden;position:relative}
-.segs{display:flex;gap:3px}
-.segs i{flex:1;height:3px;border-radius:2px;background:#1C5654;transition:background .3s}
-.segs i.done{background:#0095AC}
-.segs i.cur{background:#2BC4DB}
-.chap{display:flex;justify-content:space-between;margin-top:9px;font:600 10px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:#9BBFC0}
-.chap b{color:#2BC4DB;font-weight:600}
-.slides{flex:1;position:relative;margin-top:14px}
-.screen{container-type:inline-size}
-.slides{min-height:0;overflow:hidden}
-.sl{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:10px;min-width:0;opacity:0;visibility:hidden;transform:translateX(18px);transition:opacity .35s,transform .45s cubic-bezier(.3,.1,.2,1),visibility 0s .45s}
-.sl.on{opacity:1;visibility:visible;transform:none;transition:opacity .35s,transform .45s cubic-bezier(.3,.1,.2,1)}
-.sl.before{transform:translateX(-18px)}
-.sl .k{font:600 10.5px var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:#2BC4DB}
-.sl h4{color:#EAF6F6;font-size:clamp(17px,8cqw,23px);line-height:1.12;letter-spacing:-.02em;font-weight:700;overflow-wrap:break-word;text-wrap:pretty}
-.sl h4 em{font-style:normal;color:#2BC4DB}
-.sl p{font-size:clamp(11px,4.4cqw,12.5px);color:#9BBFC0;line-height:1.5}
-.sl .deeper{align-self:flex-start;max-width:100%;background:rgba(43,196,219,.14);color:#2BC4DB;font-size:12px;padding:6px 12px;white-space:normal}
-.sl .btn{align-self:flex-start;max-width:100%;background:#2BC4DB;color:#02201F;border-radius:8px;min-height:40px;padding:0 16px;font-size:12.5px}
-.screen .chap{font-size:9.5px;letter-spacing:.12em}
-.screen .dnav{margin-top:10px}
-.dnav{display:flex;gap:8px}
-.dnav button{flex:1;min-height:44px;border-radius:8px;font:600 13.2px var(--f-display);cursor:pointer;border:1.5px solid #4A9896;background:transparent;color:#EAF6F6}
-.dnav button.nx{background:#2BC4DB;border-color:#2BC4DB;color:#02201F}
-.dnav button:disabled{opacity:.4;cursor:default}
-.dnav button:focus-visible{outline:3px solid #C48BEA;outline-offset:2px}
-.anatomy{list-style:none;margin:var(--s22) 0 0;padding:0;display:grid;gap:var(--s8)}
-.anatomy li{display:grid;grid-template-columns:28px 1fr;gap:var(--s12);align-items:center;padding:10px 14px;background:var(--surface-tint);border-radius:var(--r-row);font-size:14.1px}
-.anatomy .n{width:26px;height:26px;border-radius:50%;background:var(--teal-deep);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700}
-.meshspec{margin-top:var(--s22);background:var(--surface-ink);color:#EAF6F6;border-radius:var(--r-panel);padding:var(--s22)}
-.meshspec h4{color:#fff;font-size:15px;margin-bottom:var(--s8)}
-.meshspec p{font-size:13.2px;color:#C9DCDC;line-height:1.55}
-.meshspec ul{margin:var(--s12) 0 0;padding-left:18px;font-size:12.3px;color:#C9DCDC;display:grid;gap:3px}
-.meshspec ul li::marker{color:#E8D2F5}
+/* go deeper pill */
+.deeper{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:8px 16px;border:1px solid var(--teal);border-radius:999px;background:var(--action-soft);font-size:13.2px;text-decoration:none}
+.deeper b{color:var(--teal-ink);font-weight:600}
+.deeper::after{content:"\2197";color:var(--teal-ink)}
 
-/* ---------- one-pager */
-.a4{container-type:inline-size;width:min(460px,100%);aspect-ratio:210/297;background:#F2F6F7;color:#10201F;border-radius:6px;box-shadow:var(--shadow-raised);overflow:hidden;display:flex;flex-direction:column;justify-self:center}
-.a4 .h{background:linear-gradient(115deg,#0095AC,#016462);color:#fff;padding:5.5cqw 6cqw 4.5cqw}
-.a4 .h .top{display:flex;justify-content:space-between;align-items:center}
-.a4 .h img{height:3.2cqw}
-.a4 .h .ey{font:700 1.5cqw var(--f-mono);letter-spacing:.08em;text-transform:uppercase}
-.a4 .h h4{color:#fff;font-size:6.6cqw;line-height:1;letter-spacing:-.03em;margin-top:3cqw}
-.a4 .h p{font-size:1.75cqw;line-height:1.45;margin-top:1.6cqw;opacity:.93}
-.a4 .m{flex:1;padding:2.6cqw 6cqw;display:flex;flex-direction:column;gap:2.2cqw}
-.a4 .lab{font:700 1.4cqw var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:#016462}
-.a4 .r{display:grid;gap:1.4cqw;margin-top:1cqw}
-.a4 .r3{grid-template-columns:repeat(3,1fr)}.a4 .r4{grid-template-columns:repeat(4,1fr)}
-.a4 .b{background:#EAF7F7;border-radius:1.6cqw;padding:1.4cqw 1.8cqw}
-.a4 .b strong{display:block;font-size:4cqw;font-weight:800;color:#0095AC;letter-spacing:-.03em;line-height:1}
-.a4 .b p{font-size:1.45cqw;line-height:1.4;color:#3C5052;margin-top:.7cqw}
-.a4 .b h5{margin:0;font-size:1.75cqw;line-height:1.2}
-.a4 .b .nn{display:grid;place-items:center;width:3.2cqw;height:3.2cqw;border-radius:50%;background:rgba(0,149,172,.16);color:#016462;font-size:1.6cqw;font-weight:700;margin-bottom:.8cqw}
-.a4 .b.ai{background:#FBF6FE;box-shadow:inset 0 0 0 .2cqw #954BBC}
-.a4 .b.ai h5{color:#6B2E8C}.a4 .b.ai .nn{background:rgba(149,75,188,.16);color:#6B2E8C}
-.a4 .b.top{border-top:.6cqw solid #0095AC}
-.a4 .b.top.d{border-top-color:#016462}.a4 .b.top.p{border-top-color:#954BBC}
-.a4 .f{background:linear-gradient(115deg,#016462,#0095AC);color:#fff;padding:2.6cqw 6cqw 2cqw}
-.a4 .f .k{font-size:1.7cqw;font-weight:600;opacity:.9}
-.a4 .f h5{margin:.5cqw 0 0;font-size:2.9cqw;line-height:1.1;letter-spacing:-.02em;color:#fff}
-.a4 .f .ft{display:flex;justify-content:space-between;gap:2cqw;font-size:1.15cqw;opacity:.8;margin-top:1.6cqw}
-.fit{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s12);margin-top:var(--s22)}
-.fit div{background:var(--surface);border-radius:var(--r-row);padding:var(--s16);border:1.5px solid var(--line-soft)}
-.fit b{display:block;font-size:22px;font-weight:800;color:var(--teal);letter-spacing:-.02em;line-height:1.1}
-.fit span{font-size:12.3px;color:var(--ink-muted)}
-@media (max-width:620px){.fit{grid-template-columns:1fr}}
+/* section chips */
+.rail{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--hh,58px));z-index:40;background:var(--surface-page);border-bottom:1px solid var(--line)}
+.railin{max-width:1220px;margin:0 auto;padding:10px 28px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.railin::-webkit-scrollbar{display:none}
+.railin a{white-space:nowrap;text-decoration:none;font-weight:500;font-size:13.5px;padding:7px 13px;border-radius:999px;border:1px solid var(--line);color:var(--ink-muted)}
+.railin a.on{background:var(--action);color:var(--on-action);border-color:transparent;font-weight:700}
 
-/* ---------- lenses */
-.fact-line{display:flex;flex-wrap:wrap;gap:var(--s8);align-items:center;margin-bottom:var(--s26)}
-.lenses{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s18)}
-.lenses > *{min-width:0}
-@media (max-width:900px){.lenses{grid-template-columns:1fr}}
-.lensc{background:var(--surface-tint);border-radius:var(--r-lg);padding:var(--s26);display:grid;gap:var(--s16);align-content:start}
-.lensc .lh{display:flex;justify-content:space-between;align-items:center;gap:var(--s8)}
-.lensc .lh b{font-size:19.4px;font-weight:700}
-.lensc blockquote{margin:0;font-size:17px;line-height:1.5;color:var(--ink);font-weight:500}
-.lensc .rule{font-size:12.3px;color:var(--ink-subtle);border-top:1.5px solid var(--line-soft);padding-top:var(--s12)}
-mark.f{background:var(--action-soft);color:var(--teal-ink);font-weight:600;padding:0 3px;border-radius:4px}
-.locked{margin-top:var(--s26);display:flex;flex-wrap:wrap;gap:var(--s8);align-items:center}
+/* route: one serpentine line, numbered stops, labels above and below.
+   Current stop uses the accent. Under 820px it becomes .journey (vertical) and detail goes in .sheet. */
+.route-stage{position:relative;width:100%;aspect-ratio:1200/520}
+.route-stage svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.routeBase{fill:none;stroke:var(--route);stroke-width:12;stroke-linecap:round;opacity:.16}
+.routeLine{fill:none;stroke:var(--route);stroke-width:5;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:0;animation:il-draw 1.5s ease both}
+[data-theme="night"] .routeLine{filter:drop-shadow(0 0 7px rgba(114,236,231,.35))}
+@keyframes il-draw{from{stroke-dashoffset:1}}
+@keyframes il-pop{from{opacity:0;transform:scale(.7)}}
+.stop{position:absolute;width:40px;height:40px;margin:-20px 0 0 -20px;padding:0;border:0;background:none;cursor:pointer;animation:il-pop .4s ease both}
+.stop .dot{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--action);color:var(--on-action);border:3px solid var(--surface-page);font-weight:800;font-size:15px;transition:transform .18s ease,box-shadow .18s ease}
+.stop:hover .dot,.stop.active .dot{transform:scale(1.14);box-shadow:0 0 0 8px color-mix(in srgb,var(--route) 22%,transparent)}
+.stop.active .dot{background:var(--ax);color:var(--ax-on);outline:2px solid var(--ink);outline-offset:3px}
+.stop.new .dot{background:var(--ax);color:var(--ax-on)}
+.stop .lab{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap;text-align:center;padding:6px 11px;border-radius:12px;background:color-mix(in srgb,var(--surface-page) 90%,transparent);border:1px solid var(--line);line-height:1.25}
+.stop .lab b{display:block;font-size:13px;font-weight:700}
+.stop .lab span{display:block;font:500 10.5px/1.3 var(--mono);color:var(--ink-muted);letter-spacing:.03em}
+.stop.up .lab{bottom:calc(100% + 10px)}.stop.down .lab{top:calc(100% + 10px)}
+.stop.active .lab{border-color:var(--route)}
+.journey{position:relative}
+.mj{position:relative;margin:0 0 0 14px;padding:0 0 26px 26px;border-left:3px solid var(--route)}
+.mj:last-child{border-left-color:transparent}
+.mj::before{content:attr(data-n);position:absolute;left:-17px;top:-2px;width:31px;height:31px;border-radius:50%;background:var(--action);color:var(--on-action);display:grid;place-items:center;font:800 14px/1 var(--font);border:3px solid var(--surface-page)}
+.mj.active::before{background:var(--ax);color:var(--ax-on)}
+.mj h3{font-size:20px;margin:2px 0 4px}
+.mj p{color:var(--ink-muted);margin:6px 0 12px}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:80;background:var(--surface);color:var(--ink);border-radius:22px 22px 0 0;box-shadow:var(--shadow-sheet);padding:20px 20px calc(20px + env(safe-area-inset-bottom,0px));transform:translateY(105%);transition:transform .3s cubic-bezier(.3,.1,.2,1)}
+.sheet.open{transform:none}
 
-/* ---------- combine */
-.combos{display:grid;gap:var(--s12)}
-.combo{display:grid;grid-template-columns:minmax(0,1.25fr) 26px minmax(0,1fr);gap:var(--s16);align-items:center;background:var(--surface);border:1.5px solid var(--line);border-radius:var(--r-lg);padding:var(--s18) var(--s22)}
-.combo .in{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-.combo .in .p{font-family:var(--f-mono);font-weight:700;color:var(--ink-subtle)}
-.combo .ar{font-size:18px;color:var(--teal-ink);text-align:center}
-.combo .out b{display:block;font-size:15px;font-weight:600}
-.combo .out span{font-size:12.3px;color:var(--ink-muted)}
-@media (max-width:620px){.combo{grid-template-columns:1fr;gap:var(--s8)}.combo .ar{text-align:left;transform:rotate(90deg);width:20px}}
-.panel{background:var(--surface-ink);color:#EAF6F6;border-radius:var(--r-panel);padding:var(--s26)}
-.panel .kicker{color:#E8D2F5}
-.panel h3{color:#fff;font-size:22px;margin-top:var(--s8)}
-.panel ul{margin:var(--s16) 0 0;padding-left:18px;display:grid;gap:6px;font-size:14.1px;color:#C9DCDC}
-.panel ul li::marker{color:#E8D2F5}
-.panel .note{color:#9BBFC0;margin-top:var(--s16)}
+@media (max-width:1000px){.g4,.g3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:760px){.g2{grid-template-columns:1fr}}
+@media (max-width:680px){
+  .wrap,.nav,.railin{padding-inline:18px}
+  .nav{flex-wrap:wrap;gap:10px 14px;padding-block:9px}
+  .logo{height:18px}
+  .navlinks{order:3;flex:1 1 100%}
+  .g2,.g3,.g4{grid-template-columns:1fr}
+  .sec{padding-block:56px}
+  .panel{padding:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .routeLine,.stop{animation:none}
+  .card,.btn,.stop .dot,.sheet{transition:none}
+}
 
-/* ---------- how to use */
-.prompts{display:grid;grid-template-columns:1fr 1fr;gap:var(--s18)}
-.prompts > *{min-width:0}
-@media (max-width:760px){.prompts{grid-template-columns:1fr}}
-.prompt{background:var(--surface-tint);border-radius:var(--r-lg);padding:var(--s22);display:grid;gap:var(--s12);align-content:space-between}
-.prompt q{quotes:"“" "”";font-size:16px;font-weight:500;line-height:1.45;color:var(--ink)}
-.prompt .pf{display:flex;justify-content:space-between;align-items:center;gap:var(--s8);flex-wrap:wrap}
-.copy{all:unset;cursor:pointer;font:600 12px var(--f-display);color:var(--teal-ink);padding:6px 12px;border-radius:var(--r-pill);border:1.5px solid var(--line-control);min-height:20px}
-.copy:hover{background:var(--action-soft)}
-.copy:focus-visible{outline:3px solid var(--focus-ring);outline-offset:2px}
-.notes3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s18);margin-top:var(--s48)}
-.notes3 > *{min-width:0}
-@media (max-width:900px){.notes3{grid-template-columns:1fr}}
-.n3{border-top:5px solid var(--teal);background:var(--surface);border-radius:var(--r-lg);padding:var(--s22);border-left:1.5px solid var(--line);border-right:1.5px solid var(--line);border-bottom:1.5px solid var(--line)}
-.n3.d{border-top-color:var(--teal-deep)}.n3.p{border-top-color:var(--purple)}
-.n3 .kicker{font-size:11px}
-.n3 h4{font-size:17px;margin-top:6px}
-.n3 p{font-size:14.1px;color:var(--ink-muted);margin-top:6px}
+:root{--hh:58px}
+.thbtn{width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(255,255,255,.6);background:transparent;color:#fff;display:inline-grid;place-items:center;cursor:pointer;padding:0;flex:none}
+.thbtn:hover{background:rgba(255,255,255,.16)}
+.thbtn .i-sun{display:none}[data-theme="night"] .thbtn .i-sun{display:block}[data-theme="night"] .thbtn .i-moon{display:none}
+.frame img,.opscale img{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+.hubex{margin-top:30px;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:26px;align-items:center}
+.hubex img{display:block;width:100%;border-radius:14px;border:1px solid var(--line);box-shadow:var(--shadow-raised)}
+@media(max-width:760px){.hubex{grid-template-columns:minmax(0,1fr)}}
+.sec h2{font-size:clamp(32px,4vw,52px);line-height:1.05;letter-spacing:-.035em;font-weight:700;margin:12px 0 14px}
+.sec h3{font-size:21px;line-height:1.25;letter-spacing:-.01em;font-weight:700}
+.sec h4{font-size:16px;font-weight:700}
+.sec-head{max-width:820px;margin-bottom:34px}
+.sub{color:var(--ink-muted);max-width:760px}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.85fr);gap:56px;align-items:center;padding-block:62px 68px}
+.hero h1{font-size:clamp(46px,6vw,88px);line-height:.98;letter-spacing:-.05em;font-weight:800;margin:16px 0 22px}
+.hero h1 em{font-style:normal;color:var(--bright);display:block}
+.hero .btnrow{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.hero .btn.ghost{border-color:rgba(255,255,255,.7);color:#fff}
+.hero .btn.ghost:hover{background:rgba(255,255,255,.14)}
+.stagelist{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.stagelist span{font:600 11.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.34);color:rgba(255,255,255,.92)}
+.newcard{border:1px solid rgba(255,255,255,.28);border-radius:24px;background:rgba(255,255,255,.11);padding:22px;backdrop-filter:blur(8px)}
+.newcard h3{font-size:16px;margin-bottom:10px}
+.newcard ul{list-style:none;padding:0;display:grid;gap:10px;font-size:14.5px}
+.newcard li{padding-left:22px;position:relative;line-height:1.45}
+.newcard li::before{content:"";position:absolute;left:0;top:.5em;width:9px;height:9px;border-radius:50%;background:var(--bright)}
+.sw-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.swatch{border-radius:14px;border:1px solid var(--line);overflow:hidden;background:var(--surface)}
+.swatch i{display:block;height:64px}
+.swatch b{display:block;padding:8px 10px 0;font:600 11.5px/1.2 var(--mono)}
+.swatch span{display:block;padding:2px 10px 9px;font:500 11px/1.2 var(--mono);color:var(--ink-subtle)}
+.type-spec{display:grid;gap:10px}
+.type-spec .r{display:grid;grid-template-columns:150px 1fr;gap:16px;align-items:baseline;border-bottom:1px solid var(--line);padding:10px 0}
+.type-spec .r:last-child{border:0}
+.type-spec .r span{font:500 11px/1.3 var(--mono);color:var(--ink-subtle);text-transform:uppercase;letter-spacing:.06em}
+.comp{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.comp .box{display:flex;flex-direction:column;gap:12px}
+.demo-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.two-acc{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.accpanel{border:1px solid var(--line);border-radius:22px;padding:24px;background:var(--surface-page);color:var(--ink);display:flex;flex-direction:column;gap:16px}
+.accpanel h3{display:flex;align-items:center;gap:10px}
+.accpanel h3 i{width:14px;height:14px;border-radius:50%;background:var(--ax)}
+.miniroute{display:flex;align-items:center;gap:0}
+.miniroute .d{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font:800 13px/1 var(--font);background:var(--action);color:var(--on-action);flex:none}
+.miniroute .d.cur{background:var(--ax);color:var(--ax-on);box-shadow:0 0 0 6px var(--ax-soft)}
+.miniroute .l{height:3px;background:var(--route);flex:1;opacity:.5}
+.rules{width:100%;border-collapse:collapse;font-size:14.5px;min-width:520px}
+.rules th{font:600 11px/1.3 var(--mono);text-transform:uppercase;letter-spacing:.07em;color:var(--ink-subtle);text-align:left;padding:12px 14px;border-bottom:1px solid var(--line)}
+.rules td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:18px;background:var(--surface);margin-top:22px}
+.gradgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+.gtile{border-radius:18px;border:1px solid var(--line);overflow:hidden;background:var(--surface)}
+.gtile .gp{height:130px;display:flex;align-items:flex-end;padding:12px;font:700 15px/1.1 var(--font)}
+.gtile .gi{padding:12px 14px 14px;font-size:13px;color:var(--ink-muted)}
+.gtile .gi b{display:block;color:var(--ink);font:600 12px/1.3 var(--mono);margin-bottom:4px}
+.tpl-bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin:34px 0 16px}
+.tplrow{display:flex;gap:16px;align-items:flex-end;overflow-x:auto;padding-bottom:10px}
+.tpl{flex:none;text-align:center;font:500 11px/1.4 var(--mono);color:var(--ink-subtle)}
+.tpl img{display:block;border-radius:12px;border:1px solid var(--line);height:210px;width:auto;margin-bottom:8px}
+.elgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px}
+.elc{border:1px solid var(--line);border-radius:18px;background:var(--surface);overflow:hidden}
+.elc .ep{height:170px;display:grid;place-items:center;background:var(--mesh-blue);padding:14px}
+[data-theme="night"] .elc .ep{background:var(--surface-alt)}
+.elc .ep img{max-width:100%;max-height:140px;display:block}
+.elc .ei{padding:10px 14px 14px}
+.elc b{display:block;font:600 12px/1.3 var(--mono)}
+.elc span{display:block;font-size:13px;color:var(--ink-muted);margin-top:3px;line-height:1.4}
+.elc.y .ep{background:var(--mesh-yellow)}
+.socials{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap}
+.scale{position:relative;flex:none;overflow:hidden;border-radius:14px;border:1px solid var(--line)}
+.scale>.cv{position:absolute;left:0;top:0;transform-origin:0 0;font-family:Poppins,sans-serif;color:#10201F;overflow:hidden}
+.cv .k{position:absolute;left:80px;top:96px;font:600 28px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#016462}
+.cv h4{position:absolute;left:80px;top:180px;width:800px;font-weight:800;font-size:108px;line-height:1;letter-spacing:-.04em;margin:0}
+.cv h4 em{font-style:normal;color:#016462}
+.cv .big{position:absolute;left:80px;font-weight:800;line-height:.9;letter-spacing:-.05em;color:#016462}
+.cv .lg{position:absolute;height:40px}
+.cv .el{opacity:.95}
+.cv .h{position:absolute;font:700 60px/1 Caveat,cursive;transform:rotate(-3deg)}
+.scap{font:500 11px/1.4 var(--mono);color:var(--ink-subtle);margin-top:8px;text-align:center}
+.routesec{background:var(--grad-surface)}
+[data-theme="night"] .routesec{background:var(--surface-page)}
+.rdetail2{margin-top:26px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:22px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:20px 26px;box-shadow:var(--shadow-raised)}
+.rdetail2 .dnum{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--ax);color:var(--ax-on);font:800 26px/1 var(--font)}
+.rdetail2 h3{margin:4px 0 6px}
+.rdetail2 p{color:var(--ink-muted);font-size:15px;max-width:68ch}
+.journeywrap{display:none}
+.devbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:18px}
+.frame{margin:0 auto;border:10px solid #0b1f1f;border-radius:34px;overflow:hidden;background:#000;box-shadow:var(--shadow-raised);transition:width .3s,height .3s;max-width:100%}
+.frame iframe{display:block;width:100%;height:100%;border:0;background:var(--surface-page)}
+.feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:26px}
+.opframe{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;align-items:flex-start}
+.opscale{width:397px;height:562px;overflow:hidden;border-radius:10px;border:1px solid var(--line);box-shadow:var(--shadow-raised);background:#fff;position:relative}
+.opscale iframe{position:absolute;left:0;top:0;width:794px;height:1123px;border:0;transform:scale(.5);transform-origin:0 0}
+.lenses{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:22px}
+.lensc blockquote{margin:12px 0;font-size:15.5px;line-height:1.6}
+.lensc mark{background:var(--action-soft);color:inherit;padding:0 4px;border-radius:5px}
+.lensc .rule{font-size:13px;color:var(--ink-muted)}
+.lh{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.combos{display:grid;gap:12px}
+.combo{display:grid;grid-template-columns:minmax(0,1.1fr) auto minmax(0,1fr);gap:14px;align-items:center;background:var(--surface-tint);border:1px solid var(--line);border-radius:16px;padding:14px 18px}
+.alt .combo{background:var(--surface)}
+.combo .in{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.combo .out b{display:block;font-size:15px}.combo .out span{display:block;font-size:13px;color:var(--ink-muted)}
+.split{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:26px;align-items:start}
+.prompts{display:grid;gap:12px}
+.prompt{background:var(--surface-tint);border:1px solid var(--line);border-radius:16px;padding:16px 18px;display:grid;gap:10px}
+.alt .prompt{background:var(--surface)}
+.prompt q{font-size:16px;font-weight:600;quotes:none;line-height:1.45}
+.pf{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.copy{min-height:36px;padding:6px 14px;border-radius:10px;border:1.5px solid var(--line-strong);background:none;cursor:pointer;font-weight:600;font-size:13.5px}
+.copy:hover{background:var(--surface-tint)}
+footer.foot{background:var(--surface-ink);color:#fff;padding:36px 0}
+footer.foot .logo{height:20px;margin-bottom:10px}
+footer.foot p{color:rgba(255,255,255,.75);font-size:13.5px}
+.chip.lens{background:var(--ax-tint);border-color:transparent;color:var(--ax-ink)}
+@media (max-width:1000px){.hero .wrap{grid-template-columns:1fr;gap:34px}.two-acc,.split,.lenses{grid-template-columns:1fr}}
+@media (max-width:680px){
+  .combo{grid-template-columns:1fr}.combo .ar{display:none}
+  .type-spec .r{grid-template-columns:1fr;gap:4px}
+  .rdetail2{grid-template-columns:auto minmax(0,1fr)}
+  .rdetail2 .dactions{grid-column:1/-1}
+  .routewide{display:none}.journeywrap{display:block}
+  .opscale{width:100%;max-width:397px}
+}
+.stage-wrap{position:relative;z-index:2}
+/* fluid rules section */
+.fl-unit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;margin-bottom:22px}
+.fl-code{margin:0;overflow-x:auto;background:var(--surface-ink);color:#E6F4F4;border-radius:var(--radius-lg);padding:18px 20px;font:500 13px/1.7 var(--mono)}
+.fl-code .c{color:#8FB1B2}
+.fl-code .k{color:var(--bright)}
+.fl-rules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:900px){.fl-rules{grid-template-columns:minmax(0,1fr)}}
+.fl-rules .card{display:flex;flex-direction:column;gap:8px}
+.fl-rules h4{margin:0}
+.fl-rules .was{margin-top:auto;padding-top:10px;border-top:1px dashed var(--line-strong);font-size:13.5px;color:var(--ink-subtle)}
+.fl-rules .was b{font:600 11px/1.3 var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--issue);margin-right:6px}
+.fl-sizes{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.fl-sizes span{font:600 12px/1 var(--mono);padding:9px 12px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-variant-numeric:tabular-nums}
+.rules td:first-child{min-width:170px}
+@media (max-width:760px){.fl-unit{grid-template-columns:minmax(0,1fr)}}
 
-footer{background:var(--surface-ink);color:#C9DCDC;padding-block:var(--s48)}
-footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:var(--s18);flex-wrap:wrap}
-footer img{height:24px}
-footer p{font-size:12.3px}
-
-@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.nav .seg{margin-left:auto}
+.nav .navlinks{max-width:720px}
 </style>
+<script>(function(){var b=document.body,t,a;try{t=localStorage.getItem('il-sc-theme');a=localStorage.getItem('il-sc-accent');}catch(e){}if(t!=='night'&&t!=='light')t='light';if(a!=='yellow'&&a!=='purple')a='purple';b.setAttribute('data-theme',t);b.setAttribute('data-accent',a);})();</script>
 
-<nav class="nav" aria-label="Main">
-  <div class="wrap">
-    <img class="logo" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTGF5ZXJfMiIgZGF0YS1uYW1lPSJMYXllciAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MDUuODQgNTMuNDIiPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuY2xzLTEgewogICAgICAgIGZpbGw6ICNmZmY7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDxnIGlkPSJMYXllcl8xLTIiIGRhdGEtbmFtZT0iTGF5ZXIgMSI+CiAgICA8ZyBpZD0ibG9nb19JTF8yMDI0X2Z1bGxfLV9wcmltYXJ5IiBkYXRhLW5hbWU9ImxvZ28gSUwgMjAyNCBmdWxsIC0gcHJpbWFyeSI+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTkwLjcxLDkuNzJjLTguNjcsMC0xNS43LDcuMDMtMTUuNywxNS43LDAsNS40MSwyLjc0LDEwLjE4LDYuOTEsMTMsLjExLjA3LjIyLjE0LjMzLjIyLjg1LjY0LDEuNDEsMS42NSwxLjQxLDIuOHYuNjVoMy45N3YtLjY1YzAtLjMzLS4wMy0uNjUtLjA3LS45OGguMDFsLTIuMDQtMTEuNjctLjg0LjEzLDEuMzksOC4wMWMtLjQxLS41NS0uOS0xLjA1LTEuNDYtMS40Ni0uMTgtLjEzLS4zNy0uMjYtLjU2LS4zNy0zLjE5LTIuMi01LjA5LTUuOC01LjA5LTkuNjcsMC02LjQ3LDUuMjYtMTEuNzQsMTEuNzMtMTEuNzRzMTEuNzMsNS4yNywxMS43MywxMS43NGMwLDMuNzktMS44Myw3LjM0LTQuOTEsOS41NC0uMzcuMjEtLjcyLjQ1LTEuMDUuNzItLjQ0LjM2LS44My43Ni0xLjE2LDEuMmwxLjM5LTcuOTUtLjg1LS4xLTEuOTIsMTAuOThjLS4wMy4xMi0uMDQuMjUtLjA2LjM4bC0uMDUuMjZzMCwuMDYtLjAxLjA4bC0uMDIuMjV2MS4zMWgzLjk2di0xLjA4Yy4xMS0uOTIuNTctMS43MiwxLjI1LTIuMjguMTktLjE1LjM5LS4yOS42MS0uNCw0LjEtMi44NCw2Ljc4LTcuNTYsNi43OC0xMi45MSwwLTguNjctNy4wMy0xNS43LTE1LjY5LTE1LjdaIi8+CiAgICAgIDxyZWN0IGNsYXNzPSJjbHMtMSIgeD0iODMuNjYiIHk9IjQ5LjQ1IiB3aWR0aD0iMTQuMDkiIGhlaWdodD0iMy45NyIvPgogICAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iODMuNjYgNDMuNzkgODMuNjYgNDcuNzYgOTcuNzUgNDcuNzYgOTcuNzUgNDMuNzkgODcuNjMgNDMuNzkgODMuNjYgNDMuNzkiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNOTAuNTcsMjUuMzRjLjcsMCwxLjMzLjM2LDEuNjkuOTcuNzgsMS4zMywyLjExLDIuMjQsMy42LDIuNTNsLjg1LjEuNi0zLjQ0Yy0uMTQuMDQtLjI5LjA2LS40NS4wNi0uMTUsMC0uMjktLjAyLS40Mi0uMDUtLjUzLS4xMS0uOTgtLjQ0LTEuMjctLjkzLS45Ni0xLjYyLTIuNzItMi42Mi00LjYtMi42MnMtMy42NCwxLTQuNiwyLjYyYy0uMjQuNDEtLjYuNy0xLjAzLjg1LS4yLjA4LS40My4xMi0uNjYuMTItLjA2LDAtLjEyLDAtLjE4LS4wMWwuNTksMy4zOC44NC0uMTNjMS4zOC0uMzUsMi42LTEuMjMsMy4zNC0yLjQ4LjM2LS42MS45OS0uOTcsMS42OS0uOTdaIi8+CiAgICAgIDxyZWN0IGNsYXNzPSJjbHMtMSIgeT0iMTAuMjgiIHdpZHRoPSI0Ljc2IiBoZWlnaHQ9IjMwLjAzIi8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIzMi41MiAzMS42NCAxNS40OSAxMC4yOCAxMS44IDEwLjI4IDExLjggNDAuMyAxNi42NSA0MC4zIDE2LjY1IDE5LjEyIDMzLjY4IDQwLjMgMzcuMzIgNDAuMyAzNy4zMiAxMC4yOCAzMi41MiAxMC4yOCAzMi41MiAzMS42NCIvPgogICAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iNjUuMTQgMzEuNjQgNDguMTEgMTAuMjggNDQuNDIgMTAuMjggNDQuNDIgNDAuMyA0OS4yNyA0MC4zIDQ5LjI3IDE5LjEyIDY2LjMgNDAuMyA2OS45NCA0MC4zIDY5Ljk0IDEwLjI4IDY1LjE0IDEwLjI4IDY1LjE0IDMxLjY0Ii8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIxMzEuMjcgMTAuMjggMTIxLjY2IDM0LjY5IDExMi4wOSAxMC4yOCAxMDYuNjkgMTAuMjggMTE5LjE3IDQwLjQzIDEyNC4xOSA0MC40MyAxMzYuNjMgMTAuMjggMTMxLjI3IDEwLjI4Ii8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTIyNi4wNywxMi4wNmMtLjExLS4wNy0uMjItLjE0LS4zMy0uMjItLjg1LS42NC0xLjQxLTEuNjctMS40MS0yLjgyVjBoLTMuOTZ2OS4wMmMwLDIuMzUsMS4xMiw0LjYsMyw2LjAxLjE4LjE1LjM2LjI3LjU2LjM5LDMuMTMsMi4xNyw1LjAyLDUuNzIsNS4wOCw5LjUzLS4yOC0uMTctLjUxLS40LS42OS0uNjktLjk2LTEuNjQtMi43Mi0yLjY1LTQuNi0yLjY1cy0zLjY0LDEuMDEtNC42MSwyLjY0Yy0uMzYuNjEtLjk5Ljk4LTEuNjkuOThzLTEuMzMtLjM2LTEuNjktLjk3Yy0uOTYtMS42NC0yLjczLTIuNjUtNC42MS0yLjY1cy0zLjY1LDEuMDEtNC42LDIuNjRjLS4yMy4zOS0uNTcuNjktLjk4Ljg0LjAyLTMuOCwxLjg1LTcuMzQsNC45MS05LjU1LjM3LS4yMS43Mi0uNDUsMS4wNS0uNzIsMS40OC0xLjIzLDIuNDMtMi45OCwyLjY2LTQuOWwuMDMtLjI0VjBoLTMuOTd2OS40NGMtLjExLjkyLS41NywxLjc0LTEuMjUsMi4zLS4yLjE2LS40LjI5LS42Mi40LTQuMSwyLjg1LTYuNzgsNy42LTYuNzgsMTMsMCw4LjczLDcuMDMsMTUuOCwxNS43LDE1LjhzMTUuNy03LjA3LDE1LjctMTUuOGMwLTUuNDUtMi43NC0xMC4yNS02LjkxLTEzLjA5Wk0yMTcuMjksMzYuOTVjLTUuMzEsMC05LjgxLTMuNTgtMTEuMjUtOC40NiwxLjQxLS4zMywyLjY1LTEuMjMsMy40MS0yLjUuMzYtLjYxLjk5LS45OCwxLjY5LS45OHMxLjMzLjM3LDEuNjkuOThjLjk2LDEuNjIsMi43MywyLjY0LDQuNjEsMi42NHMzLjY0LTEuMDIsNC42LTIuNjRjLjM2LS42MS45OS0uOTgsMS42OS0uOThzMS4zMy4zNywxLjY5Ljk4Yy43LDEuMiwxLjg0LDIuMDUsMy4xMywyLjQzLTEuNDEsNC45My01LjkzLDguNTMtMTEuMjYsOC41M1oiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTQ3LjU1LDEwLjI4bC0xMy40NywzMC4wM2g1LjFsMi44My02LjNoMTYuMjVsMi44OCw2LjNoNS4xbC0xMy40Ny0zMC4wM2gtNS4yM1pNMTQzLjgyLDI5LjYzbDYuMzUtMTQuMjksNi4zNSwxNC4yOWgtMTIuNjlaIi8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIxNjMuNDEgMTQuNjEgMTczLjI4IDE0LjYxIDE3My4yOCA0MC4zMSAxNzguMTMgNDAuMzEgMTc4LjEzIDE0LjYxIDE4Ny45NSAxNC42MSAxODcuOTUgMTAuMjggMTYzLjQxIDEwLjI4IDE2My40MSAxNC42MSIvPgogICAgICA8cmVjdCBjbGFzcz0iY2xzLTEiIHg9IjE5MS44NSIgeT0iMTAuMjgiIHdpZHRoPSI0Ljc2IiBoZWlnaHQ9IjMwLjAzIi8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIyNTguNzkgMzEuNjQgMjQxLjc2IDEwLjI4IDIzOC4wNyAxMC4yOCAyMzguMDcgNDAuMyAyNDIuOTIgNDAuMyAyNDIuOTIgMTkuMTIgMjU5Ljk1IDQwLjMgMjYzLjU5IDQwLjMgMjYzLjU5IDEwLjI4IDI1OC43OSAxMC4yOCAyNTguNzkgMzEuNjQiLz4KICAgICAgPHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjI4Ni42MyAxMC4yOCAyODEuODIgMTAuMjggMjgxLjgyIDQwLjMgMzAyLjQ1IDQwLjMgMzAyLjQ1IDM1Ljg1IDI4Ni42MyAzNS44NSAyODYuNjMgMTAuMjgiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzk0LjE1LDMwLjk3Yy0uMzMtNi4yNS02LjAyLTcuOTEtMTIuMDItOC43NC0zLjk1LS41Ni03LjI5LTEuMzctNy4yOS00LjI5czIuOTItNC41NSw2Ljk1LTQuNTVjMy4xMy4wNCw2LjAxLDEuMjksNy40MiwzLjM0bDMuNjUtMi40NGMtMi41My00LjAzLTYuODYtNS4wNi0xMS4yLTUuMDYtNS40LDAtMTEuNjIsMi40LTExLjU4LDguNjIsMCw2LjQzLDUuNjYsNy45NCwxMS42Miw4Ljc1LDQuMi41Niw3LjY4LDEuNjcsNy42OCw0LjkzLDAsMy43OC0zLjk5LDQuOTgtNy41OSw0Ljk4cy03LjIxLTEuMjktOS4zNS00LjkzbC0zLjYsMi40YzIuNzQsNS4wNiw3LjE2LDYuODIsMTIuOTEsNi44Mi41NiwwLDEuMTEtLjAzLDEuNjYtLjA3LDIuMi4wNyw2LjM0LTEuNDksNy40Ni0yLjI5LDQuMS0yLjksMy4xNS03LjM0LDMuMjgtNy40OFoiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzE4LjIsMTAuMjhsLTEzLjQ3LDMwLjAzaDUuMTFsMi44My02LjNoMTYuMjZsMi44Nyw2LjNoNS4xbC0xMy40Ny0zMC4wM2gtNS4yM1pNMzE0LjQ2LDI5LjYzbDYuMzUtMTQuMjksNi4zNSwxNC4yOWgtMTIuNjlaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTM2MC40NywyNC44MmMyLjgzLTEuMTYsNC4xNi0zLjQzLDQuMTYtNS45NiwwLTUuOTYtNC41MS04LjU4LTEwLjIxLTguNThoLTEzLjc3djMwLjAzaDEzLjc3YzUuOTIsMCwxMS4xNS0yLjAyLDExLjE1LTguNTgsMC0yLjI3LTEuNS01LjgzLTUuMS02LjlaTTM0NS40MSwxNC42MWg5LjAxYzMuNiwwLDUuNDUsMi4yMyw1LjQ1LDQuMzMsMCwyLjM2LTEuOCwzLjc4LTUuNCwzLjc4aC05LjA1di04LjExWk0zNTQuNDIsMzUuODVoLTkuMDF2LTguODRoOS4wNWMyLjc0LDAsNi4zMSwxLjQ2LDYuMzEsNC42OHMtMy42OSw0LjE2LTYuMzUsNC4xNloiLz4KICAgIDwvZz4KICAgIDxnPgogICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik00MDUuNzMsMzYuMDJoMTkuMTZ2NC42OGgtMjQuMTR2LTcuNTZjMC01LjcxLDQuNDctOS4wMiwxMi4xNi05LjAyLDQuMTIsMCw2LjkyLTEuODUsNi45Mi00LjYsMC0zLjAxLTIuNDUtNC43Ny02LjYyLTQuNzdzLTcuMDQsMS43Ni03LjEzLDQuNTFoLTUuMTVjLjM0LTUuNjcsNC45LTkuMDIsMTIuMjktOS4wMnMxMS42OCwzLjUyLDExLjY4LDkuMTljMCw2LjAxLTQuMTcsOS4xOS0xMS45NCw5LjE5LTQuNTEsMC03LjIyLDEuNjgtNy4yMiw0LjUxdjIuODhaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTQyOC4wNiwyOC41OXYtNS44OGMwLTcuNTYsNS4yOC0xMi42NywxMy4wNi0xMi42N3MxMy4wNiw1LjExLDEzLjA2LDEyLjY3djUuODhjMCw3LjUyLTUuMjgsMTIuNjMtMTMuMDYsMTIuNjNzLTEzLjA2LTUuMTEtMTMuMDYtMTIuNjNaTTQ0OS4xMSwyOC41OXYtNS44OGMwLTQuNzItMy4xOC03LjktNy45OS03LjlzLTcuOTksMy4xOC03Ljk5LDcuOXY1Ljg4YzAsNC43MiwzLjE4LDcuOSw3Ljk5LDcuOXM3Ljk5LTMuMTgsNy45OS03LjlaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTQ2Mi4yNSwzNi4wMmgxOS4xNnY0LjY4aC0yNC4xNHYtNy41NmMwLTUuNzEsNC40Ny05LjAyLDEyLjE2LTkuMDIsNC4xMiwwLDYuOTItMS44NSw2LjkyLTQuNiwwLTMuMDEtMi40NS00Ljc3LTYuNjItNC43N3MtNy4wNCwxLjc2LTcuMTMsNC41MWgtNS4xNWMuMzQtNS42Nyw0LjktOS4wMiwxMi4yOS05LjAyczExLjY4LDMuNTIsMTEuNjgsOS4xOWMwLDYuMDEtNC4xNyw5LjE5LTExLjk0LDkuMTktNC41MSwwLTcuMjIsMS42OC03LjIyLDQuNTF2Mi44OFoiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNTA1Ljg0LDEwLjY0djIuODhsLTEzLjkyLDI3LjE5aC01Ljc1bDEzLjE5LTI1LjM0aC0xNi40MXYtNC43MmgyMi44OVoiLz4KICAgIDwvZz4KICA8L2c+Cjwvc3ZnPg==" alt="Innovation Labs 2027">
-    <div class="links" id="links">
-      <a href="#overview">Overview</a><a href="#system">Design system</a><a href="#website">Website</a><a href="#presentation">Presentation</a><a href="#onepager">One-pager</a><a href="#lenses">Tone lenses</a><a href="#combine">Combine</a><a href="#use">How to use</a>
+<header class="shell" id="shell">
+  <nav class="nav" aria-label="Main">
+    <a class="brand" href="#top" aria-label="ilabsro-design"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 505.84 53.42" fill="currentColor" class="logo" role="img" aria-label="Innovation Labs 2027"><g><g><path d="M90.71,9.72c-8.67,0-15.7,7.03-15.7,15.7,0,5.41,2.74,10.18,6.91,13,.11.07.22.14.33.22.85.64,1.41,1.65,1.41,2.8v.65h3.97v-.65c0-.33-.03-.65-.07-.98h.01l-2.04-11.67-.84.13,1.39,8.01c-.41-.55-.9-1.05-1.46-1.46-.18-.13-.37-.26-.56-.37-3.19-2.2-5.09-5.8-5.09-9.67,0-6.47,5.26-11.74,11.73-11.74s11.73,5.27,11.73,11.74c0,3.79-1.83,7.34-4.91,9.54-.37.21-.72.45-1.05.72-.44.36-.83.76-1.16,1.2l1.39-7.95-.85-.1-1.92,10.98c-.03.12-.04.25-.06.38l-.05.26s0,.06-.01.08l-.02.25v1.31h3.96v-1.08c.11-.92.57-1.72,1.25-2.28.19-.15.39-.29.61-.4,4.1-2.84,6.78-7.56,6.78-12.91,0-8.67-7.03-15.7-15.69-15.7Z"/><rect x="83.66" y="49.45" width="14.09" height="3.97"/><polygon points="83.66 43.79 83.66 47.76 97.75 47.76 97.75 43.79 87.63 43.79 83.66 43.79"/><path d="M90.57,25.34c.7,0,1.33.36,1.69.97.78,1.33,2.11,2.24,3.6,2.53l.85.1.6-3.44c-.14.04-.29.06-.45.06-.15,0-.29-.02-.42-.05-.53-.11-.98-.44-1.27-.93-.96-1.62-2.72-2.62-4.6-2.62s-3.64,1-4.6,2.62c-.24.41-.6.7-1.03.85-.2.08-.43.12-.66.12-.06,0-.12,0-.18-.01l.59,3.38.84-.13c1.38-.35,2.6-1.23,3.34-2.48.36-.61.99-.97,1.69-.97Z"/><rect y="10.28" width="4.76" height="30.03"/><polygon points="32.52 31.64 15.49 10.28 11.8 10.28 11.8 40.3 16.65 40.3 16.65 19.12 33.68 40.3 37.32 40.3 37.32 10.28 32.52 10.28 32.52 31.64"/><polygon points="65.14 31.64 48.11 10.28 44.42 10.28 44.42 40.3 49.27 40.3 49.27 19.12 66.3 40.3 69.94 40.3 69.94 10.28 65.14 10.28 65.14 31.64"/><polygon points="131.27 10.28 121.66 34.69 112.09 10.28 106.69 10.28 119.17 40.43 124.19 40.43 136.63 10.28 131.27 10.28"/><path d="M226.07,12.06c-.11-.07-.22-.14-.33-.22-.85-.64-1.41-1.67-1.41-2.82V0h-3.96v9.02c0,2.35,1.12,4.6,3,6.01.18.15.36.27.56.39,3.13,2.17,5.02,5.72,5.08,9.53-.28-.17-.51-.4-.69-.69-.96-1.64-2.72-2.65-4.6-2.65s-3.64,1.01-4.61,2.64c-.36.61-.99.98-1.69.98s-1.33-.36-1.69-.97c-.96-1.64-2.73-2.65-4.61-2.65s-3.65,1.01-4.6,2.64c-.23.39-.57.69-.98.84.02-3.8,1.85-7.34,4.91-9.55.37-.21.72-.45,1.05-.72,1.48-1.23,2.43-2.98,2.66-4.9l.03-.24V0h-3.97v9.44c-.11.92-.57,1.74-1.25,2.3-.2.16-.4.29-.62.4-4.1,2.85-6.78,7.6-6.78,13,0,8.73,7.03,15.8,15.7,15.8s15.7-7.07,15.7-15.8c0-5.45-2.74-10.25-6.91-13.09ZM217.29,36.95c-5.31,0-9.81-3.58-11.25-8.46,1.41-.33,2.65-1.23,3.41-2.5.36-.61.99-.98,1.69-.98s1.33.37,1.69.98c.96,1.62,2.73,2.64,4.61,2.64s3.64-1.02,4.6-2.64c.36-.61.99-.98,1.69-.98s1.33.37,1.69.98c.7,1.2,1.84,2.05,3.13,2.43-1.41,4.93-5.93,8.53-11.26,8.53Z"/><path d="M147.55,10.28l-13.47,30.03h5.1l2.83-6.3h16.25l2.88,6.3h5.1l-13.47-30.03h-5.23ZM143.82,29.63l6.35-14.29,6.35,14.29h-12.69Z"/><polygon points="163.41 14.61 173.28 14.61 173.28 40.31 178.13 40.31 178.13 14.61 187.95 14.61 187.95 10.28 163.41 10.28 163.41 14.61"/><rect x="191.85" y="10.28" width="4.76" height="30.03"/><polygon points="258.79 31.64 241.76 10.28 238.07 10.28 238.07 40.3 242.92 40.3 242.92 19.12 259.95 40.3 263.59 40.3 263.59 10.28 258.79 10.28 258.79 31.64"/><polygon points="286.63 10.28 281.82 10.28 281.82 40.3 302.45 40.3 302.45 35.85 286.63 35.85 286.63 10.28"/><path d="M394.15,30.97c-.33-6.25-6.02-7.91-12.02-8.74-3.95-.56-7.29-1.37-7.29-4.29s2.92-4.55,6.95-4.55c3.13.04,6.01,1.29,7.42,3.34l3.65-2.44c-2.53-4.03-6.86-5.06-11.2-5.06-5.4,0-11.62,2.4-11.58,8.62,0,6.43,5.66,7.94,11.62,8.75,4.2.56,7.68,1.67,7.68,4.93,0,3.78-3.99,4.98-7.59,4.98s-7.21-1.29-9.35-4.93l-3.6,2.4c2.74,5.06,7.16,6.82,12.91,6.82.56,0,1.11-.03,1.66-.07,2.2.07,6.34-1.49,7.46-2.29,4.1-2.9,3.15-7.34,3.28-7.48Z"/><path d="M318.2,10.28l-13.47,30.03h5.11l2.83-6.3h16.26l2.87,6.3h5.1l-13.47-30.03h-5.23ZM314.46,29.63l6.35-14.29,6.35,14.29h-12.69Z"/><path d="M360.47,24.82c2.83-1.16,4.16-3.43,4.16-5.96,0-5.96-4.51-8.58-10.21-8.58h-13.77v30.03h13.77c5.92,0,11.15-2.02,11.15-8.58,0-2.27-1.5-5.83-5.1-6.9ZM345.41,14.61h9.01c3.6,0,5.45,2.23,5.45,4.33,0,2.36-1.8,3.78-5.4,3.78h-9.05v-8.11ZM354.42,35.85h-9.01v-8.84h9.05c2.74,0,6.31,1.46,6.31,4.68s-3.69,4.16-6.35,4.16Z"/></g><g><path d="M405.73,36.02h19.16v4.68h-24.14v-7.56c0-5.71,4.47-9.02,12.16-9.02,4.12,0,6.92-1.85,6.92-4.6,0-3.01-2.45-4.77-6.62-4.77s-7.04,1.76-7.13,4.51h-5.15c.34-5.67,4.9-9.02,12.29-9.02s11.68,3.52,11.68,9.19c0,6.01-4.17,9.19-11.94,9.19-4.51,0-7.22,1.68-7.22,4.51v2.88Z"/><path d="M428.06,28.59v-5.88c0-7.56,5.28-12.67,13.06-12.67s13.06,5.11,13.06,12.67v5.88c0,7.52-5.28,12.63-13.06,12.63s-13.06-5.11-13.06-12.63ZM449.11,28.59v-5.88c0-4.72-3.18-7.9-7.99-7.9s-7.99,3.18-7.99,7.9v5.88c0,4.72,3.18,7.9,7.99,7.9s7.99-3.18,7.99-7.9Z"/><path d="M462.25,36.02h19.16v4.68h-24.14v-7.56c0-5.71,4.47-9.02,12.16-9.02,4.12,0,6.92-1.85,6.92-4.6,0-3.01-2.45-4.77-6.62-4.77s-7.04,1.76-7.13,4.51h-5.15c.34-5.67,4.9-9.02,12.29-9.02s11.68,3.52,11.68,9.19c0,6.01-4.17,9.19-11.94,9.19-4.51,0-7.22,1.68-7.22,4.51v2.88Z"/><path d="M505.84,10.64v2.88l-13.92,27.19h-5.75l13.19-25.34h-16.41v-4.72h22.89Z"/></g></g></svg></a>
+    <div class="navlinks" id="links">
+      <a href="#look">Look</a><a href="#fluid">Fluid</a><a href="#accent">Accent</a><a href="#gradients">Gradients</a><a href="#elements">Elements</a><a href="#social">Social</a><a href="#route">Route</a><a href="#deck">Deck</a><a href="#onepager">One-pager</a><a href="#voices">Voices</a><a href="#use">Use</a>
     </div>
-    <div class="seg" role="group" aria-label="Theme">
-      <button type="button" data-th="light" aria-pressed="true">Light</button><button type="button" data-th="night" aria-pressed="false">Night</button>
-    </div>
-  </div>
-</nav>
+    <div class="seg" role="group" aria-label="Accent"><button type="button" data-ac="purple" aria-pressed="true"><i class="sw"></i>Purple</button><button type="button" data-ac="yellow" aria-pressed="false"><i class="sw y"></i>Yellow</button></div>
+    <button type="button" class="thbtn" id="thbtn" aria-label="Switch theme"><svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg></button>
+  </nav>
+</header>
 
+<main id="top">
 <header class="hero" id="overview">
   <div class="wrap">
     <div>
-      <div class="kicker">Innovation Labs · plugin v0.3.1</div>
-      <h1>ilabsro-design</h1>
-      <p class="lead">One Innovation Labs identity across websites, presentations, one-pagers and social posts. You pick what to make and how it should sound. The plugin keeps it on brand.</p>
-      <div class="facts"><span>4 output skills</span><span>3 tone lenses</span><span>1 design system</span><span>Light + Night</span></div>
+      <span class="eyebrow" style="color:var(--bright)">Plugin showcase · v0.4</span>
+      <h1>ilabsro-design<em>One look. More options.</em></h1>
+      <p class="lede">The Strategy Hub look, now across every format. Purple or yellow accent, gradients from the IL25 templates, the brand's SVG elements, and a route-first presentation.</p>
+      <div class="btnrow"><a class="btn light" href="#deck">See the route deck</a><a class="btn ghost" href="#gradients">Browse gradients</a></div>
+      <div class="stagelist"><span>website-maker</span><span>presentation-maker</span><span>one-pager-maker</span><span>insta-post-maker</span><span>brand-elements</span></div>
     </div>
-    <div class="model" aria-label="The plugin model">
-      <div class="row base"><div class="k">Design system</div><div><b>How Innovation Labs looks</b><p>Bundled rules and tokens. The portable source of truth.</p></div></div>
-      <div class="plus" aria-hidden="true">+</div>
-      <div class="row"><div class="k">Output skill</div><div><b>What you are making</b><div class="chips"><span class="chip">website-maker</span><span class="chip">presentation-maker</span><span class="chip">one-pager-maker</span><span class="chip">insta-post-maker</span></div></div></div>
-      <div class="plus" aria-hidden="true">+</div>
-      <div class="row"><div class="k">Tone lens</div><div><b>How the copy sounds</b><p>Zero or one per output.</p><div class="chips"><span class="chip lens">formal-lens</span><span class="chip lens">friendly-lens</span><span class="chip lens">jokey-lens</span></div></div></div>
-      <div class="eq"><span>Your source material decides</span><b>what it says.</b></div>
-    </div>
+    <aside class="newcard">
+      <h3>New in v0.4</h3>
+      <ul>
+        <li>Everything restyled to the Strategy Hub look.</li>
+        <li>Accent switch: purple (default) or yellow.</li>
+        <li>Gradient tokens plus 4 template colors and a classic mesh.</li>
+        <li>16 SVG brand elements bundled as assets.</li>
+        <li>Route-first deck: vertical journey on portrait phones, full route on landscape, Lead the room.</li>
+        <li>New brand-elements skill that picks accent, gradient and element.</li>
+        <li>Fluid layout rules from the deck and hub audit: one size unit, one container, no jumps.</li>
+      </ul>
+    </aside>
   </div>
 </header>
 
-<main>
-<!-- ================= DESIGN SYSTEM ================= -->
-<section class="sec s" id="system">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="kicker">Design system</span>
-      <h2 class="headline">Color and hierarchy. <em>Not texture.</em></h2>
-      <p class="lead">Teal on white, paper and pale-teal grounds. Bold Poppins headlines, mono labels, medium-rounded cards. Grounds stay flat; the only gradient is teal to deep teal.</p>
+<!-- LOOK -->
+<section class="sec" id="look"><div class="wrap">
+  <div class="sec-head"><span class="meta">The look</span><h2>Flat content. <span class="hl-ax" style="color:var(--teal-ink)">Glowing ground.</span></h2>
+  <p class="lead">Reading areas stay on flat teal-tinted surfaces. Gradients and mesh go on bands: the nav, heroes, covers, panels and closing slides. Switch Light, Night and accent in the top bar and everything below follows.</p></div>
+  <div class="sw-row" id="swatches"></div>
+  <div class="block" style="margin-top:44px"><div class="type-spec">
+    <div class="r"><span>display 800</span><div style="font:800 clamp(34px,5vw,60px)/1 var(--font);letter-spacing:-.05em">Human thinking first.</div></div>
+    <div class="r"><span>title-xl 700</span><div style="font:700 clamp(26px,3.4vw,40px)/1.1 var(--font);letter-spacing:-.035em">The program works. <span style="color:var(--teal-ink)">Teams told us why.</span></div></div>
+    <div class="r"><span>body 400</span><div style="font-size:16px;color:var(--ink-muted);max-width:60ch">Plain, confident sentences. Poppins for display and body, IBM Plex Mono for labels, Caveat for one handwritten aside.</div></div>
+    <div class="r"><span>kicker mono</span><div class="kicker">The evidence · What worked</div></div>
+    <div class="r"><span>hand</span><div class="hand">paper before prompts</div></div>
+  </div></div>
+  <div class="comp" style="margin-top:36px">
+    <div class="card box"><span class="meta">Buttons and tags</span><div class="demo-row"><button class="btn primary">Open the hub</button><button class="btn ghost">Replay route</button><button class="btn accent">Accent</button></div><div class="demo-row"><span class="pill new">New for 2027</span><span class="tag t-ok">Confirmed</span><span class="tag t-warn">About</span><span class="tag t-info">Info</span></div></div>
+    <a class="card edge box hov" href="#route" style="text-decoration:none"><span class="meta">Navigation card</span><h3 style="margin:0">Open the route</h3><p>5px top edge in teal, deep teal or accent. Lifts on hover.</p></a>
+    <div class="card ai box"><span class="meta" style="color:var(--ax-ink)">AI card</span><h3 style="margin:0">AI is the challenger</h3><p>Accent tint, accent border, accent ink title.</p></div>
+    <div class="card box"><span class="meta">Stat</span><div class="stat-n">53<small>hours of mentoring per team in 2026</small></div></div>
+    <div class="card box"><span class="meta">Go deeper</span><a class="deeper" href="#route"><span style="color:var(--ink-muted)">Go deeper</span><b>The calendar</b></a><details class="acc" style="background:var(--surface)"><summary>Expand pattern</summary><div class="accbody">Detail lives behind a tap, not on the slide.</div></details></div>
+  </div>
+</div></section>
+
+
+<!-- FLUID -->
+<section class="sec tint" id="fluid"><div class="wrap">
+  <div class="sec-head"><span class="meta">Fluid layout</span><h2>One unit. <span style="color:var(--teal-ink)">Every screen.</span></h2>
+  <p class="lead">What the deck and hub audits found. Both pages were patches stacked on patches, with sizes that jumped between breakpoints and edges that did not line up. These rules replaced them. New outputs start from them.</p></div>
+
+  <div class="fl-unit">
+    <pre class="fl-code"><span class="c">/* every size comes from one unit */</span>
+body{
+  <span class="k">--k</span>:1;  <span class="c">/* auto-shrink, never below .8 */</span>
+  <span class="k">--u</span>:calc(clamp(7.5px,
+      min(.6vw + 3px, 1.55vh), 12.5px) * var(--k));
+}
+@media (orientation:portrait){
+  body{<span class="k">--u</span>:calc(clamp(9px, 2.5vw, 12px) * var(--k))}
+}
+h2{font-size:calc(var(--u) * 3.4)}
+.card{padding:calc(var(--u) * 1.2) calc(var(--u) * 1.4)}</pre>
+    <div class="card"><span class="meta">How it scales</span><h3 style="margin:6px 0 8px">Landscape follows the short side. Portrait follows the width.</h3><p>A laptop, a projector and a sideways phone all scale the same way because landscape takes the smaller of width and height. Upright phones follow width only and scroll. Headings, text, gaps and radii all multiply the same unit, so nothing jumps at a breakpoint.</p>
+    <div class="fl-sizes"><span>1440 laptop · headline ~40px</span><span>body ~16px</span><span>hub hero ~72px</span></div></div>
+  </div>
+
+  <div class="fl-rules">
+    <div class="card on-tint"><h4>One layer of CSS</h4><p>One fluid layer, brand tokens untouched, no <code>!important</code>. If a fix needs a new layer on top, rewrite the rule instead.</p><p class="was"><b>Was</b>Five stacked patch layers and about 90 <code>!important</code> rules fighting each other.</p></div>
+    <div class="card on-tint"><h4>No size multipliers</h4><p>Auto-shrink starts at 1 and stops at 0.8, so a tall slide fits without text going microscopic.</p><p class="was"><b>Was</b>Every size multiplied by 1.35 on desktop. A 1440 laptop got 100px cover titles.</p></div>
+    <div class="card on-tint"><h4>No jumps between sizes</h4><p>Type and gaps scale smoothly with the screen. No hard-coded phone size.</p><p class="was"><b>Was</b>Hub hero at 92px on a laptop, then straight down to 44px on phones.</p></div>
+    <div class="card on-tint"><h4>One container</h4><p>Header, section rail and content share one width and one gutter. Page margins are even on both sides.</p><p class="was"><b>Was</b>Logo about 20px left of everything under it. Deck content hugged the left rail with an empty gap on the right.</p></div>
+    <div class="card on-tint"><h4>Markers on the first line</h4><p>The "+" sits on the first line of every card, step and row. Step numbers line up with their headings, and the connecting line runs through their centres.</p><p class="was"><b>Was</b>Markers jumped to the middle when an item opened.</p></div>
+    <div class="card on-tint"><h4>Content wraps, never squeezes</h4><p>Long labels wrap in their own column. On phones, two-column rows stack into one card, label on top.</p><p class="was"><b>Was</b>A 220px column of "ABOUT 20 TO 21 MAR 2027" squeezed the timeline text.</p></div>
+    <div class="card on-tint"><h4>Controls never cover text</h4><p>Desktop: ‹ › mid-right, mirroring the stop rail. Portrait phones: ‹ › and full screen move to a bottom row. Stop detail is a bottom sheet on portrait phones, a centred dialog everywhere else.</p><p class="was"><b>Was</b>Buttons sat on top of slide text on phones.</p></div>
+    <div class="card on-tint"><h4>One-row header on phones</h4><p>Logo, links and switches stay on one row. Links scroll sideways. Anchors land below the sticky header.</p><p class="was"><b>Was</b>A two-row header stacked on the rail, and jumps landed under it.</p></div>
+    <div class="card ai"><h4>Check at three sizes</h4><p>1440×900, 844×390 (phone sideways), 390×844 (phone upright). Nothing scrolls sideways at any of them. Screenshot before and after every fix.</p></div>
+  </div>
+
+  <div class="tblwrap"><table class="rules">
+    <thead><tr><th>Bug found</th><th>Rule now</th></tr></thead>
+    <tbody>
+    <tr><td>"Half the cohort" chart drew three full-width, 240px slabs on top of each other</td><td>Charts are real column charts, drawn to one scale</td></tr>
+    <tr><td>"How we will find out" panel set entirely in small uppercase mono, list included</td><td>Mono is for labels and kickers only, never running text</td></tr>
+    <tr><td>2027 number in dark purple on a dark ground</td><td>Accent text uses <code>--ax-ink</code> per theme, never a fixed hex</td></tr>
+    <tr><td>Route stop labels crashed into each other on smaller laptops</td><td>Labels scale with the map (container units)</td></tr>
+    <tr><td>Short calendar list indented for numbers it did not have</td><td>Plain lists sit flush left</td></tr>
+    </tbody>
+  </table></div>
+</div></section>
+
+<!-- ACCENT -->
+<section class="sec alt" id="accent"><div class="wrap">
+  <div class="sec-head"><span class="meta">Accent</span><h2>Purple by default. <span style="color:var(--teal-ink)">Yellow on request.</span></h2>
+  <p class="lead">The accent is a role, not a color. It marks what is new, AI as challenger, the current stop, plans and the focus ring. Change one attribute and every output swaps: <code style="font:600 13px var(--mono)">data-accent="yellow"</code>.</p></div>
+  <div class="two-acc">
+    <div class="accpanel" data-accent="purple"><h3><i></i>Purple</h3>
+      <div class="miniroute"><span class="d">1</span><i class="l"></i><span class="d cur">2</span><i class="l"></i><span class="d">3</span><i class="l"></i><span class="d">4</span></div>
+      <div class="card ai"><h4 style="margin:0 0 4px">Challenge with AI</h4><p>AI cards, new tags, current stop, hand note.</p></div>
+      <div class="demo-row"><span class="pill new">New for 2027</span><button class="btn accent small">Accent button</button><span class="hand" style="font-size:30px">paper first</span></div>
+      <div style="height:54px;border-radius:14px;background:var(--ax-grad)"></div>
+      <div style="height:54px;border-radius:14px;background:var(--mesh-purple);border:1px solid var(--line)"></div>
     </div>
-
-    <div class="ds-grid">
-      <div class="card c7">
-        <div class="ds-label"><h3>Palette, by role</h3><span class="meta">60 · 30 · 10</span></div>
-        <div class="sw">
-          <div><i style="background:#0095AC"></i><b>teal</b><span>Brand fill, stat numerals, routes</span></div>
-          <div><i style="background:#016462"></i><b>teal-deep</b><span>Solid dark fill, gradient end, actions</span></div>
-          <div><i style="background:#954BBC"></i><b>purple</b><span>A role: AI as challenger, current step, focus</span></div>
-          <div><i style="background:#EAF7F7"></i><b>surface-tint</b><span>Baby-teal ground and cards</span></div>
-          <div><i style="background:#F2F6F7"></i><b>surface-page</b><span>Paper ground</span></div>
-          <div><i style="background:#10201F"></i><b>surface-ink</b><span>Footers, dark panels</span></div>
-        </div>
-        <div class="ratio" aria-hidden="true"><i></i><i></i><i></i></div>
-        <div class="ratio-k meta"><span>Grounds 60%</span><span>Teal family 30%</span><span>Rest 10%</span></div>
-      </div>
-
-      <div class="card c5">
-        <div class="ds-label"><h3>Light and Night</h3><span class="meta">Same structure</span></div>
-        <div class="themes">
-          <div class="tile lightscope"><div class="bar"></div><div class="mini"><b>53 h</b><span>mentoring per team</span></div><span class="btnmini">Open the hub</span><span class="cap">Light · web, print</span></div>
-          <div class="tile night"><div class="bar"></div><div class="mini"><b>53 h</b><span>mentoring per team</span></div><span class="btnmini">Open the hub</span><span class="cap">Night · decks, maps</span></div>
-        </div>
-        <p class="note" style="margin-top:14px">Theme changes mood, never structure. Use the toggle in the top bar to switch this whole page.</p>
-      </div>
-
-      <div class="card c12">
-        <div class="ds-label"><h3>Type</h3><span class="meta">Three faces, three jobs</span></div>
-        <div class="spec">
-          <div class="row"><span class="meta">Poppins 700</span><div class="t1">The program works. <span class="beat">Teams told us why.</span></div></div>
-          <div class="row"><span class="meta">IBM Plex Mono</span><div class="t2">What worked · Innovation Labs 2027</div></div>
-          <div class="row"><span class="meta">Caveat 700</span><div class="t3">one human aside, once per screen</div></div>
-          <div class="row"><span class="meta">Poppins 400</span><div class="t4">Plain, confident sentences. Short. No hype words, no exclamation marks, no emoji.</div></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="ds-label" style="margin-top:var(--s64)"><h3>A few of the 17 components</h3><span class="meta">Rendered with the tokens</span></div>
-    <div class="comp">
-      <div class="cbox"><span class="cname">Button</span><div style="display:flex;flex-wrap:wrap;gap:8px"><span class="btn primary">Open the strategy hub</span><span class="btn secondary">See the calendar</span></div></div>
-      <div class="cbox"><span class="cname">Stat</span><div class="stat"><div class="n">53 h</div><p>of mentoring per team in 2026.</p><span class="meta">Mentor retro, July 2026</span></div></div>
-      <div class="cbox"><span class="cname">Card · link</span><div class="navcard"><h4>The curriculum</h4><p>Exercises and challenger skills</p></div></div>
-      <div class="cbox"><span class="cname">Card · AI</span><div class="aicard"><h4>Challenge with AI</h4><p>Only after a founder has produced an original version.</p></div></div>
-      <div class="cbox"><span class="cname">Chip · Deeper</span><div style="display:flex;flex-wrap:wrap;gap:8px"><span class="chip">Mentoring</span><span class="chip ai">AI</span><span class="chip exp">About 25 teams</span></div><span class="deeper"><span class="dk">Go deeper</span>The calendar</span></div>
-      <div class="cbox"><span class="cname">Expand</span>
-        <div class="expand" data-open="false"><button type="button" aria-expanded="false" id="ex1"><span>Why paper first?</span><span class="pl" aria-hidden="true">+</span></button><div class="body" hidden>It forces original thinking into existence before any model is opened.</div></div>
-        <div class="radii" aria-label="Radius tokens"><div><i style="border-radius:8px"></i><span class="meta">8</span></div><div><i style="border-radius:10px"></i><span class="meta">10</span></div><div><i style="border-radius:16px"></i><span class="meta">16</span></div><div><i style="border-radius:22px"></i><span class="meta">22</span></div><div><i style="border-radius:999px"></i><span class="meta">pill</span></div></div>
-      </div>
+    <div class="accpanel" data-accent="yellow"><h3><i></i>Yellow</h3>
+      <div class="miniroute"><span class="d">1</span><i class="l"></i><span class="d cur">2</span><i class="l"></i><span class="d">3</span><i class="l"></i><span class="d">4</span></div>
+      <div class="card ai"><h4 style="margin:0 0 4px">Challenge with AI</h4><p>Same card, same structure, gold ink on a pale yellow tint.</p></div>
+      <div class="demo-row"><span class="pill new">New for 2027</span><button class="btn accent small">Accent button</button><span class="hand" style="font-size:30px">paper first</span></div>
+      <div style="height:54px;border-radius:14px;background:var(--ax-grad)"></div>
+      <div style="height:54px;border-radius:14px;background:var(--mesh-yellow);border:1px solid var(--line)"></div>
     </div>
   </div>
-</section>
+  <div class="tblwrap"><table class="rules"><thead><tr><th>Token</th><th>Purple</th><th>Yellow</th><th>Rule</th></tr></thead><tbody>
+    <tr><td><code>--ax</code></td><td>#954BBC (Night #C48BEA)</td><td>#FBBF45</td><td>Fill for discs, buttons, tags</td></tr>
+    <tr><td><code>--ax-ink</code></td><td>#6B2E8C</td><td>#7A4B00</td><td>Text on light grounds, 4.5:1</td></tr>
+    <tr><td><code>--ax-on</code></td><td>white</td><td>#10201F</td><td>Label on an accent fill. Never white on yellow</td></tr>
+    <tr><td><code>--ax-tint</code></td><td>#F1E7F8</td><td>#FFF6DA</td><td>AI cards, new rows</td></tr>
+    <tr><td><code>--ax-grad</code></td><td>#A45CC9 to #6B2E8C</td><td>#FDD49F to #F9A751</td><td>One band or callout per view</td></tr>
+  </tbody></table></div>
+</div></section>
 
-<!-- ================= WEBSITE ================= -->
-<section class="sec t" id="website">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="kicker">website-maker</span>
-      <h2 class="headline">A hub to explore. <em>A route to follow.</em></h2>
-      <p class="lead">Strategy Hubs give a large source non-linear deep dives. The Map is the gateway: one calm route, numbered stops, detail on demand.</p>
-    </div>
-    <div class="ref"><span class="meta">Reference</span><span class="chip">IL2027 strategy hub</span><span class="note">Nine stops and nav taken from the bundled example, drawn with the Map Proposal pattern.</span></div>
+<!-- GRADIENTS -->
+<section class="sec" id="gradients"><div class="wrap">
+  <div class="sec-head"><span class="meta">Gradients</span><h2>Ten ground options. <span style="color:var(--teal-ink)">One per band.</span></h2>
+  <p class="lead">Tokens in CSS for tiny files and theme awareness, exact JPG backgrounds from the IL25 templates for social and PDF. Text on pastel mesh is ink, never white.</p></div>
+  <div class="gradgrid" id="gradgrid"></div>
+  <div class="tpl-bar"><div><span class="meta">Template backgrounds</span><h3 style="margin-top:6px">assets/backgrounds</h3></div>
+    <div class="seg on-page" id="tplseg" role="group" aria-label="Template color"></div></div>
+  <div class="tplrow" id="tplrow"></div>
+  <p class="sub" style="margin-top:6px">The template folder calls the yellow set "orange". Classic ships cover and square only.</p>
+</div></section>
 
-    <div class="frame">
-      <div class="fnav"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTGF5ZXJfMiIgZGF0YS1uYW1lPSJMYXllciAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MDUuODQgNTMuNDIiPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuY2xzLTEgewogICAgICAgIGZpbGw6ICNmZmY7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDxnIGlkPSJMYXllcl8xLTIiIGRhdGEtbmFtZT0iTGF5ZXIgMSI+CiAgICA8ZyBpZD0ibG9nb19JTF8yMDI0X2Z1bGxfLV9wcmltYXJ5IiBkYXRhLW5hbWU9ImxvZ28gSUwgMjAyNCBmdWxsIC0gcHJpbWFyeSI+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTkwLjcxLDkuNzJjLTguNjcsMC0xNS43LDcuMDMtMTUuNywxNS43LDAsNS40MSwyLjc0LDEwLjE4LDYuOTEsMTMsLjExLjA3LjIyLjE0LjMzLjIyLjg1LjY0LDEuNDEsMS42NSwxLjQxLDIuOHYuNjVoMy45N3YtLjY1YzAtLjMzLS4wMy0uNjUtLjA3LS45OGguMDFsLTIuMDQtMTEuNjctLjg0LjEzLDEuMzksOC4wMWMtLjQxLS41NS0uOS0xLjA1LTEuNDYtMS40Ni0uMTgtLjEzLS4zNy0uMjYtLjU2LS4zNy0zLjE5LTIuMi01LjA5LTUuOC01LjA5LTkuNjcsMC02LjQ3LDUuMjYtMTEuNzQsMTEuNzMtMTEuNzRzMTEuNzMsNS4yNywxMS43MywxMS43NGMwLDMuNzktMS44Myw3LjM0LTQuOTEsOS41NC0uMzcuMjEtLjcyLjQ1LTEuMDUuNzItLjQ0LjM2LS44My43Ni0xLjE2LDEuMmwxLjM5LTcuOTUtLjg1LS4xLTEuOTIsMTAuOThjLS4wMy4xMi0uMDQuMjUtLjA2LjM4bC0uMDUuMjZzMCwuMDYtLjAxLjA4bC0uMDIuMjV2MS4zMWgzLjk2di0xLjA4Yy4xMS0uOTIuNTctMS43MiwxLjI1LTIuMjguMTktLjE1LjM5LS4yOS42MS0uNCw0LjEtMi44NCw2Ljc4LTcuNTYsNi43OC0xMi45MSwwLTguNjctNy4wMy0xNS43LTE1LjY5LTE1LjdaIi8+CiAgICAgIDxyZWN0IGNsYXNzPSJjbHMtMSIgeD0iODMuNjYiIHk9IjQ5LjQ1IiB3aWR0aD0iMTQuMDkiIGhlaWdodD0iMy45NyIvPgogICAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iODMuNjYgNDMuNzkgODMuNjYgNDcuNzYgOTcuNzUgNDcuNzYgOTcuNzUgNDMuNzkgODcuNjMgNDMuNzkgODMuNjYgNDMuNzkiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNOTAuNTcsMjUuMzRjLjcsMCwxLjMzLjM2LDEuNjkuOTcuNzgsMS4zMywyLjExLDIuMjQsMy42LDIuNTNsLjg1LjEuNi0zLjQ0Yy0uMTQuMDQtLjI5LjA2LS40NS4wNi0uMTUsMC0uMjktLjAyLS40Mi0uMDUtLjUzLS4xMS0uOTgtLjQ0LTEuMjctLjkzLS45Ni0xLjYyLTIuNzItMi42Mi00LjYtMi42MnMtMy42NCwxLTQuNiwyLjYyYy0uMjQuNDEtLjYuNy0xLjAzLjg1LS4yLjA4LS40My4xMi0uNjYuMTItLjA2LDAtLjEyLDAtLjE4LS4wMWwuNTksMy4zOC44NC0uMTNjMS4zOC0uMzUsMi42LTEuMjMsMy4zNC0yLjQ4LjM2LS42MS45OS0uOTcsMS42OS0uOTdaIi8+CiAgICAgIDxyZWN0IGNsYXNzPSJjbHMtMSIgeT0iMTAuMjgiIHdpZHRoPSI0Ljc2IiBoZWlnaHQ9IjMwLjAzIi8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIzMi41MiAzMS42NCAxNS40OSAxMC4yOCAxMS44IDEwLjI4IDExLjggNDAuMyAxNi42NSA0MC4zIDE2LjY1IDE5LjEyIDMzLjY4IDQwLjMgMzcuMzIgNDAuMyAzNy4zMiAxMC4yOCAzMi41MiAxMC4yOCAzMi41MiAzMS42NCIvPgogICAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iNjUuMTQgMzEuNjQgNDguMTEgMTAuMjggNDQuNDIgMTAuMjggNDQuNDIgNDAuMyA0OS4yNyA0MC4zIDQ5LjI3IDE5LjEyIDY2LjMgNDAuMyA2OS45NCA0MC4zIDY5Ljk0IDEwLjI4IDY1LjE0IDEwLjI4IDY1LjE0IDMxLjY0Ii8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIxMzEuMjcgMTAuMjggMTIxLjY2IDM0LjY5IDExMi4wOSAxMC4yOCAxMDYuNjkgMTAuMjggMTE5LjE3IDQwLjQzIDEyNC4xOSA0MC40MyAxMzYuNjMgMTAuMjggMTMxLjI3IDEwLjI4Ii8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTIyNi4wNywxMi4wNmMtLjExLS4wNy0uMjItLjE0LS4zMy0uMjItLjg1LS42NC0xLjQxLTEuNjctMS40MS0yLjgyVjBoLTMuOTZ2OS4wMmMwLDIuMzUsMS4xMiw0LjYsMyw2LjAxLjE4LjE1LjM2LjI3LjU2LjM5LDMuMTMsMi4xNyw1LjAyLDUuNzIsNS4wOCw5LjUzLS4yOC0uMTctLjUxLS40LS42OS0uNjktLjk2LTEuNjQtMi43Mi0yLjY1LTQuNi0yLjY1cy0zLjY0LDEuMDEtNC42MSwyLjY0Yy0uMzYuNjEtLjk5Ljk4LTEuNjkuOThzLTEuMzMtLjM2LTEuNjktLjk3Yy0uOTYtMS42NC0yLjczLTIuNjUtNC42MS0yLjY1cy0zLjY1LDEuMDEtNC42LDIuNjRjLS4yMy4zOS0uNTcuNjktLjk4Ljg0LjAyLTMuOCwxLjg1LTcuMzQsNC45MS05LjU1LjM3LS4yMS43Mi0uNDUsMS4wNS0uNzIsMS40OC0xLjIzLDIuNDMtMi45OCwyLjY2LTQuOWwuMDMtLjI0VjBoLTMuOTd2OS40NGMtLjExLjkyLS41NywxLjc0LTEuMjUsMi4zLS4yLjE2LS40LjI5LS42Mi40LTQuMSwyLjg1LTYuNzgsNy42LTYuNzgsMTMsMCw4LjczLDcuMDMsMTUuOCwxNS43LDE1LjhzMTUuNy03LjA3LDE1LjctMTUuOGMwLTUuNDUtMi43NC0xMC4yNS02LjkxLTEzLjA5Wk0yMTcuMjksMzYuOTVjLTUuMzEsMC05LjgxLTMuNTgtMTEuMjUtOC40NiwxLjQxLS4zMywyLjY1LTEuMjMsMy40MS0yLjUuMzYtLjYxLjk5LS45OCwxLjY5LS45OHMxLjMzLjM3LDEuNjkuOThjLjk2LDEuNjIsMi43MywyLjY0LDQuNjEsMi42NHMzLjY0LTEuMDIsNC42LTIuNjRjLjM2LS42MS45OS0uOTgsMS42OS0uOThzMS4zMy4zNywxLjY5Ljk4Yy43LDEuMiwxLjg0LDIuMDUsMy4xMywyLjQzLTEuNDEsNC45My01LjkzLDguNTMtMTEuMjYsOC41M1oiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTQ3LjU1LDEwLjI4bC0xMy40NywzMC4wM2g1LjFsMi44My02LjNoMTYuMjVsMi44OCw2LjNoNS4xbC0xMy40Ny0zMC4wM2gtNS4yM1pNMTQzLjgyLDI5LjYzbDYuMzUtMTQuMjksNi4zNSwxNC4yOWgtMTIuNjlaIi8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIxNjMuNDEgMTQuNjEgMTczLjI4IDE0LjYxIDE3My4yOCA0MC4zMSAxNzguMTMgNDAuMzEgMTc4LjEzIDE0LjYxIDE4Ny45NSAxNC42MSAxODcuOTUgMTAuMjggMTYzLjQxIDEwLjI4IDE2My40MSAxNC42MSIvPgogICAgICA8cmVjdCBjbGFzcz0iY2xzLTEiIHg9IjE5MS44NSIgeT0iMTAuMjgiIHdpZHRoPSI0Ljc2IiBoZWlnaHQ9IjMwLjAzIi8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIyNTguNzkgMzEuNjQgMjQxLjc2IDEwLjI4IDIzOC4wNyAxMC4yOCAyMzguMDcgNDAuMyAyNDIuOTIgNDAuMyAyNDIuOTIgMTkuMTIgMjU5Ljk1IDQwLjMgMjYzLjU5IDQwLjMgMjYzLjU5IDEwLjI4IDI1OC43OSAxMC4yOCAyNTguNzkgMzEuNjQiLz4KICAgICAgPHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjI4Ni42MyAxMC4yOCAyODEuODIgMTAuMjggMjgxLjgyIDQwLjMgMzAyLjQ1IDQwLjMgMzAyLjQ1IDM1Ljg1IDI4Ni42MyAzNS44NSAyODYuNjMgMTAuMjgiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzk0LjE1LDMwLjk3Yy0uMzMtNi4yNS02LjAyLTcuOTEtMTIuMDItOC43NC0zLjk1LS41Ni03LjI5LTEuMzctNy4yOS00LjI5czIuOTItNC41NSw2Ljk1LTQuNTVjMy4xMy4wNCw2LjAxLDEuMjksNy40MiwzLjM0bDMuNjUtMi40NGMtMi41My00LjAzLTYuODYtNS4wNi0xMS4yLTUuMDYtNS40LDAtMTEuNjIsMi40LTExLjU4LDguNjIsMCw2LjQzLDUuNjYsNy45NCwxMS42Miw4Ljc1LDQuMi41Niw3LjY4LDEuNjcsNy42OCw0LjkzLDAsMy43OC0zLjk5LDQuOTgtNy41OSw0Ljk4cy03LjIxLTEuMjktOS4zNS00LjkzbC0zLjYsMi40YzIuNzQsNS4wNiw3LjE2LDYuODIsMTIuOTEsNi44Mi41NiwwLDEuMTEtLjAzLDEuNjYtLjA3LDIuMi4wNyw2LjM0LTEuNDksNy40Ni0yLjI5LDQuMS0yLjksMy4xNS03LjM0LDMuMjgtNy40OFoiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzE4LjIsMTAuMjhsLTEzLjQ3LDMwLjAzaDUuMTFsMi44My02LjNoMTYuMjZsMi44Nyw2LjNoNS4xbC0xMy40Ny0zMC4wM2gtNS4yM1pNMzE0LjQ2LDI5LjYzbDYuMzUtMTQuMjksNi4zNSwxNC4yOWgtMTIuNjlaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTM2MC40NywyNC44MmMyLjgzLTEuMTYsNC4xNi0zLjQzLDQuMTYtNS45NiwwLTUuOTYtNC41MS04LjU4LTEwLjIxLTguNThoLTEzLjc3djMwLjAzaDEzLjc3YzUuOTIsMCwxMS4xNS0yLjAyLDExLjE1LTguNTgsMC0yLjI3LTEuNS01LjgzLTUuMS02LjlaTTM0NS40MSwxNC42MWg5LjAxYzMuNiwwLDUuNDUsMi4yMyw1LjQ1LDQuMzMsMCwyLjM2LTEuOCwzLjc4LTUuNCwzLjc4aC05LjA1di04LjExWk0zNTQuNDIsMzUuODVoLTkuMDF2LTguODRoOS4wNWMyLjc0LDAsNi4zMSwxLjQ2LDYuMzEsNC42OHMtMy42OSw0LjE2LTYuMzUsNC4xNloiLz4KICAgIDwvZz4KICAgIDxnPgogICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik00MDUuNzMsMzYuMDJoMTkuMTZ2NC42OGgtMjQuMTR2LTcuNTZjMC01LjcxLDQuNDctOS4wMiwxMi4xNi05LjAyLDQuMTIsMCw2LjkyLTEuODUsNi45Mi00LjYsMC0zLjAxLTIuNDUtNC43Ny02LjYyLTQuNzdzLTcuMDQsMS43Ni03LjEzLDQuNTFoLTUuMTVjLjM0LTUuNjcsNC45LTkuMDIsMTIuMjktOS4wMnMxMS42OCwzLjUyLDExLjY4LDkuMTljMCw2LjAxLTQuMTcsOS4xOS0xMS45NCw5LjE5LTQuNTEsMC03LjIyLDEuNjgtNy4yMiw0LjUxdjIuODhaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTQyOC4wNiwyOC41OXYtNS44OGMwLTcuNTYsNS4yOC0xMi42NywxMy4wNi0xMi42N3MxMy4wNiw1LjExLDEzLjA2LDEyLjY3djUuODhjMCw3LjUyLTUuMjgsMTIuNjMtMTMuMDYsMTIuNjNzLTEzLjA2LTUuMTEtMTMuMDYtMTIuNjNaTTQ0OS4xMSwyOC41OXYtNS44OGMwLTQuNzItMy4xOC03LjktNy45OS03LjlzLTcuOTksMy4xOC03Ljk5LDcuOXY1Ljg4YzAsNC43MiwzLjE4LDcuOSw3Ljk5LDcuOXM3Ljk5LTMuMTgsNy45OS03LjlaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTQ2Mi4yNSwzNi4wMmgxOS4xNnY0LjY4aC0yNC4xNHYtNy41NmMwLTUuNzEsNC40Ny05LjAyLDEyLjE2LTkuMDIsNC4xMiwwLDYuOTItMS44NSw2LjkyLTQuNiwwLTMuMDEtMi40NS00Ljc3LTYuNjItNC43N3MtNy4wNCwxLjc2LTcuMTMsNC41MWgtNS4xNWMuMzQtNS42Nyw0LjktOS4wMiwxMi4yOS05LjAyczExLjY4LDMuNTIsMTEuNjgsOS4xOWMwLDYuMDEtNC4xNyw5LjE5LTExLjk0LDkuMTktNC41MSwwLTcuMjIsMS42OC03LjIyLDQuNTF2Mi44OFoiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNTA1Ljg0LDEwLjY0djIuODhsLTEzLjkyLDI3LjE5aC01Ljc1bDEzLjE5LTI1LjM0aC0xNi40MXYtNC43MmgyMi44OVoiLz4KICAgIDwvZz4KICA8L2c+Cjwvc3ZnPg==" alt=""><div class="fl"><span class="on">Map</span><span>Research</span><span>Vision</span><span>Curriculum</span><span>People</span><span>Year ahead</span><span>Calendar</span><span>Partners</span><span>Slides</span></div></div>
-      <div class="mapwrap">
-        <div class="maphead"><div><div class="kicker">The route</div><h3>Nine stops, one story</h3></div><span class="note">Select a stop</span></div>
-        <div class="map" id="map">
-          <svg viewBox="0 0 1000 330" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M30 210 C 160 380, 260 0, 400 150 S 640 330, 760 140 S 930 40, 975 160" fill="none" stroke="var(--line-soft)" stroke-width="1.5" opacity=".7" transform="translate(0,-60)"/>
-            <path id="rtAll" d="M40 175 C 140 60, 230 60, 320 165 S 520 280, 620 165 S 820 50, 960 160" fill="none" stroke="var(--line-control)" stroke-width="3" stroke-dasharray="7 8" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
-            <path id="rtDone" d="M40 175 C 140 60, 230 60, 320 165 S 520 280, 620 165 S 820 50, 960 160" fill="none" stroke="var(--route)" stroke-width="4" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
-          </svg>
-        </div>
-        <ol class="vroute" id="vroute"></ol>
-        <div class="mapdetail" aria-live="polite" id="mapdetail"></div>
-      </div>
-    </div>
+<!-- ELEMENTS -->
+<section class="sec alt" id="elements"><div class="wrap">
+  <div class="sec-head"><span class="meta">Brand elements</span><h2>The illustration set. <span style="color:var(--teal-ink)">One per view.</span></h2>
+  <p class="lead">Vector, teal and gold on transparent, from the IL25 and IL26 packs. They decorate the ground, never the content, and they are not clip-art or a logo.</p></div>
+  <div class="elgrid" id="elgrid"></div>
+  <div class="callout" style="margin-top:26px"><span class="meta">Pairing</span><p style="margin-top:6px;color:var(--ink-muted)">Yellow accent: hex-gold, bulb-glass, hourglass-bulb. Purple accent: star, flask. Green topics: ring-mesh. Rooms and stages: frame-mesh. Decorative images always carry <code>alt=""</code>.</p></div>
+</div></section>
 
-    <div class="split" style="margin-top:var(--s48)">
-      <ul class="points">
-        <li><span><b>Route first.</b> One 4px line, numbered stop discs, labels alternating above and below. Purple marks only the selected stop; the route ahead is dashed.</span></li>
-        <li><span><b>Same journey on a phone.</b> Under 820px the map becomes a vertical route and detail opens in a bottom sheet.</span></li>
-        <li><span><b>Map and Hub share one model.</b> Same stop names and order, Map in the Hub's navigation, light and night kept in step.</span></li>
-      </ul>
-      <div class="callout"><span class="tag">Rule</span><span>Websites and maps never use the animated mesh, dotted paper or radial glows. A few large, faint contour curves are the most a map background gets. The mesh belongs to presentations.</span></div>
-    </div>
+<!-- SOCIAL -->
+<section class="sec" id="social"><div class="wrap">
+  <div class="sec-head"><span class="meta">Social</span><h2>Template gradient. <span style="color:var(--teal-ink)">One message.</span></h2>
+  <p class="lead">insta-post-maker now builds on the template backgrounds. Text sits on the pale center, the logo at a corner, one element at the edge. Sizes: 1080x1080, 1080x1350, 1080x1920, 1200x627.</p></div>
+  <div class="socials" id="socials"></div>
+</div></section>
+
+<!-- ROUTE -->
+<section class="sec routesec" id="route"><div class="wrap">
+  <div class="sec-head"><span class="meta">Website and route</span><h2>A hub to explore. <span style="color:var(--teal-ink)">A route to follow.</span></h2>
+  <p class="lead">The Strategy Hub is the reference look. One shared list of stops drives the map, the mini-map, the deck and the chapters. Pick a stop. On a phone this becomes a vertical journey with a bottom sheet.</p></div>
+  <div class="routewide"><div class="route-stage" id="rstage" style="container-type:inline-size"><svg viewBox="0 0 1200 520" preserveAspectRatio="none" aria-hidden="true"><path class="routeBase" id="rBase"/><path class="routeLine" id="rLine" pathLength="1"/></svg></div></div>
+  <div class="journeywrap"><div class="journey" id="journey"></div></div>
+  <div class="rdetail2 routewide" id="rdet"><div class="dnum" id="dNum"></div><div><span class="meta" id="dWhen"></span><h3 id="dTitle"></h3><p id="dText"></p></div><div class="dactions"><a class="btn primary" href="https://claude.ai/artifact/VrWaRM5b16T7Kc4uQBV5Uz" target="_blank" rel="noopener">Open the strategy hub</a></div></div>
+</div></section>
+
+<div class="wrap"><div class="hubex"><a href="https://claude.ai/artifact/VrWaRM5b16T7Kc4uQBV5Uz" target="_blank" rel="noopener"><img id="hubimg" alt="Strategy Hub page header" src="examples/hub-purple.jpg"></a><div><span class="meta">Website</span><h3>The Strategy Hub</h3><p>The original hub text in this look: route-first map and a mini route in the header, with a Light and Night switch.</p><a class="btn primary" href="https://claude.ai/artifact/VrWaRM5b16T7Kc4uQBV5Uz" target="_blank" rel="noopener">Open the strategy hub</a></div></div></div>
+
+<!-- DECK -->
+<section class="sec alt" id="deck"><div class="wrap">
+  <div class="sec-head"><span class="meta">Presentation</span><h2>Starts with the route. <span style="color:var(--teal-ink)">Then the story.</span></h2>
+  <p class="lead">The new deck merges the Hub route with the pitch. Slide one is the route. Every later slide carries its stop number, and the stop strip at the top jumps between stops. Open the deck to try it.</p></div>
+  <div class="devbar">
+    <div class="seg on-page" id="devseg" role="group" aria-label="Device"><button type="button" data-dev="portrait" aria-pressed="true">Phone portrait</button><button type="button" data-dev="land" aria-pressed="false">Phone sideways</button><button type="button" data-dev="desk" aria-pressed="false">Desktop</button></div>
+    <a class="btn ghost small" id="deckopen" href="https://claude.ai/artifact/2izhCwS9SkdtEGdT9hCkQT" target="_blank" rel="noopener">Open the deck</a>
   </div>
-</section>
-
-<!-- ================= PRESENTATION ================= -->
-<section class="sec s" id="presentation">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="kicker">presentation-maker</span>
-      <h2 class="headline">The catchy front door. <em>The Hub holds the rest.</em></h2>
-      <p class="lead">Pitch-like decks, phone-first and Night by default. Each slide carries one story beat and can end with a "Go deeper" link into the matching Hub page.</p>
-    </div>
-    <div class="ref"><span class="meta">Reference</span><span class="chip">IL2027 pitch</span><span class="note">Slide titles and chapters from the bundled example. Try Back and Next.</span></div>
-
-    <div class="deckzone">
-      <div class="phone"><div class="screen">
-        <div class="segs" id="segs"></div>
-        <div class="chap"><b id="chap">Where we start</b><span id="cnt">1 / 6</span></div>
-        <div class="slides" id="slides">
-          <div class="sl"><span class="k">Innovation Labs 2027</span><h4>Analog first.<br><em>AI second.</em></h4><p>A story about how founders think, and what we are changing so they keep doing it.</p></div>
-          <div class="sl"><span class="k">Where we start</span><h4>221 teams applied.<br><em>17 stood on stage.</em></h4></div>
-          <div class="sl"><span class="k">The idea</span><h4>AI never produces version one.<br><em>It improves version one.</em></h4></div>
-          <div class="sl"><span class="k">The year</span><h4>Fewer teams.<br><em>More attention each.</em></h4><span class="deeper"><span class="dk">Go deeper</span>The cohort</span></div>
-          <div class="sl"><span class="k">The year</span><h4>The 2027 calendar,<br><em>in short.</em></h4><span class="deeper"><span class="dk">Go deeper</span>The calendar</span></div>
-          <div class="sl"><span class="k">Go deeper</span><h4>Build version one<br><em>yourself.</em></h4><span class="btn">Open the strategy hub</span></div>
-        </div>
-        <div class="dnav"><button type="button" id="bk">Back</button><button type="button" class="nx" id="nx">Next</button></div>
-      </div></div>
-
-      <div class="copy">
-        <ol class="anatomy" aria-label="Slide anatomy">
-          <li><span class="n">1</span><span>Mono kicker naming the chapter</span></li>
-          <li><span class="n">2</span><span>Two-beat title, second beat in teal</span></li>
-          <li><span class="n">3</span><span>At most one pattern: 3 cards, 3 stats, steps, a timeline or two columns</span></li>
-          <li><span class="n">4</span><span>Detail behind a tap, then one "Go deeper" pill</span></li>
-        </ol>
-        <div class="meshspec">
-          <h4>The playable network, presentations only</h4>
-          <p>Decks may run a springy network behind the slides when the story is about connection, community or the cohort. It is not drawn here, because this page is a website.</p>
-          <ul>
-            <li>Teal nodes near 55%, lines near 26%, purple tap ripples</li>
-            <li>Vignetted so text sits on calm ground</li>
-            <li>Paused under reduced motion, never on every slide</li>
-          </ul>
-        </div>
-      </div>
-    </div>
+  <div class="frame" id="frame" style="width:390px;height:760px"><img id="deckimg" alt="Route deck, slide one" src="examples/deck-portrait-purple.jpg"></div>
+  <div class="feat">
+    <div class="card on-tint"><h4>Route first</h4><p>Serpentine route with 9 numbered stops. Tap a stop for detail and a jump into its chapter.</p></div>
+    <div class="card on-tint"><h4>Turn your phone</h4><p>Portrait gets the vertical journey and a sideways hint. Landscape gets the full route.</p></div>
+    <div class="card on-tint"><h4>Stops all the way</h4><p>The strip under the progress bar shows where you are on the route and jumps between stops.</p></div>
+    <div class="card ai"><h4>Lead the room</h4><p>The presenter taps Lead and every phone follows. Works when the deck is published as an Artifact with the room capability.</p></div>
   </div>
-</section>
+</div></section>
 
-<!-- ================= ONE-PAGER ================= -->
-<section class="sec t" id="onepager">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="kicker">one-pager-maker</span>
-      <h2 class="headline">One page. <em>One thesis.</em></h2>
-      <p class="lead">A4, print-safe, Light. One headline, one lead, then a few modular blocks and a clear bottom line.</p>
-    </div>
-    <div class="ref"><span class="meta">Reference</span><span class="chip">IL2027 vision one-pager</span><span class="note">The one-pager that ships with the plugin, shown without its old dotted ground. A partner brief uses the same pattern with formal-lens.</span></div>
+<!-- ONE-PAGER -->
+<section class="sec" id="onepager"><div class="wrap">
+  <div class="sec-head"><span class="meta">One-pager</span><h2>One page. <span style="color:var(--teal-ink)">One thesis.</span></h2>
+  <p class="lead">A4, print-safe, in the Hub look. Brand gradient header, tinted cards, accent gradient closing band. The dotted grid is gone. Accent follows the switch.</p></div>
+  <div class="opframe"><div class="opscale"><img id="opimg" alt="One-pager, the 2027 vision" src="examples/onepager-purple.jpg"></div>
+  <div style="max-width:380px;display:grid;gap:14px"><div class="card"><h4>Header</h4><p>Brand gradient with the white logo, or a pastel mesh with the primary logo.</p></div><div class="card"><h4>Closing band</h4><p>Accent gradient. Yellow takes dark text.</p></div><div class="card"><h4>One page means one page</h4><p>If it does not fit, move detail to the Hub and link.</p></div></div></div>
+</div></section>
 
-    <div class="split">
-      <div class="a4" role="img" aria-label="Preview of the 2027 Vision one-pager">
-        <div class="h">
-          <div class="top"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTGF5ZXJfMiIgZGF0YS1uYW1lPSJMYXllciAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MDUuODQgNTMuNDIiPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuY2xzLTEgewogICAgICAgIGZpbGw6ICNmZmY7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDxnIGlkPSJMYXllcl8xLTIiIGRhdGEtbmFtZT0iTGF5ZXIgMSI+CiAgICA8ZyBpZD0ibG9nb19JTF8yMDI0X2Z1bGxfLV9wcmltYXJ5IiBkYXRhLW5hbWU9ImxvZ28gSUwgMjAyNCBmdWxsIC0gcHJpbWFyeSI+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTkwLjcxLDkuNzJjLTguNjcsMC0xNS43LDcuMDMtMTUuNywxNS43LDAsNS40MSwyLjc0LDEwLjE4LDYuOTEsMTMsLjExLjA3LjIyLjE0LjMzLjIyLjg1LjY0LDEuNDEsMS42NSwxLjQxLDIuOHYuNjVoMy45N3YtLjY1YzAtLjMzLS4wMy0uNjUtLjA3LS45OGguMDFsLTIuMDQtMTEuNjctLjg0LjEzLDEuMzksOC4wMWMtLjQxLS41NS0uOS0xLjA1LTEuNDYtMS40Ni0uMTgtLjEzLS4zNy0uMjYtLjU2LS4zNy0zLjE5LTIuMi01LjA5LTUuOC01LjA5LTkuNjcsMC02LjQ3LDUuMjYtMTEuNzQsMTEuNzMtMTEuNzRzMTEuNzMsNS4yNywxMS43MywxMS43NGMwLDMuNzktMS44Myw3LjM0LTQuOTEsOS41NC0uMzcuMjEtLjcyLjQ1LTEuMDUuNzItLjQ0LjM2LS44My43Ni0xLjE2LDEuMmwxLjM5LTcuOTUtLjg1LS4xLTEuOTIsMTAuOThjLS4wMy4xMi0uMDQuMjUtLjA2LjM4bC0uMDUuMjZzMCwuMDYtLjAxLjA4bC0uMDIuMjV2MS4zMWgzLjk2di0xLjA4Yy4xMS0uOTIuNTctMS43MiwxLjI1LTIuMjguMTktLjE1LjM5LS4yOS42MS0uNCw0LjEtMi44NCw2Ljc4LTcuNTYsNi43OC0xMi45MSwwLTguNjctNy4wMy0xNS43LTE1LjY5LTE1LjdaIi8+CiAgICAgIDxyZWN0IGNsYXNzPSJjbHMtMSIgeD0iODMuNjYiIHk9IjQ5LjQ1IiB3aWR0aD0iMTQuMDkiIGhlaWdodD0iMy45NyIvPgogICAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iODMuNjYgNDMuNzkgODMuNjYgNDcuNzYgOTcuNzUgNDcuNzYgOTcuNzUgNDMuNzkgODcuNjMgNDMuNzkgODMuNjYgNDMuNzkiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNOTAuNTcsMjUuMzRjLjcsMCwxLjMzLjM2LDEuNjkuOTcuNzgsMS4zMywyLjExLDIuMjQsMy42LDIuNTNsLjg1LjEuNi0zLjQ0Yy0uMTQuMDQtLjI5LjA2LS40NS4wNi0uMTUsMC0uMjktLjAyLS40Mi0uMDUtLjUzLS4xMS0uOTgtLjQ0LTEuMjctLjkzLS45Ni0xLjYyLTIuNzItMi42Mi00LjYtMi42MnMtMy42NCwxLTQuNiwyLjYyYy0uMjQuNDEtLjYuNy0xLjAzLjg1LS4yLjA4LS40My4xMi0uNjYuMTItLjA2LDAtLjEyLDAtLjE4LS4wMWwuNTksMy4zOC44NC0uMTNjMS4zOC0uMzUsMi42LTEuMjMsMy4zNC0yLjQ4LjM2LS42MS45OS0uOTcsMS42OS0uOTdaIi8+CiAgICAgIDxyZWN0IGNsYXNzPSJjbHMtMSIgeT0iMTAuMjgiIHdpZHRoPSI0Ljc2IiBoZWlnaHQ9IjMwLjAzIi8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIzMi41MiAzMS42NCAxNS40OSAxMC4yOCAxMS44IDEwLjI4IDExLjggNDAuMyAxNi42NSA0MC4zIDE2LjY1IDE5LjEyIDMzLjY4IDQwLjMgMzcuMzIgNDAuMyAzNy4zMiAxMC4yOCAzMi41MiAxMC4yOCAzMi41MiAzMS42NCIvPgogICAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iNjUuMTQgMzEuNjQgNDguMTEgMTAuMjggNDQuNDIgMTAuMjggNDQuNDIgNDAuMyA0OS4yNyA0MC4zIDQ5LjI3IDE5LjEyIDY2LjMgNDAuMyA2OS45NCA0MC4zIDY5Ljk0IDEwLjI4IDY1LjE0IDEwLjI4IDY1LjE0IDMxLjY0Ii8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIxMzEuMjcgMTAuMjggMTIxLjY2IDM0LjY5IDExMi4wOSAxMC4yOCAxMDYuNjkgMTAuMjggMTE5LjE3IDQwLjQzIDEyNC4xOSA0MC40MyAxMzYuNjMgMTAuMjggMTMxLjI3IDEwLjI4Ii8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTIyNi4wNywxMi4wNmMtLjExLS4wNy0uMjItLjE0LS4zMy0uMjItLjg1LS42NC0xLjQxLTEuNjctMS40MS0yLjgyVjBoLTMuOTZ2OS4wMmMwLDIuMzUsMS4xMiw0LjYsMyw2LjAxLjE4LjE1LjM2LjI3LjU2LjM5LDMuMTMsMi4xNyw1LjAyLDUuNzIsNS4wOCw5LjUzLS4yOC0uMTctLjUxLS40LS42OS0uNjktLjk2LTEuNjQtMi43Mi0yLjY1LTQuNi0yLjY1cy0zLjY0LDEuMDEtNC42MSwyLjY0Yy0uMzYuNjEtLjk5Ljk4LTEuNjkuOThzLTEuMzMtLjM2LTEuNjktLjk3Yy0uOTYtMS42NC0yLjczLTIuNjUtNC42MS0yLjY1cy0zLjY1LDEuMDEtNC42LDIuNjRjLS4yMy4zOS0uNTcuNjktLjk4Ljg0LjAyLTMuOCwxLjg1LTcuMzQsNC45MS05LjU1LjM3LS4yMS43Mi0uNDUsMS4wNS0uNzIsMS40OC0xLjIzLDIuNDMtMi45OCwyLjY2LTQuOWwuMDMtLjI0VjBoLTMuOTd2OS40NGMtLjExLjkyLS41NywxLjc0LTEuMjUsMi4zLS4yLjE2LS40LjI5LS42Mi40LTQuMSwyLjg1LTYuNzgsNy42LTYuNzgsMTMsMCw4LjczLDcuMDMsMTUuOCwxNS43LDE1LjhzMTUuNy03LjA3LDE1LjctMTUuOGMwLTUuNDUtMi43NC0xMC4yNS02LjkxLTEzLjA5Wk0yMTcuMjksMzYuOTVjLTUuMzEsMC05LjgxLTMuNTgtMTEuMjUtOC40NiwxLjQxLS4zMywyLjY1LTEuMjMsMy40MS0yLjUuMzYtLjYxLjk5LS45OCwxLjY5LS45OHMxLjMzLjM3LDEuNjkuOThjLjk2LDEuNjIsMi43MywyLjY0LDQuNjEsMi42NHMzLjY0LTEuMDIsNC42LTIuNjRjLjM2LS42MS45OS0uOTgsMS42OS0uOThzMS4zMy4zNywxLjY5Ljk4Yy43LDEuMiwxLjg0LDIuMDUsMy4xMywyLjQzLTEuNDEsNC45My01LjkzLDguNTMtMTEuMjYsOC41M1oiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTQ3LjU1LDEwLjI4bC0xMy40NywzMC4wM2g1LjFsMi44My02LjNoMTYuMjVsMi44OCw2LjNoNS4xbC0xMy40Ny0zMC4wM2gtNS4yM1pNMTQzLjgyLDI5LjYzbDYuMzUtMTQuMjksNi4zNSwxNC4yOWgtMTIuNjlaIi8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIxNjMuNDEgMTQuNjEgMTczLjI4IDE0LjYxIDE3My4yOCA0MC4zMSAxNzguMTMgNDAuMzEgMTc4LjEzIDE0LjYxIDE4Ny45NSAxNC42MSAxODcuOTUgMTAuMjggMTYzLjQxIDEwLjI4IDE2My40MSAxNC42MSIvPgogICAgICA8cmVjdCBjbGFzcz0iY2xzLTEiIHg9IjE5MS44NSIgeT0iMTAuMjgiIHdpZHRoPSI0Ljc2IiBoZWlnaHQ9IjMwLjAzIi8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIyNTguNzkgMzEuNjQgMjQxLjc2IDEwLjI4IDIzOC4wNyAxMC4yOCAyMzguMDcgNDAuMyAyNDIuOTIgNDAuMyAyNDIuOTIgMTkuMTIgMjU5Ljk1IDQwLjMgMjYzLjU5IDQwLjMgMjYzLjU5IDEwLjI4IDI1OC43OSAxMC4yOCAyNTguNzkgMzEuNjQiLz4KICAgICAgPHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjI4Ni42MyAxMC4yOCAyODEuODIgMTAuMjggMjgxLjgyIDQwLjMgMzAyLjQ1IDQwLjMgMzAyLjQ1IDM1Ljg1IDI4Ni42MyAzNS44NSAyODYuNjMgMTAuMjgiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzk0LjE1LDMwLjk3Yy0uMzMtNi4yNS02LjAyLTcuOTEtMTIuMDItOC43NC0zLjk1LS41Ni03LjI5LTEuMzctNy4yOS00LjI5czIuOTItNC41NSw2Ljk1LTQuNTVjMy4xMy4wNCw2LjAxLDEuMjksNy40MiwzLjM0bDMuNjUtMi40NGMtMi41My00LjAzLTYuODYtNS4wNi0xMS4yLTUuMDYtNS40LDAtMTEuNjIsMi40LTExLjU4LDguNjIsMCw2LjQzLDUuNjYsNy45NCwxMS42Miw4Ljc1LDQuMi41Niw3LjY4LDEuNjcsNy42OCw0LjkzLDAsMy43OC0zLjk5LDQuOTgtNy41OSw0Ljk4cy03LjIxLTEuMjktOS4zNS00LjkzbC0zLjYsMi40YzIuNzQsNS4wNiw3LjE2LDYuODIsMTIuOTEsNi44Mi41NiwwLDEuMTEtLjAzLDEuNjYtLjA3LDIuMi4wNyw2LjM0LTEuNDksNy40Ni0yLjI5LDQuMS0yLjksMy4xNS03LjM0LDMuMjgtNy40OFoiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzE4LjIsMTAuMjhsLTEzLjQ3LDMwLjAzaDUuMTFsMi44My02LjNoMTYuMjZsMi44Nyw2LjNoNS4xbC0xMy40Ny0zMC4wM2gtNS4yM1pNMzE0LjQ2LDI5LjYzbDYuMzUtMTQuMjksNi4zNSwxNC4yOWgtMTIuNjlaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTM2MC40NywyNC44MmMyLjgzLTEuMTYsNC4xNi0zLjQzLDQuMTYtNS45NiwwLTUuOTYtNC41MS04LjU4LTEwLjIxLTguNThoLTEzLjc3djMwLjAzaDEzLjc3YzUuOTIsMCwxMS4xNS0yLjAyLDExLjE1LTguNTgsMC0yLjI3LTEuNS01LjgzLTUuMS02LjlaTTM0NS40MSwxNC42MWg5LjAxYzMuNiwwLDUuNDUsMi4yMyw1LjQ1LDQuMzMsMCwyLjM2LTEuOCwzLjc4LTUuNCwzLjc4aC05LjA1di04LjExWk0zNTQuNDIsMzUuODVoLTkuMDF2LTguODRoOS4wNWMyLjc0LDAsNi4zMSwxLjQ2LDYuMzEsNC42OHMtMy42OSw0LjE2LTYuMzUsNC4xNloiLz4KICAgIDwvZz4KICAgIDxnPgogICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik00MDUuNzMsMzYuMDJoMTkuMTZ2NC42OGgtMjQuMTR2LTcuNTZjMC01LjcxLDQuNDctOS4wMiwxMi4xNi05LjAyLDQuMTIsMCw2LjkyLTEuODUsNi45Mi00LjYsMC0zLjAxLTIuNDUtNC43Ny02LjYyLTQuNzdzLTcuMDQsMS43Ni03LjEzLDQuNTFoLTUuMTVjLjM0LTUuNjcsNC45LTkuMDIsMTIuMjktOS4wMnMxMS42OCwzLjUyLDExLjY4LDkuMTljMCw2LjAxLTQuMTcsOS4xOS0xMS45NCw5LjE5LTQuNTEsMC03LjIyLDEuNjgtNy4yMiw0LjUxdjIuODhaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTQyOC4wNiwyOC41OXYtNS44OGMwLTcuNTYsNS4yOC0xMi42NywxMy4wNi0xMi42N3MxMy4wNiw1LjExLDEzLjA2LDEyLjY3djUuODhjMCw3LjUyLTUuMjgsMTIuNjMtMTMuMDYsMTIuNjNzLTEzLjA2LTUuMTEtMTMuMDYtMTIuNjNaTTQ0OS4xMSwyOC41OXYtNS44OGMwLTQuNzItMy4xOC03LjktNy45OS03LjlzLTcuOTksMy4xOC03Ljk5LDcuOXY1Ljg4YzAsNC43MiwzLjE4LDcuOSw3Ljk5LDcuOXM3Ljk5LTMuMTgsNy45OS03LjlaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTQ2Mi4yNSwzNi4wMmgxOS4xNnY0LjY4aC0yNC4xNHYtNy41NmMwLTUuNzEsNC40Ny05LjAyLDEyLjE2LTkuMDIsNC4xMiwwLDYuOTItMS44NSw2LjkyLTQuNiwwLTMuMDEtMi40NS00Ljc3LTYuNjItNC43N3MtNy4wNCwxLjc2LTcuMTMsNC41MWgtNS4xNWMuMzQtNS42Nyw0LjktOS4wMiwxMi4yOS05LjAyczExLjY4LDMuNTIsMTEuNjgsOS4xOWMwLDYuMDEtNC4xNyw5LjE5LTExLjk0LDkuMTktNC41MSwwLTcuMjIsMS42OC03LjIyLDQuNTF2Mi44OFoiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNTA1Ljg0LDEwLjY0djIuODhsLTEzLjkyLDI3LjE5aC01Ljc1bDEzLjE5LTI1LjM0aC0xNi40MXYtNC43MmgyMi44OVoiLz4KICAgIDwvZz4KICA8L2c+Cjwvc3ZnPg==" alt=""><span class="ey">The 2027 Vision</span></div>
-          <h4>Analog first.<br>AI second.</h4>
-          <p>Founders are handing the thinking to AI. In 2027, Innovation Labs makes them do their own thinking first, then turns AI on that work as a critic.</p>
-        </div>
-        <div class="m">
-          <div><span class="lab">Why now</span><div class="r r3">
-            <div class="b"><strong>+567%</strong><p>phone-free events worldwide across 2024 and 2025.</p></div>
-            <div class="b"><strong>Up to 55%</strong><p>less brain connectivity in ChatGPT users than in people writing unassisted.</p></div>
-            <div class="b"><strong>83%</strong><p>of ChatGPT users could not quote their own essay back.</p></div>
-          </div></div>
-          <div><span class="lab">The learning loop</span><div class="r r4">
-            <div class="b"><span class="nn">1</span><h5>Think in analog</h5><p>Build version one yourself, on paper.</p></div>
-            <div class="b"><span class="nn">2</span><h5>Think together</h5><p>Discuss it with peers.</p></div>
-            <div class="b ai"><span class="nn">3</span><h5>Challenge with AI</h5><p>AI argues against your version.</p></div>
-            <div class="b"><span class="nn">4</span><h5>Human synthesis</h5><p>The founder decides. Then repeat.</p></div>
-          </div></div>
-          <div><span class="lab">What changes in 2027</span><div class="r r3">
-            <div class="b top"><h5>Mentors and coaches</h5><p>Two to three hands-on mentors per team, one business and one tech.</p></div>
-            <div class="b top d"><h5>A smaller cohort</h5><p>About 25 teams after Bootcamp 2 plus a week.</p></div>
-            <div class="b top p"><h5>The curriculum</h5><p>An Orientation, an AI literacy track, a buffer week.</p></div>
-          </div></div>
-        </div>
-        <div class="f"><div class="k">In short</div><h5>Build it on paper. Discuss it. Let AI argue with it. Repeat.</h5><div class="ft"><span>Innovation Labs 2027: The Vision</span><span>Research figures: Eventbrite; MIT Media Lab, preprint under review.</span></div></div>
-      </div>
-
-      <div>
-        <h3 style="font-size:22px;letter-spacing:-.015em">Asked for one page? It fits on one page.</h3>
-        <p class="lead" style="margin-top:10px;font-size:16px">When a request says one page, the output must not spill onto a second. The skill prioritizes, compresses and cuts lower-priority detail, then points to the Hub for the rest. It never solves overflow by shrinking text into unreadable density.</p>
-        <div class="fit">
-          <div><b>1</b><span>thesis per page</span></div>
-          <div><b>3–5</b><span>supporting modules</span></div>
-          <div><b>15 mm</b><span>margins, 12-column grid</span></div>
-        </div>
-        <ul class="points" style="margin-top:var(--s26)">
-          <li><span><b>Print-safe cards.</b> Filled with surface-tint instead of borders, no glows, no transparency over photos.</span></li>
-          <li><span><b>Real links only.</b> The call to action uses the current Hub URL you supply, never an old artifact link found in the source.</span></li>
-        </ul>
-      </div>
-    </div>
+<!-- VOICES -->
+<section class="sec alt" id="voices"><div class="wrap">
+  <div class="sec-head"><span class="meta">Tone lenses</span><h2>One message. <span style="color:var(--teal-ink)">Three voices.</span></h2>
+  <p class="lead">A lens changes the voice. Facts, structure and look stay where they were.</p></div>
+  <div class="lenses">
+    <article class="card on-tint lensc"><div class="lh"><b>Formal</b><span class="chip lens">formal-lens</span></div><blockquote>In 2027, Innovation Labs will focus on <mark>about 25 teams</mark> <mark>after Bootcamp 2</mark>, so each receives more than the <mark>53 hours of mentoring</mark> delivered per team in 2026.</blockquote><p class="rule">Precise and concise. Confident without hype.</p></article>
+    <article class="card on-tint lensc"><div class="lh"><b>Friendly</b><span class="chip lens">friendly-lens</span></div><blockquote>From 2027 we're keeping things smaller: <mark>about 25 teams</mark> <mark>after Bootcamp 2</mark>, so every team gets more than the <mark>53 hours of mentoring</mark> they had in 2026.</blockquote><p class="rule">Warm and direct. Contractions welcome, never childish.</p></article>
+    <article class="card on-tint lensc"><div class="lh"><b>Jokey</b><span class="chip lens">jokey-lens</span></div><blockquote>Fewer teams, more mentor per team. <mark>About 25 teams</mark> continue <mark>after Bootcamp 2</mark>, and each gets more than the <mark>53 hours</mark> of 2026. The math is on your side.</blockquote><p class="rule">One light line is enough. If humor costs clarity, it goes.</p></article>
   </div>
-</section>
+</div></section>
 
-<!-- ================= LENSES ================= -->
-<section class="sec s" id="lenses">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="kicker">Tone lenses</span>
-      <h2 class="headline">One message. <em>Three voices.</em></h2>
-      <p class="lead">A lens changes the voice. The facts, the structure and the look stay exactly where they were.</p>
+<!-- USE -->
+<section class="sec" id="use"><div class="wrap">
+  <div class="sec-head"><span class="meta">How to use</span><h2>Attach your source. <span style="color:var(--teal-ink)">Say what you need.</span></h2>
+  <p class="lead">Name the format, and the accent or gradient if you care. Use one output skill, zero or one lens, plus brand-elements when you want options.</p></div>
+  <div class="split">
+    <div class="combos">
+      <div class="combo"><div class="in"><span class="chip">website-maker</span></div><div class="ar" aria-hidden="true">&rarr;</div><div class="out"><b>Strategy Hub and route</b><span>Hub look, calm route</span></div></div>
+      <div class="combo"><div class="in"><span class="chip">presentation-maker</span><span>+</span><span class="chip lens">friendly-lens</span></div><div class="ar" aria-hidden="true">&rarr;</div><div class="out"><b>Route-first deck</b><span>Stops, phone, Lead the room</span></div></div>
+      <div class="combo"><div class="in"><span class="chip">one-pager-maker</span><span>+</span><span class="chip lens">formal-lens</span></div><div class="ar" aria-hidden="true">&rarr;</div><div class="out"><b>Partner one-pager</b><span>One clear page</span></div></div>
+      <div class="combo"><div class="in"><span class="chip">insta-post-maker</span><span>+</span><span class="chip">brand-elements</span></div><div class="ar" aria-hidden="true">&rarr;</div><div class="out"><b>Carousel on a template gradient</b><span>Color, element and logo placed for you</span></div></div>
     </div>
-    <div class="fact-line"><span class="meta">Source fact</span><span class="chip">about 25 teams</span><span class="chip">after Bootcamp 2</span><span class="chip">53 hours per team in 2026</span></div>
-    <div class="lenses">
-      <article class="lensc"><div class="lh"><b>Formal</b><span class="chip lens">formal-lens</span></div>
-        <blockquote>In 2027, Innovation Labs will focus on <mark class="f">about 25 teams</mark> <mark class="f">after Bootcamp 2</mark>, so each receives more than the <mark class="f">53 hours of mentoring</mark> delivered per team in 2026.</blockquote>
-        <p class="rule">Precise and concise. Confident without hype, no corporate filler.</p></article>
-      <article class="lensc"><div class="lh"><b>Friendly</b><span class="chip lens">friendly-lens</span></div>
-        <blockquote>From 2027 we're keeping things smaller: <mark class="f">about 25 teams</mark> <mark class="f">after Bootcamp 2</mark>, so every team gets more than the <mark class="f">53 hours of mentoring</mark> they had in 2026.</blockquote>
-        <p class="rule">Warm and direct. Contractions welcome, never childish.</p></article>
-      <article class="lensc"><div class="lh"><b>Jokey</b><span class="chip lens">jokey-lens</span></div>
-        <blockquote>Fewer teams, more mentor per team. <mark class="f">About 25 teams</mark> continue <mark class="f">after Bootcamp 2</mark>, and each gets more than the <mark class="f">53 hours</mark> of 2026. The math is on your side.</blockquote>
-        <p class="rule">One light line is enough. If humor costs clarity, it goes.</p></article>
-    </div>
-    <div class="locked"><span class="meta">Every lens keeps</span><span class="chip">facts</span><span class="chip">numbers</span><span class="chip">claims</span><span class="chip">structure</span><span class="chip">visual identity</span></div>
+    <aside class="panel"><span class="meta">The rule of one</span><p style="font-size:20px;margin-top:8px">One output skill, zero or one lens, one design system, one accent.</p></aside>
   </div>
-</section>
-
-<!-- ================= COMBINE ================= -->
-<section class="sec t" id="combine">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="kicker">How skills combine</span>
-      <h2 class="headline">The skill sets the format. <em>The lens sets the tone.</em></h2>
-    </div>
-    <div class="split">
-      <div class="combos">
-        <div class="combo"><div class="in"><span class="chip">website-maker</span></div><div class="ar" aria-hidden="true">→</div><div class="out"><b>Strategy Hub and Map</b><span>Source-rich deep dives, calm route</span></div></div>
-        <div class="combo"><div class="in"><span class="chip">presentation-maker</span><span class="p">+</span><span class="chip lens">friendly-lens</span></div><div class="ar" aria-hidden="true">→</div><div class="out"><b>Founder-facing strategy deck</b><span>Pitchy story that links to the Hub</span></div></div>
-        <div class="combo"><div class="in"><span class="chip">one-pager-maker</span><span class="p">+</span><span class="chip lens">formal-lens</span></div><div class="ar" aria-hidden="true">→</div><div class="out"><b>Partner one-pager</b><span>One clear page, partner-ready voice</span></div></div>
-        <div class="combo"><div class="in"><span class="chip">insta-post-maker</span><span class="p">+</span><span class="chip lens">jokey-lens</span></div><div class="ar" aria-hidden="true">→</div><div class="out"><b>Social post or carousel</b><span>One message per card. Experimental skill.</span></div></div>
-      </div>
-      <aside class="panel">
-        <span class="kicker">The rule of one</span>
-        <h3>For a normal task, use</h3>
-        <ul>
-          <li>one output skill</li>
-          <li>zero or one tone lens</li>
-          <li>one design system</li>
-        </ul>
-        <p class="note">Stack several output skills only when you ask for a multi-format campaign.</p>
-      </aside>
-    </div>
+  <div class="prompts" style="margin-top:26px">
+    <div class="prompt"><q>Make a route-first deck from this strategy. Yellow accent, link to the Hub.</q><div class="pf"><span class="chip">presentation-maker + brand-elements</span><button type="button" class="copy">Copy</button></div></div>
+    <div class="prompt"><q>Turn this update into a 5-card Instagram carousel on the green gradient.</q><div class="pf"><span class="chip">insta-post-maker + brand-elements</span><button type="button" class="copy">Copy</button></div></div>
+    <div class="prompt"><q>Turn this strategy into an Innovation Labs Strategy Hub with a mesh hero.</q><div class="pf"><span class="chip">website-maker + brand-elements</span><button type="button" class="copy">Copy</button></div></div>
+    <div class="prompt"><q>Make a partner one-pager from this strategy.</q><div class="pf"><span class="chip">one-pager-maker + formal-lens</span><button type="button" class="copy">Copy</button></div></div>
   </div>
-</section>
-
-<!-- ================= HOW TO USE ================= -->
-<section class="sec s" id="use">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="kicker">How to use</span>
-      <h2 class="headline">Attach your source. <em>Say what you need.</em></h2>
-      <p class="lead">Name the format and, if it matters, the audience. The plugin picks the skill and only says what your source says.</p>
-    </div>
-    <div class="prompts">
-      <div class="prompt"><q>Turn this strategy into an Innovation Labs Strategy Hub.</q><div class="pf"><span class="chip">website-maker</span><button type="button" class="copy">Copy</button></div></div>
-      <div class="prompt"><q>Make this strategy into a catchy 7-slide presentation and link to the Hub.</q><div class="pf"><span class="chip">presentation-maker</span><button type="button" class="copy">Copy</button></div></div>
-      <div class="prompt"><q>Make a partner one-pager from this strategy.</q><div class="pf"><span class="chip">one-pager-maker + formal-lens</span><button type="button" class="copy">Copy</button></div></div>
-      <div class="prompt"><q>Turn this update into a 5-card Instagram carousel.</q><div class="pf"><span class="chip">insta-post-maker</span><button type="button" class="copy">Copy</button></div></div>
-    </div>
-
-    <div class="notes3">
-      <div class="n3"><span class="kicker">Built in</span><h4>Portable design rules</h4><p>The plugin carries its own Innovation Labs design system and tokens, so it works even when the native Innovation Labs Design System is not installed.</p></div>
-      <div class="n3 d"><span class="kicker">Optional</span><h4>Native Claude Design System</h4><p>Select it alongside the plugin for a richer editor and runtime of the same rules. It mirrors the bundled spec and never overrides it.</p></div>
-      <div class="n3 p"><span class="kicker">Optional</span><h4>Humanizer, last</h4><p>The public Humanizer skill can polish narrative copy once structure is approved. Not a dependency, and not for tables, labels, citations or numbers.</p></div>
-    </div>
-  </div>
-</section>
+</div></section>
 </main>
 
-<footer>
-  <div class="wrap">
-    <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTGF5ZXJfMiIgZGF0YS1uYW1lPSJMYXllciAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MDUuODQgNTMuNDIiPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuY2xzLTEgewogICAgICAgIGZpbGw6ICNmZmY7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDxnIGlkPSJMYXllcl8xLTIiIGRhdGEtbmFtZT0iTGF5ZXIgMSI+CiAgICA8ZyBpZD0ibG9nb19JTF8yMDI0X2Z1bGxfLV9wcmltYXJ5IiBkYXRhLW5hbWU9ImxvZ28gSUwgMjAyNCBmdWxsIC0gcHJpbWFyeSI+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTkwLjcxLDkuNzJjLTguNjcsMC0xNS43LDcuMDMtMTUuNywxNS43LDAsNS40MSwyLjc0LDEwLjE4LDYuOTEsMTMsLjExLjA3LjIyLjE0LjMzLjIyLjg1LjY0LDEuNDEsMS42NSwxLjQxLDIuOHYuNjVoMy45N3YtLjY1YzAtLjMzLS4wMy0uNjUtLjA3LS45OGguMDFsLTIuMDQtMTEuNjctLjg0LjEzLDEuMzksOC4wMWMtLjQxLS41NS0uOS0xLjA1LTEuNDYtMS40Ni0uMTgtLjEzLS4zNy0uMjYtLjU2LS4zNy0zLjE5LTIuMi01LjA5LTUuOC01LjA5LTkuNjcsMC02LjQ3LDUuMjYtMTEuNzQsMTEuNzMtMTEuNzRzMTEuNzMsNS4yNywxMS43MywxMS43NGMwLDMuNzktMS44Myw3LjM0LTQuOTEsOS41NC0uMzcuMjEtLjcyLjQ1LTEuMDUuNzItLjQ0LjM2LS44My43Ni0xLjE2LDEuMmwxLjM5LTcuOTUtLjg1LS4xLTEuOTIsMTAuOThjLS4wMy4xMi0uMDQuMjUtLjA2LjM4bC0uMDUuMjZzMCwuMDYtLjAxLjA4bC0uMDIuMjV2MS4zMWgzLjk2di0xLjA4Yy4xMS0uOTIuNTctMS43MiwxLjI1LTIuMjguMTktLjE1LjM5LS4yOS42MS0uNCw0LjEtMi44NCw2Ljc4LTcuNTYsNi43OC0xMi45MSwwLTguNjctNy4wMy0xNS43LTE1LjY5LTE1LjdaIi8+CiAgICAgIDxyZWN0IGNsYXNzPSJjbHMtMSIgeD0iODMuNjYiIHk9IjQ5LjQ1IiB3aWR0aD0iMTQuMDkiIGhlaWdodD0iMy45NyIvPgogICAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iODMuNjYgNDMuNzkgODMuNjYgNDcuNzYgOTcuNzUgNDcuNzYgOTcuNzUgNDMuNzkgODcuNjMgNDMuNzkgODMuNjYgNDMuNzkiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNOTAuNTcsMjUuMzRjLjcsMCwxLjMzLjM2LDEuNjkuOTcuNzgsMS4zMywyLjExLDIuMjQsMy42LDIuNTNsLjg1LjEuNi0zLjQ0Yy0uMTQuMDQtLjI5LjA2LS40NS4wNi0uMTUsMC0uMjktLjAyLS40Mi0uMDUtLjUzLS4xMS0uOTgtLjQ0LTEuMjctLjkzLS45Ni0xLjYyLTIuNzItMi42Mi00LjYtMi42MnMtMy42NCwxLTQuNiwyLjYyYy0uMjQuNDEtLjYuNy0xLjAzLjg1LS4yLjA4LS40My4xMi0uNjYuMTItLjA2LDAtLjEyLDAtLjE4LS4wMWwuNTksMy4zOC44NC0uMTNjMS4zOC0uMzUsMi42LTEuMjMsMy4zNC0yLjQ4LjM2LS42MS45OS0uOTcsMS42OS0uOTdaIi8+CiAgICAgIDxyZWN0IGNsYXNzPSJjbHMtMSIgeT0iMTAuMjgiIHdpZHRoPSI0Ljc2IiBoZWlnaHQ9IjMwLjAzIi8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIzMi41MiAzMS42NCAxNS40OSAxMC4yOCAxMS44IDEwLjI4IDExLjggNDAuMyAxNi42NSA0MC4zIDE2LjY1IDE5LjEyIDMzLjY4IDQwLjMgMzcuMzIgNDAuMyAzNy4zMiAxMC4yOCAzMi41MiAxMC4yOCAzMi41MiAzMS42NCIvPgogICAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iNjUuMTQgMzEuNjQgNDguMTEgMTAuMjggNDQuNDIgMTAuMjggNDQuNDIgNDAuMyA0OS4yNyA0MC4zIDQ5LjI3IDE5LjEyIDY2LjMgNDAuMyA2OS45NCA0MC4zIDY5Ljk0IDEwLjI4IDY1LjE0IDEwLjI4IDY1LjE0IDMxLjY0Ii8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIxMzEuMjcgMTAuMjggMTIxLjY2IDM0LjY5IDExMi4wOSAxMC4yOCAxMDYuNjkgMTAuMjggMTE5LjE3IDQwLjQzIDEyNC4xOSA0MC40MyAxMzYuNjMgMTAuMjggMTMxLjI3IDEwLjI4Ii8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTIyNi4wNywxMi4wNmMtLjExLS4wNy0uMjItLjE0LS4zMy0uMjItLjg1LS42NC0xLjQxLTEuNjctMS40MS0yLjgyVjBoLTMuOTZ2OS4wMmMwLDIuMzUsMS4xMiw0LjYsMyw2LjAxLjE4LjE1LjM2LjI3LjU2LjM5LDMuMTMsMi4xNyw1LjAyLDUuNzIsNS4wOCw5LjUzLS4yOC0uMTctLjUxLS40LS42OS0uNjktLjk2LTEuNjQtMi43Mi0yLjY1LTQuNi0yLjY1cy0zLjY0LDEuMDEtNC42MSwyLjY0Yy0uMzYuNjEtLjk5Ljk4LTEuNjkuOThzLTEuMzMtLjM2LTEuNjktLjk3Yy0uOTYtMS42NC0yLjczLTIuNjUtNC42MS0yLjY1cy0zLjY1LDEuMDEtNC42LDIuNjRjLS4yMy4zOS0uNTcuNjktLjk4Ljg0LjAyLTMuOCwxLjg1LTcuMzQsNC45MS05LjU1LjM3LS4yMS43Mi0uNDUsMS4wNS0uNzIsMS40OC0xLjIzLDIuNDMtMi45OCwyLjY2LTQuOWwuMDMtLjI0VjBoLTMuOTd2OS40NGMtLjExLjkyLS41NywxLjc0LTEuMjUsMi4zLS4yLjE2LS40LjI5LS42Mi40LTQuMSwyLjg1LTYuNzgsNy42LTYuNzgsMTMsMCw4LjczLDcuMDMsMTUuOCwxNS43LDE1LjhzMTUuNy03LjA3LDE1LjctMTUuOGMwLTUuNDUtMi43NC0xMC4yNS02LjkxLTEzLjA5Wk0yMTcuMjksMzYuOTVjLTUuMzEsMC05LjgxLTMuNTgtMTEuMjUtOC40NiwxLjQxLS4zMywyLjY1LTEuMjMsMy40MS0yLjUuMzYtLjYxLjk5LS45OCwxLjY5LS45OHMxLjMzLjM3LDEuNjkuOThjLjk2LDEuNjIsMi43MywyLjY0LDQuNjEsMi42NHMzLjY0LTEuMDIsNC42LTIuNjRjLjM2LS42MS45OS0uOTgsMS42OS0uOThzMS4zMy4zNywxLjY5Ljk4Yy43LDEuMiwxLjg0LDIuMDUsMy4xMywyLjQzLTEuNDEsNC45My01LjkzLDguNTMtMTEuMjYsOC41M1oiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTQ3LjU1LDEwLjI4bC0xMy40NywzMC4wM2g1LjFsMi44My02LjNoMTYuMjVsMi44OCw2LjNoNS4xbC0xMy40Ny0zMC4wM2gtNS4yM1pNMTQzLjgyLDI5LjYzbDYuMzUtMTQuMjksNi4zNSwxNC4yOWgtMTIuNjlaIi8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIxNjMuNDEgMTQuNjEgMTczLjI4IDE0LjYxIDE3My4yOCA0MC4zMSAxNzguMTMgNDAuMzEgMTc4LjEzIDE0LjYxIDE4Ny45NSAxNC42MSAxODcuOTUgMTAuMjggMTYzLjQxIDEwLjI4IDE2My40MSAxNC42MSIvPgogICAgICA8cmVjdCBjbGFzcz0iY2xzLTEiIHg9IjE5MS44NSIgeT0iMTAuMjgiIHdpZHRoPSI0Ljc2IiBoZWlnaHQ9IjMwLjAzIi8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIyNTguNzkgMzEuNjQgMjQxLjc2IDEwLjI4IDIzOC4wNyAxMC4yOCAyMzguMDcgNDAuMyAyNDIuOTIgNDAuMyAyNDIuOTIgMTkuMTIgMjU5Ljk1IDQwLjMgMjYzLjU5IDQwLjMgMjYzLjU5IDEwLjI4IDI1OC43OSAxMC4yOCAyNTguNzkgMzEuNjQiLz4KICAgICAgPHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjI4Ni42MyAxMC4yOCAyODEuODIgMTAuMjggMjgxLjgyIDQwLjMgMzAyLjQ1IDQwLjMgMzAyLjQ1IDM1Ljg1IDI4Ni42MyAzNS44NSAyODYuNjMgMTAuMjgiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzk0LjE1LDMwLjk3Yy0uMzMtNi4yNS02LjAyLTcuOTEtMTIuMDItOC43NC0zLjk1LS41Ni03LjI5LTEuMzctNy4yOS00LjI5czIuOTItNC41NSw2Ljk1LTQuNTVjMy4xMy4wNCw2LjAxLDEuMjksNy40MiwzLjM0bDMuNjUtMi40NGMtMi41My00LjAzLTYuODYtNS4wNi0xMS4yLTUuMDYtNS40LDAtMTEuNjIsMi40LTExLjU4LDguNjIsMCw2LjQzLDUuNjYsNy45NCwxMS42Miw4Ljc1LDQuMi41Niw3LjY4LDEuNjcsNy42OCw0LjkzLDAsMy43OC0zLjk5LDQuOTgtNy41OSw0Ljk4cy03LjIxLTEuMjktOS4zNS00LjkzbC0zLjYsMi40YzIuNzQsNS4wNiw3LjE2LDYuODIsMTIuOTEsNi44Mi41NiwwLDEuMTEtLjAzLDEuNjYtLjA3LDIuMi4wNyw2LjM0LTEuNDksNy40Ni0yLjI5LDQuMS0yLjksMy4xNS03LjM0LDMuMjgtNy40OFoiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzE4LjIsMTAuMjhsLTEzLjQ3LDMwLjAzaDUuMTFsMi44My02LjNoMTYuMjZsMi44Nyw2LjNoNS4xbC0xMy40Ny0zMC4wM2gtNS4yM1pNMzE0LjQ2LDI5LjYzbDYuMzUtMTQuMjksNi4zNSwxNC4yOWgtMTIuNjlaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTM2MC40NywyNC44MmMyLjgzLTEuMTYsNC4xNi0zLjQzLDQuMTYtNS45NiwwLTUuOTYtNC41MS04LjU4LTEwLjIxLTguNThoLTEzLjc3djMwLjAzaDEzLjc3YzUuOTIsMCwxMS4xNS0yLjAyLDExLjE1LTguNTgsMC0yLjI3LTEuNS01LjgzLTUuMS02LjlaTTM0NS40MSwxNC42MWg5LjAxYzMuNiwwLDUuNDUsMi4yMyw1LjQ1LDQuMzMsMCwyLjM2LTEuOCwzLjc4LTUuNCwzLjc4aC05LjA1di04LjExWk0zNTQuNDIsMzUuODVoLTkuMDF2LTguODRoOS4wNWMyLjc0LDAsNi4zMSwxLjQ2LDYuMzEsNC42OHMtMy42OSw0LjE2LTYuMzUsNC4xNloiLz4KICAgIDwvZz4KICAgIDxnPgogICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik00MDUuNzMsMzYuMDJoMTkuMTZ2NC42OGgtMjQuMTR2LTcuNTZjMC01LjcxLDQuNDctOS4wMiwxMi4xNi05LjAyLDQuMTIsMCw2LjkyLTEuODUsNi45Mi00LjYsMC0zLjAxLTIuNDUtNC43Ny02LjYyLTQuNzdzLTcuMDQsMS43Ni03LjEzLDQuNTFoLTUuMTVjLjM0LTUuNjcsNC45LTkuMDIsMTIuMjktOS4wMnMxMS42OCwzLjUyLDExLjY4LDkuMTljMCw2LjAxLTQuMTcsOS4xOS0xMS45NCw5LjE5LTQuNTEsMC03LjIyLDEuNjgtNy4yMiw0LjUxdjIuODhaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTQyOC4wNiwyOC41OXYtNS44OGMwLTcuNTYsNS4yOC0xMi42NywxMy4wNi0xMi42N3MxMy4wNiw1LjExLDEzLjA2LDEyLjY3djUuODhjMCw3LjUyLTUuMjgsMTIuNjMtMTMuMDYsMTIuNjNzLTEzLjA2LTUuMTEtMTMuMDYtMTIuNjNaTTQ0OS4xMSwyOC41OXYtNS44OGMwLTQuNzItMy4xOC03LjktNy45OS03LjlzLTcuOTksMy4xOC03Ljk5LDcuOXY1Ljg4YzAsNC43MiwzLjE4LDcuOSw3Ljk5LDcuOXM3Ljk5LTMuMTgsNy45OS03LjlaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTQ2Mi4yNSwzNi4wMmgxOS4xNnY0LjY4aC0yNC4xNHYtNy41NmMwLTUuNzEsNC40Ny05LjAyLDEyLjE2LTkuMDIsNC4xMiwwLDYuOTItMS44NSw2LjkyLTQuNiwwLTMuMDEtMi40NS00Ljc3LTYuNjItNC43N3MtNy4wNCwxLjc2LTcuMTMsNC41MWgtNS4xNWMuMzQtNS42Nyw0LjktOS4wMiwxMi4yOS05LjAyczExLjY4LDMuNTIsMTEuNjgsOS4xOWMwLDYuMDEtNC4xNyw5LjE5LTExLjk0LDkuMTktNC41MSwwLTcuMjIsMS42OC03LjIyLDQuNTF2Mi44OFoiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNTA1Ljg0LDEwLjY0djIuODhsLTEzLjkyLDI3LjE5aC01Ljc1bDEzLjE5LTI1LjM0aC0xNi40MXYtNC43MmgyMi44OVoiLz4KICAgIDwvZz4KICA8L2c+Cjwvc3ZnPg==" alt="Innovation Labs 2027">
-    <p>ilabsro-design v0.3.1 · Innovation Labs design plugin</p>
-  </div>
-</footer>
+<footer class="foot"><div class="wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 505.84 53.42" fill="currentColor" class="logo" role="img" aria-label="Innovation Labs 2027"><g><g><path d="M90.71,9.72c-8.67,0-15.7,7.03-15.7,15.7,0,5.41,2.74,10.18,6.91,13,.11.07.22.14.33.22.85.64,1.41,1.65,1.41,2.8v.65h3.97v-.65c0-.33-.03-.65-.07-.98h.01l-2.04-11.67-.84.13,1.39,8.01c-.41-.55-.9-1.05-1.46-1.46-.18-.13-.37-.26-.56-.37-3.19-2.2-5.09-5.8-5.09-9.67,0-6.47,5.26-11.74,11.73-11.74s11.73,5.27,11.73,11.74c0,3.79-1.83,7.34-4.91,9.54-.37.21-.72.45-1.05.72-.44.36-.83.76-1.16,1.2l1.39-7.95-.85-.1-1.92,10.98c-.03.12-.04.25-.06.38l-.05.26s0,.06-.01.08l-.02.25v1.31h3.96v-1.08c.11-.92.57-1.72,1.25-2.28.19-.15.39-.29.61-.4,4.1-2.84,6.78-7.56,6.78-12.91,0-8.67-7.03-15.7-15.69-15.7Z"/><rect x="83.66" y="49.45" width="14.09" height="3.97"/><polygon points="83.66 43.79 83.66 47.76 97.75 47.76 97.75 43.79 87.63 43.79 83.66 43.79"/><path d="M90.57,25.34c.7,0,1.33.36,1.69.97.78,1.33,2.11,2.24,3.6,2.53l.85.1.6-3.44c-.14.04-.29.06-.45.06-.15,0-.29-.02-.42-.05-.53-.11-.98-.44-1.27-.93-.96-1.62-2.72-2.62-4.6-2.62s-3.64,1-4.6,2.62c-.24.41-.6.7-1.03.85-.2.08-.43.12-.66.12-.06,0-.12,0-.18-.01l.59,3.38.84-.13c1.38-.35,2.6-1.23,3.34-2.48.36-.61.99-.97,1.69-.97Z"/><rect y="10.28" width="4.76" height="30.03"/><polygon points="32.52 31.64 15.49 10.28 11.8 10.28 11.8 40.3 16.65 40.3 16.65 19.12 33.68 40.3 37.32 40.3 37.32 10.28 32.52 10.28 32.52 31.64"/><polygon points="65.14 31.64 48.11 10.28 44.42 10.28 44.42 40.3 49.27 40.3 49.27 19.12 66.3 40.3 69.94 40.3 69.94 10.28 65.14 10.28 65.14 31.64"/><polygon points="131.27 10.28 121.66 34.69 112.09 10.28 106.69 10.28 119.17 40.43 124.19 40.43 136.63 10.28 131.27 10.28"/><path d="M226.07,12.06c-.11-.07-.22-.14-.33-.22-.85-.64-1.41-1.67-1.41-2.82V0h-3.96v9.02c0,2.35,1.12,4.6,3,6.01.18.15.36.27.56.39,3.13,2.17,5.02,5.72,5.08,9.53-.28-.17-.51-.4-.69-.69-.96-1.64-2.72-2.65-4.6-2.65s-3.64,1.01-4.61,2.64c-.36.61-.99.98-1.69.98s-1.33-.36-1.69-.97c-.96-1.64-2.73-2.65-4.61-2.65s-3.65,1.01-4.6,2.64c-.23.39-.57.69-.98.84.02-3.8,1.85-7.34,4.91-9.55.37-.21.72-.45,1.05-.72,1.48-1.23,2.43-2.98,2.66-4.9l.03-.24V0h-3.97v9.44c-.11.92-.57,1.74-1.25,2.3-.2.16-.4.29-.62.4-4.1,2.85-6.78,7.6-6.78,13,0,8.73,7.03,15.8,15.7,15.8s15.7-7.07,15.7-15.8c0-5.45-2.74-10.25-6.91-13.09ZM217.29,36.95c-5.31,0-9.81-3.58-11.25-8.46,1.41-.33,2.65-1.23,3.41-2.5.36-.61.99-.98,1.69-.98s1.33.37,1.69.98c.96,1.62,2.73,2.64,4.61,2.64s3.64-1.02,4.6-2.64c.36-.61.99-.98,1.69-.98s1.33.37,1.69.98c.7,1.2,1.84,2.05,3.13,2.43-1.41,4.93-5.93,8.53-11.26,8.53Z"/><path d="M147.55,10.28l-13.47,30.03h5.1l2.83-6.3h16.25l2.88,6.3h5.1l-13.47-30.03h-5.23ZM143.82,29.63l6.35-14.29,6.35,14.29h-12.69Z"/><polygon points="163.41 14.61 173.28 14.61 173.28 40.31 178.13 40.31 178.13 14.61 187.95 14.61 187.95 10.28 163.41 10.28 163.41 14.61"/><rect x="191.85" y="10.28" width="4.76" height="30.03"/><polygon points="258.79 31.64 241.76 10.28 238.07 10.28 238.07 40.3 242.92 40.3 242.92 19.12 259.95 40.3 263.59 40.3 263.59 10.28 258.79 10.28 258.79 31.64"/><polygon points="286.63 10.28 281.82 10.28 281.82 40.3 302.45 40.3 302.45 35.85 286.63 35.85 286.63 10.28"/><path d="M394.15,30.97c-.33-6.25-6.02-7.91-12.02-8.74-3.95-.56-7.29-1.37-7.29-4.29s2.92-4.55,6.95-4.55c3.13.04,6.01,1.29,7.42,3.34l3.65-2.44c-2.53-4.03-6.86-5.06-11.2-5.06-5.4,0-11.62,2.4-11.58,8.62,0,6.43,5.66,7.94,11.62,8.75,4.2.56,7.68,1.67,7.68,4.93,0,3.78-3.99,4.98-7.59,4.98s-7.21-1.29-9.35-4.93l-3.6,2.4c2.74,5.06,7.16,6.82,12.91,6.82.56,0,1.11-.03,1.66-.07,2.2.07,6.34-1.49,7.46-2.29,4.1-2.9,3.15-7.34,3.28-7.48Z"/><path d="M318.2,10.28l-13.47,30.03h5.11l2.83-6.3h16.26l2.87,6.3h5.1l-13.47-30.03h-5.23ZM314.46,29.63l6.35-14.29,6.35,14.29h-12.69Z"/><path d="M360.47,24.82c2.83-1.16,4.16-3.43,4.16-5.96,0-5.96-4.51-8.58-10.21-8.58h-13.77v30.03h13.77c5.92,0,11.15-2.02,11.15-8.58,0-2.27-1.5-5.83-5.1-6.9ZM345.41,14.61h9.01c3.6,0,5.45,2.23,5.45,4.33,0,2.36-1.8,3.78-5.4,3.78h-9.05v-8.11ZM354.42,35.85h-9.01v-8.84h9.05c2.74,0,6.31,1.46,6.31,4.68s-3.69,4.16-6.35,4.16Z"/></g><g><path d="M405.73,36.02h19.16v4.68h-24.14v-7.56c0-5.71,4.47-9.02,12.16-9.02,4.12,0,6.92-1.85,6.92-4.6,0-3.01-2.45-4.77-6.62-4.77s-7.04,1.76-7.13,4.51h-5.15c.34-5.67,4.9-9.02,12.29-9.02s11.68,3.52,11.68,9.19c0,6.01-4.17,9.19-11.94,9.19-4.51,0-7.22,1.68-7.22,4.51v2.88Z"/><path d="M428.06,28.59v-5.88c0-7.56,5.28-12.67,13.06-12.67s13.06,5.11,13.06,12.67v5.88c0,7.52-5.28,12.63-13.06,12.63s-13.06-5.11-13.06-12.63ZM449.11,28.59v-5.88c0-4.72-3.18-7.9-7.99-7.9s-7.99,3.18-7.99,7.9v5.88c0,4.72,3.18,7.9,7.99,7.9s7.99-3.18,7.99-7.9Z"/><path d="M462.25,36.02h19.16v4.68h-24.14v-7.56c0-5.71,4.47-9.02,12.16-9.02,4.12,0,6.92-1.85,6.92-4.6,0-3.01-2.45-4.77-6.62-4.77s-7.04,1.76-7.13,4.51h-5.15c.34-5.67,4.9-9.02,12.29-9.02s11.68,3.52,11.68,9.19c0,6.01-4.17,9.19-11.94,9.19-4.51,0-7.22,1.68-7.22,4.51v2.88Z"/><path d="M505.84,10.64v2.88l-13.92,27.19h-5.75l13.19-25.34h-16.41v-4.72h22.89Z"/></g></g></svg><p>ilabsro-design v0.4.0 · Innovation Labs design plugin · Hub look, purple or yellow accent, gradients and brand elements</p></div></footer>
 
 <script>
 (function(){
-  'use strict';
-  var root=document.documentElement;
-  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+'use strict';
+var root=document.body;
+function store(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+function load(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+function qs(n){var m=new RegExp('[?&]'+n+'=([^&]*)').exec(location.search);return m?decodeURIComponent(m[1]):null;}
 
-  /* theme */
-  var btns=document.querySelectorAll('.seg button');
-  function setTheme(t){
-    if(t==='night')root.setAttribute('data-theme','night');else root.setAttribute('data-theme','light');
-    btns.forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.th===t));});
-    try{localStorage.setItem('il-theme',t);}catch(e){}
-  }
-  var saved=null;try{saved=localStorage.getItem('il-theme');}catch(e){}
-  setTheme(saved==='night'?'night':'light');
-  btns.forEach(function(b){b.addEventListener('click',function(){setTheme(b.dataset.th);});});
+/* theme and accent */
+function paint(){
+  var tb=document.getElementById('thbtn');tb.setAttribute('aria-label',root.dataset.theme==='night'?'Switch to light theme':'Switch to night theme');
+  document.querySelectorAll('[data-ac]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.ac===root.dataset.accent));});
+  syncFrames();
+}
+var th=load('il-sc-theme'),ac=load('il-sc-accent');
+if(th==='night'||th==='light')root.dataset.theme=th;
+if(ac==='yellow'||ac==='purple')root.dataset.accent=ac;
+document.getElementById('thbtn').addEventListener('click',function(){var n=root.dataset.theme==='night'?'light':'night';root.dataset.theme=n;store('il-sc-theme',n);paint();});
+document.querySelectorAll('[data-ac]').forEach(function(b){b.addEventListener('click',function(){root.dataset.accent=b.dataset.ac;store('il-sc-accent',b.dataset.ac);paint();});});
 
-  /* nav scrollspy */
-  var links=[].slice.call(document.querySelectorAll('#links a'));
-  var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
-  function spy(){
-    var y=window.scrollY+120,cur=0;
-    secs.forEach(function(s,i){if(s&&s.offsetTop<=y)cur=i;});
-    links.forEach(function(a,i){a.classList.toggle('on',i===cur);if(i===cur)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current');});
-  }
-  window.addEventListener('scroll',spy,{passive:true});spy();
+/* swatches */
+var SW=[['teal','--teal'],['teal-deep','--teal-deep'],['header','--header'],['hero-a','--hero-a'],['hero-b','--hero-b'],['bright','--bright'],['surface-alt','--surface-alt'],['surface-tint','--surface-tint'],['surface-ink','--surface-ink'],['ax','--ax'],['ax-ink','--ax-ink'],['ax-tint','--ax-tint'],['action','--action'],['positive','--positive'],['caution','--caution'],['issue','--issue']];
+var sw=document.getElementById('swatches');
+function paintSw(){
+  var cs=getComputedStyle(root);
+  sw.innerHTML=SW.map(function(s){var v=cs.getPropertyValue(s[1]).trim();return '<div class="swatch"><i style="background:var('+s[1]+')"></i><b>'+s[0]+'</b><span>'+v+'</span></div>';}).join('');
+}
 
-  /* expand */
-  document.querySelectorAll('.expand').forEach(function(x){
-    var b=x.querySelector('button'),body=x.querySelector('.body');
-    b.addEventListener('click',function(){var o=x.dataset.open!=='true';x.dataset.open=o;b.setAttribute('aria-expanded',o);body.hidden=!o;});
-  });
+/* gradients */
+var G=[['--grad-brand','Brand','Hero, panels, closing. White text, bright highlight.','#fff'],['--grad-band','Band','Top nav. White text.','#fff'],['--ax-grad','Accent','One CTA band or callout. Text uses ax-on.','var(--ax-on)'],['--grad-surface','Surface','Map ground, calm sections. Ink text.','var(--ink)'],
+ ['--mesh-blue','Mesh blue','Default light cover, hero, social. Ink text.','var(--ink)'],['--mesh-green','Mesh green','Growth, alumni. Ink text.','var(--ink)'],['--mesh-yellow','Mesh yellow','Yellow accent covers, energy. Ink text.','var(--ink)'],['--mesh-purple','Mesh purple','Purple accent covers, AI. Ink text.','var(--ink)'],['--mesh-classic','Mesh classic','Campaign covers. Ink on the pale center.','var(--ink)'],['--mesh-night','Mesh night','Dark deck cover. White text.','#fff']];
+document.getElementById('gradgrid').innerHTML=G.map(function(g){
+  var bg=g[0]==='--mesh-night'?'radial-gradient(60% 55% at 15% 0%, rgba(11,143,145,.55) 0%, transparent 70%),radial-gradient(55% 60% at 100% 100%, rgba(7,58,57,.9) 0%, transparent 72%), #061B1B':'var('+g[0]+')';
+  return '<div class="gtile"><div class="gp" style="background:'+bg+';color:'+g[3]+'">'+g[1]+'</div><div class="gi"><b>'+g[0]+'</b>'+g[2]+'</div></div>';}).join('');
 
-  /* map */
-  var STOPS=[
-    ['What we looked at','2026 and the research','We looked at two things: our own 2026 program, and the research on AI and thinking.'],
-    ['What we found','What worked, what requests a fix','The 2026 findings are the improvement targets for a program that is fundamentally sound.'],
-    ['The idea','Analog first, AI second','AI never produces version one. It improves version one.'],
-    ['The curriculum','Exercises and challenger skills','Analog moves into existing blocks, so no new time is added.'],
-    ['The people','Mentors, coaches, feedback','A real team around every startup.'],
-    ['The cohort','Focused, with more mentoring','A focused cohort of about 25 teams, set one week after Bootcamp 2.'],
-    ['The calendar','What happens when','From the AI Validation Bootcamp with SiSC in October 2026 to Demo Day in May 2027.'],
-    ['The partners','A track and real challenges','Partners who add more than money, and stay for years.'],
-    ['Share it','The slides','The same story, in a format you can send.']
-  ];
-  var map=document.getElementById('map'),path=document.getElementById('rtDone'),vr=document.getElementById('vroute'),det=document.getElementById('mapdetail');
-  var L=path.getTotalLength(),pts=[],stopEls=[],lblEls=[],vEls=[],sel=2;
-  for(var i=0;i<STOPS.length;i++){
-    var p=path.getPointAtLength(L*(0.02+0.96*i/(STOPS.length-1)));pts.push(p);
-    var b=document.createElement('button');b.type='button';b.className='stop';b.textContent=i+1;
-    b.style.left=(p.x/10)+'%';b.style.top=(p.y/3.3)+'%';b.setAttribute('aria-label','Stop '+(i+1)+': '+STOPS[i][0]);
-    (function(k){b.addEventListener('click',function(){select(k);});})(i);
-    map.appendChild(b);stopEls.push(b);
-    var l=document.createElement('div');l.className='lbl '+(i%2?'dn':'up');l.textContent=STOPS[i][0];
-    l.style.left=(p.x/10)+'%';l.style.top=(p.y/3.3)+'%';l.setAttribute('aria-hidden','true');
-    map.appendChild(l);lblEls.push(l);
-    var li=document.createElement('li');var vb=document.createElement('button');vb.type='button';vb.className='stop vs';vb.textContent=i+1;vb.setAttribute('aria-label','Stop '+(i+1)+': '+STOPS[i][0]);
-    (function(k){vb.addEventListener('click',function(){select(k);});})(i);
-    var tx=document.createElement('b');tx.textContent=STOPS[i][0];li.appendChild(vb);li.appendChild(tx);vr.appendChild(li);vEls.push(li);
-  }
-  function select(k){
-    sel=k;
-    var frac=0.02+0.96*k/(STOPS.length-1);
-    path.style.strokeDasharray=L+' '+L;path.style.strokeDashoffset=String(L-L*frac);
-    if(!reduce)path.style.transition='stroke-dashoffset .35s cubic-bezier(.3,.1,.2,1)';
-    stopEls.forEach(function(e,i){e.classList.toggle('cur',i===k);e.classList.toggle('ahead',i>k);e.setAttribute('aria-pressed',String(i===k));});
-    lblEls.forEach(function(e,i){e.classList.toggle('cur',i===k);});
-    vEls.forEach(function(e,i){e.classList.toggle('cur',i===k);var vb=e.querySelector('.stop');vb.classList.toggle('cur',i===k);vb.classList.toggle('ahead',i>k);});
-    det.innerHTML='';
-    var n=document.createElement('div');n.className='dn';n.textContent=k+1;
-    var c=document.createElement('div');
-    var s=document.createElement('div');s.className='sub';s.textContent=STOPS[k][1];
-    var h=document.createElement('h4');h.textContent=STOPS[k][0];
-    var pp=document.createElement('p');pp.textContent=STOPS[k][2];
-    c.appendChild(s);c.appendChild(h);c.appendChild(pp);det.appendChild(n);det.appendChild(c);
-  }
-  select(sel);
+/* template backgrounds */
+var T={blue:['cover','cover-alt','square','post','view','story','wide'],green:['cover','square','post','view','story','wide'],yellow:['cover','cover-alt','square','post','view','story','wide'],purple:['cover','square','post','view','story','wide'],classic:['cover','square']};
+var SZ={cover:'1600x900',  'cover-alt':'1600x900',square:'1080x1080',post:'1080x1436',view:'1080x1350',story:'1080x1919',wide:'1600x401'};
+var tseg=document.getElementById('tplseg'),curT='blue';
+tseg.innerHTML=Object.keys(T).map(function(k){return '<button type="button" data-t="'+k+'" aria-pressed="'+(k===curT)+'">'+k+'</button>';}).join('');
+function paintT(){
+  tseg.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.t===curT));});
+  document.getElementById('tplrow').innerHTML=T[curT].map(function(f){return '<div class="tpl"><img alt="" src="assets/backgrounds/'+curT+'/'+f+'.jpg" style="'+(f==='wide'?'height:90px;':'')+'"><div>'+curT+'/'+f+'<br>'+SZ[f]+'</div></div>';}).join('');
+}
+tseg.addEventListener('click',function(e){var b=e.target.closest('button');if(b){curT=b.dataset.t;paintT();}});
 
-  /* deck */
-  var sl=[].slice.call(document.querySelectorAll('#slides .sl')),segs=document.getElementById('segs'),chap=document.getElementById('chap'),cnt=document.getElementById('cnt');
-  var CH=['Where we start','Where we start','The idea','The year','The year','Go deeper'],cur=0;
-  sl.forEach(function(){segs.appendChild(document.createElement('i'));});
-  var bk=document.getElementById('bk'),nx=document.getElementById('nx');
-  function go(k){
-    cur=Math.max(0,Math.min(sl.length-1,k));
-    sl.forEach(function(s,i){s.classList.toggle('on',i===cur);s.classList.toggle('before',i<cur);s.setAttribute('aria-hidden',String(i!==cur));});
-    [].forEach.call(segs.children,function(s,i){s.className=i<cur?'done':(i===cur?'cur':'');});
-    chap.textContent=CH[cur];cnt.textContent=(cur+1)+' / '+sl.length;
-    bk.disabled=cur===0;nx.disabled=cur===sl.length-1;
-  }
-  bk.addEventListener('click',function(){go(cur-1);});nx.addEventListener('click',function(){go(cur+1);});
-  go(0);
+/* elements */
+var EL=[['bulb-glass','Idea. Cover and closing hero.',0],['bulb-mesh','Ideas being built.',0],['hourglass-bulb','Time, the cohort period.',1],['hourglass-bulb-soft','Same, as a watermark.',1],['star','New, highlight, AI.',0],['star-soft','Star as a watermark.',0],['flask','Experiment, validation, bootcamp.',0],['hex-gold','Yellow companion. Frames a number.',1],['hex-gold-wide','Wide hexagon frame.',1],['ring-mesh','Cohort, community.',0],['frame-mesh-1','The room, a stage.',0],['frame-mesh-2','Lighter grid room.',0],['frame-mesh-3','Lightest grid room.',0],['make-it-real','Campaign line. Not a logo.',0],['register-badge','Sign-up call.',0],['register-simple','Sign-up icon.',0]];
+document.getElementById('elgrid').innerHTML=EL.map(function(e){return '<div class="elc'+(e[2]?' y':'')+'"><div class="ep"><img alt="" src="assets/elements/'+e[0]+'.svg"></div><div class="ei"><b>'+e[0]+'.svg</b><span>'+e[1]+'</span></div></div>';}).join('');
 
-  /* copy */
-  document.querySelectorAll('.copy').forEach(function(b){
-    b.addEventListener('click',function(){
-      var q=b.closest('.prompt').querySelector('q'),txt=q.textContent;
-      function done(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy';},1600);}
-      function fallback(){var r=document.createRange();r.selectNodeContents(q);var s=window.getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selected';setTimeout(function(){b.textContent='Copy';},1600);}
-      try{navigator.clipboard.writeText(txt).then(done,fallback);}catch(e){fallback();}
-    });
-  });
+/* social examples: real canvases scaled down */
+function card(w,h,k,bg,inner){var s=k;return '<div><div class="scale" style="width:'+Math.round(w*s)+'px;height:'+Math.round(h*s)+'px"><div class="cv" style="width:'+w+'px;height:'+h+'px;transform:scale('+s+');background:url(assets/backgrounds/'+bg+') center/cover">'+inner+'</div></div><div class="scap">'+w+'x'+h+' · '+bg.split('/')[0]+'</div></div>';}
+document.getElementById('socials').innerHTML=
+ card(1080,1350,.27,'yellow/view.jpg','<div class="k">Innovation Labs 2027</div><h4>Think first.<br><em>Then ask AI.</em></h4><div class="h" style="left:84px;top:690px;color:#7A4B00">paper before prompts</div><img class="el" alt="" src="assets/elements/hex-gold-wide.svg" style="position:absolute;right:-40px;bottom:150px;width:520px"><img class="lg" alt="" src="assets/logos/logo_primary_2027.svg" style="left:64px;bottom:64px">')+
+ card(1080,1920,.19,'green/story.jpg','<div class="k" style="top:260px">The cohort</div><div class="big" style="top:330px;font-size:330px">41</div><h4 style="top:640px;font-size:92px;width:880px">teams joined.<br><em>17 stood on stage.</em></h4><img class="el" alt="" src="assets/elements/ring-mesh.svg" style="position:absolute;right:-90px;bottom:420px;width:560px"><img class="lg" alt="" src="assets/logos/logo_primary_2027.svg" style="left:64px;bottom:250px">')+
+ card(1080,1080,.33,'purple/square.jpg','<div class="k">AI as challenger</div><h4 style="top:170px;font-size:104px;width:860px">The founder decides.</h4><img class="el" alt="" src="assets/elements/star.svg" style="position:absolute;right:70px;bottom:170px;width:260px"><img class="lg" alt="" src="assets/logos/logo_primary_2027.svg" style="left:64px;bottom:64px">')+
+ card(1200,627,.3,'blue/cover.jpg','<div class="k" style="top:70px">Hackathon</div><h4 style="top:130px;font-size:92px;width:760px">Make it <em>real.</em></h4><img class="el" alt="" src="assets/elements/flask.svg" style="position:absolute;right:60px;top:90px;width:260px"><img class="lg" alt="" src="assets/logos/logo_primary_2027.svg" style="left:64px;bottom:48px">');
+
+/* route demo, shared stops */
+var STOPS=[
+ {title:'Listen',when:'2026 cohort',section:'findings',body:'Cohort interviews show a sound program with fixable gaps: a software-biased mentor pool, contradictory advice, three compressed weekends, travel burden on non-Bucharest teams and deliverables nobody reviewed. Networking and community were the dominant value.'},
+ {title:'The bet',when:'Thesis',section:'evidence',body:'Founders are offloading the thinking step, not only the writing step. The evidence is recent and partly correlational, so the revamp treats it as a bet: think first, use AI as a challenger, and test it on our own teams.'},
+ {title:'Recruit',when:'Oct to Feb',section:'recruit',body:'The pre-program starts in October in the app: the iLabs.ro Academy idea-validation journey, a WhatsApp community, industry deep dives and idea selection support. A mini-Hackathon runs 24 to 25 October and the AI Validation Bootcamp in November.'},
+ {title:'Hackathon',when:'Late March',section:'recruit',body:'One national Hackathon in Bucharest at the end of March (estimated 20 to 21 March). The canvas deliverable gives way to problem articulation and competitive research, and teams cluster into four groups, each with a two-week path.'},
+ {title:'Think first',when:'After Hackathon',section:'analog',body:'Orientation states the AI position once: not banned, not a ghostwriter, used as a challenger. Four stages follow: think in analog, think together, challenge with AI, human synthesis.'},
+ {title:'Bootcamps',when:'Mar to Apr',section:'curriculum',body:'Two-day bootcamps with an AI literacy and curation track, a customer discovery track and a Bootcamp 2 pivot session. Bootcamp 1 and the Pitch Prep Workshop were the highest-rated elements in 2026 and stay protected.'},
+ {title:'Mentors',when:'Mar to May',section:'mentors',body:'Two to three hands-on mentors per team (one business, one tech), PODS of three to five teams with a facilitator, a vetted mentor core, and private 1:1 coaching alongside public brutal feedback once the cohort is about 25.'},
+ {title:'The cut',when:'Bootcamp 2 + 1 week',section:'cohort',body:'Cut after Bootcamp 2 plus a one-week buffer, so teams are judged on whether they applied feedback. In 2026 only around 25 of 41 teams were judged worth the full resources. Half the intake produced the same 17 finalists.'},
+ {title:'Demo Day',when:'Mid to end May',section:'calendar',body:'National semifinals in mid May, then the Startup Fair and the Demo Day final at the end of May (estimated 24 May). Recognition awards stay here; the EGV Investment Prize moves to IL Beyond.'},
+];
+var FULL_D='M 70 360 C 190 360 230 170 350 190 S 470 400 590 330 S 750 120 870 200 S 1010 330 1130 190';
+function along(d,n){var NS='http://www.w3.org/2000/svg',s=document.createElementNS(NS,'svg'),p=document.createElementNS(NS,'path');s.setAttribute('width','0');s.setAttribute('height','0');s.style.cssText='position:absolute;visibility:hidden';p.setAttribute('d',d);s.appendChild(p);document.body.appendChild(s);var L=p.getTotalLength(),S=800,pts=[],k;for(k=0;k<=S;k++){var q=p.getPointAtLength(L*k/S);pts.push({x:q.x,y:q.y});}var x0=pts[0].x,x1=pts[S].x,out=[];for(var i=0;i<n;i++){var tx=x0+(x1-x0)*(i/(n-1));var j=pts.findIndex(function(q){return q.x>=tx;});if(j<1)j=(i===0?1:S);var a=pts[j-1],b=pts[j],f=b.x===a.x?0:(tx-a.x)/(b.x-a.x);out.push({x:a.x+(b.x-a.x)*f,y:a.y+(b.y-a.y)*f});}s.remove();return out;}
+document.getElementById('rBase').setAttribute('d',FULL_D);document.getElementById('rLine').setAttribute('d',FULL_D);
+var pts=along(FULL_D,STOPS.length),rst=document.getElementById('rstage'),jr=document.getElementById('journey'),selI=0;
+rst.style.setProperty('--x','1');
+function dirOf(p,i){var n=p.length,a=p[i-1]||p[i+1],c=p[i+1]||p[i-1];return p[i].y<=(a.y+c.y)/2?'up':'down';}
+STOPS.forEach(function(s,i){
+  var b=document.createElement('button');b.type='button';b.className='stop '+dirOf(pts,i);
+  b.style.cssText='left:'+(pts[i].x/1200*100)+'%;top:'+(pts[i].y/520*100)+'%;animation-delay:'+(.25+i*.09)+'s;--d:clamp(26px,3.4cqw,40px);width:var(--d);height:var(--d);margin:calc(var(--d)/-2) 0 0 calc(var(--d)/-2)';
+  b.innerHTML='<span class="dot" style="font-size:clamp(11px,1.3cqw,15px)">'+(i+1)+'</span><span class="lab"><b style="font-size:clamp(10px,1.15cqw,13px)">'+s.title+'</b><span>'+s.when+'</span></span>';
+  b.addEventListener('click',function(){pick(i);});rst.appendChild(b);
+  var a=document.createElement('article');a.className='mj';a.dataset.n=i+1;a.innerHTML='<span class="meta">'+s.when+'</span><h3>'+s.title+'</h3><p>'+s.body+'</p>';a.addEventListener('click',function(){pick(i);});jr.appendChild(a);
+});
+function pick(i){selI=i;var s=STOPS[i];
+  document.querySelectorAll('#rstage .stop').forEach(function(b,k){b.classList.toggle('active',k===i);});
+  document.querySelectorAll('#journey .mj').forEach(function(b,k){b.classList.toggle('active',k===i);});
+  document.getElementById('dNum').textContent=i+1;document.getElementById('dWhen').textContent='Stop '+(i+1)+' of '+STOPS.length+' · '+s.when;document.getElementById('dTitle').textContent=s.title;document.getElementById('dText').textContent=s.body;}
+pick(0);
+
+/* deck frame */
+var DEV={portrait:[390,760],land:[760,360],desk:[1100,620]};
+var frame=document.getElementById('frame'),dseg=document.getElementById('devseg'),curDev='portrait';
+function setDev(d){dseg.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.dev===d));});curDev=d;frame.style.width=DEV[d][0]+'px';frame.style.height=DEV[d][1]+'px';syncFrames();}
+dseg.addEventListener('click',function(e){var b=e.target.closest('button');if(b)setDev(b.dataset.dev);});
+function syncFrames(){var ax=root.dataset.accent;document.getElementById('deckimg').src='examples/deck-'+curDev+'-'+ax+'.jpg';document.getElementById('opimg').src='examples/onepager-'+ax+'.jpg';document.getElementById('hubimg').src='examples/hub-'+ax+'.jpg';
+  paintSw();
+}
+
+/* prompts copy */
+document.querySelectorAll('.copy').forEach(function(b){b.addEventListener('click',function(){var t=b.closest('.prompt').querySelector('q').textContent;try{navigator.clipboard.writeText(t);b.textContent='Copied';setTimeout(function(){b.textContent='Copy';},1400);}catch(e){}});});
+
+/* nav spy */
+var links=[].slice.call(document.querySelectorAll('#links a')),secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
+function spy(){var y=scrollY+120,cur=-1;secs.forEach(function(s,i){if(s&&s.offsetTop<=y)cur=i;});links.forEach(function(a,i){if(i===cur)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});}
+addEventListener('scroll',spy,{passive:true});
+
+paintT();paint();spy();
 })();
 </script>
 
