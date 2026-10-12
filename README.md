@@ -50,3 +50,23 @@ Examples:
 The public Humanizer skill can be an optional final copy pass when useful; it is not a dependency of this plugin.
 
 See `docs/USAGE.md` and `docs/TEST_MATRIX.md`.
+
+## Live examples
+
+### Design references
+
+| Artifact | Live |
+| --- | --- |
+| Strategy Hub | [Open reference ↗](https://ilabsro-design-examples.vercel.app/) |
+| Presentation | [Open reference ↗](https://ilabsro-design-examples-gojv.vercel.app/#1) |
+
+### Plugin-generated outputs
+
+| Artifact | Live |
+| --- | --- |
+| Strategy Hub | [Open generated example ↗](https://ilabsro-design-website.vercel.app/) |
+| Presentation | [Open generated example ↗](https://ilabsro-design-presentation.vercel.app/) |
+
+### Showcase
+
+[Explore the plugin showcase ↗](https://ilabsro-design-showcase.vercel.app/)
