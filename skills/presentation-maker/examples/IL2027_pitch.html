@@ -1,163 +1,508 @@
-<title>Analog First, AI Second</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Innovation Labs 2027 · Analog First, AI Second · Route Deck</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&family=Caveat:wght@700&display=swap">
 <style>
-/* Layout: full-height phone deck. Top progress bar, one story beat per screen, thumb-reach nav at the bottom.
-   Look: dark teal ground with the brand's glowing connected-line network drifting behind the slides as you advance.
-   Colors follow the IL 2027 brand: teal #0095AC, deep teal #016462, purple #954bbc (lightened for dark). */
-:root{
-  --bg:#031E1E;--surface:#0A3433;--surface2:#0F4442;--line:#1C5654;
-  --fg:#EAF6F6;--muted:#9BBFC0;--teal:#2BC4DB;--teal-deep:#016462;--brand:#0095AC;--purple:#C48BEA;--purple-bg:#2B1A3A;
-  --btn-fg:#02201F;
-  --display:'Poppins',system-ui,sans-serif;--hand:'Caveat','Segoe Print','Bradley Hand',cursive;--mono:'IBM Plex Mono',ui-monospace,monospace;
-  color-scheme:dark;
+/* Innovation Labs presentation, route first.
+   Layout: phone-first deck. Slide 1 is the 2027 route (serpentine on wide screens and sideways phones,
+   vertical journey with a bottom sheet on a portrait phone). Every later slide carries its stop number.
+   Look: Strategy Hub tokens, Night by default, Light and purple or yellow accent on a switch. */
+/* Innovation Labs tokens v0.4
+   Look = the Strategy Hub (teal band, big Poppins, serpentine route, soft panels).
+   Two axes switch the same layout:
+     data-theme  = light | night
+     data-accent = purple | yellow     (the accent role: new, AI, current step, focus, hand note)
+   Gradients are tokens now. See BRAND_ELEMENTS.md for when to use them. */
+
+:root,
+[data-theme="light"] {
+  /* brand */
+  --teal: #0095AC;
+  --teal-deep: #016462;
+  --teal-ink: #016462;
+  --header: #007F86;          /* top band */
+  --hero-a: #068499;          /* hero gradient start */
+  --hero-b: #065F5C;          /* hero gradient end */
+  --bright: #72ECE7;          /* highlight words on teal fields */
+  --route: #0095AC;
+  --logo-ink: #2B6363;
+
+  /* surfaces (flat: alternate page / alt / tint) */
+  --surface-page: #FFFFFF;
+  --surface-alt: #F4FBFB;
+  --surface: #FFFFFF;
+  --surface-tint: #EAF7F7;
+  --surface-ink: #10201F;
+
+  /* text */
+  --ink: #10201F;
+  --ink-muted: #3C5052;
+  --ink-subtle: #4A5E60;
+  --on-brand: #FFFFFF;
+
+  /* lines */
+  --line: #D6E4E5;
+  --line-soft: #E3EDEE;
+  --line-control: #6F8689;
+  --line-strong: #9CC3C6;
+
+  /* actions */
+  --action: #007A8C;
+  --on-action: #FFFFFF;
+  --action-soft: rgba(0,149,172,.12);
+  --focus-ring: var(--ax);
+
+  /* accent role, default purple */
+  --ax: #954BBC;
+  --ax-ink: #6B2E8C;
+  --ax-tint: #F1E7F8;
+  --ax-soft: rgba(149,75,188,.14);
+  --ax-on: #FFFFFF;
+  --ax-deep: #6B2E8C;
+  --ax-grad: linear-gradient(115deg, #A45CC9 0%, #6B2E8C 100%);
+  --lilac: #E8D2F5;
+
+  /* status */
+  --positive: #2D7A57; --positive-soft: #E6F4EC;
+  --caution: #7A5200;  --caution-soft: #FFF3D6;
+  --issue: #A8453A;    --issue-soft: #FBECE9;
+
+  /* data viz */
+  --viz-1: #0095AC; --viz-2: #016462; --viz-ai: var(--ax); --viz-context: #AFC0C3; --viz-grid: #D3DEE0;
+
+  /* gradients */
+  --grad-brand: linear-gradient(115deg, var(--hero-a), var(--hero-b));
+  --grad-band: linear-gradient(115deg, var(--header), #006B6E);
+  --grad-accent: var(--ax-grad);
+  --grad-surface: linear-gradient(180deg, #F4FBFB 0%, #E4F4F4 100%);
+  --mesh-blue:
+    radial-gradient(60% 55% at 38% 0%, #B8E3EC 0%, transparent 72%),
+    radial-gradient(55% 60% at 0% 100%, #94D4DC 0%, transparent 72%),
+    radial-gradient(55% 60% at 100% 100%, #90D4DE 0%, transparent 72%),
+    radial-gradient(35% 40% at 100% 40%, #C5E8EF 0%, transparent 70%), #FFFFFF;
+  --mesh-green:
+    radial-gradient(60% 55% at 40% 0%, #A9DAC2 0%, transparent 72%),
+    radial-gradient(55% 60% at 0% 100%, #83C3A4 0%, transparent 72%),
+    radial-gradient(55% 60% at 100% 85%, #91D1B3 0%, transparent 72%),
+    radial-gradient(40% 40% at 0% 25%, #CEE9DE 0%, transparent 70%), #FFFFFF;
+  --mesh-yellow:
+    radial-gradient(55% 50% at 35% 0%, #FDD49F 0%, transparent 72%),
+    radial-gradient(55% 60% at 0% 100%, #FAB579 0%, transparent 72%),
+    radial-gradient(55% 60% at 100% 100%, #FBBF45 0%, transparent 70%),
+    radial-gradient(40% 45% at 100% 40%, #FDD2AD 0%, transparent 70%),
+    radial-gradient(45% 40% at 0% 0%, #FEFAD2 0%, transparent 70%), #FFFEF6;
+  --mesh-purple:
+    radial-gradient(55% 55% at 0% 0%, #E2DCED 0%, transparent 70%),
+    radial-gradient(55% 60% at 0% 100%, #BBABD3 0%, transparent 72%),
+    radial-gradient(55% 60% at 100% 100%, #A794C6 0%, transparent 72%),
+    radial-gradient(35% 40% at 100% 40%, #E7DBEB 0%, transparent 70%), #FFFFFF;
+  --mesh-classic:
+    radial-gradient(45% 45% at 0% 100%, #0095AC 0%, transparent 70%),
+    radial-gradient(40% 40% at 100% 0%, #6FCFDD 0%, transparent 70%),
+    radial-gradient(40% 40% at 0% 15%, #C9B8F0 0%, transparent 70%),
+    radial-gradient(40% 40% at 100% 100%, #B79AE6 0%, transparent 70%),
+    radial-gradient(40% 35% at 45% 60%, #C9F3E6 0%, transparent 70%), #FFFFFF;
+  --mesh: var(--mesh-blue);   /* default page mesh; the accent swaps it, see below */
+
+  /* spacing */
+  --space-4: 4px; --space-8: 8px; --space-12: 12px; --space-16: 16px; --space-18: 18px;
+  --space-22: 22px; --space-26: 26px; --space-40: 40px; --space-48: 48px; --space-64: 64px; --space-88: 88px;
+
+  /* radius (hub look: roomy) */
+  --radius-xs: 4px; --radius-sm: 8px; --radius-md: 12px; --radius-row: 14px;
+  --radius-lg: 18px; --radius-panel: 22px; --radius-xl: 24px; --radius-pill: 999px;
+
+  --border-card: 1px; --border-accent: 5px; --border-focus: 3px;
+  --content-max: 1180px; --text-max: 780px; --slide-max: 760px; --nav-height: 58px;
+
+  --shadow-hover: 0 10px 28px rgba(1,100,98,.13);
+  --shadow-nav: 0 2px 14px rgba(16,32,31,.25);
+  --shadow-raised: 0 14px 40px rgba(1,100,98,.13);
+  --shadow-sheet: 0 -14px 40px rgba(16,32,31,.28);
+
+  --font: Poppins, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --hand: Caveat, "Segoe Print", "Bradley Hand", cursive;
 }
+
+/* Yellow accent. Fill is the template yellow, ink is a dark gold that holds 4.5:1 on white,
+   and the label on a yellow fill is dark, never white. */
+[data-accent="purple"] { --mesh: var(--mesh-purple); }
+[data-accent="yellow"] {
+  --ax: #FBBF45;
+  --ax-ink: #7A4B00;
+  --ax-tint: #FFF6DA;
+  --ax-soft: rgba(251,191,69,.22);
+  --ax-on: #10201F;
+  --ax-deep: #BF822B;
+  --ax-grad: linear-gradient(115deg, #FDD49F 0%, #FBBF45 55%, #F9A751 100%);
+  --lilac: #FEFAD2;
+  --focus-ring: #BF822B;
+  --mesh: var(--mesh-yellow);
+}
+
+[data-theme="night"] {
+  --teal: #2BC4DB;
+  --teal-deep: #016462;
+  --teal-ink: #72ECE7;
+  --header: #061B1B;
+  --hero-a: #0B8F91;
+  --hero-b: #073A39;
+  --bright: #72ECE7;
+  --route: #72ECE7;
+  --logo-ink: #FFFFFF;
+
+  --surface-page: #061B1B;
+  --surface-alt: #0A2928;
+  --surface: #0D3A39;
+  --surface-tint: #0F4443;
+  --surface-ink: #001A1C;
+
+  --ink: #FFFFFF;
+  --ink-muted: #B9CECE;
+  --ink-subtle: #8FB1B2;
+
+  --line: rgba(195,240,240,.16);
+  --line-soft: rgba(195,240,240,.10);
+  --line-control: rgba(195,240,240,.38);
+  --line-strong: rgba(195,240,240,.38);
+
+  --action: #1AB7BE;
+  --on-action: #04201F;
+  --action-soft: rgba(43,196,219,.14);
+
+  --ax: #C48BEA;
+  --ax-ink: #D2A8EE;
+  --ax-tint: rgba(149,75,188,.22);
+  --ax-soft: rgba(196,139,234,.18);
+  --ax-on: #1B0F26;
+  --ax-deep: #954BBC;
+  --ax-grad: linear-gradient(115deg, #C48BEA 0%, #954BBC 100%);
+
+  --positive: #8FD3B1; --positive-soft: rgba(45,122,87,.26);
+  --caution: #F2D58A;  --caution-soft: rgba(160,120,20,.24);
+  --issue: #F1A39A;    --issue-soft: rgba(176,74,63,.22);
+
+  --viz-2: #8FD8E4; --viz-context: #3E6E6C;
+
+  --grad-band: linear-gradient(115deg, #061B1B, #0A2928);
+  --grad-surface: linear-gradient(180deg, #061B1B 0%, #0A2928 100%);
+  /* Night meshes are teal glows on near-black teal. */
+  --mesh-night:
+    radial-gradient(60% 55% at 15% 0%, rgba(11,143,145,.55) 0%, transparent 70%),
+    radial-gradient(55% 60% at 100% 100%, rgba(7,58,57,.9) 0%, transparent 72%), #061B1B;
+  --mesh: var(--mesh-night);
+
+  --shadow-hover: 0 10px 28px rgba(0,0,0,.40);
+  --shadow-nav: 0 2px 14px rgba(0,0,0,.45);
+  --shadow-raised: 0 14px 40px rgba(0,0,0,.45);
+  --shadow-sheet: 0 -14px 40px rgba(0,0,0,.50);
+}
+[data-theme="night"][data-accent="yellow"] {
+  --ax: #FBBF45;
+  --ax-ink: #F6D27A;
+  --ax-tint: rgba(251,191,69,.16);
+  --ax-soft: rgba(251,191,69,.18);
+  --ax-on: #2A1B00;
+  --ax-deep: #BF822B;
+  --ax-grad: linear-gradient(115deg, #FBBF45 0%, #F9A751 100%);
+  --focus-ring: #FBBF45;
+  --lilac: #FEFAD2;
+}
+
+/* Aliases so v0.3 files keep working. Prefer the new names. */
+:root, [data-theme] {
+  --purple: var(--ax);
+  --purple-ink: var(--ax-ink);
+  --purple-tint: var(--ax-tint);
+}
+
+/* ===== Layout and components, one fluid layer =====
+   Every size comes from one unit, --u, set on body.
+   Landscape: --u follows the smaller of width and height, so a laptop, a projector and a sideways phone all fit one slide per screen.
+   Portrait: --u follows width only and slides scroll.
+   fitContent() may lower --k a little when a slide is taller than the screen. Nothing here uses !important. */
+:root{--brand:#0095AC;--on-grad:#fff;color-scheme:dark}
+[data-theme="light"]{color-scheme:light}
 *{box-sizing:border-box}
-html,body{height:100%}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--display);font-size:16px;line-height:1.5;display:flex;flex-direction:column;overflow:hidden;-webkit-tap-highlight-color:transparent}
+html{background:#061B1B;color-scheme:dark}
+html,body{height:100%;overflow:hidden}
+body{
+  --k:1;
+  --u:calc(clamp(7.5px, min(.6vw + 3px, 1.55vh), 12.5px) * var(--k));
+  --pl:clamp(14px, 2.2vw, 36px);
+  --pr:clamp(58px, 4.5vw, 76px);
+  --pt:calc(var(--u) * 1.6);
+  --pb:calc(var(--u) * 1.6);
+  --tm:max(22px, calc(var(--u) * 2.2));
+  margin:0;display:flex;flex-direction:row;
+  background:var(--surface-page);color:var(--ink);
+  font-family:var(--font);font-size:calc(var(--u) * 1.4);line-height:1.5;
+  -webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased;
+}
+@media (orientation:portrait){
+  body{
+    --u:calc(clamp(9px, 2.5vw, 12px) * var(--k));
+    --pl:14px;--pr:16px;
+    --pb:calc(72px + env(safe-area-inset-bottom,0px));
+  }
+}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit}
-:focus-visible{outline:3px solid var(--purple);outline-offset:3px;border-radius:4px}
+:focus-visible{outline:3px solid var(--focus-ring);outline-offset:3px;border-radius:6px}
+*{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 
-/* network backdrop: a live canvas web you can push, drag and tap */
-.net{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+/* background network */
+.net{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;opacity:.4;transition:opacity .6s ease}
+body[data-mesh="on"] .net{opacity:.95}
+body[data-mesh="off"] .net{opacity:.12}
 .net canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-.net::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 30%,rgba(3,30,30,0) 0%,rgba(3,30,30,.78) 70%,var(--bg) 100%)}
+.net::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 85% at 50% 40%,transparent 0%,color-mix(in srgb,var(--surface-page) 80%,transparent) 62%,var(--surface-page) 100%)}
 
-.top{position:relative;z-index:2;padding:12px 16px 0;display:flex;flex-direction:column;gap:8px}
-.segs{display:flex;gap:3px}
-.segs i{flex:1;height:3px;border-radius:2px;background:var(--line);transition:background .3s}
-.segs i.done{background:var(--brand)}
-.segs i.cur{background:var(--teal)}
-.chap{display:flex;justify-content:space-between;gap:12px;font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.chap b{color:var(--teal);font-weight:600}
+/* left rail: one dot per stop */
+.strip{position:relative;z-index:3;flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;width:calc(36px + env(safe-area-inset-left,0px));padding:10px 0 10px env(safe-area-inset-left,0px)}
+.strip .sb{flex:none;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line-control);background:transparent;color:var(--ink-muted);font:600 10.5px/1 var(--mono);display:grid;place-items:center;padding:0;cursor:pointer;transition:background .2s,color .2s,transform .2s}
+.strip .ln{flex:1 1 0;width:2px;min-height:2px;max-height:26px;background:var(--line)}
+.strip .ln.done{background:var(--brand)}
+.strip .sb.done{background:var(--action);border-color:var(--action);color:var(--on-action)}
+.strip .sb.cur{background:var(--ax);border-color:var(--ax);color:var(--ax-on);transform:scale(1.15);box-shadow:0 0 0 4px var(--ax-soft)}
+.strip.all .sb{border-color:var(--brand);color:var(--teal-ink)}
 
-.stage{position:relative;z-index:1;flex:1;min-height:0;touch-action:none}
-.slide{pointer-events:none;position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;padding:20px 16px 24px;visibility:hidden;opacity:0;transform:translateX(28px);transition:opacity .35s,transform .45s cubic-bezier(.3,.1,.2,1),visibility 0s .45s;display:flex}
+/* right controls: full screen on top, previous and next centred on the rail */
+.fsb,.pn{position:fixed;z-index:61;right:calc(12px + env(safe-area-inset-right,0px));width:36px;height:36px;border-radius:50%;border:1px solid var(--line-strong);background:color-mix(in srgb,var(--surface-page) 70%,transparent);color:var(--ink-muted);display:grid;place-items:center;padding:0;cursor:pointer;opacity:.75}
+.fsb{top:calc(10px + env(safe-area-inset-top,0px))}
+.pn{font:600 20px/1 var(--mono)}
+#pv{top:calc(50% - 42px)}
+#nx{top:calc(50% + 6px)}
+.fsb:hover,.pn:hover,.pn:active{opacity:1;color:var(--ink)}
+.pn:disabled{opacity:.2;cursor:default}
+.fsb[hidden]{display:none}
+@media (orientation:portrait){
+  .fsb,.pn{top:auto;bottom:calc(14px + env(safe-area-inset-bottom,0px));width:44px;height:44px;opacity:.9}
+  #nx{top:auto;right:calc(14px + env(safe-area-inset-right,0px))}
+  #pv{top:auto;right:calc(66px + env(safe-area-inset-right,0px))}
+  .fsb{right:calc(118px + env(safe-area-inset-right,0px))}
+}
+
+/* presenter sync pill */
+.sync{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));right:calc(58px + env(safe-area-inset-right,0px));z-index:60;display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line-strong);border-radius:999px;padding:4px 6px 4px 12px;font:600 11px/1.2 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted)}
+.sync[hidden]{display:none}
+.sync .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--teal);margin-right:8px;box-shadow:0 0 8px var(--teal)}
+.sync.live .dot{background:var(--ax);box-shadow:0 0 8px var(--ax)}
+.sync button{border:1px solid var(--brand);background:var(--action-soft);color:var(--teal-ink);border-radius:999px;padding:6px 12px;font:600 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.sync button.on{background:var(--ax);border-color:var(--ax);color:var(--ax-on)}
+@media (orientation:portrait){.sync{right:calc(12px + env(safe-area-inset-right,0px))}}
+
+/* "turn your phone" note, portrait only, sits above the bottom controls */
+#turn{display:none;position:fixed;left:12px;right:12px;bottom:calc(70px + env(safe-area-inset-bottom,0px));z-index:300;background:var(--surface);color:var(--ink-muted);border:1px solid var(--line-strong);border-radius:14px;padding:10px 14px;font-size:13px;align-items:center;gap:10px;justify-content:space-between;box-shadow:0 6px 24px rgba(0,0,0,.4)}
+#turn button{border:0;background:none;color:var(--ink);font-size:20px;line-height:1;padding:2px 6px;cursor:pointer}
+@media (orientation:portrait) and (max-width:900px){#turn{display:flex}#turn.off{display:none}}
+
+/* stage and slides */
+.stage{position:relative;z-index:1;flex:1;min-width:0;min-height:0;touch-action:none;overflow:hidden}
+.slide{position:absolute;inset:0;display:flex;overflow-y:auto;overflow-x:hidden;padding:var(--pt) var(--pr) var(--pb) var(--pl);pointer-events:none;visibility:hidden;opacity:0;transform:translateX(28px);transition:opacity .35s,transform .45s cubic-bezier(.3,.1,.2,1),visibility 0s .45s}
 .slide[data-pos="before"]{transform:translateX(-28px)}
 .slide[data-pos="on"]{visibility:visible;opacity:1;transform:none;transition:opacity .35s,transform .45s cubic-bezier(.3,.1,.2,1),visibility 0s}
-.in{pointer-events:auto;touch-action:pan-y;margin:auto;width:100%;max-width:760px;display:flex;flex-direction:column;gap:18px;min-width:0}
+.in{pointer-events:auto;touch-action:pan-y;position:relative;margin:auto;width:100%;max-width:min(100%, calc(var(--u) * 76));min-width:0;display:flex;flex-direction:column;gap:calc(var(--u) * 1.3)}
+.in>*{position:relative;z-index:1;min-width:0}
 
-.kick{font:600 12px/1.2 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--teal)}
-.big{font-weight:700;font-size:clamp(30px,8.6vw,60px);line-height:1.08;margin:0;text-wrap:balance;letter-spacing:-.01em}
-.big em{font-style:normal;color:var(--teal)}
-.big .ai{color:var(--purple);font-style:normal}
-.sub{font-size:clamp(16px,4.3vw,21px);color:var(--muted);margin:0;max-width:60ch;text-wrap:pretty}
-.sub b{color:var(--fg);font-weight:600}
-.fine{font-size:13.5px;color:var(--muted);margin:0;max-width:62ch}
+/* type */
+.kick{margin:0;font:600 max(10px, calc(var(--u) * 1.05))/1.3 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--teal-ink)}
+.big{margin:0;font-weight:700;font-size:min(calc(var(--u) * 3.4), 9.5vw);line-height:1.1;letter-spacing:-.02em;text-wrap:balance}
+.cover .big{font-size:min(calc(var(--u) * 4.8), 11vw);line-height:1.04}
+.big em{font-style:normal;color:var(--teal-ink)}
+.big .ai{color:var(--ax-ink)}
+.hw{font-family:var(--hand);font-weight:700;letter-spacing:0;font-size:1.18em;line-height:1;color:var(--ax-ink)}
+.sub{margin:0;max-width:60ch;font-size:calc(var(--u) * 1.6);line-height:1.45;color:var(--ink-muted);text-wrap:pretty}
+.sub b{color:var(--ink);font-weight:600}
+.fine{margin:0;max-width:66ch;font-size:max(11px, calc(var(--u) * 1.15));color:var(--ink-subtle)}
+.hint,.tip,.loopback{display:inline-flex;align-items:center;gap:calc(var(--u) * .8);font:600 max(10px, calc(var(--u) * 1))/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted)}
+.tip{color:var(--ink-subtle)}
+.tip b{flex:none;display:inline-grid;place-items:center;width:max(18px, calc(var(--u) * 1.8));height:max(18px, calc(var(--u) * 1.8));border-radius:50%;border:1px solid var(--brand);color:var(--teal-ink);font-size:max(12px, calc(var(--u) * 1.2))}
+.loopback svg{flex:none;width:max(18px, calc(var(--u) * 2.2));height:max(18px, calc(var(--u) * 2.2))}
 
-.stats{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))}
-.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;min-width:0}
-.stat .n{font-weight:800;font-size:clamp(40px,11vw,68px);line-height:1;color:var(--teal);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
-.stat .n small{font-size:.45em;font-weight:600;color:var(--muted);letter-spacing:0}
-.stat p{margin:8px 0 0;font-size:14.5px;color:var(--muted);line-height:1.45}
-.stat .src{display:block;margin-top:8px;font:500 11px/1.3 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:#5FA9AD}
+/* shared box */
+.stat,.card,.col,.row{min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:calc(var(--u) * 1.2);padding:calc(var(--u) * 1.2) calc(var(--u) * 1.4)}
+.stat p,.card p,.steps p,.col p,.xb p{margin:0;font-size:calc(var(--u) * 1.35);line-height:1.45;color:var(--ink-muted)}
+.card h3,.steps h3{margin:0 0 calc(var(--u) * .4);font-size:calc(var(--u) * 1.55);font-weight:600;line-height:1.3}
 
-.cards{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;min-width:0}
-.card h3{margin:0 0 6px;font-size:17px;font-weight:600}
-.card p{margin:0;font-size:14.5px;color:var(--muted);line-height:1.5}
+/* stats and cards: as many columns as fit */
+.stats,.cards{display:grid;gap:calc(var(--u) * 1.1);grid-template-columns:repeat(auto-fit, minmax(min(100%, calc(var(--u) * 19)), 1fr))}
+.stat .n{font-weight:800;font-size:calc(var(--u) * 3.6);line-height:1;color:var(--teal-ink);font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.stat .n small{font-size:.5em;font-weight:700;color:var(--ink-muted);letter-spacing:0}
+.stat p{margin-top:calc(var(--u) * .8)}
+.stat .src{display:block;margin-top:calc(var(--u) * .7);font:500 max(9.5px, calc(var(--u) * .95))/1.3 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-subtle)}
 
-.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
-.steps li{display:grid;grid-template-columns:40px 1fr;gap:14px;position:relative;padding-bottom:16px;min-width:0}
+/* numbered steps */
+.steps{--sn:max(30px, calc(var(--u) * 3.4));list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.steps li{position:relative;display:grid;grid-template-columns:var(--sn) minmax(0,1fr);column-gap:calc(var(--u) * 1.3);padding-bottom:calc(var(--u) * 1.2)}
 .steps li:last-child{padding-bottom:0}
-.steps li::before{content:"";position:absolute;left:19px;top:40px;bottom:0;width:2px;background:var(--line)}
+.steps li::before{content:"";position:absolute;left:calc(var(--sn) / 2 - 1px);top:var(--sn);bottom:0;width:2px;background:var(--line)}
 .steps li:last-child::before{display:none}
-.steps .num{width:40px;height:40px;border-radius:50%;background:var(--surface2);border:2px solid var(--brand);display:grid;place-items:center;font:600 15px/1 var(--mono);color:var(--teal)}
-.steps li.ai .num{border-color:var(--purple);color:var(--purple);background:var(--purple-bg)}
-.steps h3{margin:6px 0 2px;font-size:17px;font-weight:600}
-.steps p{margin:0;font-size:14.5px;color:var(--muted)}
-.steps .tag{display:inline-block;margin-left:8px;font:600 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--purple);border:1px solid var(--purple);border-radius:4px;padding:3px 6px;vertical-align:middle}
-.loopback{display:flex;align-items:center;gap:10px;font:600 12px/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-left:2px}
-.loopback svg{flex:none}
+.steps li>div{grid-column:2;min-width:0}
+.steps .num{width:var(--sn);height:var(--sn);border-radius:50%;background:var(--surface-tint);border:2px solid var(--brand);display:grid;place-items:center;font:600 max(12px, calc(var(--u) * 1.3))/1 var(--mono);color:var(--teal-ink)}
+.steps h3{margin:calc((var(--sn) - var(--u) * 1.55 * 1.3) / 2) 0 calc(var(--u) * .2)}
+.steps li.ai .num{border-color:var(--ax);color:var(--ax-ink);background:var(--ax-tint)}
+.steps li.ai h3{color:var(--ax-ink)}
+.steps .tag{display:inline-block;margin-left:calc(var(--u) * .6);padding:calc(var(--u) * .3) calc(var(--u) * .5);border:1px solid var(--ax);border-radius:4px;font:600 max(9px, calc(var(--u) * .9))/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ax-ink);vertical-align:middle}
 
-.two{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
-.col{border-radius:10px;padding:16px;border:1px solid var(--line);background:var(--surface);min-width:0}
-.col.is{border-color:var(--purple);background:var(--purple-bg)}
-.col h3{margin:0 0 10px;font:600 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.col.is h3{color:var(--purple)}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chips span{padding:7px 12px;border-radius:999px;background:var(--surface2);font-size:14.5px}
-.col.is .chips span{background:rgba(196,139,234,.16)}
-.col.no .chips span{background:transparent;border:1px dashed var(--line);color:var(--muted)}
+/* is / is not */
+.two{display:grid;gap:calc(var(--u) * 1.1);grid-template-columns:repeat(auto-fit, minmax(min(100%, calc(var(--u) * 26)), 1fr))}
+.col h3{margin:0 0 calc(var(--u) * .9);font:600 max(10px, calc(var(--u) * 1.1))/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted)}
+.col.is{border-color:var(--ax);background:var(--ax-tint)}
+.col.is h3{color:var(--ax-ink)}
+.chips{display:flex;flex-wrap:wrap;gap:calc(var(--u) * .6)}
+.chips span{padding:calc(var(--u) * .5) calc(var(--u) * 1.05);border-radius:999px;background:var(--surface-tint);font-size:calc(var(--u) * 1.35);line-height:1.3}
+.col.is .chips span{background:var(--ax-soft)}
+.col.no .chips span{background:transparent;border:1px dashed var(--line-control);color:var(--ink-muted)}
 
+/* timeline: date column wraps instead of pushing the text */
 .tl{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
-.tl li{display:grid;grid-template-columns:104px 1fr;gap:14px;padding:11px 0;border-top:1px solid var(--line);min-width:0}
+.tl li{display:grid;grid-template-columns:calc(var(--u) * 13) minmax(0,1fr);column-gap:calc(var(--u) * 1.4);row-gap:calc(var(--u) * .2);padding:calc(var(--u) * .8) 0;border-top:1px solid var(--line);position:relative}
 .tl li:last-child{border-bottom:1px solid var(--line)}
-.tl .w{font:600 12px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--teal)}
-.tl .t{font-size:15px}
-.tl .t span{display:block;color:var(--muted);font-size:13.5px}
-@media (max-width:380px){.tl li{grid-template-columns:84px 1fr}}
+.tl .w{font:600 max(10px, calc(var(--u) * 1.05))/1.35 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--teal-ink);padding-top:calc(var(--u) * .2)}
+.tl .t{min-width:0;font-size:calc(var(--u) * 1.5);line-height:1.35}
+.tl .t span{display:block;margin-top:calc(var(--u) * .2);font-size:calc(var(--u) * 1.25);color:var(--ink-muted)}
+@media (orientation:portrait){.tl li{grid-template-columns:minmax(0,1fr)}}
 
-.deep{align-self:flex-start;display:inline-flex;align-items:center;gap:10px;margin-top:4px;padding:9px 14px 9px 12px;border:1px solid var(--brand);border-radius:999px;font-size:13.5px;background:rgba(0,149,172,.12)}
-.deep .dk{color:var(--muted)}
-.deep .dv{font-weight:600;color:var(--teal)}
-.deep::after{content:"\2197";color:var(--teal)}
+/* buttons */
+.btnrow{display:flex;flex-wrap:wrap;align-items:center;gap:calc(var(--u) * .8)}
+.cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:max(40px, calc(var(--u) * 4.2));padding:0 calc(var(--u) * 1.8);border:0;border-radius:calc(var(--u) * .8);background:var(--action);color:var(--on-action);font-weight:600;font-size:max(13px, calc(var(--u) * 1.45));line-height:1.2;cursor:pointer;text-align:center}
+.cta.ghost{background:transparent;color:var(--ink);border:1px solid var(--line-strong)}
+.cta.ax{background:var(--ax);color:var(--ax-on)}
+.cta.onband{background:#fff;color:#04504F}
 
-.cover .big{font-size:clamp(40px,12.5vw,92px);line-height:1.02}
-.hint{display:inline-flex;align-items:center;gap:10px;font:600 12px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.hint i{display:inline-block;width:28px;height:2px;background:var(--teal);position:relative}
-.hint i::after{content:"";position:absolute;right:0;top:-3px;width:7px;height:7px;border-top:2px solid var(--teal);border-right:2px solid var(--teal);transform:rotate(45deg)}
+/* hub links on the last slide */
+.go{display:grid;gap:calc(var(--u) * 1);grid-template-columns:repeat(auto-fill, minmax(min(100%, calc(var(--u) * 18)), 1fr))}
+.go a,.go div.g{display:block;min-width:0;background:var(--surface);border:1px solid var(--line);border-top:max(3px, calc(var(--u) * .4)) solid var(--brand);border-radius:calc(var(--u) * 1.2);padding:calc(var(--u) * 1) calc(var(--u) * 1.2);transition:transform .2s,border-color .2s}
+.go .ax{border-top-color:var(--ax)}
+.go a:hover{transform:translateY(-2px);border-color:var(--brand)}
+.go b{display:block;font-weight:600;font-size:calc(var(--u) * 1.45);line-height:1.3}
+.go span{display:block;margin-top:calc(var(--u) * .3);font:500 max(9.5px, calc(var(--u) * .95))/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-subtle)}
 
-.go{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))}
-.go a{display:block;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;min-width:0}
-.go a:hover{border-color:var(--brand)}
-.go b{display:block;font-weight:600;font-size:16px}
-.go span{display:block;font-size:13px;color:var(--muted);margin-top:2px}
-.main-cta{align-self:flex-start;background:var(--teal);color:var(--btn-fg);font-weight:600;border-radius:8px;padding:12px 18px}
+/* gradient bands (stop dividers, closing slide) */
+.band{display:flex;flex-direction:column;gap:calc(var(--u) * .9);background:var(--grad-brand);color:#fff;border-radius:calc(var(--u) * 2);padding:calc(var(--u) * 2.2) calc(var(--u) * 2.4);overflow:hidden}
+.band .big{color:inherit;line-height:1.15}
+.band .kick{color:var(--bright)}
+.band .big em{color:var(--bright)}
+.band .sub{color:rgba(255,255,255,.92)}
+.band .btnrow{margin-top:calc(var(--u) * .4)}
+.band.axg{background:var(--ax-grad);color:var(--ax-on)}
+.band.axg .kick,.band.axg .sub{color:var(--ax-on)}
+.band.axg .big em{color:var(--ax-on);text-decoration:underline;text-decoration-thickness:max(2px, calc(var(--u) * .3));text-underline-offset:calc(var(--u) * .4)}
 
-.bottom{position:relative;z-index:2;display:flex;align-items:center;gap:12px;padding:10px 16px calc(12px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);background:rgba(3,30,30,.92)}
-.bottom .ct{flex:1;text-align:center;font:600 12px/1 var(--mono);letter-spacing:.1em;color:var(--muted);font-variant-numeric:tabular-nums}
-.nb{min-width:92px;padding:13px 18px;border-radius:8px;border:1px solid var(--line);background:var(--surface);font-weight:600;cursor:pointer}
-.nb.pri{background:var(--teal);border-color:var(--teal);color:var(--btn-fg)}
-.nb:disabled{opacity:.35;cursor:default}
+/* open more: rows */
+.more{display:flex;flex-direction:column;gap:calc(var(--u) * .7)}
+.mk{font:600 max(10px, calc(var(--u) * 1))/1.2 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ax-ink)}
+.row{background:var(--ax-tint);border-color:var(--ax);padding:calc(var(--u) * .9) calc(var(--u) * 1.4)}
+.row h4{margin:0;font-size:calc(var(--u) * 1.5);font-weight:600;line-height:1.35}
 
-@media (min-width:900px){.slide{padding:32px 48px}.in{gap:22px}}
-
-/* tap to open: hidden detail inside cards, stats, steps, timeline rows */
-.tap{cursor:pointer;position:relative;-webkit-user-select:none;user-select:none}
-.tap::after{content:"+";position:absolute;top:10px;right:10px;width:26px;height:26px;border-radius:50%;border:1px solid var(--brand);display:grid;place-items:center;font:600 16px/1 var(--mono);color:var(--teal);background:rgba(0,149,172,.12);transition:transform .25s,background .25s}
-.tap[aria-expanded="true"]::after{transform:rotate(45deg);background:var(--teal);color:var(--btn-fg)}
+/* tap to open: one marker, pinned to the first line of each item */
+.tap{cursor:pointer;position:relative}
+.tap::after{content:"+";position:absolute;width:var(--tm);height:var(--tm);border-radius:50%;border:1px solid var(--brand);display:grid;place-items:center;font:600 calc(var(--tm) * .62)/1 var(--mono);color:var(--teal-ink);background:var(--action-soft);transition:transform .25s,background .25s}
+.tap[aria-expanded="true"]::after{transform:rotate(45deg);background:var(--action);color:var(--on-action)}
 .tap:hover{border-color:var(--brand)}
-.card.tap,.stat.tap,.row.tap{padding-right:46px}
+.card.tap,.stat.tap,.row.tap{padding-right:calc(var(--tm) + var(--u) * 2)}
+.card.tap::after,.stat.tap::after{top:calc(var(--u) * 1.2 + (var(--u) * 2 - var(--tm)) / 2);right:calc(var(--u) * 1)}
+.stat.tap::after{top:calc(var(--u) * 1.2)}
+.row.tap::after{top:calc(var(--u) * .9 + (var(--u) * 2.02 - var(--tm)) / 2);right:calc(var(--u) * 1);border-color:var(--ax);color:var(--ax-ink);background:var(--ax-soft)}
+.row.tap[aria-expanded="true"]::after{background:var(--ax);color:var(--ax-on)}
+.steps li.tap{padding-right:calc(var(--tm) + var(--u) * .8)}
+.steps li.tap::after{top:calc((var(--sn) - var(--tm)) / 2);right:0}
+.tl li.tap{padding-right:calc(var(--tm) + var(--u) * .8)}
+.tl li.tap::after{top:calc(var(--u) * .8);right:0}
 .xb{display:grid;grid-template-rows:0fr;visibility:hidden;transition:grid-template-rows .3s ease,visibility 0s .3s}
 .xb>div{overflow:hidden;min-height:0}
 .tap[aria-expanded="true"]>.xb,.tap[aria-expanded="true"] .xb{grid-template-rows:1fr;visibility:visible;transition:grid-template-rows .3s ease,visibility 0s}
-.xb p{margin:10px 0 0;padding-top:10px;border-top:1px dashed var(--line);font-size:14px;line-height:1.55;color:var(--fg)}
-.steps li.tap::after{top:6px;right:0}
-.steps li.tap{padding-right:34px}
-.tl li.tap{padding-right:40px}
-.tl li.tap::after{top:11px;right:4px}
-.tl li.tap .t{grid-column:auto}
-.tl .xb{grid-column:2}
-.tl li.tap{grid-template-columns:104px 1fr;grid-template-rows:auto auto}
-.steps li.tap>div{grid-column:2}
+.xb p{margin-top:calc(var(--u) * .9);padding-top:calc(var(--u) * .9);border-top:1px dashed var(--line-strong);color:var(--ink)}
 
-.more{display:flex;flex-direction:column;gap:8px}
-.mk{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--purple)}
-.row{background:var(--purple-bg);border:1px solid rgba(196,139,234,.35);border-radius:10px;padding:12px 16px;min-width:0}
-.row h4{margin:0;font-size:15px;font-weight:600;line-height:1.35}
-.row.tap::after{border-color:var(--purple);color:var(--purple);background:rgba(196,139,234,.12);top:9px}
-.row.tap[aria-expanded="true"]::after{background:var(--purple);color:var(--btn-fg)}
-.row:hover{border-color:var(--purple)}
-.tip{display:inline-flex;align-items:center;gap:8px;font:600 11px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.tip b{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;border:1px solid var(--brand);color:var(--teal);font-weight:600;font-size:13px}
-.hw,.stat .n{font-family:var(--hand);font-weight:700;letter-spacing:0}
-.hw{font-size:1.18em;line-height:.9}
-.stat .n{font-size:clamp(52px,14vw,84px)}
-.sync{display:flex;align-items:center;justify-content:space-between;gap:10px;font:600 11px/1.2 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:2px 0 0}
-.sync[hidden]{display:none}
-.sync .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--teal);margin-right:8px;box-shadow:0 0 8px var(--teal)}
-.sync.live .dot{background:var(--purple);box-shadow:0 0 8px var(--purple)}
-.sync button{border:1px solid var(--brand);background:rgba(0,149,172,.14);color:var(--teal);border-radius:999px;padding:6px 12px;font:600 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
-.sync button.on{background:var(--purple);border-color:var(--purple);color:var(--btn-fg)}
-@media (prefers-reduced-motion:reduce){.slide,.slide[data-pos="on"],.segs i,.xb,.tap::after{transition:none}}
+/* hub pills are switched off in this version */
+.deep,#deepf{display:none}
+
+/* ===== route slide ===== */
+.slide.route{padding-top:calc(var(--u) * .8);padding-bottom:calc(var(--u) * .8)}
+.slide.route .in{max-width:min(100%, 1180px);gap:calc(var(--u) * .8)}
+.rhero{flex:none;display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:calc(var(--u) * 2.5);row-gap:calc(var(--u) * .6);align-items:center;background:var(--grad-brand);color:#fff;border-radius:calc(var(--u) * 2);padding:calc(var(--u) * 1.6) calc(var(--u) * 2.2);overflow:hidden}
+.rhero>*{grid-column:1;margin:0}
+.rhero .logo{display:block;height:max(16px, calc(var(--u) * 2));width:auto;color:#fff}
+.rhero .kick{color:var(--bright)}
+.rhero h1{font-weight:800;letter-spacing:-.04em;line-height:1;font-size:min(calc(var(--u) * 4.6), 11vw)}
+.rhero h1 em{font-style:normal;color:var(--bright)}
+.rhero .sub{color:rgba(255,255,255,.92);font-size:calc(var(--u) * 1.5);max-width:58ch}
+.rhero .btnrow{grid-column:2;grid-row:1 / span 4;flex-direction:column;align-items:stretch}
+.rhero .hint{justify-content:center}
+@media (max-width:640px){
+  .rhero{grid-template-columns:minmax(0,1fr)}
+  .rhero .btnrow{grid-column:1;grid-row:auto;flex-direction:row;align-items:center}
+}
+.rhint{display:none}
+.rw{display:block}
+.journey{display:none}
+.route-stage{position:relative;width:100%;aspect-ratio:1200/520;container-type:inline-size}
+.route-stage svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.routeBase,.routeLine{fill:none;stroke:var(--route);stroke-linecap:round;vector-effect:non-scaling-stroke}
+.routeBase{stroke-width:12;opacity:.16}
+.routeLine{stroke-width:5;stroke-dasharray:1;stroke-dashoffset:0;animation:draw 1.5s ease both}
+[data-theme="night"] .routeLine{filter:drop-shadow(0 0 7px rgba(114,236,231,.35))}
+@keyframes draw{from{stroke-dashoffset:1}}
+@keyframes pop{from{opacity:0;transform:scale(.7)}}
+.stop{--d:clamp(24px,3.4cqw,40px);position:absolute;width:var(--d);height:var(--d);margin:calc(var(--d) / -2) 0 0 calc(var(--d) / -2);padding:0;border:0;background:none;cursor:pointer;animation:pop .4s ease both}
+.stop .dot{width:100%;height:100%;border-radius:50%;display:grid;place-items:center;background:var(--action);color:var(--on-action);border:3px solid var(--surface-page);font-weight:800;font-size:clamp(11px,1.3cqw,15px);transition:transform .18s,box-shadow .18s}
+.stop:hover .dot,.stop.active .dot{transform:scale(1.14);box-shadow:0 0 0 8px color-mix(in srgb,var(--route) 22%,transparent)}
+.stop.active .dot{background:var(--ax);color:var(--ax-on);outline:2px solid var(--ink);outline-offset:3px}
+.stop .lab{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap;text-align:center;padding:4px 10px;border-radius:10px;background:color-mix(in srgb,var(--surface-page) 90%,transparent);border:1px solid var(--line);line-height:1.25}
+.stop .lab b{display:block;font-size:clamp(10px,1.15cqw,14px);font-weight:700}
+.stop .lab span{display:block;font:500 clamp(8.5px,.9cqw,11px)/1.3 var(--mono);color:var(--ink-muted);letter-spacing:.03em}
+.stop.up .lab{bottom:calc(100% + 8px)}
+.stop.down .lab{top:calc(100% + 8px)}
+.stop.active .lab{border-color:var(--route)}
+
+/* portrait phone: the route becomes a vertical journey */
+@media (max-width:819px) and (orientation:portrait){
+  .rw{display:none}
+  .journey{display:flex;flex-direction:column;padding-top:calc(var(--u) * .6)}
+}
+.mj{--mn:max(30px, calc(var(--u) * 3.2));position:relative;margin-left:calc(var(--mn) / 2);padding:0 0 calc(var(--u) * 1.8) calc(var(--mn) / 2 + var(--u) * 1.4);border-left:3px solid var(--route);cursor:pointer;min-height:var(--mn)}
+.mj:last-child{border-left-color:transparent;padding-bottom:0}
+.mj::before{content:attr(data-n);position:absolute;left:calc(var(--mn) / -2 - 1.5px);top:0;width:var(--mn);height:var(--mn);border-radius:50%;background:var(--action);color:var(--on-action);display:grid;place-items:center;font:800 calc(var(--mn) * .45)/1 var(--font);border:3px solid var(--surface-page)}
+.mj.active::before{background:var(--ax);color:var(--ax-on)}
+.mj .w{font:600 max(10px, calc(var(--u) * 1.05))/1.3 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--teal-ink)}
+.mj h3{display:flex;align-items:center;gap:8px;margin:2px 0 0;font-size:calc(var(--u) * 1.9);line-height:1.2}
+.mj h3::after{content:"\203A";margin-left:auto;color:var(--ink-subtle);font-size:1.15em}
+
+/* sideways phone: compact hero, more room for the route */
+body.land .rhero{padding:calc(var(--u) * 1) calc(var(--u) * 1.6)}
+body.land .rhero .logo,body.land .rhero .sub{display:none}
+body.land .slide.route .in{gap:calc(var(--u) * .6)}
+
+/* stop sheet: bottom sheet on a portrait phone, centred dialog everywhere else */
+.scrim{position:fixed;inset:0;z-index:70;background:rgba(0,10,10,.55);opacity:0;visibility:hidden;transition:opacity .25s,visibility 0s .25s}
+.scrim.on{opacity:1;visibility:visible;transition:opacity .25s}
+.sheet{position:fixed;z-index:80;left:50%;top:50%;width:min(560px, calc(100vw - 32px));max-height:min(88vh, 640px);overflow:auto;background:var(--surface);color:var(--ink);border-radius:20px;box-shadow:var(--shadow-sheet);padding:calc(var(--u) * 1.8) calc(var(--u) * 2);transform:translate(-50%,-46%) scale(.97);opacity:0;visibility:hidden;transition:transform .25s ease,opacity .25s ease,visibility .25s}
+.sheet.open{transform:translate(-50%,-50%);opacity:1;visibility:visible}
+.sheet .grab{display:none;width:44px;height:4px;border-radius:2px;background:var(--line-strong);margin:0 auto 14px}
+.sheet .w{font:600 max(10px, calc(var(--u) * 1.05))/1.3 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--teal-ink)}
+.sheet h3{display:flex;align-items:center;gap:10px;margin:6px 0 8px;font-size:max(18px, calc(var(--u) * 2.4));line-height:1.2;letter-spacing:-.02em}
+.sheet h3 i{flex:none;font-style:normal;display:grid;place-items:center;width:1.4em;height:1.4em;border-radius:50%;background:var(--ax);color:var(--ax-on);font:800 .65em/1 var(--font)}
+.sheet p{margin:0 0 calc(var(--u) * 1.4);font-size:max(14px, calc(var(--u) * 1.55));line-height:1.5;color:var(--ink-muted)}
+.sheet .btnrow .cta{flex:1}
+@media (max-width:819px) and (orientation:portrait){
+  .sheet{left:0;right:0;top:auto;bottom:0;width:auto;max-height:80vh;border-radius:20px 20px 0 0;padding:16px 20px calc(20px + env(safe-area-inset-bottom,0px));transform:translateY(105%);opacity:1}
+  .sheet.open{transform:none}
+  .sheet .grab{display:block}
+}
+
+@media (prefers-reduced-motion:reduce){.slide,.slide[data-pos="on"],.xb,.tap::after,.sheet,.scrim,.strip .sb{transition:none}.routeLine,.stop{animation:none}}
 </style>
+<script>(function(){var t='night',a='purple';var b=document.body;b.setAttribute('data-theme',t);b.setAttribute('data-accent',a);b.setAttribute('data-mesh','off');})();</script>
 
 <div class="net" aria-hidden="true"><canvas id="web"></canvas></div>
-<header class="top"><div class="segs" id="segs" aria-hidden="true"></div><div class="chap"><span id="chap"></span><span id="chapn"></span></div><div class="sync" id="sync" hidden><span id="synctxt"></span><button id="syncbtn" type="button"></button></div></header>
+<nav class="strip" id="strip" aria-label="Progress"></nav>
+<div class="sync" id="sync" hidden><span id="synctxt"></span><button id="syncbtn" type="button"></button></div>
+<button class="pn" id="pv" type="button" aria-label="Previous slide">‹</button><button class="pn" id="nx" type="button" aria-label="Next slide">›</button><div id="deepf"></div><button class="fsb" id="fsb" type="button" aria-label="Full screen" title="Full screen (F)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg></button>
+<div id="turn" role="note"><span>Best in landscape. Turn your phone sideways if you like.</span><button type="button" id="turnx" aria-label="Dismiss">×</button></div>
 <main class="stage" id="stage" aria-live="polite"></main>
-<nav class="bottom" aria-label="Slides"><button class="nb" id="prev">Back</button><div class="ct" id="ct"></div><button class="nb pri" id="next">Next</button></nav>
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="shTitle"><div class="grab"></div><div class="w" id="shWhen"></div><h3 id="shTitle"></h3><p id="shBody"></p><div class="btnrow"><button class="cta" id="shGo">Go to this chapter</button><button class="cta ghost" id="shClose">Close</button></div></div>
 
 <script>
 /* ILWeb: a springy, touchable network on a canvas.
@@ -226,9 +571,9 @@ function ILWeb(cv,o){
         if(d<R){var s=1-d/R,s2=s*s;n.ax+=px/d*s2*1.9+ptr.vx*s2*.05;n.ay+=py/d*s2*1.9+ptr.vy*s2*.05;if(s*.9>n.g)n.g=s*.9;}
       }
       for(j=0;j<ripples.length;j++){
-        var r=ripples[j],age=(now-r.t)/1000,rad=age*(r.big?800:520),amp=1-age/1.85;
+        var r=ripples[j],age=(now-r.t)/1000,rad=age*(r.big?800:520),amp=(1-age/1.85)*.35;
         var rx=n.x-r.x,ry=n.y-r.y,rd=Math.sqrt(rx*rx+ry*ry)||1,dl=Math.abs(rd-rad);
-        if(dl<60&&amp>0){var q=(1-dl/60)*amp;n.ax+=rx/rd*q*(r.big?2.8:1.6);n.ay+=ry/rd*q*(r.big?2.8:1.6);if(q*.95>n.g)n.g=q*.95;if(q>n.h)n.h=q;}
+        if(dl<60&&amp>0){var q=(1-dl/60)*amp;n.ax+=rx/rd*q*(r.big?1.1:.7);n.ay+=ry/rd*q*(r.big?1.1:.7);if(q*.5>n.g)n.g=q*.5;if(q*.5>n.h)n.h=q*.5;}
       }
     }
     ptr.vx*=.8;ptr.vy*=.8;
@@ -306,16 +651,53 @@ function ILWeb(cv,o){
 
   function start(){if(running)return;running=true;requestAnimationFrame(frame);}
   start();
-  return{pulse:pulse,bind:bind,start:start,setCam:function(f){cam.f=Math.max(0,Math.min(1,f));},isGrabbing:function(){return grab>=0;}};
+  return{setColors:function(c,h,g){COL=c;HOT=h;GL=g;},pulse:pulse,bind:bind,start:start,setCam:function(f){cam.f=Math.max(0,Math.min(1,f));},isGrabbing:function(){return grab>=0;}};
 }
+
 
 </script>
 <script>
-const H='https://claude.ai/artifact/6HHtRpwf2k5Vdumxb4nQVB';
-const ONE='https://claude.ai/artifact/Xv5oKnfSqpU7EeK28CnkN6';
-const deep=(page,label)=>'<a class="deep" href="'+H+'#'+page+'" target="_blank" rel="noopener"><span class="dk">Go deeper</span><span class="dv">'+label+'</span></a>';
+/* ---------- Settings: change these two lines when the hub is deployed ---------- */
+const HUB_URL='https://claude.ai/artifact/VrWaRM5b16T7Kc4uQBV5Uz';          // example: 'https://your-hub.vercel.app/'. Empty means the Go deeper pills show but do not link.
+const LOGO="<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 505.84 53.42\" fill=\"currentColor\" class=\"logo\" role=\"img\" aria-label=\"Innovation Labs 2027\"><g><g><path d=\"M90.71,9.72c-8.67,0-15.7,7.03-15.7,15.7,0,5.41,2.74,10.18,6.91,13,.11.07.22.14.33.22.85.64,1.41,1.65,1.41,2.8v.65h3.97v-.65c0-.33-.03-.65-.07-.98h.01l-2.04-11.67-.84.13,1.39,8.01c-.41-.55-.9-1.05-1.46-1.46-.18-.13-.37-.26-.56-.37-3.19-2.2-5.09-5.8-5.09-9.67,0-6.47,5.26-11.74,11.73-11.74s11.73,5.27,11.73,11.74c0,3.79-1.83,7.34-4.91,9.54-.37.21-.72.45-1.05.72-.44.36-.83.76-1.16,1.2l1.39-7.95-.85-.1-1.92,10.98c-.03.12-.04.25-.06.38l-.05.26s0,.06-.01.08l-.02.25v1.31h3.96v-1.08c.11-.92.57-1.72,1.25-2.28.19-.15.39-.29.61-.4,4.1-2.84,6.78-7.56,6.78-12.91,0-8.67-7.03-15.7-15.69-15.7Z\"/><rect x=\"83.66\" y=\"49.45\" width=\"14.09\" height=\"3.97\"/><polygon points=\"83.66 43.79 83.66 47.76 97.75 47.76 97.75 43.79 87.63 43.79 83.66 43.79\"/><path d=\"M90.57,25.34c.7,0,1.33.36,1.69.97.78,1.33,2.11,2.24,3.6,2.53l.85.1.6-3.44c-.14.04-.29.06-.45.06-.15,0-.29-.02-.42-.05-.53-.11-.98-.44-1.27-.93-.96-1.62-2.72-2.62-4.6-2.62s-3.64,1-4.6,2.62c-.24.41-.6.7-1.03.85-.2.08-.43.12-.66.12-.06,0-.12,0-.18-.01l.59,3.38.84-.13c1.38-.35,2.6-1.23,3.34-2.48.36-.61.99-.97,1.69-.97Z\"/><rect y=\"10.28\" width=\"4.76\" height=\"30.03\"/><polygon points=\"32.52 31.64 15.49 10.28 11.8 10.28 11.8 40.3 16.65 40.3 16.65 19.12 33.68 40.3 37.32 40.3 37.32 10.28 32.52 10.28 32.52 31.64\"/><polygon points=\"65.14 31.64 48.11 10.28 44.42 10.28 44.42 40.3 49.27 40.3 49.27 19.12 66.3 40.3 69.94 40.3 69.94 10.28 65.14 10.28 65.14 31.64\"/><polygon points=\"131.27 10.28 121.66 34.69 112.09 10.28 106.69 10.28 119.17 40.43 124.19 40.43 136.63 10.28 131.27 10.28\"/><path d=\"M226.07,12.06c-.11-.07-.22-.14-.33-.22-.85-.64-1.41-1.67-1.41-2.82V0h-3.96v9.02c0,2.35,1.12,4.6,3,6.01.18.15.36.27.56.39,3.13,2.17,5.02,5.72,5.08,9.53-.28-.17-.51-.4-.69-.69-.96-1.64-2.72-2.65-4.6-2.65s-3.64,1.01-4.61,2.64c-.36.61-.99.98-1.69.98s-1.33-.36-1.69-.97c-.96-1.64-2.73-2.65-4.61-2.65s-3.65,1.01-4.6,2.64c-.23.39-.57.69-.98.84.02-3.8,1.85-7.34,4.91-9.55.37-.21.72-.45,1.05-.72,1.48-1.23,2.43-2.98,2.66-4.9l.03-.24V0h-3.97v9.44c-.11.92-.57,1.74-1.25,2.3-.2.16-.4.29-.62.4-4.1,2.85-6.78,7.6-6.78,13,0,8.73,7.03,15.8,15.7,15.8s15.7-7.07,15.7-15.8c0-5.45-2.74-10.25-6.91-13.09ZM217.29,36.95c-5.31,0-9.81-3.58-11.25-8.46,1.41-.33,2.65-1.23,3.41-2.5.36-.61.99-.98,1.69-.98s1.33.37,1.69.98c.96,1.62,2.73,2.64,4.61,2.64s3.64-1.02,4.6-2.64c.36-.61.99-.98,1.69-.98s1.33.37,1.69.98c.7,1.2,1.84,2.05,3.13,2.43-1.41,4.93-5.93,8.53-11.26,8.53Z\"/><path d=\"M147.55,10.28l-13.47,30.03h5.1l2.83-6.3h16.25l2.88,6.3h5.1l-13.47-30.03h-5.23ZM143.82,29.63l6.35-14.29,6.35,14.29h-12.69Z\"/><polygon points=\"163.41 14.61 173.28 14.61 173.28 40.31 178.13 40.31 178.13 14.61 187.95 14.61 187.95 10.28 163.41 10.28 163.41 14.61\"/><rect x=\"191.85\" y=\"10.28\" width=\"4.76\" height=\"30.03\"/><polygon points=\"258.79 31.64 241.76 10.28 238.07 10.28 238.07 40.3 242.92 40.3 242.92 19.12 259.95 40.3 263.59 40.3 263.59 10.28 258.79 10.28 258.79 31.64\"/><polygon points=\"286.63 10.28 281.82 10.28 281.82 40.3 302.45 40.3 302.45 35.85 286.63 35.85 286.63 10.28\"/><path d=\"M394.15,30.97c-.33-6.25-6.02-7.91-12.02-8.74-3.95-.56-7.29-1.37-7.29-4.29s2.92-4.55,6.95-4.55c3.13.04,6.01,1.29,7.42,3.34l3.65-2.44c-2.53-4.03-6.86-5.06-11.2-5.06-5.4,0-11.62,2.4-11.58,8.62,0,6.43,5.66,7.94,11.62,8.75,4.2.56,7.68,1.67,7.68,4.93,0,3.78-3.99,4.98-7.59,4.98s-7.21-1.29-9.35-4.93l-3.6,2.4c2.74,5.06,7.16,6.82,12.91,6.82.56,0,1.11-.03,1.66-.07,2.2.07,6.34-1.49,7.46-2.29,4.1-2.9,3.15-7.34,3.28-7.48Z\"/><path d=\"M318.2,10.28l-13.47,30.03h5.11l2.83-6.3h16.26l2.87,6.3h5.1l-13.47-30.03h-5.23ZM314.46,29.63l6.35-14.29,6.35,14.29h-12.69Z\"/><path d=\"M360.47,24.82c2.83-1.16,4.16-3.43,4.16-5.96,0-5.96-4.51-8.58-10.21-8.58h-13.77v30.03h13.77c5.92,0,11.15-2.02,11.15-8.58,0-2.27-1.5-5.83-5.1-6.9ZM345.41,14.61h9.01c3.6,0,5.45,2.23,5.45,4.33,0,2.36-1.8,3.78-5.4,3.78h-9.05v-8.11ZM354.42,35.85h-9.01v-8.84h9.05c2.74,0,6.31,1.46,6.31,4.68s-3.69,4.16-6.35,4.16Z\"/></g><g><path d=\"M405.73,36.02h19.16v4.68h-24.14v-7.56c0-5.71,4.47-9.02,12.16-9.02,4.12,0,6.92-1.85,6.92-4.6,0-3.01-2.45-4.77-6.62-4.77s-7.04,1.76-7.13,4.51h-5.15c.34-5.67,4.9-9.02,12.29-9.02s11.68,3.52,11.68,9.19c0,6.01-4.17,9.19-11.94,9.19-4.51,0-7.22,1.68-7.22,4.51v2.88Z\"/><path d=\"M428.06,28.59v-5.88c0-7.56,5.28-12.67,13.06-12.67s13.06,5.11,13.06,12.67v5.88c0,7.52-5.28,12.63-13.06,12.63s-13.06-5.11-13.06-12.63ZM449.11,28.59v-5.88c0-4.72-3.18-7.9-7.99-7.9s-7.99,3.18-7.99,7.9v5.88c0,4.72,3.18,7.9,7.99,7.9s7.99-3.18,7.99-7.9Z\"/><path d=\"M462.25,36.02h19.16v4.68h-24.14v-7.56c0-5.71,4.47-9.02,12.16-9.02,4.12,0,6.92-1.85,6.92-4.6,0-3.01-2.45-4.77-6.62-4.77s-7.04,1.76-7.13,4.51h-5.15c.34-5.67,4.9-9.02,12.29-9.02s11.68,3.52,11.68,9.19c0,6.01-4.17,9.19-11.94,9.19-4.51,0-7.22,1.68-7.22,4.51v2.88Z\"/><path d=\"M505.84,10.64v2.88l-13.92,27.19h-5.75l13.19-25.34h-16.41v-4.72h22.89Z\"/></g></g></svg>";
 
-/* tap-to-open builders. Anything built with an x argument hides that text until tapped. */
+/* ---------- One shared route model. Everything below reads it. ---------- */
+const SECTIONS={findings:'2026 findings',evidence:'Evidence',analog:'Analog-first',recruit:'Pre-program and Hackathon',curriculum:'Curriculum',mentors:'Mentors and coaches',cohort:'Cohort and the cut',calendar:'Calendar and KPIs',partners:'Partnerships'};
+const STOPS=[
+ {title:'Listen',when:'2026 cohort',section:'findings',body:'Cohort interviews show a sound program with fixable gaps: a software-biased mentor pool, contradictory advice, three compressed weekends, travel burden on non-Bucharest teams and deliverables nobody reviewed. Networking and community were the dominant value.'},
+ {title:'The bet we\'re making',when:'Thesis',section:'evidence',body:'Founders are offloading the thinking step, not only the writing step. The evidence is recent and partly correlational, so the revamp treats it as a bet: think first, use AI as a challenger, and test it on our own teams.'},
+ {title:'Recruitment',when:'Oct to Feb',section:'recruit',body:'The pre-program starts in October, with a mini-Hackathon on 24 to 25 October and the AI Validation Bootcamp in November.'},
+ {title:'Hackathon',when:'Late March',section:'recruit',body:'One national Hackathon in Bucharest at the end of March (estimated 20 to 21 March).'},
+ {title:'Think first',when:'After Hackathon',section:'analog',body:'Orientation states the AI position once: not banned, not a ghostwriter, used as a challenger. Four stages follow: think in analog, think together, challenge with AI, human synthesis.'},
+ {title:'Bootcamps',when:'Mar to Apr',section:'curriculum',body:'Two-day bootcamps with an AI literacy and curation track, a customer discovery track and a Bootcamp 2 pivot session. Bootcamp 1 and the Pitch Prep Workshop were the highest-rated elements in 2026 and stay protected.'},
+ {title:'Mentors',when:'Mar to May',section:'mentors',body:'Two to three hands-on mentors per team (one business, one tech), PODS of three to five teams with a facilitator, a vetted mentor core, and private 1:1 coaching alongside public brutal feedback once the cohort is about 25.'},
+ {title:'The cut',when:'Bootcamp 2 + 1 week',section:'cohort',body:'Cut after Bootcamp 2 plus a one-week buffer, so teams are judged on whether they applied feedback. In 2026 only around 25 of 41 teams were judged worth the full resources. Half the intake produced the same 17 finalists.'},
+ {title:'Demo Day',when:'Mid to end May',section:'calendar',body:'National semifinals in mid May, then the Startup Fair and the Demo Day final at the end of May (estimated 24 May).'},
+];
+const FULL_D='M 70 360 C 190 360 230 170 350 190 S 470 400 590 330 S 750 120 870 200 S 1010 330 1130 190';
+function along(d,n){
+  const NS='http://www.w3.org/2000/svg',s=document.createElementNS(NS,'svg'),p=document.createElementNS(NS,'path');
+  s.setAttribute('width','0');s.setAttribute('height','0');s.style.cssText='position:absolute;visibility:hidden';
+  p.setAttribute('d',d);s.appendChild(p);document.body.appendChild(s);
+  const L=p.getTotalLength(),S=800,pts=[];
+  for(let k=0;k<=S;k++){const q=p.getPointAtLength(L*k/S);pts.push({x:q.x,y:q.y})}
+  const x0=pts[0].x,x1=pts[S].x,out=[];
+  for(let i=0;i<n;i++){
+    const tx=x0+(x1-x0)*(i/(n-1));
+    let k=pts.findIndex(q=>q.x>=tx);if(k<1)k=(i===0?1:S);
+    const a=pts[k-1],b=pts[k],f=b.x===a.x?0:(tx-a.x)/(b.x-a.x);
+    out.push({x:a.x+(b.x-a.x)*f,y:a.y+(b.y-a.y)*f});
+  }
+  s.remove();return out;
+}
+
+/* ---------- Builders for slide content (tap to open) ---------- */
+const PAGEOF={findings:'research',evidence:'research',analog:'vision',recruit:'year',curriculum:'curriculum',mentors:'people',cohort:'year',calendar:'calendar',partners:'partners'};
+const deepOpen=sec=>HUB_URL?'<a class="deep" href="'+HUB_URL+'#'+(PAGEOF[sec]||'')+'" target="_blank" rel="noopener">':'<span class="deep">';
+const deepClose=()=>HUB_URL?'</a>':'</span>';
+const deepFor=sec=>deepOpen(sec)+'<span class="dk">Go deeper</span><span class="dv">'+SECTIONS[sec]+'</span>'+deepClose();
+const deep=()=>'@@DEEP@@';
+const H='',ONE='';   // only read by the unused original closing slide
 const XB=x=>'<div class="xb"><div><p>'+x+'</p></div></div>';
 const TAP=' role="button" tabindex="0" aria-expanded="false"';
 const card=(h,p,x)=>x?'<div class="card tap"'+TAP+'><h3>'+h+'</h3><p>'+p+'</p>'+XB(x)+'</div>':'<div class="card"><h3>'+h+'</h3><p>'+p+'</p></div>';
@@ -324,7 +706,7 @@ const step=(n,h,p,x,ai,tag)=>'<li class="'+(ai?'ai ':'')+(x?'tap':'')+'"'+(x?TAP
 const tl=(w,t,sub,x)=>'<li'+(x?' class="tap"'+TAP:'')+'><span class="w">'+w+'</span><span class="t">'+t+(sub?'<span>'+sub+'</span>':'')+(x?XB(x):'')+'</span></li>';
 const more=(label,rows)=>'<div class="more"><div class="mk">'+label+'</div>'+rows.map(r=>'<div class="row tap"'+TAP+'><h4>'+r[0]+'</h4>'+XB(r[1])+'</div>').join('')+'</div>';
 
-const S=[
+const P=[
 /* Where we start */
 {ch:'Where we start',cls:'cover',html:`
   <div class="kick">Innovation Labs 2027</div>
@@ -333,8 +715,8 @@ const S=[
   <div class="hint"><i></i>Swipe or tap Start</div>
   <div class="tip"><b>+</b>Drag the web behind. Tap anywhere for a ripple. Open anything with a plus.</div>`},
 {ch:'Where we start',html:`
-  <div class="kick">2026, in one breath</div>
-  <h2 class="big"><em class="hw">221</em> teams applied.<br><em class="hw">17</em> stood on stage.</h2>
+  <div class="kick">2026, in super short</div>
+  <h2 class="big"><em class="hw">221</em> teams applied in March.<br><em class="hw">17</em> stood on stage at Demo Day.</h2>
   <p class="sub">Applicants came from 16 cities. 41 teams joined the program. Mentors donated about 2,200 hours. Demo Day filled the National Opera with 450+ guests.</p>
   ${more('Open for the numbers',[
     ['How the funnel ran','221 teams applied from 16 cities. 57% advanced within the Hackathon. 41 reached the program, 26 from Bucharest and 15 from other cities. 34 reached the online Semifinals. 17 competed at the Grand Finale.'],
@@ -345,14 +727,14 @@ const S=[
   ${deep('year','The year ahead')}`},
 {ch:'Where we start',html:`
   <div class="kick">What worked</div>
-  <h2 class="big">The program works. <em>Teams told us why.</em></h2>
+  <h2 class="big">What the teams told us <em>works in the program.</em></h2>
   <div class="cards">
     ${card('Community','Networking and community were the main value for teams.','Several teams report organic outcomes after the program: investor inbound and ongoing mentor relationships.')}
     ${card('Best rated','Bootcamp 1 and the Pitch Prep Workshop scored highest.','Bootcamp 1 covers competitive analysis: direct, indirect and ecosystem competitors, with 5+ researched. The Pitch Prep Workshop is framed as how to make people care in 2 minutes.')}
     ${card('Pre-recorded theory','Teams learned at their own pace and brought questions to bootcamps.','Teams watched, paused, took notes, and brought questions to bootcamps and Office Hours. In-person time went to feedback and mentoring instead of lecture.')}
   </div>
   ${more('Open for what requests a fix',[
-    ['What requests a fix','Mentor advice contradicted itself, with no way to reconcile it. Hackathon, Bootcamp 1 and Bootcamp 2 ran on three weekends in a row, which left little time to act on feedback. Some deliverables never got feedback. Hardware teams and tech support were thin. Hybrid sessions left online participants out.']
+    ['What requests a fix','Teams do not know how to reconcile contradicting feedback from mentors. Hackathon, Bootcamp 1 and Bootcamp 2 ran on three weekends in a row, which left little time to act on feedback. Some deliverables never got feedback. Hardware teams and tech support were thin.']
   ])}
   ${deep('research','What 2026 told us')}`},
 
@@ -360,7 +742,7 @@ const S=[
 {ch:'The problem',html:`
   <div class="kick">The problem</div>
   <h2 class="big">Founders are handing <em>the thinking</em> to AI.</h2>
-  <p class="sub">The interviews, the competitive analysis, the pitch narrative. The output looks more polished, with less of their own reasoning underneath.</p>
+  <p class="sub">The interviews, the competitive analysis, the pitch narrative. The output looks more polished, but lacks substance, with even less of their own reasoning underneath.</p>
   <p class="sub"><b>In our room:</b> fluent pitches, and less ownership of the reasoning once the questions went live.</p>
   ${more('Open for the mechanism',[
     ['Why some founders get better output','Practitioner work on context engineering agrees that prompt wording matters far less than the quality and specificity of the material you feed in. Output follows how much real evidence, correction and iteration the founder brings. This is practitioner writing, not peer-reviewed research, and it is the part that turns into a teachable skill.'],
@@ -374,11 +756,8 @@ const S=[
     ${card('Fabricated research','A plausible competitor list, or an interview that never happened.','Discovery needs 10+ real interviews. AI can hit the deliverable count with fiction. The fix is a blunt integrity rule: transcripts traceable to a real person, competitor claims sourced.')}
     ${card('Fluency bias','Polished output reads as more competent than it is.','Mentors and jurors risk scoring polish over substance, which is what the pitch red-flags list already warns against.')}
     ${card('Idea homogenization','Many teams, similar prompts, similar business models and pitch language.','It undercuts the point of Blue Ocean thinking and ERRC.')}
+    ${card('AI as a silent extra mentor','Founders get advice from AI on top of human mentor advice. That adds a third, invisible voice to the contradictory-advice problem, from a source nobody can see or moderate.')}
   </div>
-  ${more('Open for two more on the register',[
-    ['AI as a silent extra mentor','Founders get advice from AI on top of human mentor advice. That adds a third, invisible voice to the contradictory-advice problem, from a source nobody can see or moderate.'],
-    ['Data leakage and GDPR','Interview transcripts contain real people\'s personal data. Pasting them into consumer AI tools is a compliance problem for an EU-based program, and it needs a plain data-handling rule.']
-  ])}
   ${deep('research','AI risks')}`},
 {ch:'The problem',html:`
   <div class="kick">The evidence</div>
@@ -395,13 +774,8 @@ const S=[
   <h2 class="big">The room is already <em>changing.</em></h2>
   <div class="stats">
     ${stat('+567<small>%</small>','Phone-free events worldwide, across 2024 and 2025.','Eventbrite','Bruno Mars, Karol G and Paul McCartney all lock phones away for their shows now. Even weddings are going analog.')}
-    ${stat('0<small> slides</small>','Notion pitched First Round Capital by just talking.','Forbes','The investor said it was unlike any pitch he had taken.')}
-    ${stat('Teams<small> first</small>','Y Combinator invests in teams.','YC Startup Library','Slides come second.')}
+    ${stat('Teams<small> first</small>','Y Combinator invests in teams.','YC Startup Library')}
   </div>
-  ${more('Open for the counterweight',[
-    ['Sweden reverses course','After about two decades of digitising classrooms, Swedish fourth-grade reading proficiency fell between the 2016 and 2021 assessments. In 2023 the government funded printed textbooks, about 685 million kronor. It is a national policy reversal and not a controlled experiment, and the link to the decline is the government\'s own read and contested.'],
-    ['School phone bans','A review of roughly two dozen studies in a dozen countries judged the overall evidence weak and inconclusive, and found a short-term rise in disciplinary incidents in year one. The case for device discipline has two sides, and saying so keeps the rest credible.']
-  ])}
   ${deep('vision','Why now')}`},
 
 /* The idea */
@@ -435,9 +809,8 @@ const S=[
   </div>
   <p class="sub">Founders stop being passive consumers of AI output, and still get what AI is good at.</p>
   ${more('Open for the tools',[
-    ['Five example tools that make AI an adversary. We will choose from them.','mom-test-interrogator flags leading questions and praise-fishing. red-team-my-pitch runs a pitch against the red-flags list. blind-spot-competitor-hunt searches for competitors a team did not list. assumption-stress-test separates falsifiable hypotheses from padding. juror-simulator generates hard follow-up questions from the gaps in a pitch.'],
-    ['How AI Tricks You','A proposed workshop in five blocks: how AI flatters you, what you lose when you offload, how AI fails silently, context engineering, and a live exercise where founders red-team their own real deliverable. No grade.'],
-    ['The risk, named up front','Founders can learn to satisfy a rubric mechanically instead of reflecting. The mitigation is to keep the output as a discussion prompt for the mentor session and not a pass or fail gate, and to vary the prompts.']
+    ['Five example tools that make AI an adversary. We will build tools for each curriculum subject.','mom-test-interrogator flags leading questions and praise-fishing. red-team-my-pitch runs a pitch against the red-flags list. blind-spot-competitor-hunt searches for competitors a team did not list. assumption-stress-test separates falsifiable hypotheses from padding. juror-simulator generates hard follow-up questions from the gaps in a pitch.'],
+    ['How AI Tricks You','A proposed workshop in five blocks: how AI flatters you, what you lose when you offload, how AI fails silently, context engineering, and a live exercise where founders red-team their own real deliverable. No grade.']
   ])}
   ${deep('vision','The Vision')}`},
 {ch:'The idea',html:`
@@ -460,25 +833,21 @@ const S=[
   <div class="kick">In the room</div>
   <h2 class="big">Paper and walls, inside blocks <em>we already run.</em></h2>
   <div class="cards">
-    ${card('Mock interviews','Phones and laptops away, paper notes only.','At Bootcamp 1, then affinity-mapping on a physical wall straight after. Pen-versus-laptop research and Reggio Emilia sit behind it.')}
-    ${card('Competitor war wall','Printed competitor pages sorted into direct, indirect and ecosystem.','Teams move cards between columns as a group and keep a running paper changelog of competitor moves.')}
-    ${card('Journey map on butcher paper','Draw the journey by hand, then walk it standing up.','A long paper roll taped to a wall, with sticky notes for touchpoints and pain points. Bootcamp 2.')}
-    ${card('Red-flag bell round','Pitch practice in front of peers. Anyone rings the bell at a red flag.','Live, low-stakes pitch practice. The bell rings the moment someone hears an item from the red-flags list.')}
-    ${card('Paper prototyping','Testers tap paper screens while a teammate swaps in the next one.','The first prototype is sketched on paper and not built in Figma. Module 2.')}
-    ${card('Elevator pitch swap','Swap one-liners on index cards with a stranger team.','The stranger team pitches yours back live, using only the card.')}
+    ${card('Mock interviews','Phones and laptops away, paper notes only.')}
+    ${card('Journey map on butcher paper','Draw the journey by hand, then walk it standing up.')}
+    ${card('Red-flag bell round','Pitch practice in front of peers. Anyone rings the bell at a red flag.')}
+    ${card('Paper prototyping','Testers tap paper screens while a teammate swaps in the next one.')}
+    ${card('Elevator pitch swap','Swap one-liners on index cards with a stranger team.')}
   </div>
-  <p class="sub">Ten example exercises. We will choose from them. No new time is added.</p>
-  ${more('Open for the other four',[
-    ['Card-sort feature prioritization','Each feature on its own index card, placed physically on an effort-versus-impact grid.'],
+  <p class="sub">Example exercises. We're now building the final version of the program.</p>
+  ${more('Open for two more options',[
     ['Pivot decision card','The team writes its actual validation evidence on index cards, then sorts it against a printed trigger and anti-trigger list with a mentor present. It forces a documented yes or no.'],
-    ['Hardware makerspace hour','Physical prototyping with breadboards, cardboard and form-factor mockups, run by dedicated hardware mentors.'],
-    ['Silent brainstorm','Everyone writes alone first, then posts to a wall, then the group discusses. It stops the loudest voice anchoring the room.'],
-    ['Analog round at Semifinals or Demo Day','Even if judges join remotely, run at least one round with printed boards or physical props instead of slides.']
+    ['Silent brainstorm','Everyone writes alone first, then posts to a wall, then the group discusses. It stops the loudest voice anchoring the room.']
   ])}
   ${deep('curriculum','Ten exercises')}`},
 {ch:'The program',html:`
   <div class="kick">The rule</div>
-  <h2 class="big">Stated once, <em>on the first Monday.</em></h2>
+  <h2 class="big">Stated at program <em>Orientation.</em></h2>
   <div class="cards">
     ${card('The AI position','AI is allowed as a challenger and never ghostwrites.','Stated at the Orientation, on the first Monday after the hackathon, next to how to be a mentee. It also explains why key exercises run paper-first.')}
     ${card('The integrity line','AI-fabricated interviews and competitors do not count. Real people and real sources, or the deliverable is invalid.','Transcripts must trace to a real person, and competitor claims need a source.')}
@@ -495,21 +864,21 @@ const S=[
   <h2 class="big">Fewer contradictions. <em>More hands-on help.</em></h2>
   <p class="sub">In 2026, mentor advice contradicted itself and teams had no way to reconcile it.</p>
   <div class="cards">
-    ${card('Hands-on mentors','Two to three per team, one business and one tech. They evaluate deliverables too.','One mentor can cover several teams. Mentors raise their hand for a specific team during the Hackathon. A vetted core is admitted after a 30-minute conversation, and matched by need and not by availability.')}
-    ${card('Small PODs','Three to five teams, one facilitator, two or three mentors, weekly for 45 to 60 minutes.','Held for the whole program. The facilitator is the core team or a trusted coach.')}
-    ${card('One shared rubric','Top mentors co-write it, so teams stop hearing six opinions on one slide.','Mentor sign-up forms confirm who is trained to evaluate AI-assisted work.')}
+    ${card('Hands-on mentors','Two to three per team, one business and one tech. They evaluate deliverables too.')}
+    ${card('Small PODs','Three to five teams, one facilitator, two or three mentors, weekly for 45 to 60 minutes.')}
+    ${card('One shared rubric','Top mentors co-write it, so teams stop hearing six opinions on one slide.')}
   </div>
   ${more('Open for how we stay close',[
     ['The accountability loop','A weekly checkpoint with the coach plus a form: what they did, what they discovered, what they changed, what is next. A weekly public status check in front of the other teams. A coach journal.'],
     ['Honest feedback, with room to take it in','Keep the public, unsoftened brutal feedback format. Add private 1:1 coaching alongside it. Make openness to feedback an explicit value at Bootcamp 2.'],
-    ['Matching','Teams describe the kind of person they need and the request goes to the IL community. Every team gets at least one guaranteed mock interview.']
+    ['Matching','Teams describe the kind of person they need and the request goes to the IL community.']
   ])}
   ${deep('people','The mentor system')}`},
 
 /* The year */
 {ch:'The year',html:`
   <div class="kick">A focused cohort</div>
-  <h2 class="big">Fewer teams. <em>More attention each.</em></h2>
+  <h2 class="big">More attention for teams <em>that get through Bootcamp 2.</em></h2>
   <div class="stats">
     ${stat('80','teams in the program, 2025','','In 2025: 228 teams accepted to the Hackathon, 148 advanced, 80 joined the program, 42 reached Semifinals, 17 reached Demo Day.')}
     ${stat('41','teams in the program, 2026','','In 2026: 127 accepted to the Hackathon, 84 advanced, 41 joined, 34 reached Semifinals, 17 reached Demo Day.')}
@@ -519,8 +888,7 @@ const S=[
   <p class="fine">The 2027 figure is a plan, not a result.</p>
   ${more('Open for the details',[
     ['Why one extra week','Teams in 2026 said one week between bootcamps was not enough to act on feedback, especially when the feedback was contradictory.'],
-    ['Four paths out of the Hackathon','Any traction. High potential overall. High potential team, which needs a pivot within 2 weeks. High potential idea, which needs qualified people added within 2 weeks.'],
-    ['The same mentors everywhere','Teams outside Bucharest get the same mentors as Bucharest teams. The known gap is the travel burden, which is still being worked out.']
+    ['Four paths out of the Hackathon','Any traction. High potential overall. High potential team, which needs a pivot within 2 weeks. High potential idea, which needs qualified people added within 2 weeks.']
   ])}
   ${deep('year','The cohort')}`},
 {ch:'The year',html:`
@@ -537,9 +905,6 @@ const S=[
     ${tl('24 May to 30 Jun 2027','Alumni community and extra support')}
   </ul>
   <p class="fine">Dates marked about are estimates.</p>
-  ${more('Open for last year, for comparison',[
-    ['The 2026 run','Hackathon 21 to 22 March at ETTI. Bootcamp 1 on 28 to 29 March, hosted by eMAG. Bootcamp 2 on 4 to 5 April, hosted by Orange Romania. Pitching workshop 22 to 23 April. Boost Day on 28 to 29 April at Adobe. Semifinals online on 13 May with 34 teams. Final on 25 May.']
-  ])}
   ${deep('calendar','The calendar')}`},
 {ch:'The year',html:`
   <div class="kick">Partners</div>
@@ -560,16 +925,16 @@ const S=[
 {ch:'The test',html:`
   <div class="kick">The test</div>
   <h2 class="big">Paper-first is a bet. <em>We will test it.</em></h2>
-  <p class="sub">No study shows it makes better companies. It rests on a plausible mechanism, a precedent adults already use, and what we saw in our own room.</p>
+  <p class="sub">Every year we test and adapt. We practice what we preach.</p>
   <ol class="steps">
     ${step(1,'Deliverable quality','Share of teams whose quality improves between Bootcamp 1 and Bootcamp 2.','Bootcamp 1 and the analog exercises produce comparable artifacts per team: interview evidence, hypothesis rigor, competitor research depth and deliverable-ranking performance.')}
     ${step(2,'Feedback on time','Share of deliverables that get mentor feedback by the deadline.','Nothing measures this today.')}
     ${step(3,'An AI-use log','On every submission: what we planned, what we asked AI, what we verified.','A standing template on every submission: what we planned, what we did, what surprised us, what we changed, what we asked AI, and what we verified.')}
   </ol>
-  ${more('Open for the honest limits',[
+  ${more('We read some research, sharing the “fun” facts',[
     ['What the evidence does not show','The strongest findings are about children and transfer weakly. The most relevant findings, on adults and AI, are recent and partly correlational. The chain from handwriting aiding encoding to a better pitch is unvalidated.'],
     ['Handwriting versus typing','In several studies, laptop note-takers did worse on conceptual questions than longhand note-takers. A 2019 replication and later work found the effect does not hold up consistently, so we treat the mechanism as plausible and unsettled.'],
-    ['Precedents we borrow from','Montessori, Waldorf and Reggio Emilia in teaching. The Google Ventures Design Sprint, which starts with individual paper sketching. Socratic seminars, which make reading your slides structurally impossible.']
+    ['Precedents we borrow from','Montessori has children handle a concrete object until a relationship is internalised, then move to the abstract symbol. Waldorf has students hand-write and illustrate their own lesson books. Reggio Emilia treats the physical environment and visible documentation as a third teacher. The Google Ventures Design Sprint starts with individual paper sketching (Crazy 8s) before any group or digital work, and our Module 2 deck already names it. A Socratic seminar is live and unscripted, with no notes and no slides. It maps onto pitch Q&A and mock-interview debriefs, and makes reading your slides structurally impossible.']
   ])}
   ${deep('research','The limits')}`},
 /* Go deeper */
@@ -588,45 +953,257 @@ const S=[
     <a href="${H}#slides" target="_blank" rel="noopener"><b>Slides</b><span>The Vision in 18 slides</span></a>
     <a href="${ONE}" target="_blank" rel="noopener"><b>One-pagers</b><span>Two A4 pages to send</span></a>
   </div>
-  <a class="main-cta" href="${H}" target="_blank" rel="noopener">Open the strategy hub</a>`}
+  <a class="main-cta" href="${H}" target="_blank" rel="noopener">Open the strategy hub</a>`},
+{ch:'The problem',html:`
+  <div class="kick">The research on kids</div>
+  <h2 class="big">What the research on kids <em>shows.</em></h2>
+  <div class="cards">
+    ${card('Screen time and attention','A study of just over a thousand children aged 3 to 11 linked screen use to weaker sustained attention, and reading to stronger attention.','Print reading was tied to better comprehension than digital. We extrapolate that the same mechanism applies to adults. (Poulain et al., BMC Pediatrics, 2025)')}
+    ${card('Handwriting builds the reading circuit','In pre-literate children, the brain\'s reading circuit activates during letter perception only after handwriting practice, not after typing or tracing.','The finding is robust but about young children, so we cite it as a reason physical, self-produced work may be encoded differently. (James and Engelhardt, 2012)')}
+  </div>
+  ${deep('research','The evidence')}`},
+{ch:'The problem',html:`
+  <div class="kick">The counterweight</div>
+  <h2 class="big">Schools are rethinking screens. <em>The evidence has two sides.</em></h2>
+  <div class="cards">
+    ${card('Sweden reverses course','After about two decades of digitising classrooms, Swedish fourth-grade reading proficiency fell between the 2016 and 2021 assessments.','In 2023 the government funded printed textbooks, about 685 million kronor, and moved to keep devices largely away from under-sixes. It is a national policy reversal and not a controlled experiment, and the link to the decline is the government\'s own read and contested.')}
+    ${card('School phone bans','A review of roughly two dozen studies in a dozen countries judged the overall evidence weak and inconclusive.','It found a short-term rise in disciplinary incidents in year one. The case for device discipline has two sides, and saying so keeps the rest credible.')}
+    ${card('The Anxious Generation','Haidt argues that four harms track the smartphone era: social deprivation, sleep disruption, attention fragmentation and addiction.','A threshold cited in Congressional testimony: 1 to 2 hours a day of social media shows no measurable harm, 3 to 4 hours does. It is a book with a strong narrative, so we use it for framing. (Haidt, 2024)')}
+  </div>
+  ${deep('research','The evidence')}`}
+];
+const EL={};
+const stopSlide=i=>{const s=STOPS[i];return {stop:i+1,sec:s.section,html:`
+  <div class="band${i%2?' axg':''}"><div class="kick">Stop ${i+1} of ${STOPS.length}</div>
+  <h2 class="big">${s.title}. <em>${s.when}.</em></h2>
+  <p class="sub">${s.body}</p></div>
+  @@DEEP@@`};};
+const R=(n,sec,extra)=>Object.assign({},P[n],{sec:sec});
+
+/* Story order follows the route. Slide 1 is the route itself. */
+const S=[
+ {route:true,stop:0,html:''},
+ Object.assign(R(1,'findings'),{stop:1}),
+ Object.assign(R(2,'findings'),{stop:1}),
+ Object.assign(R(3,'evidence'),{stop:2}),
+ Object.assign(R(4,'evidence'),{stop:2}),
+ Object.assign(R(5,'evidence'),{stop:2}),
+ Object.assign(R(19,'evidence'),{stop:2}),
+ Object.assign(R(6,'evidence'),{stop:2}),
+ Object.assign(R(20,'evidence'),{stop:2}),
+ Object.assign(R(7,'analog'),{stop:2}),
+ Object.assign(R(17,'evidence'),{stop:2}),
+ stopSlide(2),
+ stopSlide(3),
+ Object.assign(R(8,'analog'),{stop:5}),
+ Object.assign(R(9,'analog'),{stop:5,el:'star'}),
+ Object.assign(R(10,'analog'),{stop:5}),
+ Object.assign(R(12,'analog'),{stop:5}),
+ Object.assign(R(11,'curriculum'),{stop:6}),
+ Object.assign(R(13,'mentors'),{stop:7}),
+ Object.assign(R(14,'cohort'),{stop:8}),
+ stopSlide(8),
+ Object.assign(R(15,'calendar'),{stop:-1,el:'hourglass'}),
+ Object.assign(R(16,'calendar'),{stop:-1}),
+ {stop:-2,end:true,html:'@@END@@'}
 ];
 
-const $=id=>document.getElementById(id);
-const N=S.length;
-let cur=0,first=true,room=null,isPresenter=false,leading=false,following=true,leadN=null,hb=null;
 
-const web=ILWeb($('web'),{world:3.2,density:1.2,seed:7,lineA:.26});
-web.bind(document);
+/* ---------- Split heavy slides so each one carries a single idea ---------- */
+(function(){
+  // plan per title start: list of pieces; a piece = list of items. item = index of a block after the heading, or [index,from,to] to take part of a list block.
+  const PLAN={
+   'Paper and walls':[[[0,0,2]],[[0,2,5],1],[2]],
+   'Pitch building':[[0,[1,0,4]],[[1,4,7]]],
+   'The 2027 calendar':[[[0,0,4]],[[0,4,8],1]],
+   'Paper-first is a bet':[[0,1],[2]],
+   'Fewer contradictions':[[0,1],[2]],
+   'More attention for teams':[[0,1,2],[3]],
+   'AI is the challenger':[[0,1],[2]],
+   'Stated at program':[[0],[1]],
+   'Partners who add':[[0,1],[2]]
+  };
+  const out=[];
+  S.forEach(sl=>{
+    if(!sl.html||sl.route||sl.end||sl.html.indexOf('class="band')>-1&&sl.html.indexOf('class="kick">Stop')>-1){out.push(sl);return;}
+    const d=document.createElement('div');d.innerHTML=sl.html;
+    const h=d.querySelector('h2.big,h1');if(!h){out.push(sl);return;}
+    const title=h.textContent.trim();
+    const key=Object.keys(PLAN).find(k=>title.indexOf(k)===0);
+    if(!key){out.push(sl);return;}
+    const kids=[...d.children],kick=kids.find(c=>c.classList.contains('kick'));
+    const hi=kids.indexOf(h);
+    const deepEl=kids.find(c=>c.classList.contains('deep'));
+    const rest=kids.filter((c,i)=>i>hi&&c!==deepEl);
+    const plan=PLAN[key],n=plan.length;
+    plan.forEach((piece,pi)=>{
+      let html='';
+      const k=kick.cloneNode(true);if(pi>0)k.textContent=kick.textContent+' ('+(pi+1)+'/'+n+')';else k.textContent=kick.textContent+' (1/'+n+')';
+      html+=k.outerHTML+h.outerHTML;
+      piece.forEach(it=>{
+        if(Array.isArray(it)){
+          const src=rest[it[0]],c=src.cloneNode(true);
+          const items=[...src.children];
+          [...c.children].forEach((x,xi)=>{if(xi<it[1]||xi>=it[2])x.remove();});
+          html+=c.outerHTML;
+        }else html+=rest[it].outerHTML;
+      });
+      if(deepEl)html+=deepEl.outerHTML;
+      out.push(Object.assign({},sl,{html}));
+    });
+  });
+  S.splice(0,S.length,...out);
+})();
+
+/* ---------- State ---------- */
+const $=id=>document.getElementById(id);
+const N=S.length,NS_=STOPS.length;
+let cur=0,first=true,room=null,isPresenter=false,leading=false,following=true,leadN=null,hb=null,selStop=0;
+STOPS.forEach((s,i)=>{s.slide=S.findIndex(x=>x.stop===i+1);});
+
+/* ---------- Route slide ---------- */
+function routeHTML(){
+  return `<div class="rhero">${LOGO}<div class="kick">Innovation Labs 2027 · Analog first, AI second</div>
+    <h1>The 2027 <em>route.</em></h1>
+    <p class="sub">Nine stops, from what the 2026 cohort told us and what we understood from all these years of running the program.<br>Follow along on your phone.</p>
+    <div class="btnrow"><button class="cta onband" id="rStart">Start the story</button><span class="hint" style="color:rgba(255,255,255,.85)">or tap any stop</span></div></div>
+  <div class="rhint" id="rhint"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M20 8a6 6 0 0 1 0 8"/><path d="M22 6v4h-4" transform="rotate(10 20 8)"/></svg>Turn your phone sideways for the full route</div>
+  <div class="rw"><div class="route-stage" id="rstage"><svg viewBox="0 0 1200 520" preserveAspectRatio="none" aria-hidden="true"><path class="routeBase" id="rBase"/><path class="routeLine" id="rLine" pathLength="1"/></svg></div></div>
+  <div class="journey" id="journey"></div>`;
+}
+S[0].html=routeHTML();
 
 $('stage').innerHTML=S.map((s,i)=>{
-  const tip=/ tap"/.test(s.html)&&!s.cls?'<div class="tip"><b>+</b>Tap anything with a plus</div>':'';
-  return '<section class="slide '+(s.cls||'')+'" id="s'+i+'" aria-label="Slide '+(i+1)+' of '+N+'" data-pos="after"><div class="in">'+s.html+tip+'</div></section>';
+  let h=s.html;
+  if(s.end)h=endHTML();
+  else if(h.indexOf('@@DEEP@@')>-1)h=h.replace('@@DEEP@@',s.sec?deepFor(s.sec):'');
+  const tip='';
+  const el='';
+  return '<section class="slide '+(s.cls||'')+(s.route?' route':'')+'" id="s'+i+'" aria-label="Slide '+(i+1)+' of '+N+'" data-pos="after"><div class="in">'+el+h+tip+'</div></section>';
 }).join('');
-$('segs').innerHTML=S.map(()=>'<i></i>').join('');
+function endHTML(){
+  const links=Object.keys(SECTIONS).map((k,i)=>HUB_URL
+    ?'<a class="'+(i%3===2?'ax':'')+'" href="'+HUB_URL+'#'+(PAGEOF[k]||'')+'" target="_blank" rel="noopener"><b>'+SECTIONS[k]+'</b><span>Open in the hub</span></a>'
+    :'<div class="g '+(i%3===2?'ax':'')+'"><b>'+SECTIONS[k]+'</b><span>In the hub</span></div>').join('');
+  return `<div class="band"><div class="kick">To go deeper</div>
+    <h2 class="big">Build version one <em>yourself.</em></h2>
+    <p class="sub">Everything you saw sits in the strategy hub, on the same nine stops. Pick a page.</p>
+    <div class="btnrow">${HUB_URL?'<a class="cta onband" href="'+HUB_URL+'" target="_blank" rel="noopener">Open the strategy hub</a>':''}<button class="cta onband" id="eRoute">Back to the route</button></div></div>
+    <div class="go">${links}</div>`;
+}
 
+/* route elements */
+function dirOf(p,i){const a=p[i-1]||p[i+1],c=p[i+1]||p[i-1];return p[i].y<=(a.y+c.y)/2?'up':'down';}
+(function buildRoute(){
+  $('rBase').setAttribute('d',FULL_D);$('rLine').setAttribute('d',FULL_D);
+  const pts=along(FULL_D,NS_),st=$('rstage'),j=$('journey');
+  STOPS.forEach((s,i)=>{
+    const b=document.createElement('button');b.type='button';b.className='stop '+dirOf(pts,i);
+    b.style.left=(pts[i].x/1200*100)+'%';b.style.top=(pts[i].y/520*100)+'%';b.style.animationDelay=(.25+i*.09)+'s';
+    b.setAttribute('aria-label','Stop '+(i+1)+': '+s.title);
+    b.innerHTML='<span class="dot">'+(i+1)+'</span><span class="lab"><b>'+s.title+'</b><span>'+s.when+'</span></span>';
+    b.addEventListener('click',()=>pick(i,true));st.appendChild(b);
+    const a=document.createElement('article');a.className='mj';a.dataset.n=i+1;
+    a.innerHTML='<div class="w">'+s.when+'</div><h3>'+s.title+'</h3>';
+    a.addEventListener('click',()=>pick(i,true));j.appendChild(a);
+  });
+})();
+const useSheet=()=>document.body.classList.contains('land')||(matchMedia('(max-width:819px) and (orientation:portrait)').matches);
+function openSheet(i){const s=STOPS[i];$('shWhen').textContent='Stop '+(i+1)+' of '+NS_+' · '+s.when;$('shTitle').innerHTML='<i>'+(i+1)+'</i>'+s.title;$('shBody').textContent=s.body;$('shGo').dataset.i=i;$('sheet').classList.add('open');$('scrim').classList.add('on');}
+function closeSheet(){$('sheet').classList.remove('open');$('scrim').classList.remove('on');}
+function pick(i,fromTap){
+  selStop=Math.max(0,Math.min(NS_-1,i));const s=STOPS[selStop];
+  document.querySelectorAll('.stop').forEach((b,k)=>b.classList.toggle('active',k===selStop));
+  document.querySelectorAll('.mj').forEach((b,k)=>b.classList.toggle('active',k===selStop));
+  if(fromTap)openSheet(selStop);
+}
+$('shGo').addEventListener('click',()=>{const i=+$('shGo').dataset.i;closeSheet();userGo(STOPS[i].slide);});
+$('shClose').addEventListener('click',closeSheet);$('scrim').addEventListener('click',closeSheet);
+$('rStart').addEventListener('click',()=>userGo(1));
+const eR=$('eRoute');if(eR)eR.addEventListener('click',()=>userGo(0));
+pick(0);
+
+/* ---------- Top bar: segments and stop strip ---------- */
+function buildStrip(){
+  const el=$('strip');let h='';
+  for(let i=0;i<NS_;i++){h+=(i?'<i class="ln"></i>':'')+'<button type="button" class="sb" data-i="'+i+'" aria-label="Stop '+(i+1)+': '+STOPS[i].title+'">'+(i+1)+'</button>';}
+  el.innerHTML=h;
+  el.addEventListener('click',e=>{const b=e.target.closest('.sb');if(b)userGo(STOPS[+b.dataset.i].slide);});
+}
+buildStrip();
+function paintStrip(){
+  const s=S[cur],el=$('strip');
+  const past=i=>s.stop>0?i+1<s.stop:!s.route;
+  el.classList.toggle('all',s.stop<0);
+  el.querySelectorAll('.sb').forEach((b,i)=>{b.classList.toggle('cur',s.stop===i+1);b.classList.toggle('done',past(i));});
+  el.querySelectorAll('.ln').forEach((l,i)=>l.classList.toggle('done',past(i)));
+}
+
+/* ---------- Network ---------- */
+const web=ILWeb($('web'),{world:3.2,density:1.2,seed:7,lineA:.26});
+web.bind(document);
+function netColors(){
+  const night=document.body.dataset.theme==='night',y=false;
+  web.setColors(night?'43,196,219':'0,149,172',y?(night?'251,191,69':'191,130,43'):(night?'196,139,234':'149,75,188'),night?'200,248,255':'0,120,138');
+}
+
+/* ---------- Render and navigation ---------- */
 function render(){
   document.querySelectorAll('.slide').forEach((el,i)=>{
     el.dataset.pos=i<cur?'before':(i>cur?'after':'on');
     if(i===cur)el.scrollTop=0;
     else el.querySelectorAll('.tap[aria-expanded="true"]').forEach(t=>t.setAttribute('aria-expanded','false'));
   });
-  document.querySelectorAll('#segs i').forEach((el,i)=>{el.className=i<cur?'done':(i===cur?'cur':'');});
-  $('chap').innerHTML='<b>'+S[cur].ch+'</b>';
-  $('chapn').textContent=String(cur+1).padStart(2,'0')+' / '+String(N).padStart(2,'0');
-  $('prev').disabled=cur===0;
-  $('next').disabled=cur===N-1;
-  $('next').textContent=cur===0?'Start':'Next';
+  const s=S[cur];
+  document.body.dataset.mesh=s.route?'off':(s.end||s.el==='star'?'on':'');
+  paintStrip();
+  {const pv=$('pv'),nx=$('nx');if(pv){pv.disabled=cur<=0;nx.disabled=cur>=N-1;}}
+  {const d=document.getElementById('deepf');if(d)d.innerHTML=s.sec?deepFor(s.sec):'';}
+  if(s.stop>0&&s.stop-1!==selStop)pick(s.stop-1);
   web.setCam(cur/(N-1));
   if(!first)web.pulse(innerWidth/2,innerHeight*.45,true);
   first=false;
+  closeSheet();fit();setTimeout(fitContent,30);
   if(typeof emitLead==='function')emitLead();
   try{history.replaceState(null,'','#'+(cur+1));}catch(e){}
 }
 function go(i){cur=Math.max(0,Math.min(N-1,i));render();}
 function userGo(i){const t=Math.max(0,Math.min(N-1,i));if(t!==cur&&!leading&&leadN!==null&&following){following=false;updateSync();}go(i);}
-$('prev').addEventListener('click',()=>userGo(cur-1));
-$('next').addEventListener('click',()=>userGo(cur+1));
 
+/* orientation: phones turned sideways get the full route and compact chrome */
+function fit(){
+  const land=matchMedia('(orientation:landscape) and (max-height:520px)').matches;
+  document.body.classList.toggle('land',land);
+  const st=$('rstage'),sl=$('s0');
+  if(!st||!sl)return;
+  st.style.height='';st.style.aspectRatio='';
+  if(matchMedia('(max-width:819px) and (orientation:portrait)').matches)return;
+  const hero=sl.querySelector('.rhero'),det=null;
+  const gaps=Math.round(parseFloat(getComputedStyle(document.body).getPropertyValue("--u"))||8)*2+8;
+  const avail=sl.clientHeight-(hero?hero.offsetHeight:0)-0-gaps-(land?0:0);
+  const natural=st.clientWidth*520/1200;
+  st.style.aspectRatio='auto';st.style.height=Math.max(90,Math.min(natural,avail))+'px';
+}
+(function(){var x=document.getElementById('turnx');if(x)x.onclick=function(){document.getElementById('turn').classList.add('off')};})();
+addEventListener('resize',fit);addEventListener('orientationchange',()=>setTimeout(fit,200));
+
+function fitContent(){
+  const sl=document.querySelector('.slide[data-pos="on"]');if(!sl||sl.classList.contains('route'))return;
+  const inn=sl.querySelector('.in');if(!inn)return;
+  const bd=document.body;let k=1;bd.style.setProperty('--k',k);
+  const cs=getComputedStyle(sl);
+  const avail=()=>sl.clientHeight-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom);
+  while(inn.getBoundingClientRect().height>avail()&&k>.8){k-=.04;bd.style.setProperty('--k',k.toFixed(2));}
+}
+addEventListener('resize',()=>setTimeout(fitContent,60));
+function fsEl(){return document.fullscreenElement||document.webkitFullscreenElement}
+function toggleFS(){
+  const d=document.documentElement;
+  try{if(fsEl()){(document.exitFullscreen||document.webkitExitFullscreen).call(document);}else{(d.requestFullscreen||d.webkitRequestFullscreen).call(d);}}catch(e){}
+}
+if(!(document.documentElement.requestFullscreen||document.documentElement.webkitRequestFullscreen))$('fsb').hidden=true;
+$('fsb').addEventListener('click',toggleFS);
+['fullscreenchange','webkitfullscreenchange'].forEach(ev=>document.addEventListener(ev,()=>{$('fsb').setAttribute('aria-label',fsEl()?'Exit full screen':'Full screen');setTimeout(()=>{fit();fitContent();},150);}));
 function toggle(el){
   const open=el.getAttribute('aria-expanded')!=='true';
   el.setAttribute('aria-expanded',open?'true':'false');
@@ -637,51 +1214,59 @@ $('stage').addEventListener('click',e=>{
   const t=e.target.closest('.tap');if(t)toggle(t);
 });
 document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){closeSheet();return;}
+  if((e.key==='l'||e.key==='L')&&!e.ctrlKey&&!e.metaKey){toggleLead();return;}
+  if((e.key==='f'||e.key==='F')&&!e.ctrlKey&&!e.metaKey){toggleFS();return;}
   const t=e.target.closest&&e.target.closest('.tap');
   if(t&&(e.key==='Enter'||e.key===' ')){e.preventDefault();toggle(t);return;}
-  if(e.key==='ArrowRight'||e.key==='PageDown'||(e.key===' '&&!e.target.closest('a,button')))userGo(cur+1);
+  if(e.target.closest&&e.target.closest('button,a'))return;
+  if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' ')userGo(cur+1);
   else if(e.key==='ArrowLeft'||e.key==='PageUp')userGo(cur-1);
   else if(e.key==='Home')userGo(0);
   else if(e.key==='End')userGo(N-1);
 });
-let tx=0,ty=0,tt=0,noNav=false;
-$('stage').addEventListener('touchstart',e=>{const t=e.changedTouches[0];tx=t.clientX;ty=t.clientY;tt=Date.now();noNav=web.isGrabbing();},{passive:true});
-$('stage').addEventListener('touchend',e=>{
-  if(noNav)return;
-  const t=e.changedTouches[0],dx=t.clientX-tx,dy=t.clientY-ty;
-  if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.5&&Date.now()-tt<900)userGo(dx<0?cur+1:cur-1);
-},{passive:true});
+let tx=0,ty=0,tt=0,lx=0,ly=0,sw=false;
+document.addEventListener('touchstart',e=>{if(e.touches.length!==1){sw=false;return;}const t=e.touches[0];tx=lx=t.clientX;ty=ly=t.clientY;tt=Date.now();sw=!(e.target.closest&&e.target.closest('.sheet,.pn,.sync,.strip'));},{passive:true});
+document.addEventListener('touchmove',e=>{const t=e.touches[0];if(t){lx=t.clientX;ly=t.clientY;}},{passive:true});
+function endSwipe(e){
+  if(!sw)return;sw=false;
+  const t=e.changedTouches&&e.changedTouches[0],x=t?t.clientX:lx,y=t?t.clientY:ly,dx=x-tx,dy=y-ty;
+  if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)*1.2&&Date.now()-tt<1200)userGo(dx<0?cur+1:cur-1);
+}
+document.addEventListener('touchend',endSwipe,{passive:true});
+document.addEventListener('touchcancel',endSwipe,{passive:true});
+$('pv').addEventListener('click',()=>userGo(cur-1));
+$('nx').addEventListener('click',()=>userGo(cur+1));
+addEventListener('hashchange',()=>{const n=parseInt((location.hash||'').replace('#',''),10);if(n>=1&&n<=N&&n-1!==cur){cur=n-1;render();}});
+
+/* ---------- Theme and accent, remembered per device ---------- */
+const root=document.body;
+netColors();
+
 function fromHash(){const n=parseInt((location.hash||'').replace('#',''),10);if(n>=1&&n<=N)cur=n-1;}
-window.addEventListener('hashchange',()=>{const n=parseInt((location.hash||'').replace('#',''),10);if(n>=1&&n<=N&&n-1!==cur){cur=n-1;render();}});
 fromHash();render();
 
-/* Live sync. The presenter taps Lead and everyone who has the page open in the room follows.
-   Nothing here is needed to read the pitch: without the room, each phone just runs on its own. */
+/* ---------- Lead the room ----------
+   The presenter taps Lead and everyone who has the page open in the room follows.
+   Needs the artifact room runtime. Without it each phone just runs on its own. */
 function emitLead(){if(room&&leading)room.emit('slide',{n:cur}).catch(()=>{});}
 function updateSync(){
   const bar=$('sync'),txt=$('synctxt'),btn=$('syncbtn');
   if(!room){bar.hidden=true;return;}
   if(isPresenter){
-    bar.hidden=false;bar.className='sync'+(leading?' live':'');
-    const n=Math.max(0,room.peers().length-1);
-    txt.innerHTML='<span class="dot"></span>'+(leading?'Leading the room · '+n+' watching':'Presenter controls');
-    btn.hidden=false;btn.textContent=leading?'Stop':'Lead the room';btn.className=leading?'on':'';
-    btn.dataset.act='lead';
-  }else if(leadN!==null){
-    bar.hidden=false;bar.className='sync';
-    txt.innerHTML='<span class="dot"></span>'+(following?'Following the presenter':'Browsing on your own');
-    btn.hidden=false;btn.className='';
-    btn.textContent=following?'Free roam':'Back to presenter';btn.dataset.act='follow';
+    if(!leading){bar.hidden=true;return;}
+    bar.hidden=false;bar.className='sync live';
+    txt.innerHTML='<span class="dot"></span>Leading · '+Math.max(0,room.peers().length-1);
+    btn.hidden=false;btn.textContent='Stop';btn.className='on';btn.dataset.act='lead';
+  }else if(leadN!==null&&!following){
+    bar.hidden=false;bar.className='sync';txt.textContent='';
+    btn.hidden=false;btn.className='';btn.textContent='Back to presenter';btn.dataset.act='follow';
   }else bar.hidden=true;
 }
+function toggleLead(){if(!room||!isPresenter)return;leading=!leading;clearInterval(hb);if(leading){emitLead();hb=setInterval(emitLead,3000);}updateSync();}
 $('syncbtn').addEventListener('click',()=>{
   const act=$('syncbtn').dataset.act;
-  if(act==='lead'){
-    leading=!leading;
-    clearInterval(hb);
-    if(leading){emitLead();hb=setInterval(emitLead,3000);}
-    updateSync();
-  }else if(act==='follow'){
+  if(act==='lead'){toggleLead();}else if(act==='follow'){
     following=!following;
     if(following&&leadN!==null&&leadN!==cur)go(leadN);
     updateSync();
@@ -698,9 +1283,9 @@ $('syncbtn').addEventListener('click',()=>{
       if(m.isMe||leading)return;
       const n=m.data&&m.data.n;
       if(!Number.isInteger(n)||n<0||n>=N)return;
-      const first=leadN===null;leadN=n;
+      const firstMsg=leadN===null;leadN=n;
       if(following&&n!==cur)go(n);
-      if(first)updateSync();else if(following)updateSync();
+      if(firstMsg)updateSync();else if(following)updateSync();
     });
     r.onPeers(c=>{
       if(leading&&c.joined.length)emitLead();
@@ -710,3 +1295,7 @@ $('syncbtn').addEventListener('click',()=>{
   }catch(e){}
 })();
 </script>
+<!-- v14 -->
+
+
+</body></html>

@@ -1,44 +1,106 @@
-/* Innovation Labs portable token subset synced from the native Claude Design System, 2026-10-11. */
+/* Innovation Labs portable tokens v0.4.
+   Synced from the refreshed Strategy Hub / route deck / showcase, 2026-10-12.
+   Theme controls mood; accent controls the semantic highlight role. */
+
 :root,
 [data-theme="light"] {
-  --lilac: #E8D2F5;
-  --route: #0095AC;
-  --scrim: rgba(16,32,31,.45);
+  /* brand */
   --teal: #0095AC;
   --teal-deep: #016462;
   --teal-ink: #016462;
-  --purple: #954BBC;
-  --purple-ink: #6B2E8C;
-  --purple-tint: #FBF6FE;
+  --header: #007F86;
+  --hero-a: #068499;
+  --hero-b: #065F5C;
+  --bright: #72ECE7;
+  --route: #0095AC;
   --logo-ink: #2B6363;
-  --surface-page: #F2F6F7;
+  --on-brand: #FFFFFF;
+
+  /* surfaces */
+  --surface-page: #FFFFFF;
+  --surface-alt: #F4FBFB;
   --surface: #FFFFFF;
   --surface-tint: #EAF7F7;
   --surface-ink: #10201F;
+
+  /* text */
   --ink: #10201F;
   --ink-muted: #3C5052;
   --ink-subtle: #4A5E60;
-  --on-brand: #FFFFFF;
-  --on-action: #FFFFFF;
-  --line: #AFC0C3;
-  --line-soft: #D3DEE0;
+
+  /* lines */
+  --line: #D6E4E5;
+  --line-soft: #E3EDEE;
   --line-control: #6F8689;
-  --action: #016462;
+  --line-strong: #9CC3C6;
+
+  /* actions */
+  --action: #007A8C;
+  --on-action: #FFFFFF;
   --action-soft: rgba(0,149,172,.12);
-  --focus-ring: #954BBC;
+
+  /* semantic accent: purple by default */
+  --ax: #954BBC;
+  --ax-ink: #6B2E8C;
+  --ax-tint: #F1E7F8;
+  --ax-soft: rgba(149,75,188,.14);
+  --ax-on: #FFFFFF;
+  --ax-deep: #6B2E8C;
+  --ax-grad: linear-gradient(115deg, #A45CC9 0%, #6B2E8C 100%);
+  --lilac: #E8D2F5;
+  --focus-ring: var(--ax);
   --focus-ring-on-brand: #FFFFFF;
-  --positive: #2E7650;
-  --positive-soft: #EEF7F1;
-  --caution: #9A4F00;
-  --caution-soft: #FFF6EA;
-  --issue: #B0433A;
-  --issue-soft: #FCEFEC;
+
+  /* status */
+  --positive: #2D7A57;
+  --positive-soft: #E6F4EC;
+  --caution: #7A5200;
+  --caution-soft: #FFF3D6;
+  --issue: #A8453A;
+  --issue-soft: #FBECE9;
+
+  /* data viz */
   --viz-1: #0095AC;
   --viz-2: #016462;
-  --viz-ai: #954BBC;
+  --viz-ai: var(--ax);
   --viz-context: #AFC0C3;
   --viz-grid: #D3DEE0;
 
+  /* gradients / branded grounds */
+  --grad-brand: linear-gradient(115deg, var(--hero-a), var(--hero-b));
+  --grad-band: linear-gradient(115deg, var(--header), #006B6E);
+  --grad-accent: var(--ax-grad);
+  --grad-surface: linear-gradient(180deg, #F4FBFB 0%, #E4F4F4 100%);
+  --mesh-blue:
+    radial-gradient(60% 55% at 38% 0%, #B8E3EC 0%, transparent 72%),
+    radial-gradient(55% 60% at 0% 100%, #94D4DC 0%, transparent 72%),
+    radial-gradient(55% 60% at 100% 100%, #90D4DE 0%, transparent 72%),
+    radial-gradient(35% 40% at 100% 40%, #C5E8EF 0%, transparent 70%), #FFFFFF;
+  --mesh-green:
+    radial-gradient(60% 55% at 40% 0%, #A9DAC2 0%, transparent 72%),
+    radial-gradient(55% 60% at 0% 100%, #83C3A4 0%, transparent 72%),
+    radial-gradient(55% 60% at 100% 85%, #91D1B3 0%, transparent 72%),
+    radial-gradient(40% 40% at 0% 25%, #CEE9DE 0%, transparent 70%), #FFFFFF;
+  --mesh-yellow:
+    radial-gradient(55% 50% at 35% 0%, #FDD49F 0%, transparent 72%),
+    radial-gradient(55% 60% at 0% 100%, #FAB579 0%, transparent 72%),
+    radial-gradient(55% 60% at 100% 100%, #FBBF45 0%, transparent 70%),
+    radial-gradient(40% 45% at 100% 40%, #FDD2AD 0%, transparent 70%),
+    radial-gradient(45% 40% at 0% 0%, #FEFAD2 0%, transparent 70%), #FFFEF6;
+  --mesh-purple:
+    radial-gradient(55% 55% at 0% 0%, #E2DCED 0%, transparent 70%),
+    radial-gradient(55% 60% at 0% 100%, #BBABD3 0%, transparent 72%),
+    radial-gradient(55% 60% at 100% 100%, #A794C6 0%, transparent 72%),
+    radial-gradient(35% 40% at 100% 40%, #E7DBEB 0%, transparent 70%), #FFFFFF;
+  --mesh-classic:
+    radial-gradient(45% 45% at 0% 100%, #0095AC 0%, transparent 70%),
+    radial-gradient(40% 40% at 100% 0%, #6FCFDD 0%, transparent 70%),
+    radial-gradient(40% 40% at 0% 15%, #C9B8F0 0%, transparent 70%),
+    radial-gradient(40% 40% at 100% 100%, #B79AE6 0%, transparent 70%),
+    radial-gradient(40% 35% at 45% 60%, #C9F3E6 0%, transparent 70%), #FFFFFF;
+  --mesh: var(--mesh-blue);
+
+  /* spacing */
   --space-4: 4px;
   --space-8: 8px;
   --space-12: 12px;
@@ -51,71 +113,132 @@
   --space-64: 64px;
   --space-88: 88px;
 
+  /* radius */
   --radius-xs: 4px;
   --radius-sm: 8px;
-  --radius-md: 10px;
-  --radius-row: 12px;
-  --radius-lg: 16px;
-  --radius-panel: 18px;
-  --radius-xl: 22px;
+  --radius-md: 12px;
+  --radius-row: 14px;
+  --radius-lg: 18px;
+  --radius-panel: 22px;
+  --radius-xl: 24px;
   --radius-pill: 999px;
 
-  --border-card: 1.5px;
+  /* borders / layout */
+  --border-card: 1px;
   --border-accent: 5px;
   --border-focus: 3px;
-
-  --content-max: 1120px;
+  --content-max: 1180px;
   --text-max: 780px;
   --slide-max: 760px;
-  --nav-height: 64px;
+  --nav-height: 58px;
 
-  --shadow-hover: 0 10px 26px rgba(16,32,31,.14);
+  /* shadows */
+  --shadow-hover: 0 10px 28px rgba(1,100,98,.13);
   --shadow-nav: 0 2px 14px rgba(16,32,31,.25);
-  --shadow-raised: 0 12px 34px rgba(16,32,31,.16);
+  --shadow-raised: 0 14px 40px rgba(1,100,98,.13);
   --shadow-sheet: 0 -14px 40px rgba(16,32,31,.28);
+
+  /* type families */
+  --font: Poppins, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --hand: Caveat, "Segoe Print", "Bradley Hand", cursive;
+}
+
+[data-accent="purple"] {
+  --mesh: var(--mesh-purple);
+}
+
+[data-accent="yellow"] {
+  --ax: #FBBF45;
+  --ax-ink: #7A4B00;
+  --ax-tint: #FFF6DA;
+  --ax-soft: rgba(251,191,69,.22);
+  --ax-on: #10201F;
+  --ax-deep: #BF822B;
+  --ax-grad: linear-gradient(115deg, #FDD49F 0%, #FBBF45 55%, #F9A751 100%);
+  --lilac: #FEFAD2;
+  --focus-ring: #BF822B;
+  --mesh: var(--mesh-yellow);
 }
 
 [data-theme="night"] {
-  --lilac: #E8D2F5;
-  --route: #0095AC;
-  --scrim: rgba(0,208,222,.70);
   --teal: #2BC4DB;
   --teal-deep: #016462;
-  --teal-ink: #2BC4DB;
-  --purple: #C48BEA;
-  --purple-ink: #C48BEA;
-  --purple-tint: #2B1A3A;
+  --teal-ink: #72ECE7;
+  --header: #061B1B;
+  --hero-a: #0B8F91;
+  --hero-b: #073A39;
+  --bright: #72ECE7;
+  --route: #72ECE7;
   --logo-ink: #FFFFFF;
-  --surface-page: #031E1E;
-  --surface: #0A3433;
-  --surface-tint: #0F4442;
-  --surface-ink: #001A1C;
-  --ink: #EAF6F6;
-  --ink-muted: #9BBFC0;
-  --ink-subtle: #7FA5A6;
-  --on-brand: #FFFFFF;
-  --on-action: #02201F;
-  --line: #1C5654;
-  --line-soft: #164B49;
-  --line-control: #4A9896;
-  --action: #2BC4DB;
-  --action-soft: rgba(43,196,219,.14);
-  --focus-ring: #C48BEA;
-  --focus-ring-on-brand: #FFFFFF;
-  --positive: #74CC9A;
-  --positive-soft: #123A2A;
-  --caution: #F2B266;
-  --caution-soft: #3A2A12;
-  --issue: #F2958A;
-  --issue-soft: #3D1F1E;
-  --viz-1: #0095AC;
-  --viz-2: #8FD8E4;
-  --viz-ai: #954BBC;
-  --viz-context: #3E6E6C;
-  --viz-grid: #D3DEE0;
 
-  --shadow-hover: 0 10px 26px rgba(0,0,0,.40);
+  --surface-page: #061B1B;
+  --surface-alt: #0A2928;
+  --surface: #0D3A39;
+  --surface-tint: #0F4443;
+  --surface-ink: #001A1C;
+
+  --ink: #FFFFFF;
+  --ink-muted: #B9CECE;
+  --ink-subtle: #8FB1B2;
+
+  --line: rgba(195,240,240,.16);
+  --line-soft: rgba(195,240,240,.10);
+  --line-control: rgba(195,240,240,.38);
+  --line-strong: rgba(195,240,240,.38);
+
+  --action: #1AB7BE;
+  --on-action: #04201F;
+  --action-soft: rgba(43,196,219,.14);
+
+  --ax: #C48BEA;
+  --ax-ink: #D2A8EE;
+  --ax-tint: rgba(149,75,188,.22);
+  --ax-soft: rgba(196,139,234,.18);
+  --ax-on: #1B0F26;
+  --ax-deep: #954BBC;
+  --ax-grad: linear-gradient(115deg, #C48BEA 0%, #954BBC 100%);
+  --focus-ring: var(--ax);
+
+  --positive: #8FD3B1;
+  --positive-soft: rgba(45,122,87,.26);
+  --caution: #F2D58A;
+  --caution-soft: rgba(160,120,20,.24);
+  --issue: #F1A39A;
+  --issue-soft: rgba(176,74,63,.22);
+
+  --viz-2: #8FD8E4;
+  --viz-context: #3E6E6C;
+
+  --grad-band: linear-gradient(115deg, #061B1B, #0A2928);
+  --grad-surface: linear-gradient(180deg, #061B1B 0%, #0A2928 100%);
+  --mesh-night:
+    radial-gradient(60% 55% at 15% 0%, rgba(11,143,145,.55) 0%, transparent 70%),
+    radial-gradient(55% 60% at 100% 100%, rgba(7,58,57,.9) 0%, transparent 72%), #061B1B;
+  --mesh: var(--mesh-night);
+
+  --shadow-hover: 0 10px 28px rgba(0,0,0,.40);
   --shadow-nav: 0 2px 14px rgba(0,0,0,.45);
-  --shadow-raised: 0 12px 34px rgba(0,0,0,.45);
+  --shadow-raised: 0 14px 40px rgba(0,0,0,.45);
   --shadow-sheet: 0 -14px 40px rgba(0,0,0,.50);
+}
+
+[data-theme="night"][data-accent="yellow"] {
+  --ax: #FBBF45;
+  --ax-ink: #F6D27A;
+  --ax-tint: rgba(251,191,69,.16);
+  --ax-soft: rgba(251,191,69,.18);
+  --ax-on: #2A1B00;
+  --ax-deep: #BF822B;
+  --ax-grad: linear-gradient(115deg, #FBBF45 0%, #F9A751 100%);
+  --focus-ring: #FBBF45;
+  --lilac: #FEFAD2;
+}
+
+/* Backward-compatible v0.3 aliases. New work should prefer --ax*. */
+:root,
+[data-theme] {
+  --purple: var(--ax);
+  --purple-ink: var(--ax-ink);
+  --purple-tint: var(--ax-tint);
 }

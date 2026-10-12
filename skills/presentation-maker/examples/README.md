@@ -1,13 +1,15 @@
-# Strategy Pitch reference
+# Presentation reference example
 
-Use this output as a reference for:
-- catchy, story-first presentation;
-- dark teal / turquoise treatment;
-- interactive playable mesh/network as an expressive presentation device;
-- a final “Go deeper” relationship to the Strategy Hub.
+`IL2027_pitch.html` is the current v0.4 route-first presentation reference supplied/generated in Flavia's refreshed direction.
 
-The narrative should be pitch-like rather than exhaustive.
+Study it for:
+- route on slide one;
+- route/stop context through the deck;
+- phone portrait vertical journey vs landscape full route;
+- Light/Night support;
+- purple/yellow semantic accent switching;
+- fluid scaling and controls that move out of the way on phones;
+- optional Artifact-room `Lead the room` enhancement;
+- pitch-like progression rather than a compressed report.
 
-Personal team insights may strengthen the presentation, but only when actual insights are supplied. Never invent them.
-
-This is a reference implementation, not a template to copy literally.
+Treat it as a reference implementation, not a template. Do not copy factual content or force route-first behavior onto non-sequential source material.

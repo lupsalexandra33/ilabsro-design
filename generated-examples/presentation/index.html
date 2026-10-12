@@ -1,556 +1,858 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>IL 2027 Pitch</title>
+<title>Innovation Labs 2027 Route Deck</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=IBM+Plex+Mono:wght@500;600&family=Caveat:wght@700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&family=Caveat:wght@700&display=swap">
 <style>
-/* Layout: phone-first Night deck. Segmented progress on top, one story beat per slide in a 760px column,
-   Back / Next in the thumb zone, detail behind "+" taps, playable network behind selected slides only.
-   Tokens: Innovation Labs design system, Night theme. Deliberately single-theme (presentation default). */
+/* Layout: route-first phone-first deck. Slide 1 is the 2027 route; every later slide keeps its stop context
+   in a mini-route in the top bar. Night theme (projected / phone-followed), purple accent.
+   One fluid unit --u0: landscape follows the smaller viewport side, portrait follows width and slides scroll. */
 :root{
-  --teal:#2BC4DB;--teal-deep:#016462;--brand:#0095AC;--purple:#C48BEA;--purple-tint:#2B1A3A;--lilac:#E8D2F5;
-  --surface-page:#031E1E;--surface:#0A3433;--surface-tint:#0F4442;--surface-ink:#001A1C;
-  --ink:#EAF6F6;--ink-muted:#9BBFC0;--ink-subtle:#7FA5A6;--on-action:#02201F;
-  --line:#1C5654;--line-soft:#164B49;--line-control:#4A9896;
-  --action:#2BC4DB;--action-soft:rgba(43,196,219,.14);
-  --caution:#F2B266;--caution-soft:#3A2A12;--issue:#F2958A;--issue-soft:#3D1F1E;--positive:#74CC9A;--positive-soft:#123A2A;
-  --f-display:'Poppins',system-ui,-apple-system,'Segoe UI',sans-serif;
-  --f-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
-  --f-hand:'Caveat','Segoe Print','Bradley Hand',cursive;
-  --slide-max:760px;
   color-scheme:dark;
+  --teal:#2BC4DB; --teal-deep:#016462; --teal-ink:#72ECE7; --bright:#72ECE7; --route:#72ECE7;
+  --hero-a:#0B8F91; --hero-b:#073A39;
+  --surface-page:#061B1B; --surface-alt:#0A2928; --surface:#0D3A39; --surface-tint:#0F4443; --surface-ink:#001A1C;
+  --ink:#FFFFFF; --ink-muted:#B9CECE; --ink-subtle:#8FB1B2; --on-brand:#FFFFFF;
+  --line:rgba(195,240,240,.16); --line-soft:rgba(195,240,240,.10); --line-control:rgba(195,240,240,.38);
+  --action:#1AB7BE; --on-action:#04201F; --action-soft:rgba(43,196,219,.14);
+  --ax:#C48BEA; --ax-ink:#D2A8EE; --ax-tint:rgba(149,75,188,.22); --ax-soft:rgba(196,139,234,.18); --ax-on:#1B0F26; --ax-deep:#954BBC;
+  --lilac:#E8D2F5; --focus-ring:#C48BEA;
+  --caution:#F2D58A; --caution-soft:rgba(160,120,20,.24);
+  --viz-1:#2BC4DB; --viz-context:#3E6E6C;
+  --grad-brand:linear-gradient(115deg,#0B8F91,#073A39);
+  --mesh-night:radial-gradient(60% 55% at 15% 0%,rgba(11,143,145,.55) 0%,transparent 70%),radial-gradient(55% 60% at 100% 100%,rgba(7,58,57,.9) 0%,transparent 72%),#061B1B;
+  --shadow-hover:0 10px 28px rgba(0,0,0,.40);
+  --font:Poppins,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --hand:Caveat,"Segoe Print","Bradley Hand",cursive;
+  --ease:cubic-bezier(.3,.1,.2,1);
 }
 *{box-sizing:border-box}
-html,body{height:100%}
-body{margin:0;background:var(--surface-page);color:var(--ink);font-family:var(--f-display);font-size:15px;line-height:1.5;display:flex;flex-direction:column;overflow:hidden;-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased}
-a{color:inherit;text-decoration:none}
-button{font:inherit;color:inherit}
-:focus-visible{outline:3px solid var(--purple);outline-offset:2px;border-radius:6px}
+html,body{height:100%;overflow:hidden;background:var(--surface-page)}
+body{
+  --u0:clamp(7.5px,min(.8vw + 2px,1.75vh),15px);
+  --gut:clamp(16px,3vw,44px);
+  margin:0;color:var(--ink);font-family:var(--font);font-size:calc(var(--u0)*1.4);line-height:1.5;
+  display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto 1fr;
+  grid-template-areas:"prog prog" "bar ctl" "stage stage";
+  -webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;
+}
+@media (orientation:portrait){
+  body{--u0:clamp(9px,2.55vw,12px);grid-template-columns:1fr;grid-template-rows:auto auto 1fr auto;grid-template-areas:"prog" "bar" "stage" "ctl"}
+}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--focus-ring);outline-offset:2px;border-radius:6px}
 
-/* playable network, restrained: full on a few slides, faint elsewhere */
-.net{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;opacity:.18;transition:opacity .6s ease}
-body[data-mesh="on"] .net{opacity:.9}
-.net canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-.net::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 85% at 50% 40%,rgba(3,30,30,.35) 0%,rgba(3,30,30,.82) 62%,var(--surface-page) 100%)}
+/* ---------- top: progress, bar, controls ---------- */
+.prog{grid-area:prog;display:flex;gap:3px;padding:8px var(--gut) 0}
+.prog button{flex:1;height:4px;border:0;padding:0;border-radius:2px;background:var(--line)}
+.prog button.done{background:var(--teal-deep)}
+.prog button.cur{background:var(--ax)}
+.bar{grid-area:bar;display:flex;align-items:center;gap:14px 20px;padding:10px 0 8px var(--gut);min-width:0}
+.bar img{height:clamp(18px,calc(var(--u0)*2.2),28px);width:auto;flex:none}
+.chap{font:600 calc(var(--u0)*1.02)/1.2 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted);min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini{display:flex;align-items:center;margin-left:auto;flex:none;position:relative}
+.mini::before{content:"";position:absolute;left:8px;right:8px;top:50%;height:2px;background:var(--line);transform:translateY(-50%)}
+.mini button{position:relative;width:22px;height:22px;margin:0 2px;border-radius:50%;border:1.5px solid var(--line-control);background:var(--surface-page);color:var(--ink-subtle);font:600 10px/1 var(--mono);display:grid;place-items:center;padding:0;transition:background .2s,color .2s,transform .2s}
+.mini button.on{background:var(--ax);border-color:var(--ax);color:var(--ax-on);transform:scale(1.12);box-shadow:0 0 0 3px var(--ax-soft)}
+.mini.all button{border-color:var(--teal);color:var(--teal-ink)}
+.ctl{grid-area:ctl;display:flex;align-items:center;gap:8px;padding:10px var(--gut) 8px 16px}
+.count{font:600 calc(var(--u0)*1.02)/1 var(--mono);letter-spacing:.08em;color:var(--ink-subtle);min-width:4.5em;text-align:right;font-variant-numeric:tabular-nums}
+.ctl button{min-height:40px;min-width:44px;padding:0 14px;border-radius:8px;border:1px solid var(--line-control);background:transparent;font:600 13px/1 var(--font)}
+.ctl button#nx{background:var(--action);border-color:var(--action);color:var(--on-action)}
+.ctl button:disabled{opacity:.3;cursor:default}
+@media (orientation:portrait){
+  .bar{padding-right:var(--gut);flex-wrap:wrap}
+  .mini{margin-left:0;order:3;width:100%;justify-content:space-between}
+  .mini button{width:24px;height:24px}
+  .ctl{border-top:1px solid var(--line);padding:10px var(--gut) calc(10px + env(safe-area-inset-bottom,0px));background:var(--surface-page)}
+  .ctl .count{margin-right:auto;text-align:left}
+  .ctl button{min-height:46px;padding:0 20px}
+}
 
-.top{position:relative;z-index:2;padding:12px 16px 0;display:flex;flex-direction:column;gap:8px}
-.segs{display:flex;gap:3px}
-.segs i{flex:1;height:3px;border-radius:2px;background:var(--line);transition:background .3s}
-.segs i.done{background:var(--brand)}
-.segs i.cur{background:var(--teal)}
-.chap{display:flex;justify-content:space-between;gap:12px;font:600 11px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted)}
-.chap b{color:var(--teal);font-weight:600}
+/* ---------- stage and slides ---------- */
+.stage{grid-area:stage;position:relative;min-height:0}
+.slide{
+  --k:1;--u:calc(var(--u0) * var(--k));
+  position:absolute;inset:0;overflow-x:hidden;overflow-y:auto;font-size:calc(var(--u)*1.4);
+  opacity:0;visibility:hidden;transform:translateX(14px);transition:opacity .32s var(--ease),transform .32s var(--ease),visibility 0s .32s;
+}
+.slide.on{opacity:1;visibility:visible;transform:none;transition:opacity .32s var(--ease),transform .32s var(--ease)}
+.slide.back{transform:translateX(-14px)}
+.in{min-height:100%;width:100%;max-width:calc(var(--u)*100 + 2*var(--gut));margin:0 auto;padding:calc(var(--u)*2) var(--gut) calc(var(--u)*2.6);display:flex;flex-direction:column;justify-content:center;gap:calc(var(--u)*2.2)}
+.ground{background:var(--mesh-night)}
+.ground.brand{background:var(--grad-brand)}
+@media (orientation:portrait){.in{justify-content:flex-start;padding-top:calc(var(--u)*2.4)}}
 
-.stage{position:relative;z-index:1;flex:1;min-height:0;touch-action:none}
-.slide{pointer-events:none;position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;padding:20px 16px 28px;visibility:hidden;opacity:0;transform:translateX(28px);transition:opacity .35s,transform .45s cubic-bezier(.3,.1,.2,1),visibility 0s .45s;display:flex}
-.slide[data-pos="before"]{transform:translateX(-28px)}
-.slide[data-pos="on"]{visibility:visible;opacity:1;transform:none;transition:opacity .35s,transform .45s cubic-bezier(.3,.1,.2,1),visibility 0s}
-.in{pointer-events:auto;touch-action:pan-y;margin:auto;width:100%;max-width:var(--slide-max);display:flex;flex-direction:column;gap:18px;min-width:0}
-@media (min-width:900px){.slide{padding:32px 48px}.in{gap:22px}}
+.kick{font:600 calc(var(--u)*1.05)/1.2 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--teal-ink);margin:0}
+.kick.ax{color:var(--ax-ink)}
+.head{display:flex;flex-direction:column;gap:calc(var(--u)*1)}
+h1,h2{margin:0;font-weight:700;letter-spacing:-.022em;line-height:1.06;text-wrap:balance;max-width:24ch}
+h1{font-size:calc(var(--u)*5.6)}
+h2{font-size:calc(var(--u)*4.2)}
+h1 em,h2 em{font-style:normal;color:var(--teal-ink)}
+h1 em.ax,h2 em.ax{color:var(--ax-ink)}
+.ground.brand h1 em,.ground.brand h2 em{color:var(--bright)}
+.lead{margin:0;font-size:calc(var(--u)*1.75);line-height:1.45;color:var(--ink-muted);max-width:56ch}
+.note{margin:0;font-size:calc(var(--u)*1.15);line-height:1.45;color:var(--ink-subtle);max-width:80ch}
+.meta{font:500 calc(var(--u)*.95)/1.35 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-subtle)}
+.chip{display:inline-flex;align-items:center;gap:6px;font:600 calc(var(--u)*.92)/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:5px 9px;border-radius:999px;border:1px solid var(--line-control);color:var(--ink-muted);white-space:nowrap}
+.chip.ax{border-color:var(--ax);color:var(--ax-ink);background:var(--ax-soft)}
+.chip.est{border-style:dashed}
+.chip.warn{border-color:var(--caution);color:var(--caution);background:var(--caution-soft)}
+.caution{display:flex;gap:12px;align-items:flex-start;background:var(--caution-soft);border-radius:12px;padding:calc(var(--u)*1.1) calc(var(--u)*1.4);font-size:calc(var(--u)*1.2);color:var(--ink)}
+.caution b{font:600 calc(var(--u)*.92)/1.6 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--caution);flex:none}
 
-.logo svg{height:30px;width:auto;max-width:72vw;display:block}
-.kick{font:600 12px/1.2 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--teal)}
-.big{font-weight:700;font-size:clamp(30px,8.4vw,60px);line-height:1.08;margin:0;text-wrap:balance;letter-spacing:-.015em}
-.big em{font-style:normal;color:var(--teal)}
-.big .ai{color:var(--purple)}
-.cover .big{font-size:clamp(40px,11.5vw,84px);line-height:1.02;letter-spacing:-.025em}
-.cover .big span{display:block}
-.sub{font-size:clamp(16px,4.2vw,19.4px);color:var(--ink-muted);margin:0;max-width:60ch;text-wrap:pretty}
-.sub b{color:var(--ink);font-weight:600}
-.fine{font-size:12.3px;color:var(--ink-subtle);margin:0;max-width:64ch}
+/* cards and grids */
+.grid{display:grid;gap:calc(var(--u)*1.1)}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.g5{grid-template-columns:repeat(5,minmax(0,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:calc(var(--u)*1.5);min-width:0;display:flex;flex-direction:column;gap:calc(var(--u)*.6)}
+.card h3{margin:0;font-size:calc(var(--u)*1.55);line-height:1.25;font-weight:700}
+.card p{margin:0;font-size:calc(var(--u)*1.22);line-height:1.45;color:var(--ink-muted)}
+.card.ai{background:var(--ax-tint);border-color:var(--ax)}
+.card.ai h3{color:var(--ax-ink)}
+.card.flat{background:transparent}
+.card .meta{margin-top:auto;padding-top:calc(var(--u)*.4)}
+.panel{background:var(--teal-deep);border-radius:22px;padding:calc(var(--u)*1.8) calc(var(--u)*2);color:var(--on-brand);display:flex;gap:calc(var(--u)*1.6);align-items:center;flex-wrap:wrap}
+.panel p{margin:0;font-size:calc(var(--u)*1.55);line-height:1.4;font-weight:500;flex:1 1 30ch}
+.panel .lbl{font:600 calc(var(--u)*.95)/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--lilac);flex:none}
+.panel.ax{background:var(--ax-tint);border:1px solid var(--ax)}
+.panel.ax .lbl{color:var(--ax-ink)}
+@media (orientation:portrait){
+  .g3,.g4,.g5{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .g2.stack,.g3.stack{grid-template-columns:1fr}
+}
+@media (orientation:portrait) and (max-width:430px){
+  .g2,.g3,.g4,.g5{grid-template-columns:1fr}
+}
 
-.stats{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))}
-.stat,.card{background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:16px;min-width:0}
-.stat .n{font-weight:800;font-size:clamp(40px,10.5vw,56px);line-height:1;color:var(--teal);font-variant-numeric:tabular-nums;letter-spacing:-.03em;white-space:nowrap}
-.stat .n small{font-size:.5em;font-weight:700;color:var(--ink-muted);letter-spacing:0}
-.stat p{margin:10px 0 0;font-size:14.1px;color:var(--ink-muted)}
-.src{display:block;margin-top:8px;font:500 11px/1.3 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-subtle)}
-.cards{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr))}
-.card h3{margin:0 0 6px;font-size:17px;font-weight:600;line-height:1.3}
-.card p{margin:0;font-size:14.1px;color:var(--ink-muted)}
-.card .src{margin:0 0 8px}
+/* lists */
+.ticks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:calc(var(--u)*.75)}
+.ticks li{position:relative;padding-left:calc(var(--u)*1.6);font-size:calc(var(--u)*1.3);line-height:1.4;color:var(--ink-muted)}
+.ticks li::before{content:"";position:absolute;left:0;top:.5em;width:calc(var(--u)*.6);height:calc(var(--u)*.6);border-radius:50%;background:var(--teal)}
+.ticks li b{color:var(--ink);font-weight:600}
+.ticks.fix li::before{background:transparent;border:2px solid var(--ax)}
+.col-h{font:600 calc(var(--u)*1)/1.2 var(--mono);letter-spacing:.14em;text-transform:uppercase;margin:0 0 calc(var(--u)*1)}
 
-.two{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
-.col{border-radius:10px;padding:16px;border:1.5px solid var(--line);background:var(--surface);min-width:0}
-.col h3{margin:0 0 12px;font:600 12px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--positive)}
-.col.gap h3{color:var(--issue)}
-.col.is{border-color:var(--purple);background:var(--purple-tint)}
-.col.is h3{color:var(--purple)}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chips span{padding:6px 12px;border-radius:999px;background:var(--surface-tint);font-size:14.1px}
-.col.gap .chips span{background:transparent;border:1px dashed var(--line-control);color:var(--ink-muted)}
+/* stats */
+.stat{display:flex;flex-direction:column;gap:calc(var(--u)*.5);min-width:0}
+.num{font-size:calc(var(--u)*5);font-weight:800;line-height:1;letter-spacing:-.03em;color:var(--teal);font-variant-numeric:tabular-nums}
+.num small{font-size:.45em;font-weight:700;color:var(--ink-muted);letter-spacing:0}
+.num.hand{font-family:var(--hand);font-weight:700;color:var(--ax);letter-spacing:0}
 
-.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
-.steps li{display:grid;grid-template-columns:40px 1fr;gap:14px;position:relative;padding-bottom:16px;min-width:0}
-.steps li:last-child{padding-bottom:0}
-.steps li::before{content:"";position:absolute;left:19px;top:40px;bottom:0;width:2px;background:var(--line)}
-.steps li:last-child::before{display:none}
-.steps .num{width:40px;height:40px;border-radius:50%;background:var(--surface-tint);border:2px solid var(--brand);display:grid;place-items:center;font:600 14px/1 var(--f-mono);color:var(--teal)}
-.steps li.ai .num{border-color:var(--purple);color:var(--purple);background:var(--purple-tint)}
-.steps li.ai h3{color:var(--purple)}
-.steps h3{margin:7px 0 2px;font-size:17px;font-weight:600;line-height:1.3}
-.steps p{margin:0;font-size:14.1px;color:var(--ink-muted)}
-.steps li>div{min-width:0}
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:calc(var(--u)*1.1);counter-reset:s}
+.step{border-top:3px solid var(--teal);padding-top:calc(var(--u)*1.1);display:flex;flex-direction:column;gap:calc(var(--u)*.5);min-width:0}
+.step .n{font:600 calc(var(--u)*1)/1 var(--mono);letter-spacing:.12em;color:var(--teal-ink)}
+.step h3{margin:0;font-size:calc(var(--u)*1.8);line-height:1.15}
+.step p{margin:0;color:var(--ink-muted);font-size:calc(var(--u)*1.25);line-height:1.45}
+.step.ax{border-color:var(--ax)}
+.step.ax .n,.step.ax h3{color:var(--ax-ink)}
+@media (orientation:portrait){.steps{grid-template-columns:1fr 1fr}}
+@media (orientation:portrait) and (max-width:430px){.steps{grid-template-columns:1fr}}
 
-.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13.2px}
-.flow span{padding:5px 10px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
-.flow span.ai{border-color:var(--purple);color:var(--purple);background:var(--purple-tint)}
-.flow.not span{text-decoration:line-through;color:var(--ink-subtle);background:transparent;border-style:dashed}
-.flow .lbl{font:600 11px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-subtle);border:0;background:none;padding:0 4px 0 0;text-decoration:none}
+/* workflow strip */
+.flow{display:flex;flex-wrap:wrap;gap:calc(var(--u)*.55);align-items:center}
+.flow span{font-weight:600;font-size:calc(var(--u)*1.35);padding:calc(var(--u)*.55) calc(var(--u)*1.1);border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18)}
+.flow span.ax{background:var(--ax);border-color:var(--ax);color:var(--ax-on)}
+.flow i{font-style:normal;color:var(--ink-subtle)}
+.flow.not span{background:transparent;border-style:dashed;color:var(--ink-subtle);text-decoration:line-through;text-decoration-thickness:2px}
 
-.tl{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
-.tl li{display:grid;grid-template-columns:118px 1fr;gap:14px;padding:11px 0;border-top:1px solid var(--line);min-width:0}
-.tl li:last-child{border-bottom:1px solid var(--line)}
-.tl .w{font:600 11.4px/1.4 var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--teal)}
-.tl li.est .w{color:var(--ink-subtle)}
-.tl li.est .w::before{content:"";display:inline-block;width:8px;height:8px;border:1.5px dashed var(--line-control);border-radius:50%;margin-right:6px;vertical-align:0}
-.tl li.key{background:linear-gradient(90deg,var(--purple-tint),transparent);border-radius:6px}
-.tl li.key .w{color:var(--purple)}
-.tl .t{font-size:15px;min-width:0}
-.tl .t span{display:block;color:var(--ink-muted);font-size:13.2px}
-@media (max-width:380px){.tl li{grid-template-columns:92px 1fr}}
+/* table-like rows */
+.rows{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:1.1fr 1.1fr 1.8fr;gap:calc(var(--u)*1.4);padding:calc(var(--u)*.85) 0;border-bottom:1px solid var(--line);align-items:baseline}
+.row > *{min-width:0}
+.row .b{font-weight:600;font-size:calc(var(--u)*1.3)}
+.row .o{color:var(--ink-subtle);font-size:calc(var(--u)*1.18);text-decoration:line-through;text-decoration-color:rgba(185,206,206,.4)}
+.row .a{font-size:calc(var(--u)*1.25);color:var(--ink)}
+.row.h{border-bottom-color:var(--line-control)}
+.row.h > *{font:600 calc(var(--u)*.92)/1.2 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-subtle);text-decoration:none}
+.row.h .a{color:var(--ax-ink)}
+@media (orientation:portrait){
+  .row{grid-template-columns:1fr;gap:4px}
+  .row.h{display:none}
+  .row .a::before{content:"2027 · ";font:600 .78em var(--mono);letter-spacing:.1em;color:var(--ax-ink)}
+}
 
-.insight{border:1.5px dashed var(--caution);background:var(--caution-soft);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
-.insight .il{font:600 11px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--caution)}
-.insight p{margin:0;font-size:14.1px;color:var(--ink)}
-.insight p i{font-style:normal;color:var(--ink-muted)}
+/* bars */
+.bars{display:flex;flex-direction:column;gap:calc(var(--u)*1.4)}
+.bgrp{display:grid;grid-template-columns:calc(var(--u)*13) 1fr;gap:calc(var(--u)*1.2);align-items:center}
+.bgrp > .lab{font-weight:600;font-size:calc(var(--u)*1.3);line-height:1.25}
+.bset{display:flex;flex-direction:column;gap:5px;min-width:0}
+.br{display:flex;align-items:center;gap:10px;font-size:calc(var(--u)*1.1)}
+.br .y{font:600 calc(var(--u)*.92)/1 var(--mono);color:var(--ink-subtle);width:4.6em;flex:none}
+.br .fill{height:calc(var(--u)*1.55);border-radius:0 8px 8px 0;background:var(--viz-context);min-width:4px}
+.br.c26 .fill{background:var(--viz-1)}
+.br.c27 .fill{background:transparent;border:2px dashed var(--ax)}
+.br .v{font-weight:700;font-variant-numeric:tabular-nums}
+.br.c27 .v{color:var(--ax-ink)}
+@media (orientation:portrait){.bgrp{grid-template-columns:1fr}}
 
-.deep{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:8px 16px;border:1px solid var(--brand);border-radius:999px;font-size:13.2px;background:var(--action-soft)}
-.deep .dk{color:var(--ink-muted)}
-.deep .dv{font-weight:600;color:var(--teal)}
-.deep::after{content:"\2197";color:var(--teal)}
+/* timeline */
+.tl{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:calc(var(--u)*1)}
+.tl > div{border-top:2px solid var(--teal);padding-top:calc(var(--u)*.9);display:flex;flex-direction:column;gap:4px;min-width:0}
+.tl > div.ax{border-top:2px dashed var(--ax)}
+.tl .when{font:600 calc(var(--u)*.95)/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--teal-ink)}
+.tl .ax .when{color:var(--ax-ink)}
+.tl b{font-size:calc(var(--u)*1.4);line-height:1.25}
+.tl p{margin:0;font-size:calc(var(--u)*1.18);color:var(--ink-muted);line-height:1.4}
+@media (orientation:portrait){.tl{grid-auto-flow:row}}
 
-.hint{display:inline-flex;align-items:center;gap:10px;font:600 12px/1.3 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted)}
-.hint i{display:inline-block;width:28px;height:2px;background:var(--teal);position:relative}
-.hint i::after{content:"";position:absolute;right:0;top:-3px;width:7px;height:7px;border-top:2px solid var(--teal);border-right:2px solid var(--teal);transform:rotate(45deg)}
-.tip{display:inline-flex;align-items:center;gap:8px;font:600 11px/1.3 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-subtle)}
-.tip b{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;border:1px solid var(--brand);color:var(--teal);font-weight:600;font-size:13px}
-.hw{font-family:var(--f-hand);font-weight:700;font-size:30px;line-height:1;color:var(--lilac)}
+/* split */
+.split{display:grid;grid-template-columns:1fr 1.2fr;gap:calc(var(--u)*3);align-items:start}
+.split > *{min-width:0}
+@media (orientation:portrait){.split{grid-template-columns:1fr;gap:calc(var(--u)*2.2)}}
 
-.go{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))}
-.go a{display:block;background:var(--surface);border:1.5px solid var(--line);border-top:5px solid var(--brand);border-radius:10px;padding:12px 14px;min-width:0;transition:transform .2s,border-color .2s}
-.go a.ai{border-top-color:var(--purple)}
-.go a:hover{transform:translateY(-2px);border-color:var(--brand)}
-.go b{display:block;font-weight:600;font-size:15px}
-.go span{display:block;font-size:13.2px;color:var(--ink-muted);margin-top:2px}
-.main-cta{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;background:var(--action);color:var(--on-action);font-weight:600;border-radius:8px;padding:13px 20px;min-height:48px;font-size:15px}
-.main-cta::after{content:"\2197"}
+/* decorative brand element */
+.deco{position:absolute;pointer-events:none;user-select:none;z-index:0}
+.slide .in{position:relative;z-index:1}
+.deco.bulb{right:calc(var(--gut) * .4);bottom:0;height:min(78%,calc(var(--u)*52));opacity:.55}
+.deco.hour{right:var(--gut);top:12%;height:min(60%,calc(var(--u)*38));opacity:.5}
+.deco.real{right:var(--gut);bottom:calc(var(--u)*2);width:min(22%,calc(var(--u)*20));opacity:.9}
+@media (orientation:portrait){
+  .deco.bulb{height:calc(var(--u)*26);opacity:.28}
+  .deco.hour{display:none}
+  .deco.real{position:static;width:calc(var(--u)*16);align-self:flex-start}
+}
 
-.bottom{position:relative;z-index:2;display:flex;align-items:center;gap:12px;padding:10px 16px calc(12px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);background:rgba(3,30,30,.94)}
-.bottom .ct{flex:1;text-align:center;font:600 12px/1 var(--f-mono);letter-spacing:.1em;color:var(--ink-muted);font-variant-numeric:tabular-nums}
-.nb{min-width:92px;min-height:44px;padding:12px 18px;border-radius:8px;border:1px solid var(--line);background:var(--surface);font-weight:600;cursor:pointer}
-.nb.pri{background:var(--action);border-color:var(--action);color:var(--on-action)}
-.nb:disabled{opacity:.35;cursor:default}
+/* ---------- route (slide 1) ---------- */
+.route-h{position:relative;height:calc(var(--u)*34);margin-top:calc(var(--u)*.5)}
+.route-h svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.route-h path{fill:none;stroke:var(--route);stroke-width:4;stroke-linecap:round;filter:drop-shadow(0 0 6px rgba(114,236,231,.35))}
+.stop{position:absolute;transform:translate(-50%,-50%);width:0;height:0}
+.disc{position:absolute;left:0;top:0;transform:translate(-50%,-50%);width:calc(var(--u)*3);height:calc(var(--u)*3);min-width:30px;min-height:30px;border-radius:50%;background:var(--teal-deep);border:3px solid #fff;color:#fff;font:700 calc(var(--u)*1.1)/1 var(--mono);display:grid;place-items:center;padding:0;transition:transform .2s}
+.stop.new .disc{background:var(--ax);color:var(--ax-on);box-shadow:0 0 0 6px var(--ax-soft)}
+.disc:hover{transform:translate(-50%,-50%) scale(1.12)}
+.rlbl{position:absolute;left:0;width:calc(var(--u)*13.5);transform:translateX(-50%);text-align:center;display:flex;flex-direction:column;gap:2px;cursor:pointer;background:none;border:0;padding:0;color:inherit}
+.stop.up .rlbl{bottom:calc(var(--u)*2.6)}
+.stop.dn .rlbl{top:calc(var(--u)*2.6)}
+.rlbl .w{font:600 calc(var(--u)*.88)/1.25 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--teal-ink)}
+.stop.new .rlbl .w{color:var(--ax-ink)}
+.rlbl .t{font-weight:700;font-size:calc(var(--u)*1.45);line-height:1.15}
+.rlbl .d{font-size:calc(var(--u)*1.08);line-height:1.3;color:var(--ink-muted)}
+.stop:first-child .rlbl{transform:translateX(-22%)}
+.stop:last-child .rlbl{transform:translateX(-78%)}
+.route-v{display:none;list-style:none;margin:0;padding:0;position:relative}
+.route-v::before{content:"";position:absolute;left:15px;top:16px;bottom:16px;width:3px;background:var(--route);border-radius:2px;opacity:.8}
+.route-v li button{display:grid;grid-template-columns:32px 1fr;gap:14px;align-items:start;width:100%;text-align:left;background:none;border:0;padding:8px 0;color:inherit}
+.route-v .vd{width:32px;height:32px;border-radius:50%;background:var(--teal-deep);border:3px solid #fff;font:700 12px/1 var(--mono);display:grid;place-items:center;position:relative}
+.route-v .new .vd{background:var(--ax);color:var(--ax-on)}
+.route-v .vt{display:flex;flex-direction:column;gap:1px;min-width:0}
+.route-v .vt .w{font:600 11px/1.3 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--teal-ink)}
+.route-v .new .vt .w{color:var(--ax-ink)}
+.route-v .vt .t{font-weight:700;font-size:16px;line-height:1.2}
+.route-v .vt .d{font-size:13px;color:var(--ink-muted);line-height:1.35}
+@media (orientation:portrait){.route-h{display:none}.route-v{display:block}}
+.legend{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
 
-/* tap to open */
-.tap{cursor:pointer;position:relative;-webkit-user-select:none;user-select:none}
-.tap::after{content:"+";position:absolute;top:10px;right:10px;width:26px;height:26px;border-radius:50%;border:1px solid var(--brand);display:grid;place-items:center;font:600 16px/1 var(--f-mono);color:var(--teal);background:var(--action-soft);transition:transform .25s,background .25s}
-.tap[aria-expanded="true"]::after{transform:rotate(45deg);background:var(--teal);color:var(--on-action)}
-.tap:hover{border-color:var(--brand)}
-.card.tap,.stat.tap{padding-right:44px}
-.steps li.tap{padding-right:34px}
-.steps li.tap::after{top:6px;right:0}
-.tl li.tap{padding-right:38px;grid-template-rows:auto auto}
-.tl li.tap::after{top:9px;right:4px}
-.xb{display:grid;grid-template-rows:0fr;visibility:hidden;transition:grid-template-rows .3s ease,visibility 0s .3s}
-.xb>div{overflow:hidden;min-height:0}
-.tap[aria-expanded="true"] .xb{grid-template-rows:1fr;visibility:visible;transition:grid-template-rows .3s ease,visibility 0s}
-.xb p{margin:10px 0 0;padding-top:10px;border-top:1px dashed var(--line);font-size:14.1px;line-height:1.55;color:var(--ink)}
-.more{display:flex;flex-direction:column;gap:8px}
-.mk{font:600 11px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-subtle)}
-.row{background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:12px 44px 12px 16px;min-width:0}
-.row h4{margin:0;font-size:15px;font-weight:600;line-height:1.35}
-.row.tap::after{top:9px}
-.more.ai .mk{color:var(--purple)}
-.more.ai .row{background:var(--purple-tint);border-color:rgba(196,139,234,.4)}
-.more.ai .row.tap::after{border-color:var(--purple);color:var(--purple);background:rgba(196,139,234,.12)}
-.more.ai .row.tap[aria-expanded="true"]::after{background:var(--purple);color:var(--on-action)}
-
-@media (prefers-reduced-motion:reduce){.net{display:none}.slide,.slide[data-pos="on"],.segs i,.xb,.tap::after,.go a{transition:none}}
+@media (prefers-reduced-motion:reduce){
+  .slide,.slide.on{transition:none;transform:none}
+  .mini button,.disc{transition:none}
+}
 </style>
 
-<div class="net" aria-hidden="true"><canvas id="web"></canvas></div>
-<header class="top"><div class="segs" id="segs" aria-hidden="true"></div><div class="chap"><span id="chap"></span><span id="chapn"></span></div></header>
-<main class="stage" id="stage" aria-live="polite"></main>
-<nav class="bottom" aria-label="Slides"><button class="nb" id="prev" type="button">Back</button><div class="ct" id="ct"></div><button class="nb pri" id="next" type="button">Next</button></nav>
+<div class="prog" id="prog" aria-label="Slides"></div>
+<div class="bar">
+  <img src="assets/logo_white_2027.svg" alt="Innovation Labs 2027">
+  <span class="chap" id="chap"></span>
+  <nav class="mini" id="mini" aria-label="Route stops"></nav>
+</div>
+<div class="ctl">
+  <span class="count" id="count"></span>
+  <button id="pv" aria-label="Previous slide">Back</button>
+  <button id="nx" aria-label="Next slide">Next</button>
+</div>
+
+<main class="stage" id="stage">
+
+<!-- 1 · route -->
+<section class="slide" data-chap="The 2027 route" data-stops="all">
+  <div class="in">
+    <div class="head">
+      <p class="kick">Innovation Labs 2027</p>
+      <h1>One route, rebuilt so founders <em>think first.</em></h1>
+      <p class="lead">Nine stops, from the October pre-program to IL Beyond. Tap a stop to jump to it.</p>
+    </div>
+    <div class="route-h" id="routeH" aria-hidden="false"></div>
+    <ol class="route-v" id="routeV"></ol>
+    <div class="legend">
+      <span class="chip ax">New stage in 2027</span>
+      <span class="chip est">Dates are the proposed 2027 calendar, some estimated</span>
+    </div>
+  </div>
+</section>
+
+<!-- 2 · what 2026 told us -->
+<section class="slide" data-chap="Looking back · 2026 cohort" data-stops="">
+  <div class="in">
+    <div class="head">
+      <p class="kick">What 2026 told us</p>
+      <h2>The program works. <em>Teams told us where it breaks.</em></h2>
+    </div>
+    <div class="grid g2 stack">
+      <div class="card flat">
+        <p class="col-h" style="color:var(--teal-ink)">Keep and protect</p>
+        <ul class="ticks">
+          <li><b>Networking and community</b> are the main value teams take away.</li>
+          <li><b>Bootcamp 1 and the Pitch Prep Workshop</b> are the highest-rated formats.</li>
+          <li><b>Pre-recorded theory</b> worked: teams watched at their own pace and brought questions.</li>
+          <li><b>Outcomes after the program:</b> investor inbound, ongoing mentor relationships.</li>
+        </ul>
+      </div>
+      <div class="card flat">
+        <p class="col-h" style="color:var(--ax-ink)">Fix in 2027</p>
+        <ul class="ticks fix">
+          <li><b>Hardware teams</b> are underserved by a software-biased mentor pool.</li>
+          <li><b>Mentor advice contradicts itself</b>, with no way to reconcile it.</li>
+          <li><b>Three weekends in a row</b> for Hackathon, Bootcamp 1 and Bootcamp 2.</li>
+          <li><b>Deliverables</b> uploaded, promised a review, never answered.</li>
+          <li><b>Hybrid and online formats</b> lose the online audience and break continuity.</li>
+          <li><b>Travel burden</b> falls on non-Bucharest teams.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="meta">Source · 2026 cohort interviews. Coachability concerns come from direct observation, not transcripts.</p>
+  </div>
+</section>
+
+<!-- 3 · the pattern -->
+<section class="slide" data-chap="Why 2027 changes" data-stops="">
+  <div class="in">
+    <div class="head">
+      <p class="kick">The pattern</p>
+      <h2>Polished output. <em>Less thinking underneath.</em></h2>
+      <p class="lead">Founders are offloading the thinking step, not only the writing: the interviews, the competitive analysis, the pitch narrative.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card">
+        <div class="stat"><span class="num">83%</span></div>
+        <p>of ChatGPT users in the study could not quote a sentence from the essay they had just written.</p>
+        <span class="meta">MIT Media Lab, 2025 · 54 participants · preprint under review</span>
+      </div>
+      <div class="card">
+        <div class="stat"><span class="num">666</span></div>
+        <p>participants: frequent AI use correlated with lower critical thinking. Younger participants were more dependent.</p>
+        <span class="meta">Gerlich, Societies, 2025 · correlational</span>
+      </div>
+      <div class="card">
+        <div class="stat"><span class="num hand">our teams</span></div>
+        <p>Fluent, competent-sounding pitches and interviews, with less ownership of the reasoning when pushed live.</p>
+        <span class="meta">Direct observation · 2026 cohort</span>
+      </div>
+    </div>
+    <p class="note">The research is recent and partly correlational. That is why the program does not rest on it alone and measures the effect on its own teams.</p>
+  </div>
+</section>
+
+<!-- 4 · the bet -->
+<section class="slide ground brand" data-chap="The bet" data-stops="">
+  <img class="deco bulb" src="assets/bulb-mesh.svg" alt="">
+  <div class="in">
+    <div class="head">
+      <p class="kick" style="color:var(--lilac)">The bet for 2027</p>
+      <h1>Think first. <em>Use AI as a challenger.</em></h1>
+      <p class="lead" style="color:#E6F7F7">Not banned. Not a ghostwriter. AI enters once a founder has an original version, to argue with it.</p>
+    </div>
+    <div class="head" style="gap:calc(var(--u)*.9)">
+      <p class="meta" style="color:#D3EEEE">By the end of the program, a founder works like this</p>
+      <div class="flow">
+        <span>Observe</span><i>→</i><span>Think</span><i>→</i><span>Sketch</span><i>→</i><span>Discuss</span><i>→</i><span>Build</span><i>→</i><span class="ax">Challenge with AI</span><i>→</i><span>Synthesize</span><i>→</i><span>Decide</span>
+      </div>
+      <div class="flow not" aria-label="Not: prompt, copy, present">
+        <span>Prompt</span><i>→</i><span>Copy</span><i>→</i><span>Present</span>
+      </div>
+    </div>
+    <div><span class="chip ax" style="background:rgba(27,15,38,.35)">Hypothesis · tested on our own teams in 2027</span></div>
+  </div>
+</section>
+
+<!-- 5 · four stages -->
+<section class="slide" data-chap="The learning sequence" data-stops="3,4">
+  <div class="in">
+    <div class="head">
+      <p class="kick">The learning sequence</p>
+      <h2>Four stages, <em>in this order.</em></h2>
+      <p class="lead">Applied inside blocks we already run, not added as new time.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><span class="n">01</span><h3>Think in analog</h3><p>Write, sketch and map assumptions on paper before any assistance.</p></div>
+      <div class="step"><span class="n">02</span><h3>Think together</h3><p>Present unfinished work to peers and defend the reasoning out loud.</p></div>
+      <div class="step ax"><span class="n">03</span><h3>Challenge with AI</h3><p>Only now. AI tests assumptions, finds blind spots and argues back.</p></div>
+      <div class="step"><span class="n">04</span><h3>Human synthesis</h3><p>The founder makes the call. The output stays human-authored.</p></div>
+    </div>
+    <div class="grid g2">
+      <div class="card ai"><h3>AI is</h3><p>a challenger, a critic, a devil's advocate, a reviewer, a stress tester, a debate partner.</p></div>
+      <div class="card"><h3>AI is not</h3><p>the founder, the product manager, the storyteller, the strategist.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · evidence -->
+<section class="slide" data-chap="The evidence" data-stops="3,4">
+  <div class="in">
+    <div class="head">
+      <p class="kick">The evidence</p>
+      <h2>A reasoned bet. <em>Not a proof.</em></h2>
+    </div>
+    <div class="grid g3">
+      <div class="card">
+        <span class="chip">Mechanism · plausible</span>
+        <h3>Writing by hand forces synthesis</h3>
+        <p>Longhand note-takers beat laptop note-takers on concepts, but a 2019 replication did not hold consistently. Embodied-cognition findings are robust, but about young children.</p>
+      </div>
+      <div class="card">
+        <span class="chip">Adult precedent · direct</span>
+        <h3>Already a professional method</h3>
+        <p>The GV Design Sprint starts with individual paper sketching (Crazy 8s), and it is already in our Module 2 deck. The Socratic seminar maps onto pitch Q&amp;A.</p>
+      </div>
+      <div class="card">
+        <span class="chip">Context · not proof</span>
+        <h3>Why this cohort is exposed</h3>
+        <p>Haidt, Sweden's return to printed books and a screen-time study explain the generation. A review of school phone bans found that evidence weak and inconclusive.</p>
+      </div>
+    </div>
+    <div class="panel ax">
+      <span class="lbl">How we settle it</span>
+      <p>The share of teams whose deliverable quality improves from Bootcamp 1 to Bootcamp 2, read alongside each team's AI-use log.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · stop 1 pre-program -->
+<section class="slide" data-chap="Stop 1 · Pre-program" data-stops="1">
+  <div class="in">
+    <div class="head">
+      <p class="kick">Stop 1 · Pre-program</p>
+      <h2>Recruitment starts <em>in October.</em></h2>
+      <p class="lead">For new candidate teams, and for 2026 Hackathon teams that did not make the program.</p>
+    </div>
+    <div class="tl">
+      <div><span class="when">Oct 2026 – Feb 2027</span><b>Pre-recruitment</b><p>Community buildup, partner alignment.</p></div>
+      <div><span class="when">24–25 Oct 2026</span><b>Mini-Hackathon</b><p>Bucharest, with SiSC.</p></div>
+      <div><span class="when">Nov 2026</span><b>AI Validation Bootcamp</b><p>Bucharest, with LSAC.</p></div>
+    </div>
+    <div class="grid g4">
+      <div class="card ai"><h3>iLabs.ro Academy</h3><p>An idea-validation journey in the app: content, games, deliverables with mentor feedback.</p></div>
+      <div class="card"><h3>WhatsApp community</h3><p>Guides teams through their first deliverables.</p><span class="chip warn" style="align-self:flex-start;margin-top:auto">Needs an owner</span></div>
+      <div class="card"><h3>Industry deep dives</h3><p>An expert lays out an industry's real problems; teams test ideas against them.</p></div>
+      <div class="card"><h3>Idea selection support</h3><p>Route teams to B2C or B2B on purpose, including unglamorous industries.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 · stop 2 hackathon -->
+<section class="slide" data-chap="Stop 2 · Hackathon" data-stops="2">
+  <div class="in">
+    <div class="head">
+      <p class="kick">Stop 2 · Hackathon · est. 20–21 March</p>
+      <h2>Sort teams early. <em>Give each a two-week path.</em></h2>
+    </div>
+    <div class="grid g4">
+      <div class="card"><span class="meta">Cluster A</span><h3>Any traction</h3></div>
+      <div class="card"><span class="meta">Cluster B</span><h3>High potential overall</h3></div>
+      <div class="card"><span class="meta">Cluster C</span><h3>Strong team</h3><p>Needs a pivot within two weeks.</p></div>
+      <div class="card"><span class="meta">Cluster D</span><h3>Strong idea</h3><p>Needs qualified people added within two weeks.</p></div>
+    </div>
+    <ul class="ticks">
+      <li><b>New deliverable:</b> articulate the problem, plus competitive research, in place of the Lean Model Canvas.</li>
+      <li><b>Separate criteria</b> for B2C, B2B, software and hardware. One rubric is part of why hardware teams were underserved.</li>
+      <li><b>Mentors register interest</b> in going hands-on with a team before selection is final.</li>
+      <li><b>Teams not admitted</b> are flagged as candidates for next year, not dropped silently.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 9 · stop 3 paper first -->
+<section class="slide" data-chap="Stops 3–4 · Bootcamps" data-stops="3,4">
+  <div class="in">
+    <div class="head">
+      <p class="kick">Stops 3–4 · Bootcamps</p>
+      <h2>Paper first, <em>in blocks we already run.</em></h2>
+    </div>
+    <div class="rows">
+      <div class="row h"><span>Block</span><span class="o">Today</span><span class="a">2027 analog step</span></div>
+      <div class="row"><span class="b">Mock interviews</span><span class="o">Logged digitally</span><span class="a">Phones away, paper notes, affinity map on a wall after</span></div>
+      <div class="row"><span class="b">Persona building</span><span class="o">Docs, likely AI-assisted</span><span class="a">Hand-filled card from real interview quotes</span></div>
+      <div class="row"><span class="b">Value-prop canvas</span><span class="o">Digital canvas</span><span class="a">Filled in physically, typed up after</span></div>
+      <div class="row"><span class="b">Pitch workshop</span><span class="o">Script AI-drafted from the start</span><span class="a">Handwritten draft, one message per index card</span></div>
+      <div class="row"><span class="b">Pitch Q&amp;A</span><span class="o">Scripted answers</span><span class="a">Live, unscripted drilling with mentors, no notes</span></div>
+      <div class="row"><span class="b">Early ideation</span><span class="o">Straight to digital</span><span class="a">Crazy 8s paper round before group work</span></div>
+    </div>
+    <p class="note">More on the list: a competitor war wall, paper prototyping, journey mapping on butcher paper, a hardware makerspace hour. Which to pilot first is still open.</p>
+  </div>
+</section>
+
+<!-- 10 · stop 3 AI literacy -->
+<section class="slide" data-chap="Stop 3 · Bootcamp 1" data-stops="3">
+  <div class="in">
+    <div class="head">
+      <p class="kick ax">Stop 3 · AI literacy and curation track</p>
+      <h2>Rank it. Source it. <em class="ax">Then challenge it.</em></h2>
+    </div>
+    <div class="grid g4">
+      <div class="card"><h3>Deliverable ranking</h3><p>Three anonymised 2026 deliverables, strong to weak. Teams rank them and justify.</p></div>
+      <div class="card"><h3>Competitive analysis exam</h3><p>Every data point needs a source. Unsourced research is invalid.</p></div>
+      <div class="card ai"><h3>Master prompt</h3><p>One per team: it challenges ideas, asks for sources and lists assumptions.</p></div>
+      <div class="card"><h3>Deck cross-review</h3><p>Teams answer questions about a pitch deck they did not write.</p></div>
+    </div>
+    <div class="panel">
+      <span class="lbl">The integrity line</span>
+      <p>AI-fabricated interviews and competitors don't count. Real people and real sources, or the deliverable is invalid.</p>
+    </div>
+    <p class="note">Every submission adds the same AI-use log: what we planned, what we did, what surprised us, what we changed, what we asked AI, what we verified.</p>
+  </div>
+</section>
+
+<!-- 11 · challenger skills -->
+<section class="slide" data-chap="Challenger skills" data-stops="3,4,9">
+  <div class="in">
+    <div class="head">
+      <p class="kick ax">Challenger skills</p>
+      <h2>Tools that argue back, <em class="ax">not tools that write.</em></h2>
+    </div>
+    <div class="grid g5">
+      <div class="card ai"><span class="meta" style="color:var(--ax-ink)">mom-test-interrogator</span><h3>"Is this question leading the witness?"</h3></div>
+      <div class="card ai"><span class="meta" style="color:var(--ax-ink)">red-team-my-pitch</span><h3>"Where does this pitch go vague on value?"</h3></div>
+      <div class="card ai"><span class="meta" style="color:var(--ax-ink)">blind-spot-competitor-hunt</span><h3>"What's the do-nothing threat I'm missing?"</h3></div>
+      <div class="card ai"><span class="meta" style="color:var(--ax-ink)">assumption-stress-test</span><h3>"Is this testable, or unfalsifiable as written?"</h3></div>
+      <div class="card ai"><span class="meta" style="color:var(--ax-ink)">juror-simulator</span><h3>"What will a juror hit me with?"</h3></div>
+    </div>
+    <div class="grid g2 stack">
+      <div class="card flat"><h3>Mentors co-author the rubric</h3><p>One shared standard, checked the same way for every team. That is the fix for contradictory advice.</p></div>
+      <div class="card flat"><h3>Output is a prompt, not a grade</h3><p>Teams could learn to satisfy a rubric mechanically. Results feed the mentor session, never a pass or fail gate.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 · mentors -->
+<section class="slide" data-chap="Mentors and coaches" data-stops="2,3,4">
+  <div class="in">
+    <div class="head">
+      <p class="kick">Mentors and coaches</p>
+      <h2>The coach layer scaled. <em>The mentor layer is next.</em></h2>
+    </div>
+    <div class="split">
+      <div class="grid" style="gap:calc(var(--u)*1.6)">
+        <div class="stat"><span class="num">9 → 18</span><p class="note" style="color:var(--ink-muted)">coaches, 2025 to 2026. Half are IL alumni.</p></div>
+        <div class="stat"><span class="num">280 → 221</span><p class="note" style="color:var(--ink-muted)">mentors, down 21% after regional NGO partnerships ended.</p></div>
+        <div class="stat"><span class="num">~53 <small>hours</small></span><p class="note" style="color:var(--ink-muted)">of mentoring per team in 2026.</p></div>
+        <span class="meta">IL26 report · mentor retro, 7 July 2026</span>
+      </div>
+      <div class="card">
+        <p class="col-h" style="color:var(--ax-ink)">Proposed for 2027</p>
+        <ul class="ticks">
+          <li><b>Hands-on mentors, 2–3 per team:</b> one business, one tech.</li>
+          <li><b>PODS:</b> 3–5 teams, a facilitator and 2–3 mentors, weekly for the whole program.</li>
+          <li><b>A vetted mentor core,</b> admitted after a 30-minute conversation.</li>
+          <li><b>Hands-on mentors evaluate deliverables,</b> not only advise.</li>
+          <li><b>A way to fix a bad pairing</b> instead of enduring it.</li>
+          <li><b>Weekly coach checkpoint</b> with a short form the core team can read.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 · stop 4 bootcamp 2 -->
+<section class="slide" data-chap="Stop 4 · Bootcamp 2" data-stops="4">
+  <div class="in">
+    <div class="head">
+      <p class="kick">Stop 4 · Bootcamp 2</p>
+      <h2>Keep the brutal feedback. <em>Add private coaching beside it.</em></h2>
+    </div>
+    <div class="tl">
+      <div><span class="when">Before</span><b>Prepare and expect</b><p>Office hours, online mentoring, Back to Fundamentals moved here. Expectations sent in advance.</p></div>
+      <div><span class="when">During</span><b>Absorb and pivot</b><p>A working session to internalise feedback, with coaches. Pivot decision cards against the triggers list.</p></div>
+      <div class="ax"><span class="when">After</span><b>Say who is at risk</b><p>A shortlist of at-risk teams, with expectations stated explicitly.</p></div>
+    </div>
+    <div class="panel">
+      <span class="lbl">Decision</span>
+      <p>Group feedback stays public and unsoftened. Private 1:1 coaching runs next to it for the self-awareness work a room can't do.</p>
+    </div>
+    <p class="note">Coachability also becomes a selection criterion and a stated value. Private coaching is only feasible once the cohort drops to about 25 teams.</p>
+  </div>
+</section>
+
+<!-- 14 · stop 5 sizing -->
+<section class="slide" data-chap="Stop 5 · Cohort size" data-stops="5">
+  <div class="in">
+    <div class="head">
+      <p class="kick">Stop 5 · Cohort size</p>
+      <h2>Half the intake. <em>The same number of finalists.</em></h2>
+    </div>
+    <div class="bars" id="bars" role="img" aria-label="Teams accepted, at semifinals and at Demo Day: 2025, 2026 and 2027 estimate"></div>
+    <div class="legend">
+      <span class="chip"><span style="width:10px;height:10px;border-radius:2px;background:var(--viz-context)"></span>2025</span>
+      <span class="chip"><span style="width:10px;height:10px;border-radius:2px;background:var(--viz-1)"></span>2026</span>
+      <span class="chip ax est">2027 estimate</span>
+    </div>
+    <p class="note">Mentoring hours per team grow as the cohort shrinks: about 53 hours per team in 2026. Source · team funnel table, 2025–2027.</p>
+  </div>
+</section>
+
+<!-- 15 · stop 5 the cut -->
+<section class="slide" data-chap="Stop 5 · The cut" data-stops="5">
+  <div class="in">
+    <div class="head">
+      <p class="kick ax">Stop 5 · New in 2027</p>
+      <h2>Cut after Bootcamp 2, <em class="ax">plus one week.</em></h2>
+      <p class="lead">The buffer week measures whether a team applied the feedback, not where it stood on the day.</p>
+    </div>
+    <div class="tl">
+      <div><span class="when">Bootcamp 2</span><b>Feedback lands</b></div>
+      <div><span class="when">Same day</span><b>At-risk shortlist</b><p>Expectations stated.</p></div>
+      <div><span class="when">One week</span><b>Apply the feedback</b></div>
+      <div class="ax"><span class="when">Then</span><b>The cut</b><p>Judged on artifacts, with four rubrics.</p></div>
+    </div>
+    <div class="grid g2 stack">
+      <div class="card flat"><h3>Not the only exit</h3><p>Low-quality deliverables two weeks running means out. Teams admitted on potential get a checkpoint two weeks after the Hackathon.</p></div>
+      <div class="caution"><b>Check first</b><span>The read that weaker teams skew non-Bucharest. Only 15 of 41 teams came from outside Bucharest, and travel burden may explain it.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 16 · stops 6-8 on stage -->
+<section class="slide" data-chap="Stops 6–8 · On stage" data-stops="6,7,8">
+  <div class="in">
+    <div class="head">
+      <p class="kick">Stops 6–8 · Boost days to Demo Day</p>
+      <h2>Every pitch shows <em>what changed since the last one.</em></h2>
+      <p class="lead">Program pitches get a theme or a progress focus, so teams optimise the right thing at each stage.</p>
+    </div>
+    <div class="tl">
+      <div><span class="when">End of April</span><b>Boost days and mentor cafés</b><p>Teams evaluated.</p></div>
+      <div><span class="when">Mid-May</span><b>National semifinals</b><p>Teams evaluated.</p></div>
+      <div><span class="when">End of May · est. 24 May</span><b>Startup Fair and Demo Day final</b><p>Recognition awards stay on this stage.</p></div>
+    </div>
+    <div class="grid g2 stack">
+      <div class="card flat"><h3>An analog round on stage</h3><p>At least one round with printed boards or props instead of slides, even if judges join remotely.</p></div>
+      <div class="card flat"><h3>Why it matters</h3><p>In 2026, teams found an in-person Boost Day followed by online semifinals backwards.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 17 · stop 9 IL Beyond -->
+<section class="slide ground" data-chap="Stop 9 · IL Beyond" data-stops="9">
+  <img class="deco hour" src="assets/hourglass-bulb.svg" alt="">
+  <div class="in">
+    <div class="head">
+      <p class="kick ax">Stop 9 · IL Beyond · new</p>
+      <h2>From finalist to fundable. <em class="ax">A slope, not a cliff.</em></h2>
+      <p class="lead">Support used to stop at graduation, exactly when teams needed it most. IL Beyond is open to this year's graduates and alumni from any year.</p>
+    </div>
+    <div class="grid g3" style="max-width:calc(var(--u)*82)">
+      <div class="card"><span class="meta">S1 · Jul–Sep · 6 teams</span><h3>Build</h3><p>Product-market fit and a defined technical moat.</p></div>
+      <div class="card"><span class="meta">S2 · Oct–Dec · 3–4 teams</span><h3>Sell</h3><p>Incorporate, sign commercial contracts, prepare the round.</p></div>
+      <div class="card ai"><span class="meta" style="color:var(--ax-ink)">S3 · Jan–Feb · 2 teams</span><h3>Raise</h3><p>From signed term sheet to money in the bank.</p></div>
+    </div>
+    <div class="grid g2" style="max-width:calc(var(--u)*82)">
+      <div class="stat"><span class="num">2</span><p class="note" style="color:var(--ink-muted)">companies sign a term sheet for a EUR 300k–500k pre-seed round.</p></div>
+      <div class="stat"><span class="num">1</span><p class="note" style="color:var(--ink-muted)">company completes an investment with EGV or another pre-seed investor.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 18 · stop 9 EGV prize -->
+<section class="slide" data-chap="Stop 9 · IL Beyond" data-stops="9">
+  <div class="in">
+    <div class="head">
+      <p class="kick">Stop 9 · Investment</p>
+      <h2>The investment prize moves <em>to the end of IL Beyond.</em></h2>
+    </div>
+    <div class="split">
+      <div class="grid" style="gap:calc(var(--u)*1.2)">
+        <div class="card flat"><h3>Why</h3><p>A EUR 500,000 ticket on Demo Day night goes to a team that is usually not incorporated and has no repeatable sales. In 2026 the prize was not awarded on stage.</p></div>
+        <div class="card flat"><h3>What Demo Day keeps</h3><p>Grand Prize, Best Emerging Start-up, Best Product and Public Vote.</p></div>
+        <div class="caution"><b>Needs</b><span>EGV's agreement to reposition the prize.</span></div>
+      </div>
+      <div class="card">
+        <p class="col-h" style="color:var(--ax-ink)">Proposed budget per team</p>
+        <div class="stat"><span class="num">€38,800 <small>max</small></span></div>
+        <div class="rows">
+          <div class="row" style="grid-template-columns:1fr auto"><span class="b">S1 Build · stipend and ops, 3 months</span><span class="a">€8,400</span></div>
+          <div class="row" style="grid-template-columns:1fr auto"><span class="b">S2 Sell · stipend, ops, legal setup</span><span class="a">€10,400</span></div>
+          <div class="row" style="grid-template-columns:1fr auto"><span class="b">S3 Raise · IL angel bridge</span><span class="a">€20,000</span></div>
+        </div>
+        <p class="note">The bridge sits alongside third-party money, never instead of it. Full 6 → 4 → 2 funnel: €190,480 including €40,000 from angels.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 19 · partnerships -->
+<section class="slide" data-chap="Partnerships" data-stops="">
+  <div class="in">
+    <div class="head">
+      <p class="kick">Partnerships</p>
+      <h2>Co-builders, <em>not logo sponsors.</em></h2>
+    </div>
+    <div class="split">
+      <div class="grid" style="gap:calc(var(--u)*1.6)">
+        <div class="stat"><span class="num">20</span><p class="note" style="color:var(--ink-muted)">partner companies in 2026.</p></div>
+        <div class="stat"><span class="num">12</span><p class="note" style="color:var(--ink-muted)">of them with us for four years or more.</p></div>
+        <span class="meta">The drop from 25+ came from winding down seven small regional partners</span>
+      </div>
+      <ul class="ticks">
+        <li><b>PPC Romania joins as a main partner</b> with a dedicated Energy track, piloted through an AI Validation Bootcamp in November.</li>
+        <li><b>Open challenges become readiness-gated:</b> only with an internal owner, usable data and a real budget. 2026 ran zero.</li>
+        <li><b>Always-on partner value through AILabsRO:</b> year-round presence, branded scholarships, partner-led challenges.</li>
+        <li><b>Fundraising stays centralized in Bucharest,</b> with multi-year anchor commitments. EU funds supplement, never carry.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 20 · decisions -->
+<section class="slide" data-chap="What we decide next" data-stops="">
+  <img class="deco real" src="assets/make-it-real.svg" alt="">
+  <div class="in">
+    <div class="head">
+      <p class="kick">What we decide next</p>
+      <h2>Ten calls <em>to make it real.</em></h2>
+    </div>
+    <div class="grid g2" style="max-width:calc(var(--u)*76)">
+      <ul class="ticks fix">
+        <li><b>Travel burden vs. the Hub downgrade:</b> stipend, hybrid or clustered scheduling.</li>
+        <li><b>Cut criteria</b> and the four rubrics: B2C, B2B, software, hardware.</li>
+        <li><b>Integrity rule</b> for AI-assisted research and interviews.</li>
+        <li><b>Juror code of conduct</b> and a safeguarding reporting channel.</li>
+        <li><b>Which analog exercises</b> to pilot first, and where.</li>
+      </ul>
+      <ul class="ticks fix">
+        <li><b>Challenger skills build order.</b> red-team-my-pitch looks fastest.</li>
+        <li><b>Private coaching:</b> who, how many hours, at about 25 teams.</li>
+        <li><b>An owner</b> for the WhatsApp community.</li>
+        <li><b>A name</b> for the analog initiative. Not "Unplugged".</li>
+        <li><b>Validate IL Beyond Stage 3</b> with angels and VCs.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 21 · close -->
+<section class="slide ground brand" data-chap="Innovation Labs 2027" data-stops="all">
+  <div class="in">
+    <div class="head">
+      <p class="kick" style="color:var(--lilac)">The hidden curriculum</p>
+      <h1>Founders whose thinking gets stronger <em>because of AI.</em></h1>
+      <p class="lead" style="color:#E6F7F7">Not the ones who prompt fastest. The ones whose thinking is worth amplifying. Bootcamp 1 to Bootcamp 2 will tell us if the bet holds.</p>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+      <button class="restart" id="restart" style="min-height:46px;padding:0 20px;border-radius:8px;border:0;background:#fff;color:var(--teal-deep);font-weight:600;font-size:14px">Back to the route</button>
+      <span class="meta" style="color:#D3EEEE">Source · Innovation Labs 2027 Revamp Master Notes</span>
+    </div>
+  </div>
+</section>
+
+</main>
 
 <script>
-function ILWeb(cv,o){
-  o=o||{};
-  var ctx=cv.getContext('2d'),FIX=o.fixed||null,WK=o.world||1;
-  var COL=o.col||'43,196,219',HOT=o.hot||'196,139,234',GL=o.glow||'200,248,255';
-  var DENS=o.density||.3,LA=o.lineA||.26;
-  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var W=0,H=0,DPR=1,nodes=[],edges=[],ripples=[],grab=-1,running=false,last=0,t0=performance.now();
-  var ptr={x:-999,y:-999,vx:0,vy:0,on:false};
-  var cam={x:0,f:0};
-  var seed=o.seed||7;function rnd(){seed=(seed*16807)%2147483647;return seed/2147483647;}
-  var base=[],MAXN=Math.round(300*WK);
-  for(var i=0;i<MAXN;i++)base.push([rnd(),rnd(),.6+rnd()*.8,rnd()*6.283]);
+(function(){
+  const STOPS=[
+    {n:1,s:6,t:"Pre-program",w:"Oct 2026 – Feb 2027",d:"Academy app, community, mini-Hackathon"},
+    {n:2,s:7,t:"Hackathon",w:"Est. 20–21 March",d:"Teams cluster into four paths"},
+    {n:3,s:8,t:"Bootcamp 1",w:"March – April",d:"Paper first, AI literacy track"},
+    {n:4,s:12,t:"Bootcamp 2",w:"March – April",d:"Stated expectations, pivot session"},
+    {n:5,s:13,t:"The cut",w:"Bootcamp 2 + 1 week",d:"Judged on artifacts",isNew:true},
+    {n:6,s:15,t:"Boost days",w:"End of April",d:"Mentor cafés, evaluation"},
+    {n:7,s:15,t:"Semifinals",w:"Mid-May",d:"National Demo Day semifinals"},
+    {n:8,s:15,t:"Demo Day",w:"Est. 24 May",d:"Startup Fair and final"},
+    {n:9,s:16,t:"IL Beyond",w:"From June",d:"Build, Sell, Raise",isNew:true}
+  ];
+  const slides=[...document.querySelectorAll('.slide')];
+  const N=slides.length;
+  const stopsOf=s=>{const v=s.dataset.stops;return v==="all"?STOPS.map(x=>x.n):(v?v.split(',').map(Number):[])};
+  const firstSlideFor=n=>STOPS[n-1].s;
 
-  function layout(){
-    var r=cv.getBoundingClientRect();
-    var nw=FIX?FIX.w:Math.round(r.width),nh=FIX?FIX.h:Math.round(r.height);
-    if(nw<10||nh<10)return false;
-    if(nw===W&&nh===H&&nodes.length)return true;
-    W=nw;H=nh;DPR=Math.min(2,window.devicePixelRatio||1);
-    cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);ctx.setTransform(DPR,0,0,DPR,0,0);
-    var cnt=Math.min(MAXN,Math.round(DENS*(W*H)/10000*WK)),ww=W*WK;
-    nodes=base.slice(0,cnt).map(function(b){var x=b[0]*ww,y=b[1]*H;return{hx:x,hy:y,x:x,y:y,vx:0,vy:0,ax:0,ay:0,d:b[2],ph:b[3],g:0,h:0};});
-    edges=[];var seen={},cap=Math.max(W,H)*.45;cap*=cap;
-    for(var i=0;i<nodes.length;i++){
-      var a=nodes[i],ds=[];
-      for(var j=0;j<nodes.length;j++){if(i!==j){var dx=a.hx-nodes[j].hx,dy=a.hy-nodes[j].hy;ds.push([dx*dx+dy*dy,j]);}}
-      ds.sort(function(p,q){return p[0]-q[0];});
-      for(var k=0;k<3&&k<ds.length;k++){var jj=ds[k][1],key=i<jj?i+'-'+jj:jj+'-'+i;
-        if(!seen[key]&&ds[k][0]<cap){seen[key]=1;edges.push({a:i,b:jj,L:Math.sqrt(ds[k][0])});}}
-    }
-    return true;
+  // progress + mini route
+  const prog=document.getElementById('prog'), mini=document.getElementById('mini');
+  slides.forEach((s,i)=>{const b=document.createElement('button');b.setAttribute('aria-label','Slide '+(i+1));b.onclick=()=>go(i);prog.appendChild(b)});
+  STOPS.forEach(st=>{const b=document.createElement('button');b.textContent=st.n;b.title=st.n+' · '+st.t;b.setAttribute('aria-label','Stop '+st.n+': '+st.t);b.onclick=()=>{const j=firstSlideFor(st.n);if(j>=0)go(j)};mini.appendChild(b)});
+
+  // route, landscape
+  const rh=document.getElementById('routeH');
+  const pts=STOPS.map((s,i)=>({x:4+i*(92/(STOPS.length-1)),y:50+Math.sin(i*1.05+.4)*13}));
+  const W=1000,H=100;
+  const P=pts.map(p=>[p.x*W/100,p.y*H/100]);
+  let d=`M${P[0][0]},${P[0][1]}`;
+  for(let i=0;i<P.length-1;i++){
+    const p0=P[i-1]||P[i],p1=P[i],p2=P[i+1],p3=P[i+2]||p2;
+    const c1=[p1[0]+(p2[0]-p0[0])/6,p1[1]+(p2[1]-p0[1])/6],c2=[p2[0]-(p3[0]-p1[0])/6,p2[1]-(p3[1]-p1[1])/6];
+    d+=` C${c1[0]},${c1[1]} ${c2[0]},${c2[1]} ${p2[0]},${p2[1]}`;
   }
-
-  function rgba(c,a){return 'rgba('+c+','+a.toFixed(3)+')';}
-
-  function frame(now){
-    if(!running)return;
-    requestAnimationFrame(frame);
-    if(!cv.getClientRects().length)return;
-    if(!layout())return;
-    var dt=Math.min(40,now-(last||now-16));last=now;
-    var f=Math.max(.4,dt/16.7),t=(now-t0)/1000;
-    var camT=cam.f*(WK-1)*W;cam.x+=(camT-cam.x)*Math.min(1,.08*f);
-    var wpx=ptr.x+cam.x,wpy=ptr.y,R=Math.max(80,Math.min(W,H)*.22);
-    var i,j,n,e,A,B;
-    for(i=ripples.length-1;i>=0;i--)if(now-ripples[i].t>1900)ripples.splice(i,1);
-    for(i=0;i<nodes.length;i++){
-      n=nodes[i];
-      var hx=n.hx+(reduce?0:Math.sin(t*.45+n.ph)*6),hy=n.hy+(reduce?0:Math.cos(t*.37+n.ph)*6);
-      n.ax=(hx-n.x)*.012;n.ay=(hy-n.y)*.012;
-    }
-    for(i=0;i<edges.length;i++){
-      e=edges[i];A=nodes[e.a];B=nodes[e.b];
-      var dx=B.x-A.x,dy=B.y-A.y,L=Math.sqrt(dx*dx+dy*dy)||1,F=(L-e.L)*.01;
-      A.ax+=dx/L*F;A.ay+=dy/L*F;B.ax-=dx/L*F;B.ay-=dy/L*F;
-    }
-    for(i=0;i<nodes.length;i++){
-      n=nodes[i];
-      if(ptr.on&&grab<0){
-        var px=n.x-wpx,py=n.y-wpy,d=Math.sqrt(px*px+py*py)||1;
-        if(d<R){var s=1-d/R,s2=s*s;n.ax+=px/d*s2*1.9+ptr.vx*s2*.05;n.ay+=py/d*s2*1.9+ptr.vy*s2*.05;if(s*.9>n.g)n.g=s*.9;}
-      }
-      for(j=0;j<ripples.length;j++){
-        var r=ripples[j],age=(now-r.t)/1000,rad=age*(r.big?800:520),amp=1-age/1.85;
-        var rx=n.x-r.x,ry=n.y-r.y,rd=Math.sqrt(rx*rx+ry*ry)||1,dl=Math.abs(rd-rad);
-        if(dl<60&&amp>0){var q=(1-dl/60)*amp;n.ax+=rx/rd*q*(r.big?2.8:1.6);n.ay+=ry/rd*q*(r.big?2.8:1.6);if(q*.95>n.g)n.g=q*.95;if(q>n.h)n.h=q;}
-      }
-    }
-    ptr.vx*=.8;ptr.vy*=.8;
-    var damp=Math.pow(.88,f),gd=Math.pow(.95,f),hd=Math.pow(.93,f);
-    for(i=0;i<nodes.length;i++){
-      n=nodes[i];
-      if(i===grab){n.x=wpx;n.y=wpy;n.vx=0;n.vy=0;n.g=1;continue;}
-      n.vx=Math.max(-40,Math.min(40,(n.vx+n.ax*f)*damp));n.vy=Math.max(-40,Math.min(40,(n.vy+n.ay*f)*damp));
-      n.x+=n.vx*f;n.y+=n.vy*f;n.g*=gd;n.h*=hd;
-    }
-
-    ctx.clearRect(0,0,W,H);
-    var cx=cam.x,vis=function(x,y){return x-cx>-30&&x-cx<W+30&&y>-30&&y<H+30;};
-    ctx.lineCap='round';
-    ctx.beginPath();
-    for(i=0;i<edges.length;i++){
-      e=edges[i];A=nodes[e.a];B=nodes[e.b];
-      if(A.g>.06||B.g>.06)continue;
-      if(!vis(A.x,A.y)&&!vis(B.x,B.y))continue;
-      ctx.moveTo(A.x-cx,A.y);ctx.lineTo(B.x-cx,B.y);
-    }
-    ctx.strokeStyle=rgba(COL,LA);ctx.lineWidth=1;ctx.stroke();
-    for(i=0;i<edges.length;i++){
-      e=edges[i];A=nodes[e.a];B=nodes[e.b];
-      var gm=Math.max(A.g,B.g);
-      if(gm<=.06)continue;
-      if(!vis(A.x,A.y)&&!vis(B.x,B.y))continue;
-      var hot=Math.max(A.h,B.h)>.3;
-      ctx.beginPath();ctx.moveTo(A.x-cx,A.y);ctx.lineTo(B.x-cx,B.y);
-      ctx.strokeStyle=rgba(hot?HOT:GL,Math.min(.95,LA+gm*.7));ctx.lineWidth=1+gm*1.4;ctx.stroke();
-    }
-    for(i=0;i<nodes.length;i++){
-      n=nodes[i];if(!vis(n.x,n.y))continue;
-      var x=n.x-cx,y=n.y,rr=1+n.d*1.2;
-      if(n.g>.05||i===grab){
-        var hh=n.h>.3||i===grab;
-        ctx.fillStyle=rgba(hh?HOT:GL,.2*n.g);ctx.beginPath();ctx.arc(x,y,rr+4+12*n.g,0,6.283);ctx.fill();
-        ctx.fillStyle=rgba(hh?HOT:GL,.5+.5*n.g);ctx.beginPath();ctx.arc(x,y,rr+1.2*n.g,0,6.283);ctx.fill();
-      }else{
-        ctx.fillStyle=rgba(COL,.55);ctx.beginPath();ctx.arc(x,y,rr,0,6.283);ctx.fill();
-      }
-    }
-    if(ptr.on){
-      var gr=ctx.createRadialGradient(ptr.x,ptr.y,0,ptr.x,ptr.y,R);
-      gr.addColorStop(0,rgba(GL,.12));gr.addColorStop(1,rgba(GL,0));
-      ctx.fillStyle=gr;ctx.beginPath();ctx.arc(ptr.x,ptr.y,R,0,6.283);ctx.fill();
-    }
-  }
-
-  function pulse(sx,sy,big){ripples.push({x:sx+cam.x,y:sy,t:performance.now(),big:!!big});if(ripples.length>10)ripples.shift();}
-
-  function bind(target,opt){
-    var ign=(opt&&opt.ignore)||'a,button,[role="button"],summary,input,textarea,select';
-    function pos(e){
-      var r=cv.getBoundingClientRect(),kx=(FIX?FIX.w:r.width)/(r.width||1),ky=(FIX?FIX.h:r.height)/(r.height||1);
-      return[(e.clientX-r.left)*kx,(e.clientY-r.top)*ky];
-    }
-    target.addEventListener('pointermove',function(e){
-      var p=pos(e);ptr.vx=p[0]-ptr.x;ptr.vy=p[1]-ptr.y;if(!ptr.on){ptr.vx=0;ptr.vy=0;}
-      ptr.x=p[0];ptr.y=p[1];ptr.on=true;
-    },{passive:true});
-    target.addEventListener('pointerdown',function(e){
-      var p=pos(e);ptr.x=p[0];ptr.y=p[1];ptr.on=true;ptr.vx=0;ptr.vy=0;
-      if(e.target.closest&&e.target.closest(ign))return;
-      pulse(p[0],p[1],true);
-      var best=-1,bd=48*48,wx=p[0]+cam.x;
-      for(var i=0;i<nodes.length;i++){var dx=nodes[i].x-wx,dy=nodes[i].y-p[1],dd=dx*dx+dy*dy;if(dd<bd){bd=dd;best=i;}}
-      grab=best;
-    });
-    function up(e){grab=-1;if(e.pointerType==='touch')ptr.on=false;}
-    target.addEventListener('pointerup',up);
-    target.addEventListener('pointercancel',up);
-    target.addEventListener('pointerleave',function(){ptr.on=false;grab=-1;});
-  }
-
-  function start(){if(running)return;running=true;requestAnimationFrame(frame);}
-  start();
-  return{stop:function(){running=false;},pulse:pulse,bind:bind,start:start,setCam:function(f){cam.f=Math.max(0,Math.min(1,f));},isGrabbing:function(){return grab>=0;}};
-}
-
-</script>
-<script>
-const LOGO=`<svg role="img" aria-label="Innovation Labs 2027" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 505.84 53.42"> <g> <g> <path fill="#fff" d="M90.71,9.72c-8.67,0-15.7,7.03-15.7,15.7,0,5.41,2.74,10.18,6.91,13,.11.07.22.14.33.22.85.64,1.41,1.65,1.41,2.8v.65h3.97v-.65c0-.33-.03-.65-.07-.98h.01l-2.04-11.67-.84.13,1.39,8.01c-.41-.55-.9-1.05-1.46-1.46-.18-.13-.37-.26-.56-.37-3.19-2.2-5.09-5.8-5.09-9.67,0-6.47,5.26-11.74,11.73-11.74s11.73,5.27,11.73,11.74c0,3.79-1.83,7.34-4.91,9.54-.37.21-.72.45-1.05.72-.44.36-.83.76-1.16,1.2l1.39-7.95-.85-.1-1.92,10.98c-.03.12-.04.25-.06.38l-.05.26s0,.06-.01.08l-.02.25v1.31h3.96v-1.08c.11-.92.57-1.72,1.25-2.28.19-.15.39-.29.61-.4,4.1-2.84,6.78-7.56,6.78-12.91,0-8.67-7.03-15.7-15.69-15.7Z"/> <rect fill="#fff" x="83.66" y="49.45" width="14.09" height="3.97"/> <polygon fill="#fff" points="83.66 43.79 83.66 47.76 97.75 47.76 97.75 43.79 87.63 43.79 83.66 43.79"/> <path fill="#fff" d="M90.57,25.34c.7,0,1.33.36,1.69.97.78,1.33,2.11,2.24,3.6,2.53l.85.1.6-3.44c-.14.04-.29.06-.45.06-.15,0-.29-.02-.42-.05-.53-.11-.98-.44-1.27-.93-.96-1.62-2.72-2.62-4.6-2.62s-3.64,1-4.6,2.62c-.24.41-.6.7-1.03.85-.2.08-.43.12-.66.12-.06,0-.12,0-.18-.01l.59,3.38.84-.13c1.38-.35,2.6-1.23,3.34-2.48.36-.61.99-.97,1.69-.97Z"/> <rect fill="#fff" y="10.28" width="4.76" height="30.03"/> <polygon fill="#fff" points="32.52 31.64 15.49 10.28 11.8 10.28 11.8 40.3 16.65 40.3 16.65 19.12 33.68 40.3 37.32 40.3 37.32 10.28 32.52 10.28 32.52 31.64"/> <polygon fill="#fff" points="65.14 31.64 48.11 10.28 44.42 10.28 44.42 40.3 49.27 40.3 49.27 19.12 66.3 40.3 69.94 40.3 69.94 10.28 65.14 10.28 65.14 31.64"/> <polygon fill="#fff" points="131.27 10.28 121.66 34.69 112.09 10.28 106.69 10.28 119.17 40.43 124.19 40.43 136.63 10.28 131.27 10.28"/> <path fill="#fff" d="M226.07,12.06c-.11-.07-.22-.14-.33-.22-.85-.64-1.41-1.67-1.41-2.82V0h-3.96v9.02c0,2.35,1.12,4.6,3,6.01.18.15.36.27.56.39,3.13,2.17,5.02,5.72,5.08,9.53-.28-.17-.51-.4-.69-.69-.96-1.64-2.72-2.65-4.6-2.65s-3.64,1.01-4.61,2.64c-.36.61-.99.98-1.69.98s-1.33-.36-1.69-.97c-.96-1.64-2.73-2.65-4.61-2.65s-3.65,1.01-4.6,2.64c-.23.39-.57.69-.98.84.02-3.8,1.85-7.34,4.91-9.55.37-.21.72-.45,1.05-.72,1.48-1.23,2.43-2.98,2.66-4.9l.03-.24V0h-3.97v9.44c-.11.92-.57,1.74-1.25,2.3-.2.16-.4.29-.62.4-4.1,2.85-6.78,7.6-6.78,13,0,8.73,7.03,15.8,15.7,15.8s15.7-7.07,15.7-15.8c0-5.45-2.74-10.25-6.91-13.09ZM217.29,36.95c-5.31,0-9.81-3.58-11.25-8.46,1.41-.33,2.65-1.23,3.41-2.5.36-.61.99-.98,1.69-.98s1.33.37,1.69.98c.96,1.62,2.73,2.64,4.61,2.64s3.64-1.02,4.6-2.64c.36-.61.99-.98,1.69-.98s1.33.37,1.69.98c.7,1.2,1.84,2.05,3.13,2.43-1.41,4.93-5.93,8.53-11.26,8.53Z"/> <path fill="#fff" d="M147.55,10.28l-13.47,30.03h5.1l2.83-6.3h16.25l2.88,6.3h5.1l-13.47-30.03h-5.23ZM143.82,29.63l6.35-14.29,6.35,14.29h-12.69Z"/> <polygon fill="#fff" points="163.41 14.61 173.28 14.61 173.28 40.31 178.13 40.31 178.13 14.61 187.95 14.61 187.95 10.28 163.41 10.28 163.41 14.61"/> <rect fill="#fff" x="191.85" y="10.28" width="4.76" height="30.03"/> <polygon fill="#fff" points="258.79 31.64 241.76 10.28 238.07 10.28 238.07 40.3 242.92 40.3 242.92 19.12 259.95 40.3 263.59 40.3 263.59 10.28 258.79 10.28 258.79 31.64"/> <polygon fill="#fff" points="286.63 10.28 281.82 10.28 281.82 40.3 302.45 40.3 302.45 35.85 286.63 35.85 286.63 10.28"/> <path fill="#fff" d="M394.15,30.97c-.33-6.25-6.02-7.91-12.02-8.74-3.95-.56-7.29-1.37-7.29-4.29s2.92-4.55,6.95-4.55c3.13.04,6.01,1.29,7.42,3.34l3.65-2.44c-2.53-4.03-6.86-5.06-11.2-5.06-5.4,0-11.62,2.4-11.58,8.62,0,6.43,5.66,7.94,11.62,8.75,4.2.56,7.68,1.67,7.68,4.93,0,3.78-3.99,4.98-7.59,4.98s-7.21-1.29-9.35-4.93l-3.6,2.4c2.74,5.06,7.16,6.82,12.91,6.82.56,0,1.11-.03,1.66-.07,2.2.07,6.34-1.49,7.46-2.29,4.1-2.9,3.15-7.34,3.28-7.48Z"/> <path fill="#fff" d="M318.2,10.28l-13.47,30.03h5.11l2.83-6.3h16.26l2.87,6.3h5.1l-13.47-30.03h-5.23ZM314.46,29.63l6.35-14.29,6.35,14.29h-12.69Z"/> <path fill="#fff" d="M360.47,24.82c2.83-1.16,4.16-3.43,4.16-5.96,0-5.96-4.51-8.58-10.21-8.58h-13.77v30.03h13.77c5.92,0,11.15-2.02,11.15-8.58,0-2.27-1.5-5.83-5.1-6.9ZM345.41,14.61h9.01c3.6,0,5.45,2.23,5.45,4.33,0,2.36-1.8,3.78-5.4,3.78h-9.05v-8.11ZM354.42,35.85h-9.01v-8.84h9.05c2.74,0,6.31,1.46,6.31,4.68s-3.69,4.16-6.35,4.16Z"/> </g> <g> <path fill="#fff" d="M405.73,36.02h19.16v4.68h-24.14v-7.56c0-5.71,4.47-9.02,12.16-9.02,4.12,0,6.92-1.85,6.92-4.6,0-3.01-2.45-4.77-6.62-4.77s-7.04,1.76-7.13,4.51h-5.15c.34-5.67,4.9-9.02,12.29-9.02s11.68,3.52,11.68,9.19c0,6.01-4.17,9.19-11.94,9.19-4.51,0-7.22,1.68-7.22,4.51v2.88Z"/> <path fill="#fff" d="M428.06,28.59v-5.88c0-7.56,5.28-12.67,13.06-12.67s13.06,5.11,13.06,12.67v5.88c0,7.52-5.28,12.63-13.06,12.63s-13.06-5.11-13.06-12.63ZM449.11,28.59v-5.88c0-4.72-3.18-7.9-7.99-7.9s-7.99,3.18-7.99,7.9v5.88c0,4.72,3.18,7.9,7.99,7.9s7.99-3.18,7.99-7.9Z"/> <path fill="#fff" d="M462.25,36.02h19.16v4.68h-24.14v-7.56c0-5.71,4.47-9.02,12.16-9.02,4.12,0,6.92-1.85,6.92-4.6,0-3.01-2.45-4.77-6.62-4.77s-7.04,1.76-7.13,4.51h-5.15c.34-5.67,4.9-9.02,12.29-9.02s11.68,3.52,11.68,9.19c0,6.01-4.17,9.19-11.94,9.19-4.51,0-7.22,1.68-7.22,4.51v2.88Z"/> <path fill="#fff" d="M505.84,10.64v2.88l-13.92,27.19h-5.75l13.19-25.34h-16.41v-4.72h22.89Z"/> </g> </g> </svg>`;
-const H='https://claude.ai/artifact/RwocwwRsbsyPvWA7moz6jX';
-const deep=(page,label)=>'<a class="deep" href="'+H+'#'+page+'" target="_blank" rel="noopener"><span class="dk">Go deeper</span><span class="dv">'+label+'</span></a>';
-const XB=x=>'<div class="xb"><div><p>'+x+'</p></div></div>';
-const TAP=' role="button" tabindex="0" aria-expanded="false"';
-const card=(h,p,x,src)=>'<div class="card'+(x?' tap"'+TAP:'"')+'>'+(src?'<span class="src">'+src+'</span>':'')+'<h3>'+h+'</h3><p>'+p+'</p>'+(x?XB(x):'')+'</div>';
-const stat=(n,p,src,x)=>'<div class="stat'+(x?' tap"'+TAP:'"')+'><div class="n">'+n+'</div><p>'+p+'</p>'+(src?'<span class="src">'+src+'</span>':'')+(x?XB(x):'')+'</div>';
-const step=(n,h,p,x,ai)=>'<li class="'+(ai?'ai ':'')+(x?'tap':'')+'"'+(x?TAP:'')+'><span class="num">'+n+'</span><div><h3>'+h+'</h3>'+(p?'<p>'+p+'</p>':'')+(x?XB(x):'')+'</div></li>';
-const tl=(w,t,sub,cls)=>'<li class="'+(cls||'')+'"><span class="w">'+w+'</span><span class="t">'+t+(sub?'<span>'+sub+'</span>':'')+'</span></li>';
-const more=(label,rows,ai)=>'<div class="more'+(ai?' ai':'')+'"><div class="mk">'+label+'</div>'+rows.map(r=>'<div class="row tap"'+TAP+'><h4>'+r[0]+'</h4>'+XB(r[1])+'</div>').join('')+'</div>';
-const insight=prompt=>'<div class="insight" role="note"><span class="il">Team insight needed · Flavia, Daniel or Ana</span><p>Placeholder. <i>'+prompt+'</i></p></div>';
-
-const S=[
-{ch:'Innovation Labs 2027',cls:'cover',mesh:'on',html:`
-  <div class="logo">${LOGO}</div>
-  <div class="kick">The 2027 revamp</div>
-  <h1 class="big"><span>Human cognition first.</span><span class="ai">AI amplification second.</span></h1>
-  <p class="sub">What the 2026 cohort taught us, the bet we are making on how founders think, and what happens after Demo Day.</p>
-  <div class="hint"><i></i>Swipe or tap Start</div>
-  <div class="tip"><b>+</b>Drag the web behind. Open anything with a plus.</div>`},
-
-{ch:'Where we start',html:`
-  <div class="kick">2026 in one breath</div>
-  <h2 class="big">Half the intake. <em>The same number of finalists.</em></h2>
-  <div class="stats">
-    ${stat('80→41','teams in the program, 2025 to 2026.','Team funnel','221 teams applied from 16 cities and 57% advanced within the Hackathon. The 41 program teams split 26 Bucharest and 15 other cities. Pre-registration grew 55%, from 77 to 119 teams.')}
-    ${stat('17','teams at Demo Day, in both years.','Team funnel','The 2026 Grand Finale ran on 25 May at Opera Nationala Bucuresti, with 450+ invitees and 27 teams exhibiting at the Startups Fair.')}
-    ${stat('~53<small>h</small>','of mentoring per team.','Mentor retro, 7 July 2026','Roughly 2,200 hours donated by 221 mentors, across 526 touchpoints and 29 sessions. It is the number to defend in any conversation about cohort size, and it grows if the cohort shrinks.')}
-  </div>
-  ${deep('cohort.funnel','The funnel')}`},
-
-{ch:'Where we start',html:`
-  <div class="kick">What 2026 told us</div>
-  <h2 class="big">The program works. <em>Seven gaps to close.</em></h2>
-  <div class="two">
-    <div class="col"><h3>Worked</h3><div class="chips"><span>Community and networking</span><span>Bootcamp 1</span><span>Pitch Prep Workshop</span><span>Pre-recorded theory</span><span>Talks at real offices</span></div></div>
-    <div class="col gap"><h3>Needs fixing</h3><div class="chips"><span>Hardware teams underserved</span><span>Contradictory mentor advice</span><span>Three weekends in a row</span><span>Travel burden outside Bucharest</span><span>Online semifinals</span><span>Deliverables without feedback</span><span>Hybrid sessions</span></div></div>
-  </div>
-  ${more('Two moments from the record',[
-    ['A mentor who went hands-on','From the mentor retro: a mentor spent two hours teaching a team to build their first website and paid for their first month of subscription. One introverted team member visibly opened up over the program.'],
-    ['A session that never reached the online room','One participant waited 35 minutes to be called on, in a hybrid session that ended without ever reaching the online audience.']
-  ])}
-  ${insight('Add one real moment from the 2026 cohort that shows what worked or what broke, in the words of the person who saw it.')}
-  ${deep('findings','Findings')}`},
-
-{ch:'The problem',html:`
-  <div class="kick">The problem</div>
-  <h2 class="big">Founders are offloading <em>the thinking step.</em></h2>
-  <p class="sub">Interviews, competitive analysis, the pitch narrative. <b>More polished output, with less of their own reasoning underneath.</b></p>
-  <div class="stats">
-    ${stat('~55<small>%</small>','weaker brain connectivity, at most, in the ChatGPT group than in unaided writers.','MIT Media Lab, 2025','54 participants in three groups (ChatGPT, search engine, brain only) wrote essays over four months while EEG measured brain activity. Connectivity fell as outside support rose. The authors call the effect cognitive debt.')}
-    ${stat('83<small>%</small>','of ChatGPT users could not quote a sentence from the essay they had just written.','MIT Media Lab, 2025','Their essays also clustered together, statistically homogeneous within each topic.')}
-    ${stat('666','participants. Frequent AI use went with weaker critical thinking, and younger people were more dependent.','Gerlich, 2025','A significant negative correlation, mediated by cognitive offloading. Younger participants showed higher dependence and lower critical-thinking scores than older ones.')}
-  </div>
-  <p class="fine">The MIT study is a preprint under review. Gerlich's finding is a correlation. That is why we also measure the effect on our own teams.</p>
-  ${deep('evidence.problem','The evidence')}`},
-
-{ch:'The idea',html:`
-  <div class="kick">The idea</div>
-  <h2 class="big">AI doesn't write version one. <span class="ai">It challenges it.</span></h2>
-  <ol class="steps">
-    ${step(1,'Think in analog','Write, sketch and map assumptions on paper first.')}
-    ${step(2,'Think together','Show unfinished work to peers and defend it out loud.')}
-    ${step(3,'Challenge with AI','Only once an original version exists.','Its job is to challenge assumptions, find blind spots, propose alternatives, play devil\'s advocate and generate counterarguments. It does not author.',true)}
-    ${step(4,'Human synthesis','The founder makes the final call and owns the reasoning.')}
-  </ol>
-  <div class="flow"><span class="lbl">By May</span><span>Observe</span><span>Think</span><span>Sketch</span><span>Discuss</span><span>Build</span><span class="ai">Challenge with AI</span><span>Synthesize</span><span>Decide</span></div>
-  <div class="flow not"><span class="lbl">Not</span><span>Prompt</span><span>Copy</span><span>Present</span></div>
-  <p class="hw">AI doesn't accelerate anything if you don't already know in detail what you want.</p>
-  ${deep('program.sequence','The learning sequence')}`},
-
-{ch:'The program',html:`
-  <div class="kick">In the room</div>
-  <h2 class="big">Paper first, <em>inside blocks we already run.</em></h2>
-  <div class="cards">
-    ${card('Paper-only interviews','Phones and laptops away, then affinity-mapping on a physical wall.','Applied to the Bootcamp 1 mock interviews. Modelled on the pen-versus-laptop research and Reggio Emilia.','Bootcamp 1')}
-    ${card('Competitor war wall','Printed one-pagers sorted into direct, indirect and ecosystem.','Teams move cards between columns as a group and keep a running paper changelog of competitor moves across the bootcamp.','Bootcamp 1')}
-    ${card('Red-flag bell round','Anyone rings the bell the moment they hear a red flag.','Live, low-stakes pitch practice in front of peers. Self-enforced by peers instead of policed by a mentor.','Pitch practice')}
-  </div>
-  <p class="sub">No new time is added. The analog step goes into existing blocks.</p>
-  ${more('Then AI as the challenger',[
-    ['Five challenger skills','mom-test-interrogator, red-team-my-pitch, blind-spot-competitor-hunt, assumption-stress-test and juror-simulator. Each pressure-tests work a founder already built. Output is a discussion prompt for the mentor session, not a pass or fail gate.'],
-    ['How AI Tricks You','A proposed course in five blocks: how AI flatters you, what you lose when you offload, how AI fails silently, context engineering, and a live exercise red-teaming a real deliverable. It ends in an AI-use log per team.'],
-    ['The integrity line','AI-fabricated interviews and competitors don\'t count. Real people and real sources, or the deliverable is invalid.']
-  ],true)}
-  ${deep('program.exercises','The exercises')}`},
-
-{ch:'The people',mesh:'on',html:`
-  <div class="kick">Mentors and coaches</div>
-  <h2 class="big">Fewer contradictions. <em>More hands-on help.</em></h2>
-  <div class="cards">
-    ${card('Hands-on mentors','Two to three per team, one business and one tech. They evaluate deliverables, not just advise.','A vetted mentor core, admitted after a 30-minute conversation with the core team. Mentors can register interest in a specific team during the Hackathon.')}
-    ${card('PODS','Three to five teams, one facilitator, two to three mentors, held for the whole program.','The facilitator is core team or a trusted coach. 45 minutes to one hour, weekly.')}
-    ${card('One shared rubric','Mentors co-author the standard each challenger skill enforces.','One mentor-authored standard, checked consistently across teams, is the fix for the contradictory-advice gap.')}
-  </div>
-  ${more('How we stay close',[
-    ['Coachability','Keep the brutal feedback format public and unsoftened, and add private 1:1 coaching alongside it. Make coachability an explicit stated value at Bootcamp 2, and a selection criterion.'],
-    ['The accountability loop','A weekly checkpoint with the coach plus a form: what they did, what they discovered, what they changed, what is next. A weekly public status check in front of the other teams.']
-  ])}
-  ${insight('Add a real mentoring moment that shows why matching, or one shared standard, matters.')}
-  ${deep('people.structure','The mentor system')}`},
-
-{ch:'The year',html:`
-  <div class="kick">The 2027 year</div>
-  <h2 class="big">A smaller cohort. <em>A week to act on feedback.</em></h2>
-  <ul class="tl">
-    ${tl('24–25 Oct 2026','Mini-Hackathon in Bucharest','With SiSC. Pre-program starts in October, in the app.')}
-    ${tl('Nov 2026','AI Validation Bootcamp','In Bucharest, with LSAC.')}
-    ${tl('About 20–21 Mar','National Hackathon','In Bucharest. Teams cluster into four paths.','est')}
-    ${tl('Mar – Apr','Two bootcamps, then a buffer week','The cohort is cut one week after Bootcamp 2.','key')}
-    ${tl('End of Apr','Boost days and mentor cafés','Teams are evaluated.')}
-    ${tl('Mid May','Demo Day national semifinals','Teams are evaluated.')}
-    ${tl('About 24 May','Startup Fair and Demo Day final','','est')}
-    ${tl('From June','Alumni community and IL Beyond')}
-  </ul>
-  <p class="fine">Dates marked about are estimates. The 2027 calendar is a proposal, pending university calendars.</p>
-  ${more('Why cut later, and smaller',[
-    ['The buffer week','Teams in 2026 said one week between bootcamps was not enough to implement feedback. Cutting a week after Bootcamp 2 measures whether a team applied the feedback, not where it stood on the day.'],
-    ['The cohort','Of the 41 teams in 2026, the read is that around 25 were worth the program\'s full resources. The 2027 estimate is 40 teams accepted into the program and 12 at Demo Day.'],
-    ['Not the only exit','Deliverables are evaluated on an ongoing basis, with a checkpoint two weeks after the Hackathon for teams admitted on potential. After Bootcamp 2, at-risk teams hear the expectations explicitly before the cut.']
-  ])}
-  ${deep('cohort.calendar','The calendar')}`},
-
-{ch:'After Demo Day',mesh:'on',html:`
-  <div class="kick">IL Beyond</div>
-  <h2 class="big">Demo Day is the doorway. <em>Not the finish line.</em></h2>
-  <p class="sub">Reaching the finals was never the same as being fundable. IL Beyond <b>replaces that cliff with a slope.</b></p>
-  <ol class="steps">
-    ${step('S1','Build · July to September','6 teams. Product-market fit and a technical moat.')}
-    ${step('S2','Sell · October to December','3 to 4 teams. Incorporate, sign contracts, get investment-ready.')}
-    ${step('S3','Raise · January to February','2 teams. From term sheet to money in the bank, with angels and VCs co-investing.')}
-  </ol>
-  ${more('Open for the details',[
-    ['The objectives','At least 2 companies sign a term sheet for a EUR 300k to 500k pre-seed round. At least 1 reaches an actual investment with EGV or another pre-seed institutional investor.'],
-    ['The EGV Investment Prize moves here','It leaves the Demo Day stage and is deployed at the end of Stage 3, alongside IL\'s own EUR 20,000 angel bridge. The recognition awards stay at Demo Day. This needs EGV\'s agreement.'],
-    ['Who can apply','This year\'s graduates and alumni from any past year. Up to EUR 38,800 per team across all three stages.']
-  ])}
-  ${insight('Add what actually happened to a team after Demo Day that convinced us to build this track.')}
-  ${deep('beyond','IL Beyond')}`},
-
-{ch:'The test',html:`
-  <div class="kick">The test</div>
-  <h2 class="big">Analog-first is a bet. <em>We will measure it.</em></h2>
-  <p class="sub">None of the evidence proves paper-first exercises build better companies. So we settle it on our own teams.</p>
-  <ol class="steps">
-    ${step(1,'Deliverable quality','Share of teams whose deliverables improve between Bootcamp 1 and Bootcamp 2.')}
-    ${step(2,'Feedback on time','Share of deliverables that get mentor feedback within the deadline.','Nothing measured either of these in 2026, and that is what 2026 measurably failed at.')}
-    ${step(3,'The AI-use log','On every submission: what we planned, what we asked AI, what we verified.','The full template: what we planned, what we did, what surprised us, what we changed, what we asked AI, and what we verified.',true)}
-  </ol>
-  ${more('Open for the limits',[
-    ['What the evidence does not show','The strongest findings are about children and transfer weakly. The most relevant findings, on adults and AI, are recent and partly correlational. The chain from handwriting aiding encoding to a better pitch is unvalidated.'],
-    ['The handwriting caveat','Laptop note-takers did worse on conceptual questions in several studies, but a 2019 replication found the effect does not hold up consistently. We treat the mechanism as plausible, not settled.']
-  ])}
-  ${deep('evidence.hypothesis','The hypothesis')}`},
-
-{ch:'Go deeper',cls:'cover',mesh:'on',html:`
-  <div class="logo">${LOGO}</div>
-  <div class="kick">The strategy hub</div>
-  <h2 class="big">This was the front door. <em>The hub has the rest.</em></h2>
-  <p class="sub">Every number, source and open decision lives in the hub. Pick a page.</p>
-  <div class="go">
-    <a href="${H}#map" target="_blank" rel="noopener"><b>Strategy map</b><span>The revamp as one route</span></a>
-    <a href="${H}#findings" target="_blank" rel="noopener"><b>Findings</b><span>What 2026 told us</span></a>
-    <a class="ai" href="${H}#evidence" target="_blank" rel="noopener"><b>Evidence</b><span>The research and its limits</span></a>
-    <a class="ai" href="${H}#program" target="_blank" rel="noopener"><b>Program</b><span>Sequence, exercises, AI skills</span></a>
-    <a href="${H}#people" target="_blank" rel="noopener"><b>People</b><span>Mentors, coaches, coachability</span></a>
-    <a href="${H}#cohort" target="_blank" rel="noopener"><b>Cohort</b><span>Funnel, calendar, KPIs</span></a>
-    <a href="${H}#partners" target="_blank" rel="noopener"><b>Partners</b><span>Co-builders and the Energy track</span></a>
-    <a href="${H}#beyond" target="_blank" rel="noopener"><b>IL Beyond</b><span>Build, Sell, Raise</span></a>
-  </div>
-  <a class="main-cta" href="${H}" target="_blank" rel="noopener">Open the strategy hub</a>`}
-];
-
-const $=id=>document.getElementById(id);
-const N=S.length;
-let cur=0,first=true;
-const reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-const web=reduce?null:ILWeb($('web'),{world:3.2,density:1.1,seed:7,lineA:.26});
-if(web){web.bind(document);document.addEventListener('visibilitychange',()=>{document.hidden?web.stop():web.start();});}
-
-$('stage').innerHTML=S.map((s,i)=>'<section class="slide '+(s.cls||'')+'" id="s'+i+'" aria-label="Slide '+(i+1)+' of '+N+'" data-pos="after"><div class="in">'+s.html+'</div></section>').join('');
-$('segs').innerHTML=S.map(()=>'<i></i>').join('');
-
-function render(){
-  document.querySelectorAll('.slide').forEach((el,i)=>{
-    el.dataset.pos=i<cur?'before':(i>cur?'after':'on');
-    el.setAttribute('aria-hidden',i===cur?'false':'true');
-    if(i===cur)el.scrollTop=0;
-    else el.querySelectorAll('.tap[aria-expanded="true"]').forEach(t=>t.setAttribute('aria-expanded','false'));
+  rh.innerHTML=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><path d="${d}" vector-effect="non-scaling-stroke"/></svg>`;
+  STOPS.forEach((st,i)=>{
+    const el=document.createElement('div');
+    el.className='stop '+(i%2?'dn':'up')+(st.isNew?' new':'');
+    el.style.left=pts[i].x+'%';el.style.top=pts[i].y+'%';
+    el.innerHTML=`<button class="disc" aria-label="Stop ${st.n}: ${st.t}">${st.n}</button><button class="rlbl" tabindex="-1"><span class="w">${st.w}</span><span class="t">${st.t}</span><span class="d">${st.d}</span></button>`;
+    el.querySelectorAll('button').forEach(b=>b.onclick=()=>{const j=firstSlideFor(st.n);if(j>=0)go(j)});
+    rh.appendChild(el);
   });
-  document.querySelectorAll('#segs i').forEach((el,i)=>{el.className=i<cur?'done':(i===cur?'cur':'');});
-  document.body.dataset.mesh=S[cur].mesh||'low';
-  $('chap').innerHTML='<b>'+S[cur].ch+'</b>';
-  $('chapn').textContent=String(cur+1).padStart(2,'0')+' / '+String(N).padStart(2,'0');
-  $('prev').disabled=cur===0;
-  $('next').disabled=cur===N-1;
-  $('next').textContent=cur===0?'Start':'Next';
-  if(web){web.setCam(cur/(N-1));if(!first&&S[cur].mesh==='on')web.pulse(innerWidth/2,innerHeight*.45,true);}
-  first=false;
-  try{history.replaceState(null,'','#'+(cur+1));}catch(e){}
-}
-function go(i){cur=Math.max(0,Math.min(N-1,i));render();}
-$('prev').addEventListener('click',()=>go(cur-1));
-$('next').addEventListener('click',()=>go(cur+1));
-function toggle(el){
-  const open=el.getAttribute('aria-expanded')!=='true';
-  el.setAttribute('aria-expanded',open?'true':'false');
-  if(open)setTimeout(()=>{try{el.scrollIntoView({block:'nearest',behavior:reduce?'auto':'smooth'});}catch(e){}},320);
-}
-$('stage').addEventListener('click',e=>{if(e.target.closest('a'))return;const t=e.target.closest('.tap');if(t)toggle(t);});
-document.addEventListener('keydown',e=>{
-  const t=e.target.closest&&e.target.closest('.tap');
-  if(t&&(e.key==='Enter'||e.key===' ')){e.preventDefault();toggle(t);return;}
-  if(e.key==='ArrowRight'||e.key==='PageDown')go(cur+1);
-  else if(e.key==='ArrowLeft'||e.key==='PageUp')go(cur-1);
-  else if(e.key==='Home')go(0);
-  else if(e.key==='End')go(N-1);
-});
-let tx=0,ty=0,tt=0,noNav=false;
-$('stage').addEventListener('touchstart',e=>{const t=e.changedTouches[0];tx=t.clientX;ty=t.clientY;tt=Date.now();noNav=web?web.isGrabbing():false;},{passive:true});
-$('stage').addEventListener('touchend',e=>{
-  if(noNav)return;
-  const t=e.changedTouches[0],dx=t.clientX-tx,dy=t.clientY-ty;
-  if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.5&&Date.now()-tt<900)go(dx<0?cur+1:cur-1);
-},{passive:true});
-const n0=parseInt((location.hash||'').replace('#',''),10);if(n0>=1&&n0<=N)cur=n0-1;
-window.addEventListener('hashchange',()=>{const n=parseInt((location.hash||'').replace('#',''),10);if(n>=1&&n<=N&&n-1!==cur){cur=n-1;render();}});
-render();
+  // route, portrait
+  const rv=document.getElementById('routeV');
+  STOPS.forEach(st=>{
+    const li=document.createElement('li');if(st.isNew)li.className='new';
+    li.innerHTML=`<button><span class="vd">${st.n}</span><span class="vt"><span class="w">${st.w}${st.isNew?' · new':''}</span><span class="t">${st.t}</span><span class="d">${st.d}</span></span></button>`;
+    li.querySelector('button').onclick=()=>{const j=firstSlideFor(st.n);if(j>=0)go(j)};
+    rv.appendChild(li);
+  });
+
+  // funnel bars (source: team funnel table; 2027 estimated)
+  const DATA=[["Accepted into the program",80,41,40],["Reached semifinals",42,34,25],["At Demo Day",17,17,12]];
+  const bars=document.getElementById('bars');
+  DATA.forEach(([lab,a,b,c])=>{
+    const g=document.createElement('div');g.className='bgrp';
+    const row=(cls,y,v)=>`<div class="br ${cls}"><span class="y">${y}</span><span class="fill" style="width:calc(${(v/80*78).toFixed(2)}%)"></span><span class="v">${v}</span></div>`;
+    g.innerHTML=`<span class="lab">${lab}</span><div class="bset">${row('c25','2025',a)}${row('c26','2026',b)}${row('c27','2027 est.',c)}</div>`;
+    bars.appendChild(g);
+  });
+
+  // navigation
+  const chap=document.getElementById('chap'),count=document.getElementById('count'),pv=document.getElementById('pv'),nx=document.getElementById('nx');
+  let cur=-1;
+  const land=()=>matchMedia('(orientation:landscape)').matches;
+  function fit(s){
+    s.style.setProperty('--k',1);
+    if(!land())return;
+    let k=1;
+    while(s.scrollHeight>s.clientHeight+3&&k>.66){k-=.03;s.style.setProperty('--k',k.toFixed(2))}
+  }
+  function go(i,fromHash){
+    i=Math.max(0,Math.min(N-1,i));
+    const dir=i<cur?'back':'';
+    slides.forEach((s,j)=>{s.classList.toggle('on',j===i);s.classList.toggle('back',j!==i&&j>i);s.setAttribute('aria-hidden',j!==i);s.inert=j!==i});
+    cur=i;const s=slides[i];s.scrollTop=0;fit(s);
+    [...prog.children].forEach((b,j)=>{b.className=j<i?'done':(j===i?'cur':'')});
+    const st=stopsOf(s);
+    mini.classList.toggle('all',s.dataset.stops==="all");
+    [...mini.children].forEach((b,j)=>b.classList.toggle('on',s.dataset.stops!=="all"&&st.includes(j+1)));
+    chap.textContent=s.dataset.chap;
+    count.textContent=String(i+1).padStart(2,'0')+' / '+N;
+    pv.disabled=i===0;nx.disabled=i===N-1;
+    if(!fromHash){try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+  }
+  pv.onclick=()=>go(cur-1);nx.onclick=()=>go(cur+1);
+  document.getElementById('restart').onclick=()=>go(0);
+  addEventListener('keydown',e=>{
+    if(e.target.closest&&e.target.closest('input,textarea'))return;
+    if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();go(cur+1)}
+    else if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(cur-1)}
+    else if(e.key==='Home')go(0);else if(e.key==='End')go(N-1);
+  });
+  let tx=0,ty=0;
+  const stage=document.getElementById('stage');
+  stage.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+  stage.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.4)go(cur+(dx<0?1:-1))},{passive:true});
+  let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>fit(slides[cur]),120)});
+  addEventListener('hashchange',()=>{const h=/^#s(\d+)$/.exec(location.hash);if(h&&+h[1]-1!==cur)go(+h[1]-1,true)});
+  const m=/^#s(\d+)$/.exec(location.hash);
+  go(m?+m[1]-1:0,true);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>fit(slides[cur]));
+})();
 </script>
 
 </body></html>

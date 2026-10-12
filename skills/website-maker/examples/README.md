@@ -1,13 +1,14 @@
-# Strategy Hub reference
+# Website reference example
 
-Use this output as a reference for:
-- source-rich deep dives;
-- strong IL navigation and information hierarchy;
-- teal identity;
-- relationship between overview and deeper sections.
+`IL2027_strategy_hub.html` is the current v0.4 Strategy Hub reference supplied/generated in Flavia's refreshed direction.
 
-Do not generalize the highly animated map mesh as a default map background.
+Study it for:
+- one shell with Map + Hub views;
+- a full route and mini-map driven from one shared internal stop array;
+- calm route-first map treatment;
+- split hero with route preview;
+- continuous editorial deep dives;
+- Light/Night adaptation;
+- fluid responsive layout and vertical journey on portrait phones.
 
-Preserve the recognizable connected route/stop journey, but render it as the calmer horizontal serpentine Map Proposal pattern defined in `skills/website-maker/references/map-proposal-pattern.md`.
-
-This is a reference implementation, not a template to copy literally.
+Treat it as a reference implementation, not a template. Preserve source meaning and adapt the internal layout to each new artifact.

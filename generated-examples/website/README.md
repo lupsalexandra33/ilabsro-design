@@ -1,10 +1,7 @@
-# Generated example
+# Generated website example
 
-Generated with:
-- `website-maker`
+Current v0.4 generated example for `website-maker`.
 
-Source:
-- Innovation Labs 2027 strategy
+`index.html` was generated during plugin validation from the Innovation Labs 2027 source material and is kept here as an example of the plugin's output.
 
-Purpose:
-- Demonstrates how the plugin turns the same source material into a Strategy Hub.
+Reference implementations live under `skills/website-maker/examples/` and are used as design guidance. They are intentionally kept separate from generated examples.

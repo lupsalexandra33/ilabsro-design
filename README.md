@@ -1,43 +1,52 @@
 # ilabsro-design
 
-Innovation Labs design plugin prototype, synced with the native **Innovation Labs** Claude Design System. v0.3 tightens Strategy Map fidelity and removes generic catch-all `Open Threads` sections by default.
+Portable Innovation Labs design plugin for Claude. v0.4 synchronizes the plugin with the latest Strategy Hub, route-first presentation and Flavia's refreshed showcase while keeping the plugin usable without a private Claude Design System.
 
 ## Mental model
 
-- **Bundled Design System** = portable source of truth for how Innovation Labs looks.
+- **Bundled Design System** = portable source of truth for how Innovation Labs looks and behaves.
 - **Native Claude Design System** = optional richer editor/runtime representation of the same rules.
 - **Output skill** = what you are making.
 - **Tone lens** = how the copy sounds.
+- **Brand elements** = optional visual modifier for accent, branded grounds and official decorative assets.
 - **Source material** = what the output says.
 
-The plugin is intentionally usable by collaborators who **do not** have Alexandra's native Design System installed. Every output skill must be able to fall back to `design-system/INNOVATION_LABS_DESIGN_SYSTEM.md` and `design-system/TOKENS.css`.
+Every output skill must work when the native Design System is unavailable by falling back to `design-system/INNOVATION_LABS_DESIGN_SYSTEM.md`, `design-system/TOKENS.css` and the bundled assets.
 
 ## Skills
 
-- `website-maker` — strategy hubs, calm map/route previews and connected IL web artifacts.
-- `presentation-maker` — catchy, pitch-like strategy decks linked back to a deeper Hub; presentation-only playable mesh is allowed.
-- `one-pager-maker` — A4/PDF strategy and partner summaries.
-- `insta-post-maker` — experimental social post/carousel output.
+- `website-maker` — Strategy Hubs, calm route/map previews and connected IL web artifacts.
+- `presentation-maker` — pitch-like decks; route-first for strategy/program narratives; optional presentation-only playable network.
+- `one-pager-maker` — exact one-page/A4 summaries and partner briefs.
+- `insta-post-maker` — photo-led event social and campaign/template social.
+- `brand-elements` — optional visual modifier that selects accent, branded ground and one official IL element.
 - `formal-lens` — formal voice modifier.
 - `friendly-lens` — warm, clear voice modifier.
 - `jokey-lens` — restrained playful voice modifier.
 
 ## Portable design files
 
-- `design-system/INNOVATION_LABS_DESIGN_SYSTEM.md` — full rules, format behavior, component catalog and confirmed token values.
-- `design-system/TOKENS.css` — reusable Light/Night token subset extracted from the native system.
-- `design-system/COMPONENT_CATALOG.md` — 17 component patterns.
-- `assets/` — 2027 logo variants.
+- `design-system/INNOVATION_LABS_DESIGN_SYSTEM.md` — full v0.4 rules and format behavior.
+- `design-system/TOKENS.css` — Light/Night + purple/yellow accent tokens and branded ground tokens.
+- `design-system/BRAND_ELEMENTS.md` — official backgrounds, SVG elements and pairing rules.
+- `design-system/COMPONENT_CATALOG.md` — reusable interaction/content patterns.
+- `assets/brand-elements/` — 16 official SVG decorative elements.
+- `assets/backgrounds/` — IL template backgrounds for campaign/social/PDF uses.
+- `assets/logo_*.svg` — official 2027 logo variants.
 
 ## Composition
 
-Use **one output skill** + **zero or one tone lens** + the bundled/native Innovation Labs Design System.
+For a normal task use **one output skill** + **zero or one tone lens** + **optional `brand-elements`** + the bundled/native Innovation Labs Design System.
 
 Examples:
 
-- `presentation-maker` + `friendly-lens` → founder-facing strategy deck.
+- `presentation-maker` + `friendly-lens` → founder-facing route-first strategy deck.
+- `presentation-maker` + `brand-elements` → route deck with an explicitly requested yellow accent or branded cover ground.
 - `one-pager-maker` + `formal-lens` → partner-facing one-pager.
-- `website-maker` → source-rich Strategy Hub / calm Map experience.
-- Add the public Humanizer skill as an optional final copy pass when useful; do not duplicate it inside this plugin.
+- `website-maker` → source-rich Strategy Hub / calm Route experience.
+- `insta-post-maker` → event-photo carousel with photo-to-teal blending.
+- `insta-post-maker` + `brand-elements` → campaign carousel on an approved template ground with one official SVG element.
+
+The public Humanizer skill can be an optional final copy pass when useful; it is not a dependency of this plugin.
 
 See `docs/USAGE.md` and `docs/TEST_MATRIX.md`.
