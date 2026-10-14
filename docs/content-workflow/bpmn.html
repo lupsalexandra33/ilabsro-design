@@ -1,0 +1,372 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>IL Content Workflow MVP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,600&display=swap">
+<style>
+/* Layout: one wide swimlane canvas (scrolls sideways on phones), a slide-in detail drawer, short scope notes below */
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --fg:#17202e; --muted:#5b6678; --line:#d5dbe4; --lane:#eef1f5; --lane-alt:#f9fafb;
+  --accent:#0f6d6a;
+  --human-bg:#e8f0fe; --human-st:#2f5fbf; --human-fg:#183b7a;
+  --ai-bg:#f1ebfd; --ai-st:#7444c9; --ai-fg:#45207f;
+  --sys-bg:#eaf3ef; --sys-st:#3d7d63; --sys-fg:#1f4c3b;
+  --arrow:#56627a; --dim:.28;
+  --f-display:"Fraunces",Georgia,serif; --f-body:"IBM Plex Sans",system-ui,sans-serif; --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12161d; --surface:#1a2029; --fg:#e6eaf0; --muted:#9aa5b6; --line:#2e3744; --lane:#171d26; --lane-alt:#1c232d;
+  --accent:#4fc4bd;
+  --human-bg:#1c2a45; --human-st:#7aa2ef; --human-fg:#cfdcfb;
+  --ai-bg:#2a2042; --ai-st:#ad8af0; --ai-fg:#e3d8fb;
+  --sys-bg:#1b2e27; --sys-st:#6fbf9d; --sys-fg:#cdeadd;
+  --arrow:#8f9bb0; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12161d; --surface:#1a2029; --fg:#e6eaf0; --muted:#9aa5b6; --line:#2e3744; --lane:#171d26; --lane-alt:#1c232d;
+  --accent:#4fc4bd;
+  --human-bg:#1c2a45; --human-st:#7aa2ef; --human-fg:#cfdcfb;
+  --ai-bg:#2a2042; --ai-st:#ad8af0; --ai-fg:#e3d8fb;
+  --sys-bg:#1b2e27; --sys-st:#6fbf9d; --sys-fg:#cdeadd;
+  --arrow:#8f9bb0; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.5}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:20px;padding-block:28px 48px;display:grid;gap:22px}
+header{display:grid;gap:6px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:var(--f-display);font-weight:600;font-size:clamp(24px,3.2vw,34px);line-height:1.15;margin:0;text-wrap:balance}
+.lede{margin:0;color:var(--muted);max-width:68ch}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;color:var(--muted);align-items:center}
+.chip{display:inline-flex;align-items:center;gap:7px}
+.sw{width:16px;height:12px;border-radius:3px;border:1.5px solid}
+.sw.h{background:var(--human-bg);border-color:var(--human-st)}
+.sw.a{background:var(--ai-bg);border-color:var(--ai-st);border-style:dashed}
+.sw.s{background:var(--sys-bg);border-color:var(--sys-st)}
+.sw.g{width:12px;height:12px;transform:rotate(45deg);background:var(--human-bg);border-color:var(--human-st);border-radius:1px}
+.hint{font-family:var(--f-mono);font-size:12px}
+.canvas{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow-x:auto}
+svg.bpmn{display:block;width:100%;min-width:1100px;height:auto}
+.lane-bg{fill:var(--lane)} .lane-bg.alt{fill:var(--lane-alt)}
+.lane-div{stroke:var(--line);stroke-width:1}
+.lane-head{cursor:pointer}
+.lane-head rect{fill:var(--surface);stroke:var(--line)}
+.lane-head text{fill:var(--fg);font:600 13px var(--f-body)}
+.lane-head .sub{fill:var(--muted);font:400 10.5px var(--f-mono);letter-spacing:.04em}
+.flow{fill:none;stroke:var(--arrow);stroke-width:1.6}
+.flow.alt{stroke-dasharray:5 4}
+.blabel{fill:var(--fg);font:500 11.5px var(--f-mono)}
+.blabel-bg{fill:var(--surface);stroke:var(--line)}
+.el{cursor:pointer;outline:none}
+.el .shape{stroke-width:1.6;transition:stroke-width .15s}
+.el text{font:500 12.5px var(--f-body);pointer-events:none}
+.el .tag{font:500 9.5px var(--f-mono);letter-spacing:.06em}
+.el.human .shape{fill:var(--human-bg);stroke:var(--human-st)} .el.human text{fill:var(--human-fg)}
+.el.ai .shape{fill:var(--ai-bg);stroke:var(--ai-st);stroke-dasharray:6 3} .el.ai text{fill:var(--ai-fg)}
+.el.sys .shape{fill:var(--sys-bg);stroke:var(--sys-st)} .el.sys text{fill:var(--sys-fg)}
+.el.event .shape{fill:var(--surface);stroke:var(--fg)} .el.event.end .shape{stroke-width:3.2}
+.el.event text{fill:var(--muted);font:400 10.5px var(--f-mono)}
+.el:hover .shape,.el:focus-visible .shape{stroke-width:2.6}
+.el:focus-visible .ring{stroke:var(--accent);stroke-width:2;fill:none;opacity:1}
+.ring{opacity:0}
+.lane-head:focus-visible rect{stroke:var(--accent);stroke-width:2}
+.lane-head{outline:none}
+svg.focus .el:not(.sel),svg.focus .flow,svg.focus .blabel,svg.focus .blabel-bg,svg.focus .lane-head:not(.sel){opacity:var(--dim);transition:opacity .2s}
+.el.sel .shape{stroke-width:3}
+.el.sel .ring{opacity:1;stroke:var(--accent);stroke-width:2.5;fill:none;stroke-dasharray:none}
+.lane-head.sel rect{stroke:var(--accent);stroke-width:2.5}
+/* drawer */
+.scrim{position:fixed;inset:0;background:rgba(10,14,20,.25);z-index:9}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:var(--surface);border-left:1px solid var(--line);z-index:10;display:flex;flex-direction:column;box-shadow:-12px 0 32px rgba(0,0,0,.12);padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);transform:translateX(0);transition:transform .22s ease}
+.drawer[hidden]{display:flex!important;transform:translateX(105%);visibility:hidden}
+.d-head{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;padding:20px 20px 14px;border-bottom:1px solid var(--line)}
+.d-head h2{font-family:var(--f-display);font-weight:600;font-size:22px;line-height:1.2;margin:4px 0 0;text-wrap:balance}
+.pill{display:inline-block;font:500 11px var(--f-mono);letter-spacing:.05em;text-transform:uppercase;padding:3px 8px;border-radius:999px;border:1px solid}
+.pill.human{background:var(--human-bg);color:var(--human-fg);border-color:var(--human-st)}
+.pill.ai{background:var(--ai-bg);color:var(--ai-fg);border-color:var(--ai-st)}
+.pill.sys{background:var(--sys-bg);color:var(--sys-fg);border-color:var(--sys-st)}
+.pill.event{background:var(--lane);color:var(--muted);border-color:var(--line)}
+.close{flex:none;font:500 13px var(--f-body);background:var(--lane);color:var(--fg);border:1px solid var(--line);border-radius:6px;padding:6px 10px;cursor:pointer}
+.close:hover{border-color:var(--fg)} .close:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.d-body{overflow-y:auto;padding:16px 20px 28px;display:grid;gap:16px}
+.d-body .summary{margin:0;font-size:15px}
+dl{margin:0;display:grid;gap:14px}
+dt{font:500 11px var(--f-mono);letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+dd{margin:0;font-size:14px}
+dd ul{margin:0;padding-left:18px;display:grid;gap:3px}
+.crit{font:500 10.5px var(--f-mono);letter-spacing:.04em;padding:1px 6px;border-radius:4px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.crit.gate{color:var(--accent);border-color:var(--accent)}
+.guard dd{border-left:3px solid var(--accent);padding-left:10px}
+.next{font-size:13px;color:var(--muted)}
+.next button{font:500 13px var(--f-body);color:var(--accent);background:none;border:none;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+/* scope */
+.scope{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px 28px;border-top:1px solid var(--line);padding-top:18px}
+.scope h3{font:600 12px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;margin:0 0 6px;color:var(--accent)}
+.scope h3.later{color:var(--muted)}
+.scope ul{margin:0;padding-left:18px;color:var(--fg);font-size:14px;display:grid;gap:3px}
+.scope-title{grid-column:1/-1;font-family:var(--f-display);font-weight:600;font-size:19px;margin:0}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Innovation Labs · content workflow · MVP</span>
+    <h1>From strategy documents to reviewed drafts</h1>
+    <p class="lede">A semi-automated path that turns existing IL material into content ideas without losing what the strategy actually says. Click any step, decision or lane to see what happens there.</p>
+  </header>
+
+  <div class="legend" aria-label="Legend">
+    <span class="chip"><span class="sw h"></span>Human step</span>
+    <span class="chip"><span class="sw a"></span>AI-assisted step</span>
+    <span class="chip"><span class="sw s"></span>System / storage</span>
+    <span class="chip"><span class="sw g"></span>Human decision</span>
+    <span class="hint">Click an element · Esc closes</span>
+  </div>
+
+  <div class="canvas">
+  <svg class="bpmn" id="bpmn" viewBox="0 0 1590 524" role="group" aria-label="Swimlane diagram of the content workflow">
+    <defs>
+      <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M0 0L10 5L0 10z" fill="var(--arrow)"/>
+      </marker>
+    </defs>
+
+    <!-- lanes -->
+    <rect class="lane-bg" x="0" y="0" width="1590" height="130"/>
+    <rect class="lane-bg alt" x="0" y="130" width="1590" height="130"/>
+    <rect class="lane-bg" x="0" y="260" width="1590" height="130"/>
+    <rect class="lane-bg alt" x="0" y="390" width="1590" height="134"/>
+    <line class="lane-div" x1="0" y1="130" x2="1590" y2="130"/>
+    <line class="lane-div" x1="0" y1="260" x2="1590" y2="260"/>
+    <line class="lane-div" x1="0" y1="390" x2="1590" y2="390"/>
+
+    <g class="lane-head" data-id="lane-human" tabindex="0" role="button" aria-label="Lane: IL team">
+      <rect x="0" y="0" width="120" height="130"/>
+      <text x="14" y="58">IL team</text><text class="sub" x="14" y="76">HUMAN</text>
+    </g>
+    <g class="lane-head" data-id="lane-ai" tabindex="0" role="button" aria-label="Lane: AI agent">
+      <rect x="0" y="130" width="120" height="130"/>
+      <text x="14" y="188">AI agent</text><text class="sub" x="14" y="206">AI-ASSISTED</text>
+    </g>
+    <g class="lane-head" data-id="notion" tabindex="0" role="button" aria-label="Lane: Notion">
+      <rect x="0" y="260" width="120" height="130"/>
+      <text x="14" y="318">Notion</text><text class="sub" x="14" y="336">SYSTEM</text>
+    </g>
+    <g class="lane-head" data-id="lane-after" tabindex="0" role="button" aria-label="Lane: After selection">
+      <rect x="0" y="390" width="120" height="134"/>
+      <text x="14" y="450">After</text><text x="14" y="466">selection</text><text class="sub" x="14" y="484">SELECTED ONLY</text>
+    </g>
+
+    <!-- flows -->
+    <path class="flow" d="M184 65H208" marker-end="url(#ah)"/>
+    <path class="flow" d="M270 95V195H388" marker-end="url(#ah)"/>
+    <path class="flow" d="M510 195H558" marker-end="url(#ah)"/>
+    <path class="flow alt" d="M620 225V244H450V227" marker-end="url(#ah)"/>
+    <rect class="blabel-bg" x="476" y="234" width="118" height="20" rx="4"/><text class="blabel" x="535" y="248" text-anchor="middle">Flag for revision</text>
+    <path class="flow" d="M680 195H770V293" marker-end="url(#ah)"/>
+    <rect class="blabel-bg" x="686" y="168" width="78" height="20" rx="4"/><text class="blabel" x="725" y="182" text-anchor="middle">Passed</text>
+    <g transform="translate(170 0)">
+    <path class="flow" d="M680 325H790V97" marker-end="url(#ah)"/>
+    <path class="flow" d="M850 65H918" marker-end="url(#ah)"/>
+    <path class="flow" d="M982 65H1080V423" marker-end="url(#ah)"/>
+    <path class="flow alt" d="M950 33V14H650V293" marker-end="url(#ah)"/>
+    <path class="flow alt" d="M950 97V309" marker-end="url(#ah)"/>
+    <path class="flow" d="M1140 455H1188" marker-end="url(#ah)"/>
+    <path class="flow" d="M1250 425V97" marker-end="url(#ah)"/>
+    <path class="flow" d="M1310 65H1352" marker-end="url(#ah)"/>
+
+    <!-- branch labels -->
+    <rect class="blabel-bg" x="1000" y="38" width="70" height="20" rx="4"/><text class="blabel" x="1035" y="52" text-anchor="middle">Selected</text>
+    <rect class="blabel-bg" x="770" y="4" width="54" height="20" rx="4"/><text class="blabel" x="797" y="18" text-anchor="middle">Later</text>
+    <rect class="blabel-bg" x="958" y="170" width="70" height="20" rx="4"/><text class="blabel" x="993" y="184" text-anchor="middle">Rejected</text>
+    <text class="blabel" x="660" y="250" style="fill:var(--muted)">back to backlog</text>
+
+    </g>
+
+    <!-- start -->
+    <g class="el event" data-id="start" tabindex="0" role="button" aria-label="Start: source material available">
+      <circle class="ring" cx="170" cy="65" r="20"/>
+      <circle class="shape" cx="170" cy="65" r="14"/>
+      <text x="170" y="104" text-anchor="middle">start</text>
+    </g>
+
+    <g class="el human" data-id="source" tabindex="0" role="button" aria-label="Provide source material">
+      <rect class="ring" x="204" y="29" width="132" height="72" rx="12"/>
+      <rect class="shape" x="210" y="35" width="120" height="60" rx="8"/>
+      <text x="270" y="60" text-anchor="middle">Provide source</text>
+      <text x="270" y="76" text-anchor="middle">material</text>
+    </g>
+
+    <g class="el ai" data-id="planning" tabindex="0" role="button" aria-label="Content planning">
+      <rect class="ring" x="384" y="159" width="132" height="72" rx="12"/>
+      <rect class="shape" x="390" y="165" width="120" height="60" rx="8"/>
+      <text class="tag" x="450" y="183" text-anchor="middle">AI</text>
+      <text x="450" y="200" text-anchor="middle">Content</text>
+      <text x="450" y="215" text-anchor="middle">planning</text>
+    </g>
+
+    <g class="el ai" data-id="evaluate" tabindex="0" role="button" aria-label="Evaluate themes">
+      <rect class="ring" x="554" y="159" width="132" height="72" rx="12"/>
+      <rect class="shape" x="560" y="165" width="120" height="60" rx="8"/>
+      <text class="tag" x="620" y="183" text-anchor="middle">AI · 2 GATES</text>
+      <text x="620" y="200" text-anchor="middle">Evaluate</text>
+      <text x="620" y="215" text-anchor="middle">themes</text>
+    </g>
+
+    <g transform="translate(170 0)">
+    <g class="el sys" data-id="notion" tabindex="0" role="button" aria-label="Notion idea tracker">
+      <rect class="ring" x="554" y="289" width="132" height="72" rx="12"/>
+      <path class="shape" d="M560 302c0-10 120-10 120 0v46c0 10-120 10-120 0z"/>
+      <path class="shape" d="M560 302c0 10 120 10 120 0" fill="none"/>
+      <text x="620" y="328" text-anchor="middle">Idea tracker</text>
+      <text class="tag" x="620" y="344" text-anchor="middle">status · source refs</text>
+    </g>
+
+    <g class="el human" data-id="review" tabindex="0" role="button" aria-label="Review proposed ideas">
+      <rect class="ring" x="724" y="29" width="132" height="72" rx="12"/>
+      <rect class="shape" x="730" y="35" width="120" height="60" rx="8"/>
+      <text x="790" y="60" text-anchor="middle">Review proposed</text>
+      <text x="790" y="76" text-anchor="middle">ideas</text>
+    </g>
+
+    <g class="el human" data-id="gateway" tabindex="0" role="button" aria-label="Decision: worth developing?">
+      <path class="ring" d="M950 25L990 65L950 105L910 65z"/>
+      <path class="shape" d="M950 33L982 65L950 97L918 65z"/>
+      <path d="M940 55L960 75M960 55L940 75" stroke="var(--human-st)" stroke-width="2.4" stroke-linecap="round"/>
+      <text x="950" y="122" text-anchor="middle" style="font-size:11.5px">Worth developing?</text>
+    </g>
+
+    <g class="el event end" data-id="rejected" tabindex="0" role="button" aria-label="End: idea rejected">
+      <circle class="ring" cx="950" cy="325" r="21"/>
+      <circle class="shape" cx="950" cy="325" r="14"/>
+      <text x="950" y="362" text-anchor="middle">rejected, kept</text>
+      <text x="950" y="375" text-anchor="middle">in Notion</text>
+    </g>
+
+    <g class="el ai" data-id="brief" tabindex="0" role="button" aria-label="Generate content brief">
+      <rect class="ring" x="1014" y="419" width="132" height="72" rx="12"/>
+      <rect class="shape" x="1020" y="425" width="120" height="60" rx="8"/>
+      <text class="tag" x="1080" y="443" text-anchor="middle">AI-ASSISTED</text>
+      <text x="1080" y="460" text-anchor="middle">Generate</text>
+      <text x="1080" y="475" text-anchor="middle">content brief</text>
+    </g>
+
+    <g class="el sys" data-id="workflow" tabindex="0" role="button" aria-label="Existing content-generation workflow">
+      <rect class="ring" x="1184" y="419" width="132" height="72" rx="12"/>
+      <rect class="shape" x="1190" y="425" width="120" height="60" rx="8"/>
+      <path d="M1196 431h108" stroke="var(--sys-st)" stroke-width="1"/>
+      <text x="1250" y="456" text-anchor="middle">Existing content</text>
+      <text x="1250" y="472" text-anchor="middle">workflow → draft</text>
+    </g>
+
+    <g class="el human" data-id="draftreview" tabindex="0" role="button" aria-label="Review draft">
+      <rect class="ring" x="1184" y="29" width="132" height="72" rx="12"/>
+      <rect class="shape" x="1190" y="35" width="120" height="60" rx="8"/>
+      <text x="1250" y="69" text-anchor="middle">Review draft</text>
+    </g>
+
+    <g class="el event end" data-id="end" tabindex="0" role="button" aria-label="End of MVP">
+      <circle class="ring" cx="1370" cy="65" r="21"/>
+      <circle class="shape" cx="1370" cy="65" r="14"/>
+      <text x="1370" y="104" text-anchor="middle">MVP ends</text>
+    </g>
+    </g>
+  </svg>
+  </div>
+
+  <section class="scope" aria-labelledby="scope-t">
+    <h2 class="scope-title" id="scope-t">MVP scope</h2>
+    <div>
+      <h3>Covered</h3>
+      <ul>
+        <li>Reading IL strategy docs, event scripts and program notes</li>
+        <li>Candidate themes and angles, traceable to their source</li>
+        <li>Evaluation gate: fidelity and distinctness, plus four quality scores</li>
+        <li>Only evaluated themes tracked in Notion</li>
+        <li>Human selection: Selected, Later or Rejected</li>
+        <li>Source-grounded brief handed to the existing generation workflow</li>
+        <li>Human review of the resulting draft</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="later">Left for later</h3>
+      <ul>
+        <li>Publishing and scheduling</li>
+        <li>Social platform integrations and automation tooling</li>
+        <li>Feedback loops from performance data</li>
+        <li>Production hardening (permissions, monitoring, scale)</li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" hidden role="dialog" aria-modal="false" aria-labelledby="d-title">
+  <div class="d-head">
+    <div><span class="pill" id="d-pill"></span><h2 id="d-title"></h2></div>
+    <button class="close" id="d-close" type="button">Close ✕</button>
+  </div>
+  <div class="d-body" id="d-body"></div>
+</aside>
+
+<script>
+const T={human:"Human",ai:"AI-assisted",sys:"System",event:"Event"};
+const D={
+ start:{type:"event",title:"Start: material is available",what:"The workflow begins when there is existing IL material worth mining for content. Nothing new is written for this step.",by:"IL team",input:["Existing documents only"],output:["Trigger for the next step"],next:"source"},
+ source:{type:"human",title:"Provide source material",what:"Someone from the IL team chooses which existing documents the agent should read and hands them over as-is.",by:"IL team member (content owner)",input:["Strategy documents","Event scripts","Program notes"],output:["A set of source files, each with a name, owner and date"],preserve:["Original files unedited","Document title and section headings, so every idea can point back to its origin"],guard:["Only send approved, current material","Mark drafts or outdated strategy before sending, or leave them out"],next:"planning"},
+ planning:{type:"ai",title:"Content planning",what:"The agent reads the supplied strategy and source material and generates candidate themes and content angles, each with its source context attached. These are candidates only: the next step, Evaluate themes, decides which are strong enough to keep.",by:"AI agent",input:["Source material from the IL team"],output:["Candidate themes. Each has: theme, content angle, source reference (document + section), supporting excerpt in the original wording"],preserve:["The original meaning and substance of each strategic point","The original wording or excerpt that supports the idea"],guard:["Generate candidates; do not self-select or store anything yet","Do not generate duplicate themes from the same strategic point. Multiple angles are allowed only if they create genuinely different standalone value.","No rewording for its own sake, preserve or quote the original wording where it carries important meaning.","Every candidate must be traceable to a source; untraceable ones are dropped","Nothing goes to Notion directly from this step"],next:"evaluate"},
+ evaluate:{type:"ai",title:"Evaluate themes",what:"Every candidate theme is checked before it can be stored. This step keeps weak, duplicated or over-paraphrased ideas out of the tracker.",by:"AI agent, applying fixed criteria. The IL team owns the criteria and spot-checks results in Notion.",input:["All candidate themes from content planning, with source references and excerpts"],criteria:[["Source fidelity","PASS / FAIL","Preserves the original strategic meaning. No rewritten claims, no lost nuance, caveats or context. A change in substance fails.",1],["Distinctness","PASS / FAIL","Meaningfully different from the other candidates. Themes making the same underlying point are merged or discarded.",1],["Clarity","1–5","Understandable by someone outside IL without the full strategy. No internal jargon or context-dependent phrasing."],["Substance / usefulness","1–5","Teaches, explains or offers a useful perspective. Not generic motivation or empty statements."],["Save / share potential","1–5","A reason to save, repost or share it: useful, insightful or surprising."],["Standalone value","1–5","Works as a social post without much extra context."]],gates:["Only themes that PASS both Source fidelity and Distinctness may continue to Notion","Scores do not override a gate: a high-scoring theme that fails fidelity is still blocked"],failed:["Fails Source fidelity: discarded, or sent back to content planning to be re-derived from the excerpt","Duplicate: merged into the strongest version, keeping every source reference; the rest are discarded","Passes both gates but scores low: flagged for revision, or discarded if it cannot be improved without changing the source"],output:["Themes that passed both gates, each carrying: gate results, the four scores, a one-line rationale, and any revision flag","Source reference and verbatim excerpt, unchanged"],guard:["Judge the theme against its excerpt, not against a general memory of the strategy","When unsure about fidelity, fail it: a missing idea costs less than a distorted one"],next:"notion"},
+ notion:{type:"sys",title:"Notion: idea tracker",what:"Notion is the human-facing content tracker. Only evaluated themes, the ones that passed Source fidelity and Distinctness, enter the tracker. Their source references, evaluation results and status live here so the team can review them in one place.",by:"Notion (database), filled by the agent, updated by the team",input:["Evaluated themes that passed both gates, with scores and rationale","Ideas sent back with status Later"],output:["Ideas ready for review"],preserve:["Suggested fields: Theme · Angle · Source doc · Section · Source excerpt · Clarity · Substance · Share potential · Standalone · Eval rationale · Revision flag · Status · Reviewer · Notes"],guard:["Unevaluated or gate-failing themes never enter the tracker","Status values: Proposed, Selected, Later, Rejected","Source excerpt is stored verbatim and is never edited by the agent","Rejected ideas stay visible so the agent does not propose them again"],next:"review"},
+ review:{type:"human",title:"Review proposed ideas",what:"A person reads each proposed idea next to its source excerpt and checks that it is accurate, distinct and worth communicating.",by:"IL team reviewer",input:["Proposed ideas in Notion, with source references"],output:["A decision per idea, recorded as its status in Notion"],preserve:["Reviewer notes on why an idea was chosen or dropped"],guard:["Check the idea against the excerpt, not against memory of the strategy","Flag ideas that misstate or stretch the strategy"],next:"gateway"},
+ gateway:{type:"human",title:"Decision: worth developing?",what:"An exclusive decision. Each idea takes exactly one branch, and the status is updated in Notion.",by:"IL team reviewer",branches:[["Selected","The idea is worth developing now. It is the only branch that continues to the content brief."],["Later","Good idea, wrong time. It goes back to the Notion backlog with status Later and can be reviewed again."],["Rejected","Inaccurate, duplicate or not useful. It ends here but stays in Notion as Rejected so it is not proposed again."]],next:"brief"},
+ rejected:{type:"event",title:"End: idea rejected",what:"The idea leaves the flow. Its record remains in Notion with status Rejected and the reviewer's note.",by:"Notion",guard:["Keep the record so the agent avoids re-proposing the same point"],next:null},
+ brief:{type:"ai",title:"Generate content brief",what:"For each selected idea, the agent drafts a short brief that the existing content-generation workflow can use. The original strategy context travels with it.",by:"AI agent, checked by the IL team",input:["The selected idea from Notion, with its source reference and excerpt","Reviewer notes"],output:["A content brief: goal, key message, audience, suggested format and angle, source reference, verbatim source excerpt"],preserve:["The source excerpt, copied unchanged into the brief","The link back to the Notion record"],guard:["The key message must stay within what the source says","No new claims, figures or promises that are not in the source","If the brief needs something the source does not support, flag it instead of inventing it"],next:"workflow"},
+ workflow:{type:"sys",title:"Existing content-generation workflow",what:"The brief is handed to the content-generation workflow the team already uses, which produces a draft.",by:"Existing workflow (unchanged by this MVP)",input:["Source-grounded content brief"],output:["Draft content, with the brief and source reference attached"],guard:["This MVP does not change how the existing workflow works","The source reference must stay attached to the draft"],next:"draftreview"},
+ draftreview:{type:"human",title:"Review draft",what:"A person checks the draft against the brief and the original source excerpt before anything else happens.",by:"IL team reviewer",input:["Draft","Brief","Source excerpt"],output:["Approved draft, or notes for revision"],guard:["Check fidelity to the strategy first, then tone and format","Nothing is published automatically"],next:"end"},
+ end:{type:"event",title:"End of MVP",what:"The MVP stops at a human-reviewed draft. Publishing stays manual and outside this prototype.",by:"—",next:null},
+ "lane-human":{type:"human",title:"Lane: IL team",what:"Everything a person decides or checks. Humans start the process, choose which ideas move forward and approve the final draft.",by:"IL team members",guard:["Humans own every decision about what is communicated"],next:"source"},
+ "lane-ai":{type:"ai",title:"Lane: AI agent",what:"The agent generates candidate themes, evaluates them against fixed criteria, and passes only gate-passing themes to Notion. It filters; humans still decide.",by:"AI agent",guard:["Strategy fidelity over volume","Every output carries its source reference"],next:"planning"},
+ "lane-after":{type:"ai",title:"Lane: After selection",what:"Only ideas with status Selected reach this lane. Here they become a brief and then a draft, with the source context still attached.",by:"AI agent and the existing content workflow",guard:["Later and Rejected ideas never enter this lane"],next:"brief"}
+};
+const svg=document.getElementById("bpmn"),drawer=document.getElementById("drawer"),scrim=document.getElementById("scrim");
+const body=document.getElementById("d-body"),pill=document.getElementById("d-pill"),ttl=document.getElementById("d-title");
+let lastFocus=null;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const list=a=>"<ul>"+a.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul>";
+function open(id,from){
+  const d=D[id]; if(!d) return;
+  lastFocus=from||lastFocus;
+  svg.querySelectorAll(".sel").forEach(e=>e.classList.remove("sel"));
+  svg.querySelectorAll('[data-id="'+id+'"]').forEach(e=>e.classList.add("sel"));
+  svg.classList.add("focus");
+  pill.className="pill "+d.type; pill.textContent=T[d.type];
+  ttl.textContent=d.title;
+  let h='<p class="summary">'+esc(d.what)+'</p><dl>';
+  if(d.by) h+='<div><dt>Performed by</dt><dd>'+esc(d.by)+'</dd></div>';
+  if(d.input) h+='<div><dt>Input</dt><dd>'+list(d.input)+'</dd></div>';
+  if(d.criteria) h+='<div><dt>Criteria</dt><dd><ul>'+d.criteria.map(c=>"<li><strong>"+esc(c[0])+"</strong> <span class=\"crit"+(c[3]?" gate":"")+"\">"+esc(c[3]?"GATE · "+c[1]:c[1])+"</span><br>"+esc(c[2])+"</li>").join("")+'</ul></dd></div>';
+  if(d.gates) h+='<div class="guard"><dt>Mandatory gates</dt><dd>'+list(d.gates)+'</dd></div>';
+  if(d.failed) h+='<div><dt>Failed or duplicate ideas</dt><dd>'+list(d.failed)+'</dd></div>';
+  if(d.output) h+='<div><dt>Output</dt><dd>'+list(d.output)+'</dd></div>';
+  if(d.branches) h+='<div><dt>Branches</dt><dd><ul>'+d.branches.map(b=>"<li><strong>"+esc(b[0])+"</strong>: "+esc(b[1])+"</li>").join("")+'</ul></dd></div>';
+  if(d.preserve) h+='<div><dt>Preserve</dt><dd>'+list(d.preserve)+'</dd></div>';
+  if(d.guard) h+='<div class="guard"><dt>Guardrails</dt><dd>'+list(d.guard)+'</dd></div>';
+  h+='</dl>';
+  h+='<p class="next">Next: '+(d.next?'<button type="button" data-go="'+d.next+'">'+esc(D[d.next].title)+' →</button>':'the flow ends here.')+'</p>';
+  body.innerHTML=h; body.scrollTop=0;
+  drawer.hidden=false; scrim.hidden=false;
+  document.getElementById("d-close").focus({preventScroll:true});
+}
+function close(){
+  drawer.hidden=true; scrim.hidden=true;
+  svg.classList.remove("focus");
+  svg.querySelectorAll(".sel").forEach(e=>e.classList.remove("sel"));
+  if(lastFocus) lastFocus.focus({preventScroll:true});
+}
+svg.querySelectorAll("[data-id]").forEach(el=>{
+  el.addEventListener("click",()=>open(el.dataset.id,el));
+  el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();open(el.dataset.id,el)}});
+});
+body.addEventListener("click",e=>{const b=e.target.closest("[data-go]"); if(b) open(b.dataset.go, svg.querySelector('.el[data-id="'+b.dataset.go+'"]')||lastFocus)});
+document.getElementById("d-close").addEventListener("click",close);
+scrim.addEventListener("click",close);
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!drawer.hidden) close()});
+</script>
+
+</body></html>
