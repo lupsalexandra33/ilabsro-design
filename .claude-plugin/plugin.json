@@ -1,8 +1,8 @@
 {
   "name": "ilabsro-design",
   "displayName": "Innovation Labs Design",
-  "version": "0.4.0",
-  "description": "Portable Innovation Labs design plugin with a shared v0.4 design system, route-first web/deck patterns, social art direction, brand elements and tone lenses.",
+  "version": "0.5.0",
+  "description": "Portable Innovation Labs design plugin with route-first web/deck patterns, social art direction, source-grounded content planning, custom brand image generation, brand elements and tone lenses.",
   "author": {
     "name": "Innovation Labs"
   },

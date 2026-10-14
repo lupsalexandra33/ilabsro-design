@@ -14,8 +14,8 @@ try:
     data = json.loads(manifest.read_text())
     if data.get('name') != 'ilabsro-design':
         errors.append('plugin name must be ilabsro-design')
-    if data.get('version') != '0.4.0':
-        errors.append('plugin version must be 0.4.0 for this test package')
+    if data.get('version') != '0.5.0':
+        errors.append('plugin version must be 0.5.0')
 except Exception as e:
     errors.append(f'plugin.json invalid: {e}')
 
@@ -41,6 +41,8 @@ required = [
     'presentation-maker',
     'one-pager-maker',
     'insta-post-maker',
+    'content-planner',
+    'brand-image-maker',
     'brand-elements',
     'formal-lens',
     'friendly-lens',
@@ -65,8 +67,8 @@ required_files = [
     'assets/backgrounds/yellow/cover.jpg',
     'skills/insta-post-maker/assets/brand-elements/flying-pig.png',
     'skills/insta-post-maker/references/social-2026/reference-bulb-mesh.jpeg',
-    'skills/website-maker/examples/IL2027_strategy_hub.html',
-    'skills/presentation-maker/examples/IL2027_pitch.html',
+    'skills/website-maker/examples/index.html',
+    'skills/presentation-maker/examples/index.html',
 ]
 
 for rel in required_files:
@@ -91,8 +93,8 @@ if errors:
     sys.exit(1)
 
 print(
-    f'OK: plugin manifest v0.4.0 valid; '
+    f'OK: plugin manifest v0.5.0 valid; '
     f'{len(found)} skills found; '
     f'{svg_count} shared SVG brand elements; '
-    f'v0.4 references present.'
+    f'v0.5 required files present.'
 )

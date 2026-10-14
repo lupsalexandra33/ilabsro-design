@@ -1,4 +1,4 @@
-# Test matrix — v0.4
+# Test matrix — v0.5
 
 Run each test in a fresh chat. First test with only the plugin installed; then repeat core tests with the native Innovation Labs Design System selected. Both should remain recognizably the same brand.
 
@@ -9,6 +9,9 @@ Run each test in a fresh chat. First test with only the plugin installed; then r
 | Yellow deck | “Same deck, yellow accent.” | presentation-maker + brand-elements | Structure unchanged; semantic accent swaps coherently; dark text on yellow fills; no random recoloring |
 | Presentation mesh | “Use the interactive network on the community transition.” | presentation-maker | Playable network is selective, readable and presentation-only; reduced-motion respected |
 | One-pager | “Make a one-page partner brief.” | one-pager-maker + formal-lens | Exactly one page; strong hierarchy; no invented facts; optional controlled brand header/band |
+| Content planning | “Turn this approved strategy into content opportunities.” | content-planner | Max 5 distinct opportunities; exact source traceability; fidelity + distinctness gates; human selection remains explicit |
+| Hand-drawn social | “Turn this approved brief into a simple hand-drawn carousel.” | insta-post-maker + brand-image-maker | One primary thought/frame; varied sketch grammar; drawings carry explanation; no generic AI-carousel look; factual boundaries preserved |
+| Narrative illustration | “Explain this founder idea as one playful IL scene.” | brand-image-maker | One clear metaphor/scene; recognizably IL; little embedded text; not generic glossy AI art |
 | Event social | “Turn these Demo Day photos into a 5-card recap carousel.” | insta-post-maker | Photo-first; photo-to-teal blend / overlay used intentionally; people remain focal; no repeated photo-card template; source-faithful |
 | Campaign social | “Turn this update into a 5-card carousel on the green gradient.” | insta-post-maker + brand-elements | Approved background family, one message/frame, one major element/frame max, coherent logo placement and accent |
 | Story sequence | “Create 4 connected event stories from these photos.” | insta-post-maker | Safe zones; concise overlays; varied but coherent photo integration; people not obscured |

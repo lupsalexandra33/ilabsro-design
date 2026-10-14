@@ -34,6 +34,22 @@ Use `insta-post-maker` + optional lens. Prefer full-photo text overlays, photo-t
 ### Campaign/social without photos
 Use `insta-post-maker` + `brand-elements`. Pick one approved template ground, one accent and usually one official SVG element.
 
+## Content planning
+
+Use `content-planner` when approved strategy, research, event scripts or program notes need to become a small set of source-grounded content opportunities.
+
+The normal flow is:
+
+`source → content-planner PLAN → human selects idea + format → content-planner BRIEF → output skill → human review`
+
+`content-planner` does not make final visual decisions and does not replace the downstream output skill.
+
+## Custom brand images
+
+Use `brand-image-maker` when a diagram, sketch, narrative illustration or atmospheric generated visual communicates an idea faster than another text block.
+
+It can be used by `insta-post-maker` or other output skills. Human-selected visual mode, complexity and tone are authoritative when supplied.
+
 ## Accent
 
 Purple is the default accent. Yellow is an optional alternate accent when requested or when `brand-elements` selects it for a suitable campaign. The accent is a semantic role: new, AI/challenger, current step, plans, focus and selective human emphasis.

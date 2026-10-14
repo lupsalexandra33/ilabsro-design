@@ -1,6 +1,6 @@
 # ilabsro-design
 
-Portable Innovation Labs design plugin for Claude. v0.4 synchronizes the plugin with the latest Strategy Hub, route-first presentation and Flavia's refreshed showcase while keeping the plugin usable without a private Claude Design System.
+Portable Innovation Labs design plugin for Claude. v0.5 adds source-grounded content planning and reusable custom image generation on top of the existing Strategy Hub, route-first presentation, social and brand system.
 
 ## Mental model
 
@@ -18,7 +18,9 @@ Every output skill must work when the native Design System is unavailable by fal
 - `website-maker` — Strategy Hubs, calm route/map previews and connected IL web artifacts.
 - `presentation-maker` — pitch-like decks; route-first for strategy/program narratives; optional presentation-only playable network.
 - `one-pager-maker` — exact one-page/A4 summaries and partner briefs.
-- `insta-post-maker` — photo-led event social and campaign/template social.
+- `insta-post-maker` — photo-led, graphic and custom-illustration social assets.
+- `content-planner` — turns approved strategy, research and program material into source-grounded content opportunities and briefs.
+- `brand-image-maker` — generates reusable IL visuals using hand-drawn diagrams, narrative illustrations or event-glow directions.
 - `brand-elements` — optional visual modifier that selects accent, branded ground and one official IL element.
 - `formal-lens` — formal voice modifier.
 - `friendly-lens` — warm, clear voice modifier.
@@ -46,6 +48,8 @@ Examples:
 - `website-maker` → source-rich Strategy Hub / calm Route experience.
 - `insta-post-maker` → event-photo carousel with photo-to-teal blending.
 - `insta-post-maker` + `brand-elements` → campaign carousel on an approved template ground with one official SVG element.
+- `content-planner` → source material → evaluated content opportunities → human selection → structured brief.
+- `insta-post-maker` + `brand-image-maker` → social carousel where custom drawings or generated visuals carry part of the explanation.
 
 The public Humanizer skill can be an optional final copy pass when useful; it is not a dependency of this plugin.
 

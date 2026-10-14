@@ -1,7 +1,7 @@
 ---
 name: insta-post-maker
-description: Create Innovation Labs Instagram carousels, stories and social posts using photo-led event art direction or approved campaign grounds and brand elements.
-version: 0.4.0
+description: Create simple, shareable Innovation Labs social assets using photo-led, graphic or custom-illustration art direction while preserving approved content boundaries.
+version: 0.5.0
 ---
 
 # Innovation Labs Insta Post Maker
@@ -31,10 +31,12 @@ Generate social assets that are:
 ## Supported outputs
 
 ### Carousel
-Usually 3–8 frames.
+Usually 4–10 frames. Use more frames when that lets each frame stay simpler.
 - frame 1: strongest hook / cover;
 - middle: narrative progression, not unrelated cards;
 - final: closing message / CTA.
+
+A longer carousel with one clear thought per frame is better than compressing several hierarchy levels into fewer text-heavy frames.
 
 ### Stories
 Usually 3–6 frames.
@@ -51,9 +53,9 @@ Only when explicitly requested.
 - preserve readability and reduced-motion behavior;
 - do not promise MP4/MOV/WebM export unless the active runtime explicitly supports it.
 
-## Two visual families
+## Three visual families
 
-Choose between these based on the source. Do not force both into every asset.
+Choose the family that best serves the source and message. Do not force multiple families into one asset without a reason.
 
 ### A. Event / photo-led social
 
@@ -79,6 +81,80 @@ Preferred structure:
 - purple default accent or yellow when requested/selected.
 
 Text should sit in the calm portion of the template ground. Do not cover the entire background with additional cards.
+
+### C. Custom illustration / diagram social
+
+Use when a diagram, sketch, metaphor or simple generated scene can explain the idea faster than another block of copy.
+
+When `brand-image-maker` is available or selected, use it as the custom-image generation layer rather than duplicating detailed illustration logic here.
+
+Good uses:
+- hand-drawn process or concept sketch;
+- sticky-note / workshop schema;
+- simple narrative scene;
+- symbolic explanatory illustration;
+- event-glow concept image.
+
+Prefer illustration when it **replaces explanatory copy**, not when it only decorates an already dense slide.
+
+Human-selected visual mode, complexity or tone are authoritative. If those are not supplied, choose the lightest visual treatment that communicates the idea.
+
+## Content density and slide simplicity
+
+Prefer **one primary message per frame**.
+
+Do not default to the repeated pattern:
+- small eyebrow / kicker;
+- large headline;
+- explanatory paragraph.
+
+That structure may be used when it genuinely helps, but it must not become the automatic layout for every frame. In many cases the better solution is just one sentence, one question, one drawing, one comparison or one short label attached to a custom image.
+
+Eyebrows / kickers are optional, not mandatory. If a frame already works without one, omit it. Do not add a mono kicker simply because the system knows how to.
+
+When a frame contains both a strong statement and a substantial explanation, prefer splitting them across multiple carousel frames.
+
+Good social frames often need only one of these:
+- one strong sentence;
+- one short question;
+- one diagram plus a short label;
+- one image plus a short line;
+- one simple list or checklist.
+
+Avoid turning every idea into a mini article.
+
+If a custom visual can carry the explanation, let the image do the work and reduce the copy.
+
+For hand-drawn carousel directions, favor slide types such as:
+- one sketched comparison;
+- one sticky note plus one arrow;
+- one circled question;
+- one simple process doodle;
+- one named concept with a hand-drawn annotation;
+- one illustrative before/after or thin-input / rich-input contrast.
+
+A good hand-drawn sequence should feel varied, not like the same template with different words.
+
+## Evidence, opinions and caveat prominence
+
+Preserve factual boundaries from an approved content brief, but do **not** automatically turn every source limitation into a prominent visual disclaimer.
+
+When the brief classifies caveats:
+- **Content-critical caveat** → keep it visibly attached to the claim when removing it would make the post misleading.
+- **Source / evidence note** → preserve it, but it may live in the caption, final frame or a quiet source note.
+- **Internal planning note** → use it as a generation guardrail; do not automatically surface it as public copy.
+
+If the brief does not classify a limitation, use the same principle: the more the limitation changes the meaning of the claim, the more visible it should be.
+
+The post may take a clear editorial position or have a point of view. Do not weaken every statement with defensive language when the approved brief supports a stronger, plain-language framing.
+
+Still do not:
+- turn correlation into causation;
+- present a proposal as already implemented;
+- present practitioner evidence as peer-reviewed science;
+- invent certainty, facts or outcomes.
+
+Avoid large labels such as “HONESTY NOTE” by default. Evidence attribution can be visually quiet when it is not the main point.
 
 ## Photo-grounded factuality
 
@@ -162,6 +238,25 @@ Use the actual bundled SVG when appropriate rather than recreating it.
 
 Default: **0–1 major shared element per frame**.
 
+## Custom image handoff
+
+When a slide needs a custom explanatory visual, hand the visual brief to `brand-image-maker`.
+
+Pass only what the image layer needs:
+- core idea;
+- what must be shown;
+- factual boundaries;
+- intended aspect ratio;
+- optional human-selected visual mode / complexity / tone.
+
+`brand-image-maker` owns the generated image. `insta-post-maker` owns how that image is cropped, placed, paired with copy and sequenced inside the carousel.
+
+For social, default custom-image complexity to `very-simple` unless the content requires more.
+
+When the chosen mode is `handdrawn-diagram`, sequence the carousel so the sketch language evolves slide to slide. Do not keep reusing the same sticky-note board, the same title block or the same diagram primitive across the whole set if a simpler or clearer variation would work better.
+
+If one frame introduces a named concept (for example a term such as `context engineering`), keep that frame in the same hand-drawn family as the surrounding slides unless the human explicitly asks for a deliberate visual break.
+
 ## Social-only mascot assets
 
 Social-specific assets live in:
@@ -222,12 +317,15 @@ Choose the strongest emotional image for the cover when possible. Do not use pho
 
 ## Carousel rules
 
-- one idea per frame;
+- one primary idea per frame;
 - frame 1 strongest hook;
 - final frame closes the story;
+- split dense material instead of stacking several text hierarchies on one frame;
+- use more frames when simplification improves comprehension;
 - composition can vary across frames;
 - keep one palette/accent/type rhythm;
 - do not force all slides onto the exact same ground;
+- illustration may carry the explanation on selected frames;
 - maintain recognizably shared art direction.
 
 ## Story rules
@@ -247,8 +345,9 @@ Decide in this order:
    - no → campaign/graphic family is often better.
 3. What format best serves it? single / carousel / stories.
 4. Which photo or message leads?
-5. Does a brand element add meaning?
-6. Is the default purple accent right, or has yellow/another approved ground been requested?
+5. Can the idea be understood faster through a custom diagram or illustration than through more copy?
+6. Does a brand element add meaning?
+7. Is the default purple accent right, or has yellow/another approved ground been requested?
 
 ## What to avoid
 
@@ -262,6 +361,10 @@ Avoid:
 - unreadable copy over busy photography;
 - corporate brochure tone;
 - generic startup social templates;
+- repeating eyebrow + headline + paragraph on every frame;
+- oversized evidence disclaimers when a quiet note would preserve accuracy;
+- turning every source note into a framed “honesty” box;
+- custom illustration used as decoration without explanatory value;
 - invented facts/quotes/results;
 - using every available asset because it exists.
 
@@ -294,6 +397,7 @@ Extract the visual behavior. Do not copy their exact copy or layout.
 - visual family: approved template ground;
 - one semantic accent;
 - one message per frame;
+- consider `brand-image-maker` when a hand-drawn or narrative visual can replace explanatory copy;
 - logo at a corner;
 - usually one official SVG element;
 - body reading content stays off the decorative edge areas.
