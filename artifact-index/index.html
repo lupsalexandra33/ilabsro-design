@@ -1,0 +1,2286 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Innovation Labs Artifact Index</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Everything Innovation Labs has built, explored and documented, in one place: what exists, what kind of thing it is, what it is for and where to open it.">
+<script>
+(function () {
+  /* Light/Night + accent before first paint. The host owns data-theme on the root element;
+     this page keeps its own mode in data-mode and follows the host until the viewer picks one. */
+  var d = document.documentElement, mode = null, acc = null;
+  try {
+    var t = localStorage.getItem('ila-theme'), a = localStorage.getItem('ila-accent');
+    if (t === 'night' || t === 'light') { mode = t; }
+    if (a === 'yellow' || a === 'purple') { acc = a; }
+  } catch (e) {}
+  if (!mode) {
+    var h = d.getAttribute('data-theme');
+    mode = h === 'dark' ? 'night' : h === 'light' ? 'light'
+      : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'light');
+  }
+  d.setAttribute('data-mode', mode);
+  d.setAttribute('data-accent', acc || 'purple');
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Caveat:wght@600&display=swap">
+<style>
+/* Innovation Labs portable tokens v0.4.
+   Synced from the refreshed Strategy Hub / route deck / showcase, 2026-10-12.
+   Theme controls mood; accent controls the semantic highlight role. */
+
+:root,
+[data-mode="light"] {
+  /* brand */
+  --teal: #0095AC;
+  --teal-deep: #016462;
+  --teal-ink: #016462;
+  --header: #007F86;
+  --hero-a: #068499;
+  --hero-b: #065F5C;
+  --bright: #72ECE7;
+  --route: #0095AC;
+  --logo-ink: #2B6363;
+  --on-brand: #FFFFFF;
+
+  /* surfaces */
+  --surface-page: #FFFFFF;
+  --surface-alt: #F4FBFB;
+  --surface: #FFFFFF;
+  --surface-tint: #EAF7F7;
+  --surface-ink: #10201F;
+
+  /* text */
+  --ink: #10201F;
+  --ink-muted: #3C5052;
+  --ink-subtle: #4A5E60;
+
+  /* lines */
+  --line: #D6E4E5;
+  --line-soft: #E3EDEE;
+  --line-control: #6F8689;
+  --line-strong: #9CC3C6;
+
+  /* actions */
+  --action: #007A8C;
+  --on-action: #FFFFFF;
+  --action-soft: rgba(0,149,172,.12);
+
+  /* semantic accent: purple by default */
+  --ax: #954BBC;
+  --ax-ink: #6B2E8C;
+  --ax-tint: #F1E7F8;
+  --ax-soft: rgba(149,75,188,.14);
+  --ax-on: #FFFFFF;
+  --ax-deep: #6B2E8C;
+  --ax-grad: linear-gradient(115deg, #A45CC9 0%, #6B2E8C 100%);
+  --lilac: #E8D2F5;
+  --focus-ring: var(--ax);
+  --focus-ring-on-brand: #FFFFFF;
+
+  /* status */
+  --positive: #2D7A57;
+  --positive-soft: #E6F4EC;
+  --caution: #7A5200;
+  --caution-soft: #FFF3D6;
+  --issue: #A8453A;
+  --issue-soft: #FBECE9;
+
+  /* data viz */
+  --viz-1: #0095AC;
+  --viz-2: #016462;
+  --viz-ai: var(--ax);
+  --viz-context: #AFC0C3;
+  --viz-grid: #D3DEE0;
+
+  /* gradients / branded grounds */
+  --grad-brand: linear-gradient(115deg, var(--hero-a), var(--hero-b));
+  --grad-band: linear-gradient(115deg, var(--header), #006B6E);
+  --grad-accent: var(--ax-grad);
+  --grad-surface: linear-gradient(180deg, #F4FBFB 0%, #E4F4F4 100%);
+  --mesh-blue:
+    radial-gradient(60% 55% at 38% 0%, #B8E3EC 0%, transparent 72%),
+    radial-gradient(55% 60% at 0% 100%, #94D4DC 0%, transparent 72%),
+    radial-gradient(55% 60% at 100% 100%, #90D4DE 0%, transparent 72%),
+    radial-gradient(35% 40% at 100% 40%, #C5E8EF 0%, transparent 70%), #FFFFFF;
+  --mesh-green:
+    radial-gradient(60% 55% at 40% 0%, #A9DAC2 0%, transparent 72%),
+    radial-gradient(55% 60% at 0% 100%, #83C3A4 0%, transparent 72%),
+    radial-gradient(55% 60% at 100% 85%, #91D1B3 0%, transparent 72%),
+    radial-gradient(40% 40% at 0% 25%, #CEE9DE 0%, transparent 70%), #FFFFFF;
+  --mesh-yellow:
+    radial-gradient(55% 50% at 35% 0%, #FDD49F 0%, transparent 72%),
+    radial-gradient(55% 60% at 0% 100%, #FAB579 0%, transparent 72%),
+    radial-gradient(55% 60% at 100% 100%, #FBBF45 0%, transparent 70%),
+    radial-gradient(40% 45% at 100% 40%, #FDD2AD 0%, transparent 70%),
+    radial-gradient(45% 40% at 0% 0%, #FEFAD2 0%, transparent 70%), #FFFEF6;
+  --mesh-purple:
+    radial-gradient(55% 55% at 0% 0%, #E2DCED 0%, transparent 70%),
+    radial-gradient(55% 60% at 0% 100%, #BBABD3 0%, transparent 72%),
+    radial-gradient(55% 60% at 100% 100%, #A794C6 0%, transparent 72%),
+    radial-gradient(35% 40% at 100% 40%, #E7DBEB 0%, transparent 70%), #FFFFFF;
+  --mesh-classic:
+    radial-gradient(45% 45% at 0% 100%, #0095AC 0%, transparent 70%),
+    radial-gradient(40% 40% at 100% 0%, #6FCFDD 0%, transparent 70%),
+    radial-gradient(40% 40% at 0% 15%, #C9B8F0 0%, transparent 70%),
+    radial-gradient(40% 40% at 100% 100%, #B79AE6 0%, transparent 70%),
+    radial-gradient(40% 35% at 45% 60%, #C9F3E6 0%, transparent 70%), #FFFFFF;
+  --mesh: var(--mesh-blue);
+
+  /* spacing */
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-18: 18px;
+  --space-22: 22px;
+  --space-26: 26px;
+  --space-40: 40px;
+  --space-48: 48px;
+  --space-64: 64px;
+  --space-88: 88px;
+
+  /* radius */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-row: 14px;
+  --radius-lg: 18px;
+  --radius-panel: 22px;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
+
+  /* borders / layout */
+  --border-card: 1px;
+  --border-accent: 5px;
+  --border-focus: 3px;
+  --content-max: 1180px;
+  --text-max: 780px;
+  --slide-max: 760px;
+  --nav-height: 58px;
+
+  /* shadows */
+  --shadow-hover: 0 10px 28px rgba(1,100,98,.13);
+  --shadow-nav: 0 2px 14px rgba(16,32,31,.25);
+  --shadow-raised: 0 14px 40px rgba(1,100,98,.13);
+  --shadow-sheet: 0 -14px 40px rgba(16,32,31,.28);
+
+  /* type families */
+  --font: Poppins, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --hand: Caveat, "Segoe Print", "Bradley Hand", cursive;
+}
+
+[data-accent="purple"] {
+  --mesh: var(--mesh-purple);
+}
+
+[data-accent="yellow"] {
+  --ax: #FBBF45;
+  --ax-ink: #7A4B00;
+  --ax-tint: #FFF6DA;
+  --ax-soft: rgba(251,191,69,.22);
+  --ax-on: #10201F;
+  --ax-deep: #BF822B;
+  --ax-grad: linear-gradient(115deg, #FDD49F 0%, #FBBF45 55%, #F9A751 100%);
+  --lilac: #FEFAD2;
+  --focus-ring: #BF822B;
+  --mesh: var(--mesh-yellow);
+}
+
+[data-mode="night"] {
+  --teal: #2BC4DB;
+  --teal-deep: #016462;
+  --teal-ink: #72ECE7;
+  --header: #061B1B;
+  --hero-a: #0B8F91;
+  --hero-b: #073A39;
+  --bright: #72ECE7;
+  --route: #72ECE7;
+  --logo-ink: #FFFFFF;
+
+  --surface-page: #061B1B;
+  --surface-alt: #0A2928;
+  --surface: #0D3A39;
+  --surface-tint: #0F4443;
+  --surface-ink: #001A1C;
+
+  --ink: #FFFFFF;
+  --ink-muted: #B9CECE;
+  --ink-subtle: #8FB1B2;
+
+  --line: rgba(195,240,240,.16);
+  --line-soft: rgba(195,240,240,.10);
+  --line-control: rgba(195,240,240,.38);
+  --line-strong: rgba(195,240,240,.38);
+
+  --action: #1AB7BE;
+  --on-action: #04201F;
+  --action-soft: rgba(43,196,219,.14);
+
+  --ax: #C48BEA;
+  --ax-ink: #D2A8EE;
+  --ax-tint: rgba(149,75,188,.22);
+  --ax-soft: rgba(196,139,234,.18);
+  --ax-on: #1B0F26;
+  --ax-deep: #954BBC;
+  --ax-grad: linear-gradient(115deg, #C48BEA 0%, #954BBC 100%);
+  --focus-ring: var(--ax);
+
+  --positive: #8FD3B1;
+  --positive-soft: rgba(45,122,87,.26);
+  --caution: #F2D58A;
+  --caution-soft: rgba(160,120,20,.24);
+  --issue: #F1A39A;
+  --issue-soft: rgba(176,74,63,.22);
+
+  --viz-2: #8FD8E4;
+  --viz-context: #3E6E6C;
+
+  --grad-band: linear-gradient(115deg, #061B1B, #0A2928);
+  --grad-surface: linear-gradient(180deg, #061B1B 0%, #0A2928 100%);
+  --mesh-night:
+    radial-gradient(60% 55% at 15% 0%, rgba(11,143,145,.55) 0%, transparent 70%),
+    radial-gradient(55% 60% at 100% 100%, rgba(7,58,57,.9) 0%, transparent 72%), #061B1B;
+  --mesh: var(--mesh-night);
+
+  --shadow-hover: 0 10px 28px rgba(0,0,0,.40);
+  --shadow-nav: 0 2px 14px rgba(0,0,0,.45);
+  --shadow-raised: 0 14px 40px rgba(0,0,0,.45);
+  --shadow-sheet: 0 -14px 40px rgba(0,0,0,.50);
+}
+
+[data-mode="night"][data-accent="yellow"] {
+  --ax: #FBBF45;
+  --ax-ink: #F6D27A;
+  --ax-tint: rgba(251,191,69,.16);
+  --ax-soft: rgba(251,191,69,.18);
+  --ax-on: #2A1B00;
+  --ax-deep: #BF822B;
+  --ax-grad: linear-gradient(115deg, #FBBF45 0%, #F9A751 100%);
+  --focus-ring: #FBBF45;
+  --lilac: #FEFAD2;
+}
+
+/* Backward-compatible v0.3 aliases. New work should prefer --ax*. */
+:root,
+[data-mode] {
+  --purple: var(--ax);
+  --purple-ink: var(--ax-ink);
+  --purple-tint: var(--ax-tint);
+}
+
+/* ============================================================
+   Artifact Index: page styles. Built on the IL tokens above.
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-height) + 24px);-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--surface-page);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,p,ul,ol,figure,dl,dd{margin:0}
+ul,ol{padding:0;list-style:none}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer}
+img,svg{display:block;max-width:100%}
+[hidden]{display:none!important}
+:focus-visible{outline:var(--border-focus) solid var(--focus-ring);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip{position:absolute;left:12px;top:-60px;z-index:100;background:var(--surface-ink);color:#fff;padding:10px 16px;border-radius:var(--radius-sm);font-weight:600}
+.skip:focus{top:10px}
+.wrap{width:100%;max-width:calc(var(--content-max) + 64px);margin:0 auto;padding-left:max(32px,env(safe-area-inset-left,0px));padding-right:max(32px,env(safe-area-inset-right,0px))}
+.mono{font-family:var(--mono);font-size:11.5px;line-height:1.4;letter-spacing:.07em;text-transform:uppercase}
+
+/* page-level colour roles --------------------------------- */
+:root{
+  --plate:#10201F; --plate-2:#183331; --plate-ink:#FFFFFF; --plate-muted:#A4C2C3; --plate-line:rgba(195,240,240,.18);
+  --mat-base:#F4FAFA; --shot-ring:rgba(16,32,31,.10); --shot-shadow:0 14px 32px rgba(1,70,70,.20);
+  --st-live:var(--positive); --st-wip:#A66A00; --st-ai:var(--ax); --st-calm:var(--line-control);
+  --c-strategy-a:#B8E3EC; --c-strategy-b:#8FD2DD;
+  --c-content-a:#A9DAC2;  --c-content-b:#8CCDAE;
+  --c-visual-a:#FDD49F;   --c-visual-b:#FAB579;
+  --c-systems-a:#C9B8DF;  --c-systems-b:#A794C6;
+}
+[data-mode="night"]{
+  --plate:#0A2423; --plate-2:#113634; --plate-line:rgba(195,240,240,.16);
+  --mat-base:#0A2928; --shot-ring:rgba(195,240,240,.18); --shot-shadow:0 14px 34px rgba(0,0,0,.55);
+  --st-wip:#F2D58A;
+  --c-strategy-a:rgba(43,196,219,.34); --c-strategy-b:rgba(11,143,145,.34);
+  --c-content-a:rgba(110,200,160,.28); --c-content-b:rgba(60,150,110,.30);
+  --c-visual-a:rgba(251,191,69,.26);   --c-visual-b:rgba(240,140,70,.26);
+  --c-systems-a:rgba(196,139,234,.30); --c-systems-b:rgba(149,75,188,.36);
+}
+[data-cat="strategy"]{--ca:var(--c-strategy-a);--cb:var(--c-strategy-b)}
+[data-cat="content"]{--ca:var(--c-content-a);--cb:var(--c-content-b)}
+[data-cat="visual"]{--ca:var(--c-visual-a);--cb:var(--c-visual-b)}
+[data-cat="systems"]{--ca:var(--c-systems-a);--cb:var(--c-systems-b)}
+.matbg{background:radial-gradient(70% 90% at 10% 0%,var(--ca),transparent 72%),radial-gradient(70% 90% at 100% 100%,var(--cb),transparent 72%),var(--mat-base)}
+
+/* corner-bracket label: the IL eyebrow motif */
+.lab{position:relative;display:inline-block;padding:4px 10px;color:var(--teal-ink)}
+.lab::before,.lab::after{content:"";position:absolute;width:9px;height:7px;border:1.5px solid var(--teal)}
+.lab::before{top:0;left:0;border-right:0;border-bottom:0}
+.lab::after{bottom:0;right:0;border-left:0;border-top:0}
+
+/* status chip ---------------------------------------------- */
+.meta{display:inline-flex;flex-wrap:wrap;align-items:center;gap:0 7px;color:var(--ink-subtle)}
+.meta i{font-style:normal;opacity:.55}
+.st{display:inline-flex;align-items:center;gap:6px;color:var(--ink)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--st-calm);flex:none}
+.st[data-tone="live"] .dot{background:var(--st-live)}
+.st[data-tone="wip"] .dot{background:var(--st-wip)}
+.st[data-tone="ai"] .dot{background:var(--st-ai)}
+
+/* ===== top bar ===== */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;height:var(--nav-height);background:var(--header);color:#fff;box-shadow:var(--shadow-nav)}
+.bar .wrap{height:100%;display:flex;align-items:center;gap:28px}
+.brand{display:flex;align-items:center;gap:14px;flex:none}
+.logo{height:19px;width:auto;color:#fff}
+.brand-tag{color:#fff;padding-left:14px;border-left:1px solid rgba(255,255,255,.34);white-space:nowrap}
+.bar-nav{display:flex;gap:4px;margin-left:auto}
+.bar-nav a{padding:7px 14px;border-radius:var(--radius-pill);font-weight:500;font-size:14px;color:#fff}
+.bar-nav a:hover{background:rgba(255,255,255,.12)}
+.bar-nav a[aria-current="true"]{background:#fff;color:var(--teal-deep)}
+.bar :focus-visible{outline-color:var(--focus-ring-on-brand)}
+.bar-ctl{display:flex;align-items:center;gap:12px;flex:none}
+.seg{display:inline-flex;border:1px solid rgba(255,255,255,.5);border-radius:var(--radius-pill);padding:2px}
+.seg button{border:0;background:transparent;color:#fff;padding:4px 12px;border-radius:var(--radius-pill);font-size:13px;font-weight:600}
+.seg button[aria-pressed="true"]{background:#fff;color:var(--teal-deep)}
+.acc{display:inline-flex;gap:6px}
+.acc button{width:22px;height:22px;border-radius:50%;border:2px solid rgba(255,255,255,.55);padding:0;position:relative}
+.acc button[data-accent="purple"]{background:#954BBC}
+.acc button[data-accent="yellow"]{background:#FBBF45}
+.acc button[aria-pressed="true"]{border-color:#fff;box-shadow:0 0 0 2px var(--header),0 0 0 4px #fff}
+[data-mode="night"] .bar{border-bottom:1px solid var(--line)}
+[data-mode="night"] .seg button[aria-pressed="true"]{color:#04201F}
+
+/* ===== hero ===== */
+.hero{position:relative;background:var(--surface-alt);border-bottom:1px solid var(--line);overflow:hidden}
+.hero .wrap{position:relative;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.9fr);gap:56px;align-items:center;padding-top:72px;padding-bottom:80px}
+.hero-orn{position:absolute;left:-150px;bottom:-54px;width:210px;opacity:.95;pointer-events:none;transform:rotate(-8deg)}
+.hero h1{font-size:clamp(2.7rem,7.2vw,6.1rem);line-height:.95;letter-spacing:-.045em;font-weight:700;margin-top:30px}
+.hero h1 span{display:block}
+.hero h1 .a{font-size:.38em;line-height:1;letter-spacing:-.01em;font-weight:600;color:var(--ink-muted);margin-bottom:.45em}
+.hero h1 .b{color:var(--teal-ink)}
+.lede{font-size:clamp(1.2rem,2.1vw,1.75rem);line-height:1.3;font-weight:500;letter-spacing:-.015em;margin-top:26px;max-width:21em}
+.lede em{font-style:normal;color:var(--ax-ink);font-weight:600}
+.hero-q{margin-top:20px;max-width:35em;color:var(--ink-muted);font-size:15px}
+.hero-cta{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-top:34px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:12px 22px;border-radius:var(--radius-pill);background:var(--action);color:var(--on-action);font-weight:600;font-size:15px;border:0}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--teal-ink);box-shadow:inset 0 0 0 1.5px var(--line-strong)}
+.btn.ghost:hover{background:var(--action-soft);filter:none}
+.keyhint{color:var(--ink-subtle)}
+.keyhint kbd{font-family:var(--mono);font-size:11px;border:1px solid var(--line-control);border-bottom-width:2px;border-radius:5px;padding:1px 6px;background:var(--surface);color:var(--ink)}
+
+.ledger-wrap{position:relative}
+.hand{position:absolute;right:6px;top:-40px;font-family:var(--hand);font-weight:600;font-size:26px;line-height:1;color:var(--ax-ink);transform:rotate(-4deg);white-space:nowrap}
+.hand::after{content:"";position:absolute;left:-30px;top:28px;width:22px;height:22px;border-left:2px solid currentColor;border-bottom:2px solid currentColor;border-radius:0 0 0 22px;transform:rotate(-10deg);opacity:.8}
+.ledger{position:relative;z-index:1;background:var(--plate);color:var(--plate-ink);border-radius:var(--radius-panel);overflow:hidden;box-shadow:var(--shadow-raised);border:1px solid var(--plate-line)}
+.lhead,.lfoot{display:flex;justify-content:space-between;gap:12px;padding:14px 22px;color:var(--plate-muted)}
+.lhead{border-bottom:1px solid var(--plate-line)}
+.lfoot{border-top:1px solid var(--plate-line)}
+.lrow{display:grid;grid-template-columns:62px 1fr 22px;align-items:center;gap:6px;width:100%;text-align:left;background:transparent;border:0;padding:13px 22px;color:inherit;position:relative;border-bottom:1px solid var(--plate-line)}
+.ledger li:last-child .lrow{border-bottom:0}
+.lrow:hover{background:rgba(255,255,255,.06)}
+.lrow[aria-pressed="true"]{background:rgba(255,255,255,.09)}
+.lrow[aria-pressed="true"]::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--bright)}
+.lrow:focus-visible{outline-color:var(--bright);outline-offset:-3px}
+.ln{font-family:var(--mono);font-size:30px;font-weight:500;color:var(--bright);letter-spacing:-.02em;line-height:1}
+.lt b{display:block;font-weight:600;font-size:15.5px;line-height:1.25}
+.lt small{display:block;font-size:12.5px;color:var(--plate-muted);line-height:1.35}
+.la{color:var(--plate-muted);font-size:18px;transition:transform .15s}
+.lrow:hover .la{transform:translateX(3px);color:var(--bright)}
+
+/* ===== sections ===== */
+.sec{padding:92px 0 0}
+.sec-h{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.62fr);align-items:end;gap:14px 40px;border-top:2px solid var(--ink);padding-top:18px;margin-bottom:34px}
+.sec-h h2{font-size:clamp(1.8rem,3.2vw,2.6rem);line-height:1.05;letter-spacing:-.03em;font-weight:700}
+.sec-h p:not(.lab){color:var(--ink-muted);max-width:30em;justify-self:end;font-size:15px}
+.sec-h .lab{grid-column:1/-1;justify-self:start;margin-left:-10px}
+
+/* ===== selected plates ===== */
+.plates{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:26px}
+.p1{grid-column:span 7}.p2{grid-column:span 5}.p3,.p4,.p5{grid-column:span 4}.p6{grid-column:1/-1}
+.plate{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;transition:box-shadow .18s,transform .18s,border-color .18s}
+.plate:hover{box-shadow:var(--shadow-hover);transform:translateY(-3px);border-color:var(--line-strong)}
+.p1,.p2{--mat-h:clamp(260px,29vw,380px)}
+.p3,.p4,.p5{--mat-h:clamp(200px,18vw,250px)}
+.mat{display:flex;align-items:center;justify-content:center;height:var(--mat-h);padding:20px;--mh:calc(var(--mat-h) - 40px)}
+.shot{width:min(100%,calc(var(--mh) * var(--r)));aspect-ratio:var(--r);border-radius:9px;overflow:hidden;box-shadow:0 0 0 1px var(--shot-ring),var(--shot-shadow);background:var(--surface)}
+.shot img{width:100%;height:100%;object-fit:cover;object-position:var(--pos,center)}
+.pbody{display:flex;flex-direction:column;gap:9px;padding:20px 24px 24px;flex:1}
+.idx{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px}
+.idx>span:first-child{color:var(--ax-ink);font-weight:600}
+.plate h3{font-size:1.4rem;line-height:1.15;letter-spacing:-.02em;font-weight:700}
+.p1 h3,.p2 h3{font-size:1.75rem}
+.desc{color:var(--ink-muted);font-size:15px;line-height:1.5}
+.open{margin-top:auto;padding-top:8px;color:var(--action);font-weight:500}
+.stretch::after{content:"";position:absolute;inset:0;z-index:1;border-radius:inherit}
+.stretch:focus-visible{outline:none}
+.stretch:focus-visible::after{outline:var(--border-focus) solid var(--focus-ring);outline-offset:-3px;border-radius:var(--radius-lg)}
+.plate:hover h3 a,.row:hover h3 a{color:var(--teal-ink)}
+
+/* system plate (dark) */
+.plate.sys{background:var(--plate);color:var(--plate-ink);border-color:var(--plate-line);padding:26px 26px 24px;gap:16px;overflow:hidden}
+.plate.sys:hover{border-color:var(--bright)}
+.sys .meta,.sys .st{color:var(--plate-muted)}
+.sys .st{color:var(--plate-ink)}
+.sys .idx>span:first-child{color:var(--bright)}
+.sys h3{font-size:2rem;letter-spacing:-.03em}
+.sys .desc{color:var(--plate-muted);font-size:14.5px}
+.sys-orn{position:absolute;right:-44px;bottom:-40px;width:160px;opacity:.55;pointer-events:none}
+.sys-orn2{position:absolute;right:26px;top:64px;width:30px;opacity:.95;pointer-events:none}
+.sys-act{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-top:auto;position:relative;z-index:2}
+.btn.light{background:#fff;color:#04201F;padding:10px 18px;font-size:14px}
+.btn.light:hover{background:var(--bright);filter:none}
+.sys-act a.sl{color:var(--bright);font-size:13.5px;font-weight:500;border-bottom:1px solid transparent}
+.sys-act a.sl:hover{border-bottom-color:var(--bright)}
+.sys :focus-visible{outline-color:var(--bright)}
+
+/* ===== library ===== */
+.toolbar{background:var(--surface-page);border-bottom:1px solid var(--line);padding:14px 0 14px;margin-bottom:6px}
+@media (min-width:1000px) and (min-height:720px){.toolbar{position:sticky;top:calc(var(--nav-height) + env(safe-area-inset-top,0px));z-index:40}}
+.tb{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+.tb-r1,.tb-r2{display:flex;align-items:center;justify-content:space-between;gap:12px 20px;min-width:0}
+.tabs,.chips{display:flex;gap:8px;flex-wrap:wrap;min-width:0}
+.tab{display:inline-flex;align-items:baseline;gap:8px;padding:8px 16px;border-radius:var(--radius-pill);border:1.5px solid var(--line-strong);background:transparent;font-weight:600;font-size:14.5px;color:var(--ink)}
+.tab small{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--ink-subtle)}
+.tab:hover{background:var(--action-soft)}
+.tab[aria-pressed="true"]{background:var(--surface-ink);border-color:var(--surface-ink);color:#fff}
+[data-mode="night"] .tab[aria-pressed="true"]{background:var(--bright);border-color:var(--bright);color:#04201F}
+.tab[aria-pressed="true"] small{color:inherit;opacity:.8}
+.chip{display:inline-flex;align-items:center;gap:7px;padding:4px 11px;border-radius:var(--radius-pill);border:1px solid var(--line-control);background:transparent;font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-muted)}
+.chip small{font-size:10.5px}
+.chip:hover:not(:disabled){background:var(--action-soft);color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--ax-tint);border-color:var(--ax);color:var(--ax-ink);font-weight:600}
+.chip:disabled{opacity:.38;cursor:not-allowed}
+.search{position:relative;flex:0 0 270px}
+.search input{width:100%;padding:9px 38px 9px 38px;border:1.5px solid var(--line-control);border-radius:var(--radius-pill);background:var(--surface);color:var(--ink);font:inherit;font-size:14px}
+.search input::placeholder{color:var(--ink-subtle)}
+.search input:focus-visible{outline-offset:1px}
+.search svg{position:absolute;left:13px;top:50%;width:16px;height:16px;transform:translateY(-50%);color:var(--ink-subtle);pointer-events:none}
+.search kbd{position:absolute;right:11px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:11px;border:1px solid var(--line-control);border-radius:5px;padding:0 6px;color:var(--ink-subtle);pointer-events:none}
+.status{color:var(--ink-subtle);display:flex;align-items:center;gap:10px;white-space:nowrap}
+.status button{border:0;background:transparent;color:var(--action);text-decoration:underline;text-underline-offset:3px;padding:0;font:inherit;letter-spacing:inherit;text-transform:inherit}
+.fchips{display:inline-flex;gap:6px;flex-wrap:wrap}
+.fchip{padding:2px 8px;border-radius:var(--radius-pill);background:var(--ax-tint);color:var(--ax-ink)}
+
+.group{margin-top:68px;border-top:2px solid var(--ink)}
+.group:first-of-type{margin-top:36px}
+.gh{display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:6px 18px;align-items:baseline;padding:20px 0 24px}
+.gnum{color:var(--ax-ink);font-weight:600;font-size:13px}
+.gh h3{font-size:clamp(1.6rem,2.6vw,2.1rem);line-height:1.1;letter-spacing:-.025em;font-weight:700;display:flex;align-items:center;gap:14px}
+.gh h3::before{content:"";width:14px;height:14px;border-radius:4px;background:linear-gradient(135deg,var(--ca),var(--cb));box-shadow:inset 0 0 0 1px var(--shot-ring);flex:none}
+.gblurb{grid-column:2;color:var(--ink-muted);font-size:15px}
+.gcount{grid-column:3;grid-row:1;color:var(--ink-subtle)}
+
+.row{position:relative;display:grid;grid-template-columns:64px 148px minmax(0,1fr) 168px;gap:6px 22px;align-items:start;padding:22px 0;border-top:1px solid var(--line);transition:background .15s}
+.row:hover{background:linear-gradient(90deg,transparent,var(--surface-alt) 14%,var(--surface-alt) 86%,transparent)}
+.row .ri{color:var(--ink-subtle);padding-top:3px}
+.thumb{--mat-h:92px;--mh:calc(var(--mat-h) - 18px);display:flex;align-items:center;justify-content:center;height:var(--mat-h);padding:9px;border-radius:10px;overflow:hidden;position:relative}
+.thumb .shot{border-radius:5px;box-shadow:0 0 0 1px var(--shot-ring),0 6px 14px rgba(1,70,70,.16)}
+.thumb .shot.cover{width:100%;height:var(--mh);aspect-ratio:auto}
+.tile{position:absolute;inset:0;display:grid;place-items:center;color:var(--teal-ink)}
+.tile .lab{font-weight:600;font-size:12px}
+.tile.dark{background:var(--plate);color:var(--bright)}
+.tile.dark .lab{color:var(--bright)}
+.tile.dark .lab::before,.tile.dark .lab::after{border-color:var(--bright)}
+.tile.dark img{position:absolute;right:-14px;bottom:-22px;width:58px;opacity:.9}
+.tile-bg.dark{background:var(--plate)}
+.rmain{min-width:0;display:flex;flex-direction:column;gap:5px}
+.row h3{font-size:1.2rem;line-height:1.25;letter-spacing:-.015em;font-weight:600}
+.row .desc{font-size:14.5px;max-width:52em}
+.rlinks{display:flex;flex-wrap:wrap;gap:4px 16px;margin-top:4px;position:relative;z-index:2}
+.rlinks a{color:var(--ink-muted);border-bottom:1px solid var(--line-strong)}
+.rlinks a:hover{color:var(--action);border-bottom-color:var(--action)}
+.rgo{display:flex;flex-direction:column;align-items:flex-end;gap:6px;text-align:right;padding-top:2px}
+.rgo .open{margin:0;padding:0}
+.rgo time{color:var(--ink-subtle);font-size:11px}
+.row:hover .open{text-decoration:underline;text-underline-offset:4px}
+
+
+.empty{padding:70px 0 20px;text-align:left}
+.empty h3{font-size:1.6rem;letter-spacing:-.02em}
+.empty p{color:var(--ink-muted);margin-top:8px}
+.empty button{margin-top:18px}
+
+/* ===== footer ===== */
+.foot{margin-top:120px;background:var(--plate);color:var(--plate-ink);padding:54px 0 46px}
+.foot .wrap{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);gap:40px}
+.foot .logo{height:20px;color:#fff;margin-bottom:18px}
+.foot p{color:var(--plate-muted);font-size:14px;max-width:28em}
+.foot h4{color:var(--plate-muted);font-weight:500;margin-bottom:12px}
+.foot li{padding:4px 0}
+.foot li a{color:var(--plate-ink);border-bottom:1px solid var(--plate-line);font-size:14.5px}
+.foot li a:hover{border-bottom-color:var(--bright);color:var(--bright)}
+.foot code{font-family:var(--mono);font-size:12.5px;color:var(--bright)}
+.foot :focus-visible{outline-color:var(--bright)}
+.foot-end{grid-column:1/-1;border-top:1px solid var(--plate-line);padding-top:22px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:var(--plate-muted)}
+
+/* ===== responsive ===== */
+@media (max-width:1100px){
+  .hero .wrap{grid-template-columns:1fr;gap:56px;padding-top:56px;padding-bottom:64px}
+  .hand{display:none}
+  .ledger-wrap{max-width:640px}
+  .hero-orn{width:150px;left:auto;right:-46px;top:-92px;bottom:auto;transform:rotate(10deg)}
+}
+@media (max-width:900px){
+  .bar-nav{display:none}
+  .bar .wrap{justify-content:space-between}
+}
+@media (max-width:1023px){
+  .plates{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .p1{grid-column:1/-1}.p2,.p3,.p4,.p5{grid-column:span 1}
+  .p1,.p2,.p3,.p4,.p5{--mat-h:clamp(200px,32vw,320px)}
+  .tb-r1,.tb-r2{flex-wrap:wrap}
+  .search{flex:1 1 240px}
+  .row{grid-template-columns:132px minmax(0,1fr);gap:8px 18px;padding:20px 0}
+  .row .ri{display:none}
+  .rgo{grid-column:2;flex-direction:row;align-items:baseline;justify-content:flex-start;gap:16px;text-align:left}
+  .gh{grid-template-columns:44px minmax(0,1fr) auto}
+  .sec-h{grid-template-columns:1fr}
+  .sec-h p:not(.lab){justify-self:start}
+  .foot .wrap{grid-template-columns:1fr 1fr}
+  .foot .wrap>div:first-child{grid-column:1/-1}
+}
+@media (max-width:760px){
+  .wrap{padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+  .brand-tag{display:none}
+  .sec{padding-top:68px}
+  .plates{grid-template-columns:1fr}
+  .p1,.p2,.p3,.p4,.p5{grid-column:1/-1}
+  .p1,.p2,.p3,.p4,.p5{--mat-h:clamp(190px,56vw,300px)}
+  .tabs{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;margin-left:calc(-1*max(20px,env(safe-area-inset-left,0px)));margin-right:calc(-1*max(20px,env(safe-area-inset-right,0px)));padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px));scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex:none}
+  .status{white-space:normal}
+  .row{grid-template-columns:96px minmax(0,1fr);gap:8px 14px}
+  .thumb{--mat-h:74px;--mh:calc(var(--mat-h) - 14px);padding:7px}
+  .gh{grid-template-columns:1fr auto}
+  .gnum{display:none}
+  .gblurb{grid-column:1/-1}
+  .gcount{grid-column:2}
+  .foot .wrap{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  .acc{display:none}
+}
+@media (max-width:420px){
+  .hero h1{font-size:2.5rem}
+  .ledger .ln{font-size:26px}
+  .lrow{grid-template-columns:52px 1fr 18px;padding:12px 16px}
+  .lhead,.lfoot{padding:12px 16px}
+}
+
+
+/* ============================================================
+   Added in this version (schema 2)
+   ============================================================ */
+:root[data-mode="night"]{color-scheme:dark}
+
+/* hint: a small, honest note under the Open link (for example, no hosted page yet) */
+.hint{font-family:var(--mono);font-size:11px;letter-spacing:.04em;line-height:1.35;color:var(--ink-subtle)}
+.rgo .hint{max-width:16em}
+.pfoot{margin-top:auto;padding-top:8px;display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 14px}
+.pfoot .open{margin:0;padding:0}
+
+/* Selected: the system plate runs the full width of the grid */
+.plate.sys.p6{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:30px 64px;padding:42px 46px;align-items:center}
+.plate.sys.p6:hover{transform:none;box-shadow:none;border-color:var(--plate-line)}
+.p6 .sys-l{display:flex;flex-direction:column;gap:16px;min-width:0;position:relative;z-index:2}
+.p6 h3{font-size:clamp(2.2rem,4.6vw,3.5rem);line-height:1;letter-spacing:-.035em}
+.p6 .desc{font-size:16px;line-height:1.55;max-width:34em}
+.p6 .sys-act{margin-top:8px}
+.p6 .sys-orn{right:-30px;bottom:-58px;width:210px;opacity:.5}
+.p6 .sys-orn2{right:36px;top:30px;width:34px}
+.sys-r{position:relative;z-index:2;min-width:0}
+.sys-cap{color:var(--plate-muted);margin-bottom:12px}
+.sys-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border:1px solid var(--plate-line);border-radius:var(--radius-md);background:rgba(255,255,255,.045);overflow:hidden}
+.sys-grid li{padding:20px 22px 18px;border-right:1px solid var(--plate-line);border-bottom:1px solid var(--plate-line);display:flex;flex-direction:column;gap:8px}
+.sys-grid li:nth-child(2n){border-right:0}
+.sys-grid li:nth-last-child(-n+2){border-bottom:0}
+.sys-grid b{font-family:var(--mono);font-size:clamp(30px,3.8vw,44px);font-weight:500;line-height:1;letter-spacing:-.02em;color:var(--bright)}
+.sys-grid span{color:var(--plate-muted)}
+.sys-note{color:var(--plate-muted);margin-top:14px;max-width:30em}
+
+@media (max-width:1023px){
+  .plate.sys.p6{grid-template-columns:minmax(0,1fr);gap:28px;padding:32px 30px}
+}
+@media (max-width:520px){
+  .plate.sys.p6{padding:28px 20px 26px}
+  .p6 .sys-orn2{display:none}
+  .p6 .sys-orn{width:150px;right:-44px;bottom:-64px;opacity:.38}
+  .sys-grid li{padding:16px 16px 14px}
+}
+
+/* ============================================================
+   Added in this version (schema 3): the media viewer
+   One <dialog> for every entry that has `media` (image, document, carousel).
+   The primary action of such an entry is a button, so the card stays one big target.
+   ============================================================ */
+button.stretch{display:inline;margin:0;padding:0;border:0;background:none;color:inherit;font:inherit;letter-spacing:inherit;text-align:inherit;cursor:pointer;-webkit-appearance:none;appearance:none}
+.plate:hover h3 .stretch,.row:hover h3 .stretch{color:var(--teal-ink)}
+
+html.viewer-open{overflow:hidden}
+.viewer{position:fixed;inset:0;width:100%;height:100%;height:100dvh;max-width:none;max-height:none;margin:0;padding:0;border:0;background:rgba(8,19,18,.97);color:var(--plate-ink);overflow:hidden;overscroll-behavior:contain}
+.viewer:not([open]){display:none}
+.viewer::backdrop{background:rgba(8,19,18,.97)}
+:root[data-mode="night"] .viewer,:root[data-mode="night"] .viewer::backdrop{background:rgba(2,9,9,.975)}
+
+/* grid: bar / [prev media next] / foot. On a phone the arrows move down beside the count. */
+.v-shell{height:100%;display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-rows:auto minmax(0,1fr) auto;
+  grid-template-areas:"bar bar bar" "prev media next" "foot foot foot";column-gap:10px;
+  padding:env(safe-area-inset-top,0px) max(16px,env(safe-area-inset-right,0px)) env(safe-area-inset-bottom,0px) max(16px,env(safe-area-inset-left,0px))}
+
+.v-bar{grid-area:bar;display:flex;align-items:flex-start;gap:12px 18px;padding:16px 0 12px;min-width:0}
+.v-id{flex:1 1 auto;min-width:0}
+.v-kicker{margin:0 0 5px;color:var(--plate-muted)}
+.v-title{margin:0;font-family:var(--font);font-size:clamp(1.05rem,2.1vw,1.4rem);line-height:1.22;font-weight:600;letter-spacing:-.012em;color:var(--plate-ink);overflow-wrap:anywhere;text-wrap:balance}
+.v-tools{display:flex;align-items:center;flex-wrap:wrap;justify-content:flex-end;gap:8px;min-width:0}
+.v-link,.v-btn{display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:0 15px;border-radius:var(--radius-pill);border:1px solid var(--plate-line);background:rgba(255,255,255,.04);color:var(--plate-ink);font-family:var(--mono);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;white-space:nowrap;cursor:pointer}
+.v-link:hover,.v-btn:hover,.v-nav:hover:not([aria-disabled="true"]),.v-close:hover{background:rgba(255,255,255,.13);border-color:rgba(195,240,240,.42)}
+.v-btn[aria-pressed="true"]{background:var(--bright);border-color:var(--bright);color:#04201F}
+.v-close,.v-nav{display:inline-grid;place-items:center;border-radius:50%;border:1px solid var(--plate-line);background:rgba(255,255,255,.05);color:var(--plate-ink);padding:0;cursor:pointer}
+.v-close{width:40px;height:40px;flex:none}
+.v-nav{width:48px;height:48px;align-self:center}
+.v-nav.prev{grid-area:prev}
+.v-nav.next{grid-area:next}
+.v-nav[aria-disabled="true"]{opacity:.28;cursor:default}
+.v-close svg,.v-nav svg{display:block}
+.viewer :focus-visible{outline:2px solid var(--bright);outline-offset:2px}
+
+/* the picture: it scrolls inside itself, so the page behind never has to */
+.v-media{grid-area:media;position:relative;min-width:0;min-height:0}
+.v-fig{position:absolute;inset:0;display:flex;overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:rgba(195,240,240,.4) transparent}
+.v-fig:focus-visible{outline-offset:-3px}
+.v-fig img{display:block;flex:none;margin:auto;width:auto;height:auto;max-width:100%;max-height:100%;border-radius:6px;
+  background:rgba(255,255,255,.07);color:transparent;font-size:0}      /* while it loads: a quiet placeholder in the right shape */
+.v-fig img.ready{background:#fff;box-shadow:0 0 0 1px rgba(255,255,255,.16),0 26px 70px rgba(0,0,0,.5)}
+.v-fig.can-zoom img{cursor:zoom-in}
+.v-fig.actual img{max-width:none;max-height:none;cursor:zoom-out}
+.v-fig.carousel:not(.actual){touch-action:pan-y pinch-zoom}
+
+/* a document: the pages stack and scroll */
+.v-fig.document{display:block;padding:2px 0 22px}
+.v-page{width:min(100%,var(--docw,1000px));margin:0 auto 18px}
+.v-page:last-child{margin-bottom:0}
+.v-fig.document img{width:100%;max-width:none;max-height:none;margin:0}
+.v-fig.document.actual .v-page{width:var(--w);max-width:none}
+.v-fig.document.actual img{width:100%}
+.v-fig.document{padding:0;overflow:hidden}
+.v-pdf-frame{display:block;width:100%;height:100%;border:0;border-radius:6px;background:#fff}
+
+.v-err{margin:auto;max-width:28em;padding:24px;text-align:center;color:var(--plate-muted)}
+.v-err a{color:var(--plate-ink);border-bottom:1px solid var(--plate-line)}
+
+.v-foot{grid-area:foot;display:flex;flex-direction:column;align-items:center;gap:8px;min-width:0;padding:14px 0 16px;text-align:center}
+.v-pager{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px 16px;min-height:18px}
+.v-count{margin:0;color:var(--plate-ink);font-variant-numeric:tabular-nums}
+.v-dots{display:flex;flex-wrap:wrap;justify-content:center;gap:7px}
+.v-dot{position:relative;width:8px;height:8px;padding:0;border:0;border-radius:50%;background:rgba(255,255,255,.28);cursor:pointer}
+.v-dot::before{content:"";position:absolute;inset:-7px}
+.v-dot[aria-current="true"]{background:var(--bright);transform:scale(1.35)}
+.v-cap{margin:0;max-width:64ch;font-size:13px;line-height:1.5;color:var(--plate-muted);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+
+@media (max-width:700px){
+  .v-shell{grid-template-areas:"bar bar bar" "media media media" "prev foot next";column-gap:6px}
+  .v-bar{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"id close" "tools tools";gap:10px 12px;padding:12px 0 10px}
+  .v-id{grid-area:id}
+  .v-close{grid-area:close}
+  .v-tools{grid-area:tools;justify-content:flex-start}
+  .v-nav{width:44px;height:44px}
+  .v-foot{padding:10px 0 12px;gap:6px}
+  .v-dots{display:none}
+  .v-cap{font-size:12.5px;-webkit-line-clamp:2}
+}
+@media (pointer:coarse){
+  .v-link,.v-btn{min-height:44px}
+  .v-close{width:44px;height:44px}
+}
+@media (max-height:560px){
+  .v-cap{display:none}
+  .v-bar{padding:10px 0 8px}
+}
+
+</style>
+<a class="skip" href="#library">Skip to the library</a>
+
+<header class="bar" data-bar>
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Innovation Labs Artifact Index, back to top">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 505.84 53.42" fill="currentColor" class="logo" aria-hidden="true" focusable="false"><g><g><path d="M90.71,9.72c-8.67,0-15.7,7.03-15.7,15.7,0,5.41,2.74,10.18,6.91,13,.11.07.22.14.33.22.85.64,1.41,1.65,1.41,2.8v.65h3.97v-.65c0-.33-.03-.65-.07-.98h.01l-2.04-11.67-.84.13,1.39,8.01c-.41-.55-.9-1.05-1.46-1.46-.18-.13-.37-.26-.56-.37-3.19-2.2-5.09-5.8-5.09-9.67,0-6.47,5.26-11.74,11.73-11.74s11.73,5.27,11.73,11.74c0,3.79-1.83,7.34-4.91,9.54-.37.21-.72.45-1.05.72-.44.36-.83.76-1.16,1.2l1.39-7.95-.85-.1-1.92,10.98c-.03.12-.04.25-.06.38l-.05.26s0,.06-.01.08l-.02.25v1.31h3.96v-1.08c.11-.92.57-1.72,1.25-2.28.19-.15.39-.29.61-.4,4.1-2.84,6.78-7.56,6.78-12.91,0-8.67-7.03-15.7-15.69-15.7Z"/><rect x="83.66" y="49.45" width="14.09" height="3.97"/><polygon points="83.66 43.79 83.66 47.76 97.75 47.76 97.75 43.79 87.63 43.79 83.66 43.79"/><path d="M90.57,25.34c.7,0,1.33.36,1.69.97.78,1.33,2.11,2.24,3.6,2.53l.85.1.6-3.44c-.14.04-.29.06-.45.06-.15,0-.29-.02-.42-.05-.53-.11-.98-.44-1.27-.93-.96-1.62-2.72-2.62-4.6-2.62s-3.64,1-4.6,2.62c-.24.41-.6.7-1.03.85-.2.08-.43.12-.66.12-.06,0-.12,0-.18-.01l.59,3.38.84-.13c1.38-.35,2.6-1.23,3.34-2.48.36-.61.99-.97,1.69-.97Z"/><rect y="10.28" width="4.76" height="30.03"/><polygon points="32.52 31.64 15.49 10.28 11.8 10.28 11.8 40.3 16.65 40.3 16.65 19.12 33.68 40.3 37.32 40.3 37.32 10.28 32.52 10.28 32.52 31.64"/><polygon points="65.14 31.64 48.11 10.28 44.42 10.28 44.42 40.3 49.27 40.3 49.27 19.12 66.3 40.3 69.94 40.3 69.94 10.28 65.14 10.28 65.14 31.64"/><polygon points="131.27 10.28 121.66 34.69 112.09 10.28 106.69 10.28 119.17 40.43 124.19 40.43 136.63 10.28 131.27 10.28"/><path d="M226.07,12.06c-.11-.07-.22-.14-.33-.22-.85-.64-1.41-1.67-1.41-2.82V0h-3.96v9.02c0,2.35,1.12,4.6,3,6.01.18.15.36.27.56.39,3.13,2.17,5.02,5.72,5.08,9.53-.28-.17-.51-.4-.69-.69-.96-1.64-2.72-2.65-4.6-2.65s-3.64,1.01-4.61,2.64c-.36.61-.99.98-1.69.98s-1.33-.36-1.69-.97c-.96-1.64-2.73-2.65-4.61-2.65s-3.65,1.01-4.6,2.64c-.23.39-.57.69-.98.84.02-3.8,1.85-7.34,4.91-9.55.37-.21.72-.45,1.05-.72,1.48-1.23,2.43-2.98,2.66-4.9l.03-.24V0h-3.97v9.44c-.11.92-.57,1.74-1.25,2.3-.2.16-.4.29-.62.4-4.1,2.85-6.78,7.6-6.78,13,0,8.73,7.03,15.8,15.7,15.8s15.7-7.07,15.7-15.8c0-5.45-2.74-10.25-6.91-13.09ZM217.29,36.95c-5.31,0-9.81-3.58-11.25-8.46,1.41-.33,2.65-1.23,3.41-2.5.36-.61.99-.98,1.69-.98s1.33.37,1.69.98c.96,1.62,2.73,2.64,4.61,2.64s3.64-1.02,4.6-2.64c.36-.61.99-.98,1.69-.98s1.33.37,1.69.98c.7,1.2,1.84,2.05,3.13,2.43-1.41,4.93-5.93,8.53-11.26,8.53Z"/><path d="M147.55,10.28l-13.47,30.03h5.1l2.83-6.3h16.25l2.88,6.3h5.1l-13.47-30.03h-5.23ZM143.82,29.63l6.35-14.29,6.35,14.29h-12.69Z"/><polygon points="163.41 14.61 173.28 14.61 173.28 40.31 178.13 40.31 178.13 14.61 187.95 14.61 187.95 10.28 163.41 10.28 163.41 14.61"/><rect x="191.85" y="10.28" width="4.76" height="30.03"/><polygon points="258.79 31.64 241.76 10.28 238.07 10.28 238.07 40.3 242.92 40.3 242.92 19.12 259.95 40.3 263.59 40.3 263.59 10.28 258.79 10.28 258.79 31.64"/><polygon points="286.63 10.28 281.82 10.28 281.82 40.3 302.45 40.3 302.45 35.85 286.63 35.85 286.63 10.28"/><path d="M394.15,30.97c-.33-6.25-6.02-7.91-12.02-8.74-3.95-.56-7.29-1.37-7.29-4.29s2.92-4.55,6.95-4.55c3.13.04,6.01,1.29,7.42,3.34l3.65-2.44c-2.53-4.03-6.86-5.06-11.2-5.06-5.4,0-11.62,2.4-11.58,8.62,0,6.43,5.66,7.94,11.62,8.75,4.2.56,7.68,1.67,7.68,4.93,0,3.78-3.99,4.98-7.59,4.98s-7.21-1.29-9.35-4.93l-3.6,2.4c2.74,5.06,7.16,6.82,12.91,6.82.56,0,1.11-.03,1.66-.07,2.2.07,6.34-1.49,7.46-2.29,4.1-2.9,3.15-7.34,3.28-7.48Z"/><path d="M318.2,10.28l-13.47,30.03h5.11l2.83-6.3h16.26l2.87,6.3h5.1l-13.47-30.03h-5.23ZM314.46,29.63l6.35-14.29,6.35,14.29h-12.69Z"/><path d="M360.47,24.82c2.83-1.16,4.16-3.43,4.16-5.96,0-5.96-4.51-8.58-10.21-8.58h-13.77v30.03h13.77c5.92,0,11.15-2.02,11.15-8.58,0-2.27-1.5-5.83-5.1-6.9ZM345.41,14.61h9.01c3.6,0,5.45,2.23,5.45,4.33,0,2.36-1.8,3.78-5.4,3.78h-9.05v-8.11ZM354.42,35.85h-9.01v-8.84h9.05c2.74,0,6.31,1.46,6.31,4.68s-3.69,4.16-6.35,4.16Z"/></g><g><path d="M405.73,36.02h19.16v4.68h-24.14v-7.56c0-5.71,4.47-9.02,12.16-9.02,4.12,0,6.92-1.85,6.92-4.6,0-3.01-2.45-4.77-6.62-4.77s-7.04,1.76-7.13,4.51h-5.15c.34-5.67,4.9-9.02,12.29-9.02s11.68,3.52,11.68,9.19c0,6.01-4.17,9.19-11.94,9.19-4.51,0-7.22,1.68-7.22,4.51v2.88Z"/><path d="M428.06,28.59v-5.88c0-7.56,5.28-12.67,13.06-12.67s13.06,5.11,13.06,12.67v5.88c0,7.52-5.28,12.63-13.06,12.63s-13.06-5.11-13.06-12.63ZM449.11,28.59v-5.88c0-4.72-3.18-7.9-7.99-7.9s-7.99,3.18-7.99,7.9v5.88c0,4.72,3.18,7.9,7.99,7.9s7.99-3.18,7.99-7.9Z"/><path d="M462.25,36.02h19.16v4.68h-24.14v-7.56c0-5.71,4.47-9.02,12.16-9.02,4.12,0,6.92-1.85,6.92-4.6,0-3.01-2.45-4.77-6.62-4.77s-7.04,1.76-7.13,4.51h-5.15c.34-5.67,4.9-9.02,12.29-9.02s11.68,3.52,11.68,9.19c0,6.01-4.17,9.19-11.94,9.19-4.51,0-7.22,1.68-7.22,4.51v2.88Z"/><path d="M505.84,10.64v2.88l-13.92,27.19h-5.75l13.19-25.34h-16.41v-4.72h22.89Z"/></g></g></svg>
+      <span class="brand-tag mono">Artifact Index</span>
+    </a>
+    <nav class="bar-nav" aria-label="Sections">
+      <a href="#selected" data-spy="selected">Selected</a>
+      <a href="#library" data-spy="library">Library</a>
+      <a href="#about">Registry</a>
+    </nav>
+    <div class="bar-ctl">
+      <!-- Present Mode mounts a button here later (see window.ILA_UI). -->
+      <div data-present-slot></div>
+      <div class="acc" role="group" aria-label="Accent colour">
+        <button type="button" data-accent="purple" aria-pressed="true" aria-label="Purple accent" title="Purple accent"></button>
+        <button type="button" data-accent="yellow" aria-pressed="false" aria-label="Yellow accent" title="Yellow accent"></button>
+      </div>
+      <div class="seg" role="group" aria-label="Theme">
+        <button type="button" data-theme-btn="light" aria-pressed="true">Light</button>
+        <button type="button" data-theme-btn="night" aria-pressed="false">Night</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="top" data-present-root>
+
+  <section class="hero" data-step="0" data-step-id="cover" aria-labelledby="h-title">
+    <div class="wrap">
+      <div>
+        <p class="lab mono">Working library &middot; Studio archive</p>
+        <h1 id="h-title"><span class="a">Innovation Labs</span><span class="b">Artifact Index</span></h1>
+        <p class="lede">Everything we&rsquo;ve built, explored and documented. <em>In one place.</em></p>
+        <p class="hero-q">A curated library of what exists, what kind of thing it is, what it is for and where to open it.</p>
+        <div class="hero-cta">
+          <a class="btn" href="#library">Browse the library <span aria-hidden="true">&darr;</span></a>
+          <a class="btn ghost" href="#selected">Selected work</a>
+          <span class="keyhint mono">Search <kbd>/</kbd></span>
+        </div>
+      </div>
+      <div class="ledger-wrap">
+        <img class="hero-orn" src="assets/elements/hex-gold.svg" alt="" width="210" height="242">
+        <p class="hand" aria-hidden="true">pick a kind, or just scroll</p>
+        <div class="ledger" id="ledger" role="group" aria-label="Registry by kind. Choose one to filter the library."></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="selected" data-step="1" data-step-id="selected" aria-labelledby="h-selected">
+    <div class="wrap">
+      <div class="sec-h">
+        <p class="lab mono">Selected</p>
+        <h2 id="h-selected">A few places to start.</h2>
+        <p id="sel-note">A handful of entries from across the work. The full registry is below.</p>
+      </div>
+      <div class="plates" id="plates"></div>
+    </div>
+  </section>
+
+  <section class="sec" id="library" data-step-id="library" aria-labelledby="h-library">
+    <div class="wrap">
+      <div class="sec-h">
+        <p class="lab mono">Library</p>
+        <h2 id="h-library">The full registry.</h2>
+        <p>Grouped by what the work is about. Filter by kind from the ledger above, or by format here.</p>
+      </div>
+    </div>
+    <div class="toolbar" id="toolbar">
+      <div class="wrap tb">
+        <div class="tb-r1">
+          <div class="tabs" id="tabs" role="group" aria-label="Category"></div>
+          <div class="search">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m16 16-3.2-3.2"/></svg>
+            <label class="sr" for="q">Search the registry</label>
+            <input id="q" type="search" placeholder="Search the registry" autocomplete="off" spellcheck="false">
+            <kbd aria-hidden="true">/</kbd>
+          </div>
+        </div>
+        <div class="tb-r2">
+          <div class="chips" id="chips" role="group" aria-label="Format"></div>
+          <p class="status mono" id="status" role="status" aria-live="polite"></p>
+        </div>
+      </div>
+    </div>
+    <div class="wrap" id="groups"></div>
+  </section>
+
+</main>
+
+<footer class="foot" id="about" data-step-id="end">
+  <div class="wrap">
+    <div>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 505.84 53.42" fill="currentColor" class="logo" aria-hidden="true" focusable="false"><g><g><path d="M90.71,9.72c-8.67,0-15.7,7.03-15.7,15.7,0,5.41,2.74,10.18,6.91,13,.11.07.22.14.33.22.85.64,1.41,1.65,1.41,2.8v.65h3.97v-.65c0-.33-.03-.65-.07-.98h.01l-2.04-11.67-.84.13,1.39,8.01c-.41-.55-.9-1.05-1.46-1.46-.18-.13-.37-.26-.56-.37-3.19-2.2-5.09-5.8-5.09-9.67,0-6.47,5.26-11.74,11.73-11.74s11.73,5.27,11.73,11.74c0,3.79-1.83,7.34-4.91,9.54-.37.21-.72.45-1.05.72-.44.36-.83.76-1.16,1.2l1.39-7.95-.85-.1-1.92,10.98c-.03.12-.04.25-.06.38l-.05.26s0,.06-.01.08l-.02.25v1.31h3.96v-1.08c.11-.92.57-1.72,1.25-2.28.19-.15.39-.29.61-.4,4.1-2.84,6.78-7.56,6.78-12.91,0-8.67-7.03-15.7-15.69-15.7Z"/><rect x="83.66" y="49.45" width="14.09" height="3.97"/><polygon points="83.66 43.79 83.66 47.76 97.75 47.76 97.75 43.79 87.63 43.79 83.66 43.79"/><path d="M90.57,25.34c.7,0,1.33.36,1.69.97.78,1.33,2.11,2.24,3.6,2.53l.85.1.6-3.44c-.14.04-.29.06-.45.06-.15,0-.29-.02-.42-.05-.53-.11-.98-.44-1.27-.93-.96-1.62-2.72-2.62-4.6-2.62s-3.64,1-4.6,2.62c-.24.41-.6.7-1.03.85-.2.08-.43.12-.66.12-.06,0-.12,0-.18-.01l.59,3.38.84-.13c1.38-.35,2.6-1.23,3.34-2.48.36-.61.99-.97,1.69-.97Z"/><rect y="10.28" width="4.76" height="30.03"/><polygon points="32.52 31.64 15.49 10.28 11.8 10.28 11.8 40.3 16.65 40.3 16.65 19.12 33.68 40.3 37.32 40.3 37.32 10.28 32.52 10.28 32.52 31.64"/><polygon points="65.14 31.64 48.11 10.28 44.42 10.28 44.42 40.3 49.27 40.3 49.27 19.12 66.3 40.3 69.94 40.3 69.94 10.28 65.14 10.28 65.14 31.64"/><polygon points="131.27 10.28 121.66 34.69 112.09 10.28 106.69 10.28 119.17 40.43 124.19 40.43 136.63 10.28 131.27 10.28"/><path d="M226.07,12.06c-.11-.07-.22-.14-.33-.22-.85-.64-1.41-1.67-1.41-2.82V0h-3.96v9.02c0,2.35,1.12,4.6,3,6.01.18.15.36.27.56.39,3.13,2.17,5.02,5.72,5.08,9.53-.28-.17-.51-.4-.69-.69-.96-1.64-2.72-2.65-4.6-2.65s-3.64,1.01-4.61,2.64c-.36.61-.99.98-1.69.98s-1.33-.36-1.69-.97c-.96-1.64-2.73-2.65-4.61-2.65s-3.65,1.01-4.6,2.64c-.23.39-.57.69-.98.84.02-3.8,1.85-7.34,4.91-9.55.37-.21.72-.45,1.05-.72,1.48-1.23,2.43-2.98,2.66-4.9l.03-.24V0h-3.97v9.44c-.11.92-.57,1.74-1.25,2.3-.2.16-.4.29-.62.4-4.1,2.85-6.78,7.6-6.78,13,0,8.73,7.03,15.8,15.7,15.8s15.7-7.07,15.7-15.8c0-5.45-2.74-10.25-6.91-13.09ZM217.29,36.95c-5.31,0-9.81-3.58-11.25-8.46,1.41-.33,2.65-1.23,3.41-2.5.36-.61.99-.98,1.69-.98s1.33.37,1.69.98c.96,1.62,2.73,2.64,4.61,2.64s3.64-1.02,4.6-2.64c.36-.61.99-.98,1.69-.98s1.33.37,1.69.98c.7,1.2,1.84,2.05,3.13,2.43-1.41,4.93-5.93,8.53-11.26,8.53Z"/><path d="M147.55,10.28l-13.47,30.03h5.1l2.83-6.3h16.25l2.88,6.3h5.1l-13.47-30.03h-5.23ZM143.82,29.63l6.35-14.29,6.35,14.29h-12.69Z"/><polygon points="163.41 14.61 173.28 14.61 173.28 40.31 178.13 40.31 178.13 14.61 187.95 14.61 187.95 10.28 163.41 10.28 163.41 14.61"/><rect x="191.85" y="10.28" width="4.76" height="30.03"/><polygon points="258.79 31.64 241.76 10.28 238.07 10.28 238.07 40.3 242.92 40.3 242.92 19.12 259.95 40.3 263.59 40.3 263.59 10.28 258.79 10.28 258.79 31.64"/><polygon points="286.63 10.28 281.82 10.28 281.82 40.3 302.45 40.3 302.45 35.85 286.63 35.85 286.63 10.28"/><path d="M394.15,30.97c-.33-6.25-6.02-7.91-12.02-8.74-3.95-.56-7.29-1.37-7.29-4.29s2.92-4.55,6.95-4.55c3.13.04,6.01,1.29,7.42,3.34l3.65-2.44c-2.53-4.03-6.86-5.06-11.2-5.06-5.4,0-11.62,2.4-11.58,8.62,0,6.43,5.66,7.94,11.62,8.75,4.2.56,7.68,1.67,7.68,4.93,0,3.78-3.99,4.98-7.59,4.98s-7.21-1.29-9.35-4.93l-3.6,2.4c2.74,5.06,7.16,6.82,12.91,6.82.56,0,1.11-.03,1.66-.07,2.2.07,6.34-1.49,7.46-2.29,4.1-2.9,3.15-7.34,3.28-7.48Z"/><path d="M318.2,10.28l-13.47,30.03h5.11l2.83-6.3h16.26l2.87,6.3h5.1l-13.47-30.03h-5.23ZM314.46,29.63l6.35-14.29,6.35,14.29h-12.69Z"/><path d="M360.47,24.82c2.83-1.16,4.16-3.43,4.16-5.96,0-5.96-4.51-8.58-10.21-8.58h-13.77v30.03h13.77c5.92,0,11.15-2.02,11.15-8.58,0-2.27-1.5-5.83-5.1-6.9ZM345.41,14.61h9.01c3.6,0,5.45,2.23,5.45,4.33,0,2.36-1.8,3.78-5.4,3.78h-9.05v-8.11ZM354.42,35.85h-9.01v-8.84h9.05c2.74,0,6.31,1.46,6.31,4.68s-3.69,4.16-6.35,4.16Z"/></g><g><path d="M405.73,36.02h19.16v4.68h-24.14v-7.56c0-5.71,4.47-9.02,12.16-9.02,4.12,0,6.92-1.85,6.92-4.6,0-3.01-2.45-4.77-6.62-4.77s-7.04,1.76-7.13,4.51h-5.15c.34-5.67,4.9-9.02,12.29-9.02s11.68,3.52,11.68,9.19c0,6.01-4.17,9.19-11.94,9.19-4.51,0-7.22,1.68-7.22,4.51v2.88Z"/><path d="M428.06,28.59v-5.88c0-7.56,5.28-12.67,13.06-12.67s13.06,5.11,13.06,12.67v5.88c0,7.52-5.28,12.63-13.06,12.63s-13.06-5.11-13.06-12.63ZM449.11,28.59v-5.88c0-4.72-3.18-7.9-7.99-7.9s-7.99,3.18-7.99,7.9v5.88c0,4.72,3.18,7.9,7.99,7.9s7.99-3.18,7.99-7.9Z"/><path d="M462.25,36.02h19.16v4.68h-24.14v-7.56c0-5.71,4.47-9.02,12.16-9.02,4.12,0,6.92-1.85,6.92-4.6,0-3.01-2.45-4.77-6.62-4.77s-7.04,1.76-7.13,4.51h-5.15c.34-5.67,4.9-9.02,12.29-9.02s11.68,3.52,11.68,9.19c0,6.01-4.17,9.19-11.94,9.19-4.51,0-7.22,1.68-7.22,4.51v2.88Z"/><path d="M505.84,10.64v2.88l-13.92,27.19h-5.75l13.19-25.34h-16.41v-4.72h22.89Z"/></g></g></svg>
+      <p>The working library for Innovation Labs. Sites, decks, carousels, visuals, workflows and systems, each with one place to open it.</p>
+    </div>
+    <div>
+      <h4 class="mono">Registry</h4>
+      <ul>
+        <li class="mono" id="foot-count" style="color:var(--plate-muted);font-size:11.5px"></li>
+        <li style="color:var(--plate-muted);font-size:14px;max-width:24em;padding-top:8px">Every entry on this page comes from one list in its source. Change the list and the page follows.</li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="mono">Open</h4>
+      <ul id="foot-links"></ul>
+    </div>
+    <div class="foot-end mono"><span>Innovation Labs</span><span id="foot-upd"></span></div>
+  </div>
+</footer>
+
+<!-- Media viewer: one dialog for every entry that has `media` (see app.js, "media viewer"). -->
+<dialog class="viewer" id="viewer" aria-labelledby="v-title" aria-describedby="v-cap">
+  <div class="v-shell" id="v-shell">
+    <header class="v-bar">
+      <div class="v-id">
+        <p class="v-kicker mono" id="v-kicker"></p>
+        <h2 class="v-title" id="v-title"></h2>
+      </div>
+      <div class="v-tools">
+        <button class="v-btn" id="v-zoom" type="button" aria-pressed="false" hidden>Actual size</button>
+        <a class="v-link" id="v-pdf" target="_blank" rel="noopener" hidden>Open PDF&nbsp;&nearr;<span class="sr"> (opens in a new tab)</span></a>
+        <a class="v-link" id="v-src" target="_blank" rel="noopener" hidden>View source&nbsp;&nearr;<span class="sr"> (opens in a new tab)</span></a>
+      </div>
+      <button class="v-close" id="v-close" type="button" autofocus aria-label="Close viewer"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    </header>
+    <button class="v-nav prev" id="v-prev" type="button" aria-label="Previous slide" hidden><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg></button>
+    <div class="v-media" id="v-media">
+      <div class="v-fig" id="v-fig" tabindex="0" role="group" aria-label="Preview"></div>
+    </div>
+    <button class="v-nav next" id="v-next" type="button" aria-label="Next slide" hidden><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></button>
+    <footer class="v-foot">
+      <div class="v-pager">
+        <p class="v-count mono" id="v-count" aria-live="polite" hidden></p>
+        <div class="v-dots" id="v-dots" hidden></div>
+      </div>
+      <p class="v-cap" id="v-cap"></p>
+    </footer>
+  </div>
+</dialog>
+
+<noscript><p style="padding:24px;font-family:sans-serif">The Artifact Index builds its list in the browser. Please enable JavaScript.</p></noscript>
+
+<script>
+/* Innovation Labs Artifact Index: registry.
+ *
+ * This list is the single source of truth for what the page shows. Add, rename
+ * or remove an entry and the page follows. Plain script, no modules, no fetch.
+ * Sets window.ILA_REGISTRY.
+ *
+ * Entry fields
+ *   id, title, description   what it is, what it is for, what makes it distinct
+ *   kind        artifact | workflow | reference | system | documentation
+ *   category    strategy | content | visual | systems      (what the work is about)
+ *   format      website | deck | one-pager | carousel | visual | workflow | system | documentation
+ *   status      free label in the metadata line (Live, Validated, Prototype, v0.5.0 ...)
+ *   scope       optional label that replaces the category in the metadata line (it also replaces a category that only repeats the format)
+ *   href        where "Open" goes. Only links that resolve today are used.
+ *               Optional when the entry has `media` (the viewer is then the primary action).
+ *   cta         optional label for the primary action (for example "View one-pager")
+ *   media       optional: open the entry in the built-in viewer instead of leaving the page.
+ *                 {type:'image',    src, w, h, alt, source}
+ *                 {type:'document', pages:[{src, w, h, alt}], pdf, source}
+ *                 {type:'carousel', frames:[{src, w, h, alt}], source}
+ *               The files are the committed originals (documents: page renders of the PDF),
+ *               published next to this page because the Artifact frame only loads its own files.
+ *               source = repository page for provenance, shown as "View source".
+ *               pdf    = direct file URL for the original PDF, shown as "Open PDF".
+ *               caption (optional) replaces the description line in the viewer footer.
+ *   hint        optional small note under the Open link (for example, no hosted page yet)
+ *   links       optional secondary links [{label, href}]
+ *   preview     {src, w, h, alt, fit?, pos?}, real pixel size so boxes keep the ratio
+ *   tags        search words
+ *   featured    true = shown in "Selected" (kept in step with PRESENT.order)
+ *   updated     YYYY-MM-DD, date of the last repo commit touching the source
+ *   stats       system entries only: {skills, elements, grounds, designSystem}
+ *   statsNote   optional one line under the stats
+ *
+ * Not indexed on purpose: raw strategy sources, research and private notes,
+ * event scripts, Notion material, event photography, internal test plans and
+ * the sanitized-brief and prompt files behind each example (linked, not listed).
+ */
+(function (root) {
+  'use strict';
+
+  var REPO = 'https://github.com/lupsalexandra33/ilabsro-design';
+  var META = {
+    title: 'Innovation Labs Artifact Index',
+    tagline: "Everything we've built, explored and documented. In one place.",
+    registry: 'This page',
+    schema: 3,
+    generated: '2026-10-15',
+    repo: REPO,
+    source: 'main @ ad4dca2'
+  };
+
+  var KINDS = [
+    { id: 'artifact',      label: 'Artifact',      plural: 'Artifacts',     note: 'Finished things you can open' },
+    { id: 'workflow',      label: 'Workflow',      plural: 'Workflows',     note: 'How work moves from source to output' },
+    { id: 'reference',     label: 'Reference',     plural: 'References',    note: 'Assets and material to build from' },
+    { id: 'system',        label: 'System',        plural: 'Systems',       note: 'Tools and rules that make the rest' },
+    { id: 'documentation', label: 'Doc',           plural: 'Documentation', note: 'Written down so it can be repeated' }
+  ];
+
+  var CATEGORIES = [
+    { id: 'strategy', label: 'Strategy',        blurb: 'The 2027 programme and the ideas around it, as sites, decks and one-pagers.' },
+    { id: 'content',  label: 'Content',         blurb: 'Ideas turned into things people can read, scroll and share, and the workflow behind them.' },
+    { id: 'visual',   label: 'Visual',          blurb: 'The look itself: illustrations, brand elements, grounds and the design system.' },
+    { id: 'systems',  label: 'Tools & systems', blurb: 'What produces the rest, and how to use it.' }
+  ];
+
+  var FORMATS = [
+    { id: 'website',       label: 'Website',       cta: 'Open site' },
+    { id: 'deck',          label: 'Deck',          cta: 'Open deck' },
+    { id: 'one-pager',     label: 'One-pager',     cta: 'View page' },
+    { id: 'carousel',      label: 'Carousel',      cta: 'Browse frames' },
+    { id: 'visual',        label: 'Visual',        cta: 'View visual' },
+    { id: 'workflow',      label: 'Workflow',      cta: 'Open workflow' },
+    { id: 'system',        label: 'System',        cta: 'Open' },
+    { id: 'documentation', label: 'Documentation', cta: 'Read doc' }
+  ];
+
+  /* status label -> tone used for the dot in the UI */
+  var STATUS_TONE = {
+    'Live': 'live',
+    'Validated': 'live',
+    'Prototype': 'wip',
+    'Example': 'calm'
+  };
+
+  var ENTRIES = [
+  {
+    "id": "strategy-hub",
+    "title": "Strategy Hub",
+    "description": "The Innovation Labs 2027 programme as a route-first website, generated by website-maker from the 2027 source material.",
+    "kind": "artifact",
+    "category": "strategy",
+    "format": "website",
+    "status": "Live",
+    "href": "https://ilabsro-design-website.vercel.app/",
+    "links": [
+      {
+        "label": "Reference build",
+        "href": "https://ilabsro-design-examples.vercel.app/"
+      },
+      {
+        "label": "Files",
+        "href": "https://github.com/lupsalexandra33/ilabsro-design/tree/main/generated-examples/website/strategy-hub"
+      }
+    ],
+    "preview": {
+      "src": "previews/strategy-hub.jpg",
+      "w": 1280,
+      "h": 720,
+      "alt": "The Strategy Hub, a route-first website for the 2027 programme"
+    },
+    "tags": [
+      "microsite",
+      "2027",
+      "route",
+      "hub",
+      "website-maker"
+    ],
+    "updated": "2026-10-15",
+    "featured": true
+  },
+  {
+    "id": "build-for-real-problems",
+    "title": "Build for real problems",
+    "description": "A fictional challenge microsite with a campaign layout instead of the route-first Strategy Hub. Tests whether website-maker can make a second kind of site that still reads as Innovation Labs.",
+    "kind": "artifact",
+    "category": "strategy",
+    "format": "website",
+    "status": "Validated",
+    "href": "https://ilabsro-design-build-for-real-probl.vercel.app/",
+    "cta": "Open files",
+    "hint": "No hosted page yet",
+    "preview": {
+      "src": "previews/build-for-real-problems.jpg",
+      "w": 1280,
+      "h": 720,
+      "alt": "Build for real problems, a fictional challenge microsite"
+    },
+    "tags": [
+      "microsite",
+      "campaign",
+      "fictional",
+      "website-maker",
+      "challenge"
+    ],
+    "updated": "2026-10-15"
+  },
+  {
+    "id": "route-deck",
+    "title": "Route Deck",
+    "description": "The 2027 strategy as a pitch-style deck, told route-first. Shows the presentation treatment and the presentation-only playable mesh.",
+    "kind": "artifact",
+    "category": "strategy",
+    "format": "deck",
+    "status": "Live",
+    "href": "https://ilabsro-design-presentation.vercel.app/",
+    "links": [
+      {
+        "label": "Reference build",
+        "href": "https://ilabsro-design-examples-gojv.vercel.app/#1"
+      },
+      {
+        "label": "Files",
+        "href": "https://github.com/lupsalexandra33/ilabsro-design/tree/main/generated-examples/presentation/route-deck"
+      }
+    ],
+    "preview": {
+      "src": "previews/route-deck.jpg",
+      "w": 1280,
+      "h": 720,
+      "alt": "A slide from the Route Deck"
+    },
+    "tags": [
+      "presentation",
+      "slides",
+      "pitch",
+      "2027",
+      "route",
+      "presentation-maker"
+    ],
+    "updated": "2026-10-15",
+    "featured": true
+  },
+  {
+    "id": "learning-environment",
+    "title": "Useful startup learning environment",
+    "description": "A fictional conversation deck asking what a useful startup learning environment actually teaches. Tests a deck that is not route-first: one idea per slide, varied compositions, custom diagrams.",
+    "kind": "artifact",
+    "category": "strategy",
+    "format": "deck",
+    "status": "Validated",
+    "href": "https://ilabsro-design-learning-environment.vercel.app/#s1",
+    "cta": "Open files",
+    "hint": "No hosted page yet",
+    "preview": {
+      "src": "previews/learning-environment.jpg",
+      "w": 1280,
+      "h": 720,
+      "alt": "A slide from the startup learning environment deck"
+    },
+    "tags": [
+      "presentation",
+      "slides",
+      "fictional",
+      "startup",
+      "presentation-maker",
+      "brand-image-maker"
+    ],
+    "updated": "2026-10-15"
+  },
+  {
+    "id": "vision-one-pager",
+    "title": "2027 Vision one-pager",
+    "description": "A one-page corporate partner brief for the 2027 programme, written in the formal voice. Shows what one-pager-maker makes from strategy material.",
+    "kind": "artifact",
+    "category": "strategy",
+    "format": "one-pager",
+    "status": "Example",
+    "cta": "View one-pager",
+    "media": {
+      "type": "document",
+      "pdf": "https://raw.githubusercontent.com/lupsalexandra33/ilabsro-design/main/generated-examples/one-pager/2027-vision/IL2027_Revamp_OnePager.pdf",
+      "source": "https://github.com/lupsalexandra33/ilabsro-design/tree/main/generated-examples/one-pager/2027-vision"
+    },
+    "preview": {
+      "src": "previews/vision-one-pager.jpg",
+      "w": 1242,
+      "h": 358,
+      "alt": "Headline band of the 2027 Vision one-pager"
+    },
+    "tags": [
+      "pdf",
+      "partner",
+      "brief",
+      "2027",
+      "formal",
+      "one-pager-maker"
+    ],
+    "updated": "2026-10-15"
+  },
+  {
+    "id": "context-engineering",
+    "title": "Context engineering",
+    "description": "An 11-frame carousel on improving AI output with real material, domain context, corrections and iteration. The refined version, with fewer dense slides and more hand-drawn diagrams.",
+    "kind": "artifact",
+    "category": "content",
+    "format": "carousel",
+    "status": "Validated",
+    "media": {
+      "type": "carousel",
+      "frames": [
+        {
+          "src": "https://raw.githubusercontent.com/lupsalexandra33/ilabsro-design/main/generated-examples/social/context-engineering/01.png",
+          "w": 1080,
+          "h": 1350,
+          "alt": "Context engineering, slide 1 of 11"
+        },
+        {
+          "src": "https://raw.githubusercontent.com/lupsalexandra33/ilabsro-design/main/generated-examples/social/context-engineering/02.png",
+          "w": 1080,
+          "h": 1350,
+          "alt": "Context engineering, slide 2 of 11"
+        },
+        {
+          "src": "https://raw.githubusercontent.com/lupsalexandra33/ilabsro-design/main/generated-examples/social/context-engineering/03.png",
+          "w": 1080,
+          "h": 1350,
+          "alt": "Context engineering, slide 3 of 11"
+        },
+        {
+          "src": "https://raw.githubusercontent.com/lupsalexandra33/ilabsro-design/main/generated-examples/social/context-engineering/04.png",
+          "w": 1080,
+          "h": 1350,
+          "alt": "Context engineering, slide 4 of 11"
+        },
+        {
+          "src": "https://raw.githubusercontent.com/lupsalexandra33/ilabsro-design/main/generated-examples/social/context-engineering/05.png",
+          "w": 1080,
+          "h": 1350,
+          "alt": "Context engineering, slide 5 of 11"
+        },
+        {
+          "src": "https://raw.githubusercontent.com/lupsalexandra33/ilabsro-design/main/generated-examples/social/context-engineering/06.png",
+          "w": 1080,
+          "h": 1350,
+          "alt": "Context engineering, slide 6 of 11"
+        },
+        {
+          "src": "https://raw.githubusercontent.com/lupsalexandra33/ilabsro-design/main/generated-examples/social/context-engineering/07.png",
+          "w": 1080,
+          "h": 1350,
+          "alt": "Context engineering, slide 7 of 11"
+        },
+        {
+          "src": "https://raw.githubusercontent.com/lupsalexandra33/ilabsro-design/main/generated-examples/social/context-engineering/08.png",
+          "w": 1080,
+          "h": 1350,
+          "alt": "Context engineering, slide 8 of 11"
+        },
+        {
+          "src": "https://raw.githubusercontent.com/lupsalexandra33/ilabsro-design/main/generated-examples/social/context-engineering/09.png",
+          "w": 1080,
+          "h": 1350,
+          "alt": "Context engineering, slide 9 of 11"
+        },
+        {
+          "src": "https://raw.githubusercontent.com/lupsalexandra33/ilabsro-design/main/generated-examples/social/context-engineering/10.png",
+          "w": 1080,
+          "h": 1350,
+          "alt": "Context engineering, slide 10 of 11"
+        },
+        {
+          "src": "https://raw.githubusercontent.com/lupsalexandra33/ilabsro-design/main/generated-examples/social/context-engineering/11.png",
+          "w": 1080,
+          "h": 1350,
+          "alt": "Context engineering, slide 11 of 11"
+        }
+      ],
+      "source": "https://github.com/lupsalexandra33/ilabsro-design/tree/main/generated-examples/social/context-engineering"
+    },
+    "preview": {
+      "src": "previews/context-engineering.jpg",
+      "w": 640,
+      "h": 800,
+      "alt": "Opening frame of the Context engineering carousel"
+    },
+    "tags": [
+      "instagram",
+      "social",
+      "frames",
+      "ai",
+      "hand-drawn",
+      "insta-post-maker"
+    ],
+    "updated": "2026-10-15",
+    "featured": true
+  },
+  {
+    "id": "source-before-prompt",
+    "title": "Source before prompt",
+    "description": "A 7-frame carousel arguing that better source material and active review often matter more than polishing prompt wording. The drawings carry part of the explanation, so the copy stays short.",
+    "kind": "artifact",
+    "category": "content",
+    "format": "carousel",
+    "status": "Validated",
+    "media": {
+      "type": "carousel",
+      "frames": [
+        {
+          "src": "https://raw.githubusercontent.com/lupsalexandra33/ilabsro-design/main/generated-examples/social/source-before-prompt/01.png",
+          "w": 1080,
+          "h": 1350,
+          "alt": "Source before prompt, slide 1 of 7"
+        },
+        {
+          "src": "https://raw.githubusercontent.com/lupsalexandra33/ilabsro-design/main/generated-examples/social/source-before-prompt/02.png",
+          "w": 1080,
+          "h": 1350,
+          "alt": "Source before prompt, slide 2 of 7"
+        },
+        {
+          "src": "https://raw.githubusercontent.com/lupsalexandra33/ilabsro-design/main/generated-examples/social/source-before-prompt/03.png",
+          "w": 1080,
+          "h": 1350,
+          "alt": "Source before prompt, slide 3 of 7"
+        },
+        {
+          "src": "https://raw.githubusercontent.com/lupsalexandra33/ilabsro-design/main/generated-examples/social/source-before-prompt/04.png",
+          "w": 1080,
+          "h": 1350,
+          "alt": "Source before prompt, slide 4 of 7"
+        },
+        {
+          "src": "https://raw.githubusercontent.com/lupsalexandra33/ilabsro-design/main/generated-examples/social/source-before-prompt/05.png",
+          "w": 1080,
+          "h": 1350,
+          "alt": "Source before prompt, slide 5 of 7"
+        },
+        {
+          "src": "https://raw.githubusercontent.com/lupsalexandra33/ilabsro-design/main/generated-examples/social/source-before-prompt/06.png",
+          "w": 1080,
+          "h": 1350,
+          "alt": "Source before prompt, slide 6 of 7"
+        },
+        {
+          "src": "https://raw.githubusercontent.com/lupsalexandra33/ilabsro-design/main/generated-examples/social/source-before-prompt/07.png",
+          "w": 1080,
+          "h": 1350,
+          "alt": "Source before prompt, slide 7 of 7"
+        }
+      ],
+      "source": "https://github.com/lupsalexandra33/ilabsro-design/tree/main/generated-examples/social/source-before-prompt"
+    },
+    "preview": {
+      "src": "previews/source-before-prompt.jpg",
+      "w": 640,
+      "h": 800,
+      "alt": "Opening frame of the Source before prompt carousel"
+    },
+    "tags": [
+      "instagram",
+      "social",
+      "frames",
+      "ai",
+      "prompt",
+      "hand-drawn",
+      "insta-post-maker"
+    ],
+    "updated": "2026-10-15"
+  },
+  {
+    "id": "better-ai-context",
+    "title": "Better AI output starts with better context",
+    "description": "An explainer on getting better AI work by bringing in source material, constraints, domain context and human review. Contrasts thin and rich input with a custom diagram.",
+    "kind": "artifact",
+    "category": "content",
+    "format": "one-pager",
+    "status": "Validated",
+    "cta": "View one-pager",
+    "media": {
+      "type": "document",
+      "pdf": "https://raw.githubusercontent.com/lupsalexandra33/ilabsro-design/main/generated-examples/one-pager/better-ai-context/better-ai-context.pdf",
+      "source": "https://github.com/lupsalexandra33/ilabsro-design/tree/main/generated-examples/one-pager/better-ai-context"
+    },
+    "preview": {
+      "src": "previews/better-ai-context.jpg",
+      "w": 1156,
+      "h": 720,
+      "alt": "Top of the Better AI context explainer"
+    },
+    "tags": [
+      "pdf",
+      "explainer",
+      "ai",
+      "workshop",
+      "one-pager-maker",
+      "brand-image-maker"
+    ],
+    "updated": "2026-10-15"
+  },
+  {
+    "id": "content-workflow",
+    "title": "Content Workflow",
+    "description": "An experimental workflow that turns source material into source-grounded content briefs: themes, evaluation, human selection, handoff. Each BPMN step lists its inputs, outputs and guardrails.",
+    "kind": "workflow",
+    "category": "content",
+    "format": "workflow",
+    "status": "Prototype",
+    "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/docs/content-workflow/README.md",
+    "cta": "Read workflow",
+    "hint": "BPMN not hosted yet",
+    "links": [
+      {
+        "label": "BPMN source",
+        "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/docs/content-workflow/bpmn.html"
+      }
+    ],
+    "preview": {
+      "src": "previews/content-workflow.jpg",
+      "w": 1280,
+      "h": 800,
+      "alt": "The interactive BPMN view of the Content Workflow"
+    },
+    "tags": [
+      "bpmn",
+      "planning",
+      "briefs",
+      "content-planner",
+      "process",
+      "mvp"
+    ],
+    "updated": "2026-10-14",
+    "featured": true
+  },
+  {
+    "id": "idea-meets-real-users",
+    "title": "Idea meets real users",
+    "description": "A narrative illustration of a founder who starts with a confident idea and changes it after real user feedback. Tells a small story without a supporting paragraph.",
+    "kind": "artifact",
+    "category": "visual",
+    "format": "visual",
+    "status": "Validated",
+    "scope": "Narrative",
+    "media": {
+      "type": "image",
+      "src": "https://raw.githubusercontent.com/lupsalexandra33/ilabsro-design/main/generated-examples/visuals/idea-meets-real-users/output.png",
+      "w": 3840,
+      "h": 2160,
+      "alt": "A founder walks in holding a square idea. Three round users react with a question mark, a blank and a tick. The founder leaves holding a round idea, labelled \"turns out: round\".",
+      "source": "https://github.com/lupsalexandra33/ilabsro-design/tree/main/generated-examples/visuals/idea-meets-real-users"
+    },
+    "preview": {
+      "src": "previews/idea-meets-real-users.jpg",
+      "w": 1280,
+      "h": 720,
+      "alt": "Illustration of a founder meeting real users"
+    },
+    "tags": [
+      "illustration",
+      "story",
+      "founder",
+      "image",
+      "brand-image-maker"
+    ],
+    "updated": "2026-10-15",
+    "featured": true
+  },
+  {
+    "id": "you-go-first",
+    "title": "You go first",
+    "description": "A conceptual visual for a human-first AI workflow: the person brings the first answer, AI challenges it with questions, the person sharpens the result. No robot imagery.",
+    "kind": "artifact",
+    "category": "visual",
+    "format": "visual",
+    "status": "Validated",
+    "scope": "Conceptual",
+    "media": {
+      "type": "image",
+      "src": "https://raw.githubusercontent.com/lupsalexandra33/ilabsro-design/main/generated-examples/visuals/ai-as-you-sharpen/output.png",
+      "w": 3200,
+      "h": 1800,
+      "alt": "Three hand-drawn documents joined by arrows: \"you go first\", then \"AI asks\" with the questions \"why?\", \"what if wrong?\" and \"says who?\", then \"you sharpen it\" with one line highlighted.",
+      "source": "https://github.com/lupsalexandra33/ilabsro-design/tree/main/generated-examples/visuals/ai-as-you-sharpen"
+    },
+    "preview": {
+      "src": "previews/you-go-first.jpg",
+      "w": 1280,
+      "h": 720,
+      "alt": "The You go first visual, a three-step human-first AI sequence"
+    },
+    "tags": [
+      "conceptual",
+      "ai",
+      "sequence",
+      "image",
+      "brand-image-maker",
+      "ai-as-you-sharpen"
+    ],
+    "updated": "2026-10-15"
+  },
+  {
+    "id": "test-my-thinking",
+    "title": "Test my thinking",
+    "description": "A comparison visual: asking AI to think in your place versus using it to pressure-test thinking you already did. The companion to You go first, using comparison where that one uses sequence.",
+    "kind": "artifact",
+    "category": "visual",
+    "format": "visual",
+    "status": "Validated",
+    "scope": "Conceptual",
+    "media": {
+      "type": "image",
+      "src": "https://raw.githubusercontent.com/lupsalexandra33/ilabsro-design/main/generated-examples/visuals/test-my-thinking/output.png",
+      "w": 2160,
+      "h": 2160,
+      "alt": "Two columns. Left, \"Think for me\", crossed out: you have a vague thought, AI turns it into a finished document. Right, \"Test my thinking\": you write a document, AI checks it with a magnifying glass and \"found the gap\".",
+      "source": "https://github.com/lupsalexandra33/ilabsro-design/tree/main/generated-examples/visuals/test-my-thinking"
+    },
+    "preview": {
+      "src": "previews/test-my-thinking.jpg",
+      "w": 960,
+      "h": 960,
+      "alt": "The Test my thinking visual, a side-by-side comparison"
+    },
+    "tags": [
+      "conceptual",
+      "ai",
+      "comparison",
+      "image",
+      "brand-image-maker"
+    ],
+    "updated": "2026-10-15"
+  },
+  {
+    "id": "brand-elements",
+    "title": "Brand elements",
+    "description": "The 16 official SVG elements, from hexagons and frames to stars, bulbs and badges, for adding one recognisable Innovation Labs accent to a site, deck or post.",
+    "kind": "reference",
+    "category": "visual",
+    "format": "visual",
+    "href": "https://github.com/lupsalexandra33/ilabsro-design/tree/main/assets/brand-elements",
+    "cta": "Browse elements",
+    "links": [
+      {
+        "label": "Guide",
+        "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/design-system/BRAND_ELEMENTS.md"
+      }
+    ],
+    "preview": {
+      "src": "previews/brand-elements.jpg",
+      "w": 1280,
+      "h": 560,
+      "alt": "A sheet of the 16 official Innovation Labs SVG elements"
+    },
+    "tags": [
+      "svg",
+      "assets",
+      "decorative",
+      "hexagon",
+      "star",
+      "bulb",
+      "badge"
+    ],
+    "updated": "2026-10-12"
+  },
+  {
+    "id": "branded-grounds",
+    "title": "Branded grounds",
+    "description": "Template backgrounds in five colour families (blue, green, purple, yellow and classic), cut for covers, stories, posts and wide formats.",
+    "kind": "reference",
+    "category": "visual",
+    "format": "visual",
+    "href": "https://github.com/lupsalexandra33/ilabsro-design/tree/main/assets/backgrounds",
+    "cta": "Browse grounds",
+    "links": [
+      {
+        "label": "Guide",
+        "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/design-system/BRAND_ELEMENTS.md"
+      }
+    ],
+    "preview": {
+      "src": "previews/branded-grounds.jpg",
+      "w": 1280,
+      "h": 800,
+      "alt": "The five branded background families side by side"
+    },
+    "tags": [
+      "backgrounds",
+      "assets",
+      "mesh",
+      "gradient",
+      "blue",
+      "green",
+      "purple",
+      "yellow",
+      "classic"
+    ],
+    "updated": "2026-10-12"
+  },
+  {
+    "id": "design-system",
+    "title": "Innovation Labs Design System",
+    "description": "The portable rules for how Innovation Labs looks and behaves: type, colour, Light and Night, the purple and yellow accents, and how each format applies them.",
+    "kind": "system",
+    "category": "visual",
+    "format": "system",
+    "status": "v0.4",
+    "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/design-system/INNOVATION_LABS_DESIGN_SYSTEM.md",
+    "cta": "Read the system",
+    "links": [
+      {
+        "label": "Tokens",
+        "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/design-system/TOKENS.css"
+      },
+      {
+        "label": "Brand elements guide",
+        "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/design-system/BRAND_ELEMENTS.md"
+      }
+    ],
+    "preview": {
+      "src": "previews/design-system.jpg",
+      "w": 1280,
+      "h": 640,
+      "alt": "Type, colour and Light and Night panels from the design system"
+    },
+    "tags": [
+      "tokens",
+      "typography",
+      "colour",
+      "color",
+      "night",
+      "light",
+      "accent",
+      "rules"
+    ],
+    "updated": "2026-10-12"
+  },
+  {
+    "id": "component-catalog",
+    "title": "Component catalog",
+    "description": "17 reusable interaction and content patterns, each with its purpose and one core rule. Described, not coded, so any format can recreate them.",
+    "kind": "documentation",
+    "category": "visual",
+    "format": "documentation",
+    "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/design-system/COMPONENT_CATALOG.md",
+    "tags": [
+      "components",
+      "patterns",
+      "buttons",
+      "cards",
+      "navigation",
+      "charts"
+    ],
+    "updated": "2026-10-12"
+  },
+  {
+    "id": "ilabsro-design",
+    "title": "ilabsro-design",
+    "description": "The Claude plugin that turns Innovation Labs source material into on-brand sites, decks, one-pagers, posts and visuals. Ten skills: output makers, a content planner, an image maker, brand elements and three tone lenses.",
+    "kind": "system",
+    "category": "systems",
+    "format": "system",
+    "status": "v0.5.0",
+    "scope": "Design + Content",
+    "href": "https://github.com/lupsalexandra33/ilabsro-design",
+    "cta": "Open the repository",
+    "links": [
+      {
+        "label": "Usage",
+        "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/docs/USAGE.md"
+      },
+      {
+        "label": "Skills",
+        "href": "https://github.com/lupsalexandra33/ilabsro-design/tree/main/skills"
+      }
+    ],
+    "tags": [
+      "plugin",
+      "claude",
+      "skills",
+      "website-maker",
+      "presentation-maker",
+      "one-pager-maker",
+      "insta-post-maker",
+      "content-planner",
+      "brand-image-maker",
+      "lens"
+    ],
+    "updated": "2026-10-14",
+    "stats": {
+      "skills": 10,
+      "elements": 16,
+      "grounds": 5,
+      "designSystem": "0.4"
+    },
+    "statsNote": "One output skill, up to one tone lens, optional brand elements.",
+    "featured": true
+  },
+  {
+    "id": "plugin-showcase",
+    "title": "ilabsro-design Plugin Showcase",
+    "description": "The plugin's public showcase: a hosted tour of what it makes, with example sites and decks.",
+    "kind": "documentation",
+    "category": "systems",
+    "format": "website",
+    "status": "Live",
+    "href": "https://ilabsro-design-showcase.vercel.app/",
+    "links": [
+      {
+        "label": "Files",
+        "href": "https://github.com/lupsalexandra33/ilabsro-design/tree/main/showcase"
+      }
+    ],
+    "preview": {
+      "src": "previews/plugin-showcase.jpg",
+      "w": 1280,
+      "h": 800,
+      "alt": "Example sites and decks from the plugin showcase"
+    },
+    "tags": [
+      "showcase",
+      "tour",
+      "examples",
+      "vercel"
+    ],
+    "updated": "2026-10-12"
+  },
+  {
+    "id": "usage",
+    "title": "Using the ilabsro-design plugin",
+    "description": "How to use the plugin: the mental model, how to combine one output skill with a tone lens and brand elements, and when to plan content first.",
+    "kind": "documentation",
+    "category": "systems",
+    "format": "documentation",
+    "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/docs/USAGE.md",
+    "tags": [
+      "guide",
+      "how-to",
+      "combinations",
+      "lens",
+      "accent",
+      "humanizer"
+    ],
+    "updated": "2026-10-14"
+  },
+  {
+    "id": "architecture",
+    "title": "Plugin architecture",
+    "description": "How the plugin is put together: folders, skills, shared assets and the composition model. Also why some assets exist twice.",
+    "kind": "documentation",
+    "category": "systems",
+    "format": "documentation",
+    "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/docs/PLUGIN_ARCHITECTURE.md",
+    "tags": [
+      "structure",
+      "folders",
+      "composition",
+      "assets"
+    ],
+    "updated": "2026-10-14"
+  }
+];
+
+  /* Present Mode (not built yet): the order of a future walkthrough, driven by
+     this same list. index.html exposes data-step / data-artifact-id hooks and
+     window.ILA_UI.steps(), so a Present button only has to read presentSteps(). */
+  var PRESENT = {
+  "enabled": false,
+  "order": [
+    "strategy-hub",
+    "route-deck",
+    "context-engineering",
+    "idea-meets-real-users",
+    "content-workflow",
+    "ilabsro-design"
+  ],
+  "notes": {
+    "strategy-hub": "The programme as a route you can walk.",
+    "route-deck": "The same story, told live.",
+    "context-engineering": "An idea turned into something you can swipe.",
+    "idea-meets-real-users": "One picture, no paragraph.",
+    "content-workflow": "How source material becomes briefs.",
+    "ilabsro-design": "The system that makes the rest."
+  }
+};
+
+  /* ---------- helpers ---------- */
+  function lookup(list, id) {
+    for (var i = 0; i < list.length; i++) { if (list[i].id === id) { return list[i]; } }
+    return null;
+  }
+  function byId(id) { return lookup(ENTRIES, id); }
+  function top() { return ENTRIES.slice(); }
+  function typeLabel(e) { return lookup(FORMATS, e.format).label; }
+  function metaParts(e) {
+    /* second label: scope, else the category; when that repeats the format ("Visual · Visual"), the kind */
+    var fmt = typeLabel(e), cat = lookup(CATEGORIES, e.category).label;
+    var second = e.scope || (cat.toLowerCase() === fmt.toLowerCase() ? lookup(KINDS, e.kind).label : cat);
+    var parts = [fmt, second];
+    if (e.status) { parts.push(e.status); }
+    return parts;
+  }
+  function isLocal(href) { return !/^https?:\/\//i.test(href); }
+  /* default label of the primary action when an entry opens in the viewer */
+  var VIEW_CTA = { image: 'View image', document: 'View document', carousel: 'View carousel' };
+  function ctaOf(e) { return e.cta || (e.media ? VIEW_CTA[e.media.type] : lookup(FORMATS, e.format).cta); }
+  /* secondary links, in order: original PDF, repository source, then the entry's own */
+  function linksOf(e) {
+    var out = [], m = e.media;
+    if (m && m.pdf) { out.push({ label: 'Open PDF', href: m.pdf }); }
+    if (m && m.source) { out.push({ label: 'View source', href: m.source }); }
+    return out.concat(e.links || []);
+  }
+  function matches(e, q) {
+    if (!q) { return true; }
+    var hay = [e.title, e.description, e.kind, e.category, e.format, e.status, e.scope || '', (e.tags || []).join(' ')].join(' ').toLowerCase();
+    return q.toLowerCase().split(/\s+/).every(function (t) { return hay.indexOf(t) !== -1; });
+  }
+  function counts() {
+    var c = {};
+    KINDS.forEach(function (k) { c[k.id] = 0; });
+    ENTRIES.forEach(function (e) { c[e.kind] += 1; });
+    return c;
+  }
+  function lastUpdated() {
+    return ENTRIES.reduce(function (m, e) { return e.updated > m ? e.updated : m; }, '');
+  }
+  function presentSteps() {
+    var steps = [{ type: 'cover', id: 'cover', title: META.title }];
+    PRESENT.order.forEach(function (id) {
+      var e = byId(id);
+      if (e) { steps.push({ type: 'artifact', id: id, title: e.title, note: PRESENT.notes[id] || '' }); }
+    });
+    steps.push({ type: 'section', id: 'library', title: 'Library' });
+    return steps;
+  }
+
+  root.ILA_REGISTRY = {
+    META: META, KINDS: KINDS, CATEGORIES: CATEGORIES, FORMATS: FORMATS,
+    STATUS_TONE: STATUS_TONE, ENTRIES: ENTRIES, PRESENT: PRESENT,
+    byId: byId, top: top, typeLabel: typeLabel, metaParts: metaParts,
+    isLocal: isLocal, ctaOf: ctaOf, linksOf: linksOf, matches: matches, counts: counts,
+    lastUpdated: lastUpdated, presentSteps: presentSteps,
+    kind: function (id) { return lookup(KINDS, id); },
+    category: function (id) { return lookup(CATEGORIES, id); },
+    format: function (id) { return lookup(FORMATS, id); }
+  };
+})(window);
+
+</script>
+<script>
+(function () {
+  'use strict';
+  var R = window.ILA_REGISTRY;
+  var $ = function (s, el) { return (el || document).querySelector(s); };
+  var $$ = function (s, el) { return Array.prototype.slice.call((el || document).querySelectorAll(s)); };
+  var root = document.documentElement;
+
+  if (!R) {
+    $('#groups').innerHTML = '<div class="empty"><h3>The registry did not load.</h3><p>Reload the page. If it keeps failing, the list at the top of the page script is the place to look.</p></div>';
+    return;
+  }
+
+  /* ---------- small helpers ---------- */
+  var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var WORDS = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'];
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function fmtDate(s) { var p = s.split('-'); return +p[2] + ' ' + MONTHS[+p[1] - 1] + ' ' + p[0]; }
+  function ext(href) { return !R.isLocal(href); }
+  function linkAttrs(href) { return ' href="' + esc(href) + '"' + (ext(href) ? ' target="_blank" rel="noopener"' : ''); }
+  function arrow(href) { return ext(href) ? '↗' : '→'; }
+  /* Entries with `media` open in the viewer, so their main action is a button. Everything else is a link. */
+  function arrowOf(e) { return e.media ? '→' : arrow(e.href); }
+  function stretch(e) {
+    if (e.media) {
+      return '<button type="button" class="stretch" data-view="' + esc(e.id) + '" aria-haspopup="dialog">' + esc(e.title) + '<span class="sr"> (opens the viewer)</span></button>';
+    }
+    return '<a class="stretch"' + linkAttrs(e.href) + '>' + esc(e.title) + newTab(e.href) + '</a>';
+  }
+  function newTab(href) { return ext(href) ? '<span class="sr"> (opens in a new tab)</span>' : ''; }
+  function tone(e) { return R.STATUS_TONE[e.status] || 'calm'; }
+  function metaLine(e) {
+    var p = R.metaParts(e);
+    var out = '<span class="meta mono"><span>' + esc(p[0]) + '</span><i>·</i><span>' + esc(p[1]) + '</span>';
+    if (p[2]) { out += '<i>·</i><span class="st" data-tone="' + tone(e) + '"><b class="dot" aria-hidden="true"></b>' + esc(p[2]) + '</span>'; }
+    return out + '</span>';
+  }
+  function shot(e, opts) {
+    var p = e.preview, cover = p.fit === 'cover', r = (p.w / p.h).toFixed(4);
+    var style = cover ? '' : ' style="--r:' + r + '"';
+    var pos = p.pos ? ' style="--pos:' + p.pos + '"' : '';
+    return '<span class="shot' + (cover ? ' cover' : '') + '"' + style + '><img src="' + esc(p.src) + '" width="' + p.w + '" height="' + p.h + '" alt="' + esc(opts && opts.alt ? p.alt : '') + '" loading="' + ((opts && opts.eager) ? 'eager' : 'lazy') + '" decoding="async"' + pos + '></span>';
+  }
+
+  /* ---------- state ---------- */
+  var state = { cat: 'all', fmt: 'all', kind: 'all', q: '' };
+  var CATS = R.CATEGORIES, KINDS = R.KINDS, FORMATS = R.FORMATS, ALL = R.ENTRIES;
+  var N = R.PRESENT.order.length;
+
+  /* faceted filtering: `skip` leaves one facet out so its own counts stay honest */
+  function pass(e, skip) {
+    if (skip !== 'cat' && state.cat !== 'all' && e.category !== state.cat) { return false; }
+    if (skip !== 'fmt' && state.fmt !== 'all' && e.format !== state.fmt) { return false; }
+    if (skip !== 'kind' && state.kind !== 'all' && e.kind !== state.kind) { return false; }
+    if (state.q && !R.matches(e, state.q)) { return false; }
+    return true;
+  }
+  function count(skip, pred) { return ALL.filter(function (e) { return pass(e, skip) && (!pred || pred(e)); }).length; }
+
+  /* ---------- hero ledger ---------- */
+  function renderLedger() {
+    var c = R.counts();
+    var html = '<div class="lhead mono"><span>Registry</span><span>' + esc(R.META.registry) + '</span></div><ul>';
+    KINDS.forEach(function (k) {
+      if (!c[k.id]) { return; }
+      html += '<li><button class="lrow" type="button" data-kind="' + k.id + '" aria-pressed="false">' +
+        '<span class="ln">' + pad(c[k.id]) + '</span>' +
+        '<span class="lt"><b>' + esc(k.plural) + '</b><small>' + esc(k.note) + '</small></span>' +
+        '<span class="la" aria-hidden="true">→</span></button></li>';
+    });
+    html += '</ul><div class="lfoot mono"><span>' + ALL.length + ' entries</span><span>Updated ' + fmtDate(R.lastUpdated()) + '</span></div>';
+    $('#ledger').innerHTML = html;
+  }
+
+  /* ---------- selected ---------- */
+  function openLine(e) {
+    return '<div class="pfoot"><p class="open mono" aria-hidden="true">' + esc(R.ctaOf(e)) + ' ' + arrowOf(e) + '</p>' +
+      (e.hint ? '<p class="hint">' + esc(e.hint) + '</p>' : '') + '</div>';
+  }
+  var STAT_LABELS = [['skills', 'skills', ''], ['elements', 'brand elements', ''], ['grounds', 'branded grounds', ''], ['designSystem', 'design system', 'v']];
+  function sysPlate(e, n, step, cls) {
+    var st = e.stats || {};
+    var cells = STAT_LABELS.filter(function (s) { return st[s[0]] !== undefined; }).map(function (s) {
+      return '<li><b>' + s[2] + esc(st[s[0]]) + '</b><span class="mono">' + s[1] + '</span></li>';
+    }).join('');
+    var more = (e.links || []).map(function (l) {
+      return '<a class="sl mono"' + linkAttrs(l.href) + '>' + esc(l.label) + ' ' + arrow(l.href) + newTab(l.href) + '</a>';
+    }).join('');
+    return '<article class="' + cls + ' sys" data-artifact-id="' + e.id + '" data-step="' + step + '" data-cat="' + e.category + '">' +
+      '<img class="sys-orn" src="assets/elements/ring-mesh.svg" alt="" width="150" height="108">' +
+      '<img class="sys-orn2" src="assets/elements/star.svg" alt="" width="34" height="34">' +
+      '<div class="sys-l"><p class="idx mono"><span>' + n + '</span>' + metaLine(e) + '</p>' +
+      '<h3>' + esc(e.title) + '</h3>' +
+      '<p class="desc">' + esc(e.description) + '</p>' +
+      '<div class="sys-act"><a class="btn light"' + linkAttrs(e.href) + '>' + esc(R.ctaOf(e)) + ' <span aria-hidden="true">' + arrow(e.href) + '</span>' + newTab(e.href) + '</a>' + more + '</div></div>' +
+      '<div class="sys-r"><p class="sys-cap mono">Inside</p><ul class="sys-grid">' + cells + '</ul>' +
+      (e.statsNote ? '<p class="sys-note mono">' + esc(e.statsNote) + '</p>' : '') + '</div></article>';
+  }
+  function renderPlates() {
+    var html = '';
+    R.PRESENT.order.forEach(function (id, i) {
+      var e = R.byId(id); if (!e) { return; }
+      var n = pad(i + 1), step = i + 2, cls = 'plate p' + (i + 1);
+      if (e.stats) { html += sysPlate(e, n, step, cls); return; }
+      html += '<article class="' + cls + '" data-artifact-id="' + e.id + '" data-step="' + step + '" data-cat="' + e.category + '">' +
+        '<div class="mat matbg">' + shot(e, { alt: true, eager: true }) + '</div>' +
+        '<div class="pbody"><p class="idx mono"><span>' + n + '</span>' + metaLine(e) + '</p>' +
+        '<h3>' + stretch(e) + '</h3>' +
+        '<p class="desc">' + esc(e.description) + '</p>' + openLine(e) + '</div></article>';
+    });
+    $('#plates').innerHTML = html;
+    $('#sel-note').textContent = (WORDS[N] || N) + ' entries from across the work. The full registry is below.';
+  }
+
+  /* ---------- library ---------- */
+  function renderTabs() {
+    var html = tabBtn('all', 'All', count('cat'));
+    CATS.forEach(function (c) { html += tabBtn(c.id, c.label, count('cat', function (e) { return e.category === c.id; })); });
+    $('#tabs').innerHTML = html;
+  }
+  function tabBtn(id, label, n) {
+    return '<button type="button" class="tab" data-cat="' + id + '" aria-pressed="' + (state.cat === id) + '">' + esc(label) + ' <small>' + n + '</small></button>';
+  }
+  function renderChips() {
+    var html = '';
+    FORMATS.forEach(function (f) {
+      var n = count('fmt', function (e) { return e.format === f.id; });
+      var total = ALL.filter(function (e) { return e.format === f.id; }).length;
+      if (!total) { return; }
+      html += '<button type="button" class="chip" data-fmt="' + f.id + '" aria-pressed="' + (state.fmt === f.id) + '"' + ((n === 0 && state.fmt !== f.id) ? ' disabled' : '') + '>' + esc(f.label) + ' <small>' + n + '</small></button>';
+    });
+    $('#chips').innerHTML = html;
+  }
+  function renderStatus() {
+    var n = count(), total = ALL.length, parts = [];
+    if (state.kind !== 'all') { parts.push('Kind: ' + R.kind(state.kind).label); }
+    if (state.fmt !== 'all') { parts.push('Format: ' + R.format(state.fmt).label); }
+    if (state.cat !== 'all') { parts.push(R.category(state.cat).label); }
+    var active = parts.length || state.q;
+    var html = (active ? n + ' of ' + total : total) + ' entries';
+    if (parts.length) { html += ' <span class="fchips">' + parts.map(function (p) { return '<span class="fchip">' + esc(p) + '</span>'; }).join('') + '</span>'; }
+    if (active) { html += ' <button type="button" data-clear>Clear</button>'; }
+    $('#status').innerHTML = html;
+  }
+
+  function thumb(e) {
+    if (e.preview) { return '<div class="thumb matbg" data-cat="' + e.category + '">' + shot(e, {}) + '</div>'; }
+    var dark = !!e.stats;   /* system entries get the dark tile with the hexagon */
+    return '<div class="thumb ' + (dark ? 'tile-bg dark' : 'matbg') + '" data-cat="' + e.category + '"><div class="tile' + (dark ? ' dark' : '') + '">' +
+      (dark ? '<img src="assets/elements/hex-gold.svg" alt="" width="62" height="72">' : '') +
+      '<span class="lab mono">' + esc(R.typeLabel(e)) + '</span></div></div>';
+  }
+  function row(e, i) {
+    var links = R.linksOf(e).map(function (l) { return '<a' + linkAttrs(l.href) + '>' + esc(l.label) + ' ' + arrow(l.href) + newTab(l.href) + '</a>'; }).join('');
+    return '<li class="row" data-artifact-id="' + e.id + '" data-kind="' + e.kind + '" data-cat="' + e.category + '">' +
+      '<span class="ri mono">' + pad(i + 1) + '</span>' + thumb(e) +
+      '<div class="rmain">' + metaLine(e) +
+      '<h3>' + stretch(e) + '</h3>' +
+      '<p class="desc">' + esc(e.description) + '</p>' +
+      (links ? '<p class="rlinks mono">' + links + '</p>' : '') + '</div>' +
+      '<div class="rgo mono"><span class="open" aria-hidden="true">' + esc(R.ctaOf(e)) + ' ' + arrowOf(e) + '</span>' +
+      (e.hint ? '<span class="hint">' + esc(e.hint) + '</span>' : '') +
+      '<time datetime="' + e.updated + '">' + fmtDate(e.updated) + '</time></div></li>';
+  }
+  function renderGroups() {
+    var html = '', shown = 0, step = 3 + N;
+    CATS.forEach(function (c) {
+      if (state.cat !== 'all' && state.cat !== c.id) { return; }
+      var list = ALL.filter(function (e) { return e.category === c.id && pass(e); });
+      if (!list.length) { return; }
+      shown += list.length;
+      html += '<section class="group" id="g-' + c.id + '" data-category="' + c.id + '" data-cat="' + c.id + '" data-step="' + (step++) + '" data-step-id="group-' + c.id + '">' +
+        '<header class="gh"><p class="gnum mono">' + pad(CATS.indexOf(c) + 1) + '</p><h3>' + esc(c.label) + '</h3><p class="gcount mono">' + list.length + ' ' + (list.length === 1 ? 'entry' : 'entries') + '</p><p class="gblurb">' + esc(c.blurb) + '</p></header>' +
+        '<ol class="rows">' + list.map(row).join('') + '</ol></section>';
+    });
+    if (!shown) {
+      html = '<div class="empty"><h3>Nothing matches.</h3><p>Try a shorter search, or clear the filters to see the whole registry.</p><button class="btn ghost" type="button" data-clear>Clear filters</button></div>';
+    }
+    $('#groups').innerHTML = html;
+  }
+
+  function syncLedger() {
+    $$('.lrow').forEach(function (b) { b.setAttribute('aria-pressed', String(state.kind === b.getAttribute('data-kind'))); });
+  }
+  function render() {
+    renderTabs(); renderChips(); renderStatus(); renderGroups(); syncLedger();
+  }
+
+  /* ---------- footer ---------- */
+  function renderFooter() {
+    $('#foot-count').textContent = ALL.length + ' entries · schema ' + R.META.schema + ' · ' + R.META.source;
+    $('#foot-upd').textContent = 'Registry updated ' + fmtDate(R.lastUpdated());
+    var items = ['<a href="' + esc(R.META.repo) + '" target="_blank" rel="noopener">Repository ↗<span class="sr"> (opens in a new tab)</span></a>'];
+    var show = R.byId('plugin-showcase'), use = R.byId('usage');
+    if (show) { items.push('<a' + linkAttrs(show.href) + '>Plugin showcase ' + arrow(show.href) + newTab(show.href) + '</a>'); }
+    if (use) { items.push('<a' + linkAttrs(use.href) + '>Usage guide ' + arrow(use.href) + newTab(use.href) + '</a>'); }
+    $('#foot-links').innerHTML = items.map(function (i) { return '<li>' + i + '</li>'; }).join('');
+  }
+
+
+  /* ---------- media viewer ----------
+     One viewer for every entry that carries `media`. The registry says what to show
+     (image, document pages or carousel frames); this code only knows those three shapes.
+     Same code path from Selected and from Library: both render a [data-view] button. */
+  var Viewer = (function () {
+    var dlg = $('#viewer'), fig = $('#v-fig'), box = $('#v-media');
+    var bKick = $('#v-kicker'), bTitle = $('#v-title'), bCap = $('#v-cap');
+    var bPdf = $('#v-pdf'), bSrc = $('#v-src'), bZoom = $('#v-zoom'), bClose = $('#v-close');
+    var bPrev = $('#v-prev'), bNext = $('#v-next'), bCount = $('#v-count'), bDots = $('#v-dots');
+    var cur = null;          /* { e, m, items, i, zoom, trigger } while open */
+
+    function itemsOf(m) {
+      if (m.type === 'image') { return [{ src: m.src, w: m.w, h: m.h, alt: m.alt }]; }
+      return m.type === 'carousel' ? (m.frames || []) : (m.pages || []);
+    }
+    function many() { return cur.m.type === 'carousel' && cur.items.length > 1; }
+
+    /* --- one picture --- */
+    function pic(it) {
+      var img = new Image();
+      img.width = it.w; img.height = it.h;           /* keeps the box the right shape before it loads */
+      img.alt = it.alt || '';
+      img.decoding = 'async';
+      img.addEventListener('load', function () { img.classList.add('ready'); syncZoom(); });
+      img.addEventListener('error', function () {
+        if (!img.parentNode) { return; }
+        var s = cur && cur.m.source;
+        var d = document.createElement('div');
+        d.className = 'v-err';
+        d.innerHTML = '<p>This image could not be loaded.</p>' + (s ? '<p><a href="' + esc(s) + '" target="_blank" rel="noopener">View source ↗</a></p>' : '');
+        img.parentNode.replaceChild(d, img);
+      });
+      img.src = it.src;
+      if (img.complete && img.naturalWidth) { img.classList.add('ready'); }
+      return img;
+    }
+    function preload(i) {
+      var it = cur.items[i];
+      if (it) { var p = new Image(); p.src = it.src; }
+    }
+
+    /* --- paint the current state --- */
+    function paint() {
+      var m = cur.m, it = cur.items[cur.i], n = cur.items.length;
+      fig.className = 'v-fig ' + m.type + (cur.zoom ? ' actual' : '');
+      fig.scrollTo(0, 0);
+      fig.textContent = '';
+      if (m.type === 'document') {
+        if (m.pdf) {
+          var pdf = document.createElement('iframe');
+          pdf.className = 'v-pdf-frame';
+          pdf.src = m.pdf + '#view=FitH';
+          pdf.title = cur.e.title + ' PDF';
+          pdf.setAttribute('loading', 'eager');
+          fig.appendChild(pdf);
+          fig.setAttribute('aria-label', cur.e.title + ' PDF viewer');
+        } else {
+          var d = document.createElement('div');
+          d.className = 'v-err';
+          d.innerHTML = '<p>This document preview is unavailable.</p>' +
+            (m.source ? '<p><a href="' + esc(m.source) + '" target="_blank" rel="noopener">View source ↗</a></p>' : '');
+          fig.appendChild(d);
+        }
+      } else {
+        fig.appendChild(pic(it));
+        fig.setAttribute('aria-label', m.type === 'carousel' ? 'Slide ' + (cur.i + 1) + ' of ' + n : 'Image');
+        if (m.type === 'carousel') { preload(cur.i + 1); preload(cur.i - 1); }
+      }
+      /* position */
+      if (m.type === 'carousel') {
+        bCount.hidden = false; bCount.textContent = (cur.i + 1) + ' / ' + n;
+      } else if (m.type === 'document') {
+        bCount.hidden = true; bCount.textContent = '';
+      } else { bCount.hidden = true; bCount.textContent = ''; }
+      var multi = many();
+      bPrev.hidden = bNext.hidden = !multi;
+      bDots.hidden = !multi;
+      if (multi) {
+        bPrev.setAttribute('aria-disabled', String(cur.i === 0));
+        bNext.setAttribute('aria-disabled', String(cur.i === n - 1));
+        $$('.v-dot', bDots).forEach(function (d, k) {
+          if (k === cur.i) { d.setAttribute('aria-current', 'true'); } else { d.removeAttribute('aria-current'); }
+        });
+      }
+      bZoom.setAttribute('aria-pressed', String(cur.zoom));
+      syncZoom();
+    }
+
+    /* "Actual size" only shows when the picture really is bigger than the room it has */
+    function syncZoom() {
+      if (!cur) { return; }
+      var W = fig.clientWidth, H = fig.clientHeight, can = false;
+      cur.items.forEach(function (it) {
+        if (cur.m.type === 'document') { can = can || it.w > Math.min(W, 1000) + 8; }
+        else { can = can || it.w > W + 8 || it.h > H + 8; }
+      });
+      fig.classList.toggle('can-zoom', can && !cur.zoom);
+      bZoom.hidden = !(can || cur.zoom);
+    }
+    function setZoom(on) {
+      if (!cur) { return; }
+      cur.zoom = on;
+      fig.classList.toggle('actual', on);
+      bZoom.setAttribute('aria-pressed', String(on));
+      fig.scrollTo(0, 0);
+      syncZoom();
+    }
+
+    function go(d) {
+      if (!cur || !many()) { return; }
+      var k = Math.max(0, Math.min(cur.items.length - 1, cur.i + d));
+      if (k !== cur.i) { cur.i = k; paint(); }
+    }
+    function goTo(k) {
+      if (!cur || !many() || k === cur.i) { return; }
+      cur.i = Math.max(0, Math.min(cur.items.length - 1, k)); paint();
+    }
+
+    /* --- open / close --- */
+    function open(id, trigger) {
+      var e = R.byId(id);
+      if (!e || !e.media || cur) { return false; }
+      var m = e.media;
+      cur = { e: e, m: m, items: itemsOf(m), i: 0, zoom: false, trigger: trigger || document.activeElement };
+      bKick.textContent = R.metaParts(e).join(' · ');
+      bTitle.textContent = e.title;
+      bCap.textContent = m.caption || e.description || '';
+      bPdf.hidden = !m.pdf; if (m.pdf) { bPdf.href = m.pdf; }
+      bSrc.hidden = !m.source; if (m.source) { bSrc.href = m.source; }
+      bDots.innerHTML = many() ? cur.items.map(function (_, k) {
+        return '<button type="button" class="v-dot" data-go="' + k + '" tabindex="-1" aria-hidden="true"></button>';
+      }).join('') : '';
+      paint();
+      /* lock the page behind, without letting it jump when the scrollbar goes */
+      var sb = window.innerWidth - root.clientWidth;
+      root.classList.add('viewer-open');
+      if (sb > 0) { root.style.paddingRight = sb + 'px'; }
+      if (typeof dlg.showModal === 'function') { dlg.showModal(); } else { dlg.setAttribute('open', ''); }
+      fig.scrollTop = 0; fig.scrollLeft = 0;       /* a closed dialog keeps the old offset; start at the top every time */
+      document.addEventListener('keydown', onKey, true);
+      bClose.focus({ preventScroll: true });
+      syncZoom();
+      return true;
+    }
+    function close() {
+      if (!cur) { return; }
+      if (typeof dlg.close === 'function' && dlg.open) { dlg.close(); }
+      done();          /* the dialog's own close event fires later; done() is safe to run twice */
+    }
+    /* runs for every way the dialog can close (button, Escape, click outside, dlg.close()) */
+    function done() {
+      if (!cur) { return; }
+      var t = cur.trigger, id = cur.e.id;
+      document.removeEventListener('keydown', onKey, true);
+      root.classList.remove('viewer-open');
+      root.style.paddingRight = '';
+      dlg.removeAttribute('open');
+      fig.textContent = '';
+      cur = null;
+      /* focus goes back to the card that opened it */
+      if (!(t && document.contains(t) && t.focus)) { t = document.querySelector('[data-view="' + id + '"]'); }
+      if (t) { t.focus({ preventScroll: true }); }
+    }
+
+    function onKey(ev) {
+      if (!cur) { return; }
+      if (ev.key === 'Escape') { ev.preventDefault(); ev.stopPropagation(); close(); return; }
+      if (ev.altKey || ev.ctrlKey || ev.metaKey) { return; }
+      /* a zoomed picture that can scroll sideways keeps the arrows for itself while it has focus */
+      var scrolls = cur.zoom && ev.target === fig && fig.scrollWidth > fig.clientWidth;
+      if (ev.key === 'ArrowRight' && many() && !scrolls) { ev.preventDefault(); go(1); }
+      else if (ev.key === 'ArrowLeft' && many() && !scrolls) { ev.preventDefault(); go(-1); }
+      else if (ev.key === 'Home' && many() && ev.target !== fig) { ev.preventDefault(); goTo(0); }
+      else if (ev.key === 'End' && many() && ev.target !== fig) { ev.preventDefault(); goTo(cur.items.length - 1); }
+    }
+
+    /* --- wiring (once) --- */
+    if (dlg) {
+      dlg.addEventListener('close', done);
+      dlg.addEventListener('cancel', function (ev) { ev.preventDefault(); close(); });
+      bClose.addEventListener('click', close);
+      bPrev.addEventListener('click', function () { go(-1); });
+      bNext.addEventListener('click', function () { go(1); });
+      bZoom.addEventListener('click', function () { if (cur) { setZoom(!cur.zoom); } });
+      bDots.addEventListener('click', function (ev) {
+        var d = ev.target.closest('[data-go]'); if (d) { goTo(+d.getAttribute('data-go')); }
+      });
+      /* a click on the picture toggles actual size; on empty space it closes the viewer */
+      dlg.addEventListener('click', function (ev) {
+        if (!cur) { return; }
+        var t = ev.target;
+        if (t.tagName === 'IMG') {
+          if (cur.zoom || fig.classList.contains('can-zoom')) { setZoom(!cur.zoom); }
+          return;
+        }
+        if (t.closest('a, button, h2, p, .v-dots')) { return; }
+        /* a click on a scrollbar is not a click outside */
+        var r = t.getBoundingClientRect();
+        if ((t.scrollHeight > t.clientHeight && ev.clientX > r.left + t.clientWidth) ||
+            (t.scrollWidth > t.clientWidth && ev.clientY > r.top + t.clientHeight)) { return; }
+        close();
+      });
+      /* swipe: touch only, horizontal, carousel only, not while zoomed in */
+      var sx = 0, sy = 0, tracking = false;
+      box.addEventListener('pointerdown', function (ev) {
+        tracking = !!cur && ev.pointerType === 'touch' && !cur.zoom && many();
+        sx = ev.clientX; sy = ev.clientY;
+      });
+      box.addEventListener('pointerup', function (ev) {
+        if (!tracking) { return; }
+        tracking = false;
+        var dx = ev.clientX - sx, dy = ev.clientY - sy;
+        if (Math.abs(dx) > 48 && Math.abs(dx) > 1.4 * Math.abs(dy)) { go(dx < 0 ? 1 : -1); }
+      });
+      box.addEventListener('pointercancel', function () { tracking = false; });
+      window.addEventListener('resize', syncZoom);
+    }
+
+    return {
+      open: open, close: close, go: go, goTo: goTo,
+      isOpen: function () { return !!cur; },
+      state: function () { return cur && { id: cur.e.id, type: cur.m.type, index: cur.i, count: cur.items.length, zoom: cur.zoom }; }
+    };
+  })();
+
+  /* ---------- events ---------- */
+  function scrollToLibrary() {
+    var t = $('#library .sec-h');
+    if (t) { t.scrollIntoView({ block: 'start' }); }
+  }
+  document.addEventListener('click', function (ev) {
+    var t = ev.target.closest('button, a');
+    if (!t) { return; }
+    if (t.matches('a[href^="#"]')) {
+      /* in-page anchors scroll by hand so the framed page is never navigated */
+      var target = document.getElementById(t.getAttribute('href').slice(1));
+      if (target) { ev.preventDefault(); target.scrollIntoView({ block: 'start' }); }
+      return;
+    }
+    if (t.hasAttribute('data-view')) {
+      Viewer.open(t.getAttribute('data-view'), t);
+    } else if (t.matches('.lrow')) {
+      var k = t.getAttribute('data-kind');
+      state.kind = state.kind === k ? 'all' : k; render();
+      if (state.kind !== 'all') { scrollToLibrary(); }
+    } else if (t.matches('.tab')) {
+      state.cat = t.getAttribute('data-cat'); render();
+    } else if (t.matches('.chip')) {
+      var f = t.getAttribute('data-fmt'); state.fmt = state.fmt === f ? 'all' : f; render();
+    } else if (t.hasAttribute('data-clear')) {
+      state.cat = 'all'; state.fmt = 'all'; state.kind = 'all'; state.q = ''; $('#q').value = ''; render();
+    } else if (t.hasAttribute('data-theme-btn')) {
+      setTheme(t.getAttribute('data-theme-btn'));
+    } else if (t.hasAttribute('data-accent')) {
+      setAccent(t.getAttribute('data-accent'));
+    }
+  });
+  $('#q').addEventListener('input', function (e) { state.q = e.target.value.trim(); render(); });
+  $('#q').addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { e.target.value = ''; state.q = ''; render(); e.target.blur(); }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === '/' && !e.metaKey && !e.ctrlKey && !e.altKey && !/^(input|textarea|select)$/i.test((e.target.tagName || ''))) {
+      e.preventDefault(); $('#library').scrollIntoView(); $('#q').focus();
+    }
+  });
+
+  /* ---------- theme + accent ----------
+     The host owns data-theme on the root element. This page keeps its own Light/Night in
+     data-mode: it follows the host (or the system) until the viewer picks one. */
+  var explicit = false;
+  try { var st0 = localStorage.getItem('ila-theme'); explicit = (st0 === 'night' || st0 === 'light'); } catch (e) {}
+  function hostMode() {
+    var h = root.getAttribute('data-theme');
+    if (h === 'dark') { return 'night'; }
+    if (h === 'light') { return 'light'; }
+    return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'night' : 'light';
+  }
+  function setMode(m) { root.setAttribute('data-mode', m); syncControls(); }
+  function setTheme(t) {
+    explicit = true;
+    try { localStorage.setItem('ila-theme', t); } catch (e) {}
+    setMode(t);
+  }
+  function setAccent(a) {
+    root.setAttribute('data-accent', a);
+    try { localStorage.setItem('ila-accent', a); } catch (e) {}
+    syncControls();
+  }
+  function follow() { if (!explicit) { setMode(hostMode()); } }
+  function syncControls() {
+    var t = root.getAttribute('data-mode'), a = root.getAttribute('data-accent');
+    $$('[data-theme-btn]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-theme-btn') === t)); });
+    $$('.acc [data-accent]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-accent') === a)); });
+  }
+  if ('MutationObserver' in window) { new MutationObserver(follow).observe(root, { attributes: true, attributeFilter: ['data-theme'] }); }
+  if (window.matchMedia) {
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    if (mq.addEventListener) { mq.addEventListener('change', follow); } else if (mq.addListener) { mq.addListener(follow); }
+  }
+
+  /* ---------- scroll-spy ---------- */
+  function spy() {
+    var links = $$('[data-spy]');
+    if (!('IntersectionObserver' in window)) { return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) { return; }
+        var id = en.target.id;
+        links.forEach(function (l) { if (l.getAttribute('data-spy') === id) { l.setAttribute('aria-current', 'true'); } else { l.removeAttribute('aria-current'); } });
+      });
+    }, { rootMargin: '-30% 0px -60% 0px' });
+    ['selected', 'library'].forEach(function (id) { var s = document.getElementById(id); if (s) { io.observe(s); } });
+    var hero = $('.hero');
+    if (hero) {
+      new IntersectionObserver(function (en) { if (en[0].isIntersecting) { links.forEach(function (l) { l.removeAttribute('aria-current'); }); } }, { rootMargin: '-40% 0px -40% 0px' }).observe(hero);
+    }
+  }
+
+  /* ---------- boot ---------- */
+  $('#library').setAttribute('data-step', String(2 + N));
+  renderLedger(); renderPlates(); renderFooter(); render(); syncControls(); spy();
+
+  /* Present Mode hooks (no UI yet). A future Present button reads these:
+     the ordered steps, the registry they come from, and a way to jump. */
+  window.ILA_UI = {
+    registry: R,
+    state: state,
+    render: render,
+    setFilter: function (p) { for (var k in p) { if (k in state) { state[k] = p[k]; } } $('#q').value = state.q; render(); },
+    steps: function () {
+      return $$('[data-step]').map(function (el) {
+        return { index: +el.getAttribute('data-step'), id: el.getAttribute('data-step-id') || el.getAttribute('data-artifact-id'), el: el };
+      }).sort(function (a, b) { return a.index - b.index; });
+    },
+    goto: function (i) { var s = this.steps().filter(function (x) { return x.index === i; })[0]; if (s) { s.el.scrollIntoView({ block: 'start' }); } return !!s; },
+    present: R.presentSteps,
+    setTheme: setTheme, setAccent: setAccent,
+    viewer: Viewer
+  };
+})();
+</script>
+
+</body></html>
