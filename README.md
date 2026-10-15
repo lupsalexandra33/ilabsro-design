@@ -1,76 +1,572 @@
 # ilabsro-design
 
-Portable Innovation Labs design plugin for Claude. v0.5 adds source-grounded content planning and reusable custom image generation on top of the existing Strategy Hub, route-first presentation, social and brand system.
+Innovation Labs design and content plugin for creating consistent websites, presentations, one-pagers, social content, standalone visuals and source-grounded content plans.
 
-## Mental model
+**Plugin version:** `v0.5.0`
 
-- **Bundled Design System** = portable source of truth for how Innovation Labs looks and behaves.
-- **Native Claude Design System** = optional richer editor/runtime representation of the same rules.
-- **Output skill** = what you are making.
-- **Tone lens** = how the copy sounds.
-- **Brand elements** = optional visual modifier for accent, branded grounds and official decorative assets.
-- **Source material** = what the output says.
+The project packages Innovation Labs visual language, reusable brand elements, artifact-making skills, content planning and voice guidance into one working system.
 
-Every output skill must work when the native Design System is unavailable by falling back to `design-system/INNOVATION_LABS_DESIGN_SYSTEM.md`, `design-system/TOKENS.css` and the bundled assets.
+The goal is not to generate one fixed template.
+
+The goal is to make different Innovation Labs artifacts feel recognizably related while still allowing each format and story to choose the structure that fits it.
+
+---
+
+## What it can make
+
+`ilabsro-design` currently supports:
+
+- websites and microsites;
+- presentation decks;
+- one-pagers;
+- Instagram / social carousels;
+- standalone explanatory visuals;
+- source-grounded content plans and briefs;
+- reusable Innovation Labs brand elements;
+- tone adaptation through voice lenses.
+
+Generated and validated examples live in:
+
+`generated-examples/`
+
+---
 
 ## Skills
 
-- `website-maker` — Strategy Hubs, calm route/map previews and connected IL web artifacts.
-- `presentation-maker` — pitch-like decks; route-first for strategy/program narratives; optional presentation-only playable network.
-- `one-pager-maker` — exact one-page/A4 summaries and partner briefs.
-- `insta-post-maker` — photo-led, graphic and custom-illustration social assets.
-- `content-planner` — turns approved strategy, research and program material into source-grounded content opportunities and briefs.
-- `brand-image-maker` — generates reusable IL visuals using hand-drawn diagrams, narrative illustrations or event-glow directions.
-- `brand-elements` — optional visual modifier that selects accent, branded ground and one official IL element.
-- `formal-lens` — formal voice modifier.
-- `friendly-lens` — warm, clear voice modifier.
-- `jokey-lens` — restrained playful voice modifier.
+The plugin currently contains **10 skills**.
 
-## Portable design files
+### Artifact makers
 
-- `design-system/INNOVATION_LABS_DESIGN_SYSTEM.md` — full v0.4 rules and format behavior.
-- `design-system/TOKENS.css` — Light/Night + purple/yellow accent tokens and branded ground tokens.
-- `design-system/BRAND_ELEMENTS.md` — official backgrounds, SVG elements and pairing rules.
-- `design-system/COMPONENT_CATALOG.md` — reusable interaction/content patterns.
-- `assets/brand-elements/` — 16 official SVG decorative elements.
-- `assets/backgrounds/` — IL template backgrounds for campaign/social/PDF uses.
-- `assets/logo_*.svg` — official 2027 logo variants.
+#### `website-maker`
 
-## Composition
+Creates responsive Innovation Labs websites and microsites.
 
-For a normal task use **one output skill** + **zero or one tone lens** + **optional `brand-elements`** + the bundled/native Innovation Labs Design System.
+It focuses on:
 
-Examples:
+- information architecture;
+- story structure;
+- responsive layouts;
+- interaction;
+- Innovation Labs visual consistency;
+- choosing a layout appropriate to the specific content rather than repeating one site pattern.
 
-- `presentation-maker` + `friendly-lens` → founder-facing route-first strategy deck.
-- `presentation-maker` + `brand-elements` → route deck with an explicitly requested yellow accent or branded cover ground.
-- `one-pager-maker` + `formal-lens` → partner-facing one-pager.
-- `website-maker` → source-rich Strategy Hub / calm Route experience.
-- `insta-post-maker` → event-photo carousel with photo-to-teal blending.
-- `insta-post-maker` + `brand-elements` → campaign carousel on an approved template ground with one official SVG element.
-- `content-planner` → source material → evaluated content opportunities → human selection → structured brief.
-- `insta-post-maker` + `brand-image-maker` → social carousel where custom drawings or generated visuals carry part of the explanation.
+---
 
-The public Humanizer skill can be an optional final copy pass when useful; it is not a dependency of this plugin.
+#### `presentation-maker`
 
-See `docs/USAGE.md` and `docs/TEST_MATRIX.md`.
+Creates Innovation Labs presentation decks.
 
-## Live examples
+It supports different storytelling structures rather than relying on one fixed route-based deck format.
 
-### Design references
+It focuses on:
 
-| Artifact | Live |
-| --- | --- |
-| Strategy Hub | [Open reference ↗](https://ilabsro-design-examples.vercel.app/) |
-| Presentation | [Open reference ↗](https://ilabsro-design-examples-gojv.vercel.app/#1) |
+- one clear idea per slide;
+- visual pacing;
+- varied composition;
+- diagrams and custom visuals;
+- presentation-specific hierarchy;
+- readable partner-facing storytelling.
 
-### Plugin-generated outputs
+---
 
-| Artifact | Live |
-| --- | --- |
-| Strategy Hub | [Open generated example ↗](https://ilabsro-design-website.vercel.app/) |
-| Presentation | [Open generated example ↗](https://ilabsro-design-presentation.vercel.app/) |
+#### `one-pager-maker`
 
-### Showcase
+Creates compact Innovation Labs one-pagers and explainers.
 
-[Explore the plugin showcase ↗](https://ilabsro-design-showcase.vercel.app/)
+It focuses on:
+
+- editorial hierarchy;
+- one-page information architecture;
+- visual comparison;
+- diagrams;
+- print and screen readability;
+- concise supporting copy.
+
+---
+
+#### `insta-post-maker`
+
+Creates Innovation Labs social posts and carousels.
+
+It prefers:
+
+- one primary thought per frame;
+- more frames with less information per frame;
+- strong visual explanation;
+- custom drawings and diagrams;
+- concise copy;
+- avoiding repetitive eyebrow + headline + paragraph layouts.
+
+---
+
+## Planning and visual generation
+
+### `content-planner`
+
+Transforms source material into source-grounded content directions and briefs.
+
+The core workflow is:
+
+```text
+source material
+→ candidate ideas
+→ evaluation
+→ human selection
+→ content brief
+→ artifact generation
+→ human review
+```
+
+The skill prioritizes source fidelity over creativity.
+
+It is designed so the human remains responsible for selecting the idea and format before generation continues.
+
+---
+
+### `brand-image-maker`
+
+Creates standalone Innovation Labs visuals and supporting illustrations.
+
+It can autonomously select an appropriate visual direction based on the idea being communicated.
+
+Current visual modes include:
+
+- `handdrawn-diagram`
+- `narrative-illustration`
+- `event-glow`
+
+The goal is to avoid generic AI visual language and create visuals that feel specific to Innovation Labs.
+
+Examples include:
+
+- explanatory hand-drawn diagrams;
+- comparison visuals;
+- narrative startup illustrations;
+- event-oriented branded imagery.
+
+---
+
+### `brand-elements`
+
+Provides reusable Innovation Labs visual elements for other skills.
+
+The plugin currently includes **16 shared SVG brand elements** used across websites, decks, one-pagers and other outputs.
+
+---
+
+## Voice lenses
+
+### `formal-lens`
+
+Adapts content toward a more formal Innovation Labs voice.
+
+Useful for:
+
+- partner material;
+- institutional communication;
+- structured briefs;
+- formal presentations.
+
+---
+
+### `friendly-lens`
+
+Adapts content toward a more approachable and conversational tone while preserving clarity.
+
+---
+
+### `jokey-lens`
+
+Adds a more playful tone where appropriate without turning the content into generic internet copy.
+
+---
+
+## Design system
+
+The plugin includes portable Innovation Labs design tokens and visual rules under:
+
+`design-system/`
+
+The current design-system token version may remain different from the plugin version.
+
+For example:
+
+```text
+Plugin: v0.5.0
+Design system / portable tokens: v0.4
+```
+
+These versions describe different layers of the project and do not need to move together.
+
+The system includes guidance for:
+
+- typography;
+- Innovation Labs teal;
+- semantic accent colours;
+- Light / Night modes;
+- branded mesh backgrounds;
+- spacing;
+- borders;
+- radius;
+- shadows;
+- layout;
+- visual hierarchy;
+- reusable brand elements.
+
+---
+
+## Generated examples
+
+Validated outputs created with the plugin live under:
+
+`generated-examples/`
+
+The examples are intentionally varied.
+
+They are not intended to demonstrate one canonical layout.
+
+Instead, they test whether the system can generate different artifact archetypes while remaining recognizably Innovation Labs.
+
+Current example families include:
+
+```text
+generated-examples/
+├── website/
+├── presentation/
+├── one-pager/
+├── social/
+└── visuals/
+```
+
+Examples currently include work such as:
+
+### Websites
+
+- Strategy Hub
+- Build for real problems
+
+These explore different website structures:
+
+- route / strategy exploration;
+- campaign / challenge microsite.
+
+### Presentations
+
+- Route Deck
+- Learning Environment
+
+These explore:
+
+- route-first storytelling;
+- non-route-first narrative presentation structure.
+
+### One-pagers
+
+- 2027 Vision
+- Better AI output starts with better context
+
+### Social
+
+- Context Engineering
+- Source Before Prompt
+
+Each multi-frame carousel is treated as one artifact.
+
+### Standalone visuals
+
+- Idea Meets Real Users
+- You Go First / AI as You Sharpen
+- Test My Thinking
+
+The visual examples intentionally test different explanatory structures, including:
+
+- narrative illustration;
+- sequential process;
+- direct comparison.
+
+---
+
+## Artifact Index
+
+The repository includes an Innovation Labs Artifact Index under:
+
+`artifact-index/`
+
+The Artifact Index answers:
+
+> What have we built, explored, documented or systematized for Innovation Labs?
+
+It acts as a working library / studio archive across:
+
+- generated examples;
+- workflows;
+- tools;
+- systems;
+- documentation.
+
+It includes:
+
+- Selected work;
+- complete Library;
+- Registry;
+- category filtering;
+- format filtering;
+- search;
+- Light / Night modes;
+- accent switching;
+- direct viewing for visual artifacts.
+
+For visual work, the Artifact Index is intended to be the primary viewing experience.
+
+GitHub remains the source of provenance rather than the gallery itself.
+
+Canonical generated media remains in:
+
+`generated-examples/`
+
+The Artifact Index may keep lightweight UI previews, but it should not become a second copy of the generated artifact library.
+
+---
+
+## Plugin Showcase
+
+The repository also contains a separate Plugin Showcase under:
+
+`showcase/`
+
+The Artifact Index and Plugin Showcase have different purposes.
+
+### Artifact Index
+
+> What exists across the Innovation Labs work?
+
+### Plugin Showcase
+
+> What can `ilabsro-design` do and how does the system work?
+
+The Plugin Showcase focuses on:
+
+- design system;
+- plugin capabilities;
+- skills;
+- visual language;
+- representative generated outputs;
+- usage patterns.
+
+It should not replace the Artifact Index, and the Artifact Index should not become plugin documentation.
+
+---
+
+## Content workflow
+
+Public workflow documentation lives under:
+
+`docs/content-workflow/`
+
+The current source-grounded content flow is:
+
+```text
+source
+↓
+content-planner
+↓
+candidate ideas
+↓
+evaluation
+↓
+human selects idea + format
+↓
+brief
+↓
+artifact maker
+↓
+human review
+```
+
+The human selection step is intentional.
+
+The system is designed to assist with discovery, structure and generation without silently deciding what should be published.
+
+The current workflow is an MVP and does not imply production publishing, scheduling or external integrations.
+
+---
+
+## Repository structure
+
+```text
+ilabsro-design/
+│
+├── .claude-plugin/
+│   └── plugin.json
+│
+├── assets/
+│   ├── backgrounds/
+│   ├── elements/
+│   └── logos/
+│
+├── design-system/
+│   └── ...
+│
+├── skills/
+│   ├── website-maker/
+│   ├── presentation-maker/
+│   ├── one-pager-maker/
+│   ├── insta-post-maker/
+│   ├── content-planner/
+│   ├── brand-image-maker/
+│   ├── brand-elements/
+│   ├── formal-lens/
+│   ├── friendly-lens/
+│   └── jokey-lens/
+│
+├── generated-examples/
+│   ├── website/
+│   ├── presentation/
+│   ├── one-pager/
+│   ├── social/
+│   └── visuals/
+│
+├── artifact-index/
+│   ├── index.html
+│   ├── assets/
+│   └── previews/
+│
+├── showcase/
+│   └── ...
+│
+├── docs/
+│   ├── content-workflow/
+│   ├── PLUGIN_ARCHITECTURE.md
+│   ├── TEST_MATRIX.md
+│   └── USAGE.md
+│
+├── scripts/
+│   └── validate_plugin.py
+│
+└── README.md
+```
+
+---
+
+## Source of truth
+
+The repository follows a simple ownership rule:
+
+```text
+skills/
+= behaviour and generation guidance
+
+design-system/
+= visual system and tokens
+
+assets/
+= shared reusable brand assets
+
+generated-examples/
+= canonical generated outputs
+
+artifact-index/
+= library / navigation / viewing layer
+
+showcase/
+= plugin capability showcase
+
+docs/
+= workflows and technical documentation
+```
+
+Original generated outputs should not be unnecessarily duplicated inside the Artifact Index or Showcase.
+
+---
+
+## Working principles
+
+### Source fidelity over invention
+
+When an artifact is based on source material, generation should remain grounded in that material.
+
+The system should not turn weak evidence into strong claims.
+
+---
+
+### Human choice remains explicit
+
+For content planning, candidate ideas may be generated automatically, but a human chooses the idea and output format before downstream production.
+
+---
+
+### Different artifacts need different structures
+
+A website, carousel, deck and one-pager should not all look like the same template resized into different dimensions.
+
+Shared brand language should coexist with format-specific composition.
+
+---
+
+### Visuals should explain, not decorate
+
+Custom drawings, diagrams and illustrations should carry part of the meaning.
+
+They should not exist only as decorative filler.
+
+---
+
+### Simpler frames over overloaded frames
+
+Especially in social content and presentations, the system prefers splitting complex ideas across multiple frames or slides instead of compressing everything into one.
+
+---
+
+### AI should support thinking, not erase it
+
+Several generated examples explore a human-first use of AI:
+
+```text
+human brings the first thinking
+→ AI challenges assumptions
+→ human reviews and sharpens the result
+```
+
+These examples are conceptual communication artifacts, not claims about a specific AI model.
+
+---
+
+## Validation
+
+The repository includes validation tooling under:
+
+`scripts/`
+
+Generated examples are kept when they meaningfully test a capability, format or visual direction.
+
+Examples may be labelled as:
+
+- validated;
+- example;
+- prototype;
+- exploratory.
+
+Validation is about whether the artifact is useful as a reference for the system, not whether it represents an official Innovation Labs publication.
+
+---
+
+## Status
+
+Current plugin version:
+
+`v0.5.0`
+
+Current plugin scope:
+
+```text
+10 skills
+16 shared SVG brand elements
+multiple artifact formats
+source-grounded content planning
+custom visual generation
+validated generated examples
+Artifact Index
+Plugin Showcase
+```
+
+The project is actively evolving toward a more complete production workflow while keeping the repository usable as a clear design-system and artifact-generation reference.
