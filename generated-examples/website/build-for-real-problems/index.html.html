@@ -1,0 +1,829 @@
+<!doctype html>
+<!--
+  TEST ARTIFACT — "Build for real problems." is a fictional Innovation Labs challenge,
+  built only to try the ilabsro-design plugin (website-maker + brand-elements, design system v0.4).
+  It is not a real or announced programme. All rules, timings and examples are placeholders.
+
+  Brand-elements decision: accent = purple · ground = --mesh-blue (hero only) · element = make-it-real.svg (hero only)
+-->
+<html lang="en" data-theme="light" data-accent="purple">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Illustrative Innovation Labs challenge microsite. A test artifact, not a real programme.">
+<title>Build for real problems · Test artifact</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=IBM+Plex+Mono:wght@500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   Innovation Labs tokens (portable v0.4, Light + purple accent)
+   ============================================================ */
+:root {
+  /* brand */
+  --teal: #0095AC;
+  --teal-deep: #016462;
+  --teal-ink: #016462;
+  --header: #007F86;
+  --hero-a: #068499;
+  --hero-b: #065F5C;
+  --bright: #72ECE7;
+  --on-brand: #FFFFFF;
+
+  /* surfaces */
+  --surface-page: #FFFFFF;
+  --surface-alt: #F4FBFB;
+  --surface: #FFFFFF;
+  --surface-tint: #EAF7F7;
+  --surface-ink: #10201F;
+
+  /* text */
+  --ink: #10201F;
+  --ink-muted: #3C5052;
+  --ink-subtle: #4A5E60;
+
+  /* lines */
+  --line: #D6E4E5;
+  --line-soft: #E3EDEE;
+  --line-control: #6F8689;
+  --line-strong: #9CC3C6;
+
+  /* actions */
+  --action: #007A8C;
+  --on-action: #FFFFFF;
+  --action-soft: rgba(0, 149, 172, .12);
+
+  /* semantic accent: purple */
+  --ax: #954BBC;
+  --ax-ink: #6B2E8C;
+  --ax-tint: #F1E7F8;
+  --ax-soft: rgba(149, 75, 188, .14);
+  --ax-on: #FFFFFF;
+  --ax-deep: #6B2E8C;
+  --focus-ring: var(--ax);
+  --focus-ring-on-brand: #FFFFFF;
+
+  /* status (used once: the test notice) */
+  --caution: #7A5200;
+  --caution-soft: #FFF3D6;
+
+  /* grounds */
+  --grad-band: linear-gradient(115deg, var(--header), #006B6E);
+  --mesh-blue:
+    radial-gradient(60% 55% at 38% 0%, #B8E3EC 0%, transparent 72%),
+    radial-gradient(55% 60% at 0% 100%, #94D4DC 0%, transparent 72%),
+    radial-gradient(55% 60% at 100% 100%, #90D4DE 0%, transparent 72%),
+    radial-gradient(35% 40% at 100% 40%, #C5E8EF 0%, transparent 70%), #FFFFFF;
+
+  /* spacing */
+  --space-4: 4px;  --space-8: 8px;  --space-12: 12px; --space-16: 16px; --space-18: 18px;
+  --space-22: 22px; --space-26: 26px; --space-40: 40px; --space-48: 48px; --space-64: 64px; --space-88: 88px;
+
+  /* radius */
+  --radius-sm: 8px; --radius-md: 12px; --radius-row: 14px; --radius-lg: 18px; --radius-panel: 22px; --radius-pill: 999px;
+
+  /* borders / layout */
+  --border-focus: 3px;
+  --content-max: 1180px;
+  --nav-height: 58px;
+
+  /* shadows */
+  --shadow-hover: 0 10px 28px rgba(1, 100, 98, .13);
+  --shadow-nav: 0 2px 14px rgba(16, 32, 31, .25);
+  --shadow-raised: 0 14px 40px rgba(1, 100, 98, .13);
+
+  /* type families */
+  --font: Poppins, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --hand: Caveat, "Segoe Print", "Bradley Hand", cursive;
+
+  /* one fluid layer */
+  --gutter: clamp(20px, 5vw, 48px);
+  --section-y: clamp(60px, 6vw + 24px, 88px);
+  --ease: cubic-bezier(.3, .1, .2, 1);
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--nav-height) + 16px); }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+body {
+  margin: 0;
+  background: var(--surface-page);
+  color: var(--ink-muted);
+  font: 400 15px/1.65 var(--font);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img, svg { display: block; max-width: 100%; }
+h1, h2, h3, p, ul, ol, dl, figure { margin: 0; }
+p { text-wrap: pretty; }
+ul, ol { padding: 0; list-style: none; }
+a { color: var(--teal-ink); text-underline-offset: 3px; font-weight: 600; }
+:focus-visible { outline: var(--border-focus) solid var(--focus-ring); outline-offset: 2px; }
+.on-brand :focus-visible { outline-color: var(--focus-ring-on-brand); }
+
+.wrap { width: min(100% - var(--gutter) * 2, var(--content-max)); margin-inline: auto; }
+
+.skip {
+  position: absolute; left: 12px; top: -64px; z-index: 100;
+  background: var(--surface); color: var(--teal-ink); padding: 12px 18px;
+  border-radius: var(--radius-sm); border: 2px solid var(--teal-ink); text-decoration: none;
+}
+.skip:focus { top: 12px; }
+
+/* ---------- type ---------- */
+.kicker, .label, .meta { font-family: var(--mono); text-transform: uppercase; }
+.kicker { font-size: 12px; font-weight: 600; letter-spacing: .14em; line-height: 1.4; color: var(--teal-ink); }
+.label  { font-size: 11.4px; font-weight: 600; letter-spacing: .12em; line-height: 1.4; color: var(--teal-ink); }
+.meta   { font-size: 11px; font-weight: 500; letter-spacing: .1em; line-height: 1.4; color: var(--ink-subtle); }
+.note   { font-size: 12.3px; line-height: 1.5; color: var(--ink-subtle); }
+
+.display-hero { font: 700 clamp(40.5px, 3.2vw + 28px, 81px)/1.02 var(--font); letter-spacing: -.03em; color: var(--ink); text-wrap: balance; }
+.display-page { font: 700 clamp(33.4px, 2.4vw + 24px, 60px)/1.06 var(--font); letter-spacing: -.03em; color: var(--ink); text-wrap: balance; }
+.headline     { font: 700 clamp(28.2px, 1.6vw + 22px, 45.8px)/1.1 var(--font); letter-spacing: -.025em; color: var(--ink); text-wrap: balance; max-width: 900px; }
+.title        { font: 700 19.4px/1.3 var(--font); letter-spacing: -.01em; color: var(--ink); }
+.lead         { font: 400 clamp(15.8px, .5vw + 14px, 19.4px)/1.6 var(--font); color: var(--ink-muted); max-width: 62ch; }
+.beat         { color: var(--teal-ink); }
+.hand         { font: 700 clamp(26px, 1.2vw + 20px, 34px)/1 var(--hand); color: var(--ax-ink); }
+
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  font: 600 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase;
+  padding: 7px 11px; border-radius: var(--radius-pill); border: 1px solid transparent; white-space: nowrap;
+}
+.chip--test { background: var(--caution-soft); color: var(--caution); border-color: rgba(122, 82, 0, .4); }
+.chip--plain { background: var(--surface); color: var(--ink-muted); border-color: var(--line-control); }
+.chip--sample { background: transparent; color: #fff; border-color: rgba(255, 255, 255, .75); }
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 48px; padding: 0 26px; border-radius: var(--radius-pill);
+  font: 600 14.5px/1.2 var(--font); text-decoration: none; text-align: center;
+  border: 1px solid transparent; cursor: pointer;
+  transition: background-color .18s ease, transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.btn svg { width: 18px; height: 18px; flex: none; }
+.btn--primary { background: var(--action); color: var(--on-action); }
+.btn--primary:hover { background: #006676; transform: translateY(-1px); box-shadow: var(--shadow-hover); }
+.btn--secondary { background: var(--surface); color: var(--teal-ink); border-color: var(--line-control); }
+.btn--secondary:hover { background: #E4F4F6; }
+.btn--quiet { background: transparent; color: var(--teal-ink); text-decoration: underline; text-underline-offset: 3px; padding: 0 12px; }
+.btn--quiet:hover { background: var(--action-soft); }
+
+/* ============================================================
+   Test notice + navigation
+   ============================================================ */
+.testbar { background: var(--caution-soft); color: var(--caution); border-bottom: 1px solid rgba(122, 82, 0, .25); }
+.testbar .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; padding-block: 9px; }
+.testbar strong { font: 700 11px/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+.testbar span { font-size: 12.3px; line-height: 1.45; }
+
+.nav { position: sticky; top: 0; z-index: 50; background: var(--grad-band); box-shadow: var(--shadow-nav); color: #fff; }
+.nav .wrap { display: flex; align-items: center; gap: 12px; min-height: var(--nav-height); }
+.nav__logo { display: block; flex: none; }
+.nav__logo img { height: 22px; width: auto; }
+@media (min-width: 520px) { .nav__logo img { height: 24px; } }
+.nav .chip { color: #fff; background: transparent; border-color: rgba(255, 255, 255, .75); padding: 6px 10px; }
+.nav .chip .long { display: none; }
+@media (min-width: 560px) { .nav .chip .long { display: inline; } }
+.nav__spacer { flex: 1; }
+
+.nav__links { display: none; gap: 4px; }
+.nav__links a {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: var(--radius-pill);
+  color: #fff; font: 600 13.2px/1 var(--font); text-decoration: none;
+  transition: background-color .18s ease, color .18s ease;
+}
+.nav__links a:hover { background: rgba(255, 255, 255, .16); }
+.nav__links a[aria-current="true"] { background: #fff; color: var(--teal-deep); }
+@media (min-width: 900px) { .nav__links { display: flex; } .menu { display: none; } }
+
+.menu { position: relative; }
+.menu summary {
+  list-style: none; display: grid; place-items: center; width: 44px; height: 44px; cursor: pointer;
+  border-radius: var(--radius-pill); border: 1px solid rgba(255, 255, 255, .7); background: rgba(255, 255, 255, .14);
+}
+.menu summary::-webkit-details-marker { display: none; }
+.menu summary svg { width: 20px; height: 20px; }
+.menu[open] summary { background: #fff; color: var(--teal-deep); }
+.menu__panel {
+  position: absolute; right: 0; top: calc(100% + 10px); width: min(280px, calc(100vw - var(--gutter) * 2));
+  background: var(--surface); border-radius: var(--radius-lg); padding: 8px; box-shadow: var(--shadow-raised); border: 1px solid var(--line);
+}
+.menu__panel a {
+  display: flex; align-items: center; min-height: 48px; padding: 0 16px; border-radius: var(--radius-md);
+  color: var(--teal-ink); font: 600 14.5px/1 var(--font); text-decoration: none;
+}
+.menu__panel a:hover { background: var(--action-soft); }
+
+/* ============================================================
+   Sections
+   ============================================================ */
+.sec { padding-block: var(--section-y); }
+.sec--alt { background: var(--surface-alt); }
+.sec--tint { background: var(--surface-tint); }
+.sec--deep { background: var(--teal-deep); color: rgba(255, 255, 255, .88); }
+.sec__head { display: grid; gap: 14px; max-width: 900px; margin-bottom: clamp(28px, 4vw, 48px); }
+.split { display: grid; gap: clamp(28px, 5vw, 48px); }
+@media (min-width: 900px) { .split { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); align-items: start; } }
+
+/* ---------- 1 · hero (isolated branded ground + one official element) ---------- */
+.hero { background: var(--mesh-blue); padding-block: clamp(44px, 7vw, 104px) clamp(52px, 7vw, 96px); overflow: clip; }
+.hero__grid { display: grid; gap: clamp(36px, 5vw, 64px); align-items: center; }
+@media (min-width: 900px) { .hero__grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); } }
+.hero__kickers { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-bottom: clamp(20px, 3vw, 30px); }
+.hero .kicker { color: var(--ink); }
+.hero h1 { margin-bottom: clamp(18px, 2.4vw, 26px); }
+.hero h1 .beat { display: block; }
+.mark { position: relative; display: inline-block; }
+.mark__line { position: absolute; left: -3%; width: 106%; bottom: -.16em; height: .22em; color: var(--ax); overflow: visible; }
+.hero .lead { color: var(--ink); max-width: 40ch; }
+.hero__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(26px, 3.4vw, 36px); }
+.hero__art { display: flex; justify-content: center; }
+.hero__mark { width: min(86%, 380px); height: auto; }
+@media (min-width: 900px) { .hero__art { justify-content: flex-end; } .hero__mark { width: min(100%, 460px); } }
+
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: no-preference) {
+  .hero__copy > *, .hero__art { animation: rise .6s var(--ease) both; }
+  .hero__copy > :nth-child(2) { animation-delay: .06s; }
+  .hero__copy > :nth-child(3) { animation-delay: .12s; }
+  .hero__copy > :nth-child(4) { animation-delay: .18s; }
+  .hero__art { animation-delay: .24s; }
+}
+
+/* ---------- 2 · the challenge (editorial split) ---------- */
+.statement { display: grid; gap: clamp(18px, 2.4vw, 26px); align-content: start; }
+.statement .kicker { margin-bottom: -4px; }
+.who { background: var(--surface-tint); border-radius: var(--radius-panel); padding: clamp(22px, 3vw, 34px); display: grid; gap: 18px; }
+.ticks { display: grid; gap: 16px; }
+.ticks li { display: grid; grid-template-columns: 24px 1fr; gap: 12px; align-items: start; color: var(--ink); font-size: 15px; line-height: 1.55; }
+.ticks svg { width: 24px; height: 24px; color: var(--teal-ink); margin-top: 1px; }
+
+/* ---------- 3 · example problem spaces (ruled editorial rows) ---------- */
+.spaces { border-bottom: 1px solid var(--line); }
+.space { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 18px 20px; padding-block: clamp(26px, 3.4vw, 40px); border-top: 1px solid var(--line); }
+.space__letter { font: 800 clamp(56px, 6vw + 20px, 96px)/.85 var(--font); color: var(--teal); letter-spacing: -.04em; }
+.space__body { display: grid; gap: 8px; align-content: start; }
+.space__body .meta { margin-bottom: 4px; }
+.space__start { grid-column: 1 / -1; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 18px 22px; display: grid; gap: 6px; align-content: start; }
+.space__start p:last-child { color: var(--ink); font-size: 14.1px; }
+@media (min-width: 900px) {
+  .space { grid-template-columns: 112px minmax(0, 1.5fr) minmax(0, 1fr); gap: 40px; align-items: start; }
+  .space__start { grid-column: auto; }
+}
+
+/* ---------- 4 · what we are looking for (brand panel) ---------- */
+.sec--deep .kicker { color: var(--bright); }
+.sec--deep .headline { color: #fff; }
+.sec--deep .beat { color: var(--bright); }
+.sec--deep .lead { color: rgba(255, 255, 255, .88); }
+.look { display: grid; gap: clamp(28px, 4vw, 48px); }
+@media (min-width: 900px) { .look { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(40px, 6vw, 80px); align-items: start; } .look__head { position: sticky; top: calc(var(--nav-height) + 32px); } }
+.look__head { display: grid; gap: 18px; }
+.criteria { border-bottom: 1px solid rgba(255, 255, 255, .24); }
+.criteria li { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 4px 12px; padding-block: 22px; border-top: 1px solid rgba(255, 255, 255, .24); }
+.criteria__n { font: 600 13px/1.9 var(--mono); letter-spacing: .1em; color: var(--bright); }
+.criteria .title { color: #fff; }
+.criteria p { grid-column: 2; color: rgba(255, 255, 255, .88); }
+.rewrite { margin-top: clamp(44px, 6vw, 72px); display: grid; gap: 18px; }
+.rewrite__cards { display: grid; gap: 18px; }
+@media (min-width: 760px) { .rewrite__cards { grid-template-columns: 1fr 1fr; } }
+.rcard { border-radius: var(--radius-panel); padding: clamp(22px, 3vw, 30px); display: grid; gap: 12px; align-content: start; }
+.rcard__q { font: 600 clamp(17px, 1vw + 13px, 21px)/1.4 var(--font); letter-spacing: -.01em; }
+.rcard--was { background: var(--surface); border: 1px solid var(--line); }
+.rcard--was .label { color: var(--ink-subtle); }
+.rcard--was .rcard__q { color: var(--ink-muted); }
+.rcard--try { background: var(--ax-tint); border: 1px solid var(--ax); }
+.rcard--try .label { color: var(--ax-ink); }
+.rcard--try .rcard__q { color: var(--ink); }
+.rcard .note { color: var(--ink-muted); }
+
+/* ---------- 5 · process (staircase, no route line) ---------- */
+.steps { display: grid; gap: 18px; align-items: start; }
+@media (min-width: 620px) { .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 900px) {
+  .steps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .step:nth-child(2) { margin-top: 28px; }
+  .step:nth-child(3) { margin-top: 56px; }
+  .step:nth-child(4) { margin-top: 84px; }
+}
+.step { background: var(--surface-tint); border: 1px solid transparent; border-radius: var(--radius-lg); padding: var(--space-26); display: grid; gap: 10px; align-content: start; }
+.step__n { font: 800 clamp(44px, 3vw + 30px, 56px)/1 var(--font); color: var(--teal); letter-spacing: -.03em; }
+.step--now { background: var(--ax-tint); border-color: var(--ax); }
+.step--now .step__n, .step--now .title { color: var(--ax-ink); }
+.tag { justify-self: start; background: var(--ax); color: var(--ax-on); font: 600 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; padding: 7px 11px; border-radius: var(--radius-pill); }
+.steps + .note { margin-top: 28px; }
+
+/* ---------- 6 · submission checklist ---------- */
+.check-side { display: grid; gap: 18px; align-content: start; }
+@media (min-width: 900px) { .check-side { position: sticky; top: calc(var(--nav-height) + 32px); } }
+.progress { display: grid; gap: 10px; margin-top: 6px; }
+.progress p { font: 600 14.5px/1.4 var(--font); color: var(--ink); min-height: 2.8em; }
+.meter { height: 8px; border-radius: var(--radius-pill); background: var(--line); overflow: hidden; }
+.meter span { display: block; height: 100%; width: 0; background: var(--action); border-radius: inherit; transition: width .3s ease; }
+.checks { display: grid; gap: 12px; }
+.check {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 16px; align-items: start;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-row);
+  padding: 18px 20px; min-height: 64px; cursor: pointer; transition: border-color .18s ease;
+}
+.check:hover { border-color: var(--line-strong); }
+.check:has(input:checked) { border-color: var(--action); }
+.check input {
+  appearance: none; -webkit-appearance: none; margin: 1px 0 0; width: 26px; height: 26px; cursor: pointer;
+  display: grid; place-content: center; border: 2px solid var(--line-control); border-radius: 8px; background: var(--surface);
+  transition: background-color .15s ease, border-color .15s ease;
+}
+.check input::before { content: ""; width: 14px; height: 14px; background: #fff; transform: scale(0); transition: transform .15s ease; clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%); }
+.check input:checked { background: var(--action); border-color: var(--action); }
+.check input:checked::before { transform: scale(1); }
+.check__text { display: grid; gap: 2px; }
+.check__text strong { font: 700 16px/1.35 var(--font); color: var(--ink); letter-spacing: -.01em; }
+.check__text span { font-size: 14.1px; line-height: 1.5; }
+@media (forced-colors: active) { .check input::before { background: CanvasText; } }
+.optional { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 6px; }
+.optional .label { color: var(--ink-subtle); margin-right: 4px; }
+
+/* ---------- 7 · closing CTA ---------- */
+.sec--close { background: var(--grad-band); color: #fff; }
+.sec--close .kicker { color: #fff; }
+.sec--close .headline { color: #fff; }
+.sec--close .beat { color: var(--bright); }
+.sec--close .lead { color: #fff; }
+.close { display: grid; gap: clamp(32px, 5vw, 56px); }
+@media (min-width: 900px) { .close { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); align-items: start; } }
+.close__copy { display: grid; gap: 22px; align-content: start; }
+.next { display: grid; gap: 14px; margin-top: 8px; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, .45); }
+.next__head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; }
+.next ol { display: grid; gap: 12px; }
+.next li { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 8px; color: #fff; font-size: 15px; line-height: 1.55; }
+.next li span:first-child { font: 700 13px/1.9 var(--mono); color: #fff; }
+.next .note { color: #fff; }
+
+.starter { background: var(--surface); color: var(--ink-muted); border-radius: var(--radius-panel); padding: clamp(22px, 3vw, 34px); display: grid; gap: 18px; }
+.starter__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; }
+.starter .hand { transform: rotate(-3deg); transform-origin: left center; }
+.field { display: grid; gap: 6px; }
+.field label { font: 600 13.2px/1.4 var(--font); color: var(--ink); }
+.field input {
+  width: 100%; min-height: 48px; padding: 11px 14px; font: 400 15px/1.4 var(--font); color: var(--ink);
+  background: var(--surface); border: 1px solid var(--line-control); border-radius: var(--radius-md);
+}
+.field input::placeholder { color: var(--ink-subtle); opacity: 1; }
+.preview { background: var(--surface-tint); border-radius: var(--radius-md); padding: 16px 18px; min-height: 96px; font: 600 clamp(16px, .6vw + 13px, 19.4px)/1.45 var(--font); color: var(--ink); overflow-wrap: anywhere; }
+.preview.is-empty { color: var(--ink-subtle); font-weight: 400; }
+.starter__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.starter .note { min-height: 1.5em; }
+
+/* ---------- footer ---------- */
+.foot { background: var(--surface-ink); color: #C9DADA; padding-block: clamp(40px, 5vw, 64px); }
+.foot__grid { display: grid; gap: 24px; }
+@media (min-width: 900px) { .foot__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) auto; align-items: start; gap: 48px; } }
+.foot img { height: 24px; width: auto; }
+.foot p { font-size: 13.2px; line-height: 1.6; max-width: 62ch; }
+.foot a { color: var(--bright); }
+.foot .on-brand-focus:focus-visible, .foot a:focus-visible { outline-color: var(--focus-ring-on-brand); }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<aside class="testbar" aria-label="Test artifact notice">
+  <div class="wrap">
+    <strong>Test artifact</strong>
+    <span>Illustrative only. Not a real Innovation Labs programme.</span>
+  </div>
+</aside>
+
+<header class="nav on-brand">
+  <div class="wrap">
+    <a class="nav__logo" href="#top" aria-label="Innovation Labs, back to top">
+      <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTGF5ZXJfMiIgZGF0YS1uYW1lPSJMYXllciAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MDUuODQgNTMuNDIiPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuY2xzLTEgewogICAgICAgIGZpbGw6ICNmZmY7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDxnIGlkPSJMYXllcl8xLTIiIGRhdGEtbmFtZT0iTGF5ZXIgMSI+CiAgICA8ZyBpZD0ibG9nb19JTF8yMDI0X2Z1bGxfLV9wcmltYXJ5IiBkYXRhLW5hbWU9ImxvZ28gSUwgMjAyNCBmdWxsIC0gcHJpbWFyeSI+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTkwLjcxLDkuNzJjLTguNjcsMC0xNS43LDcuMDMtMTUuNywxNS43LDAsNS40MSwyLjc0LDEwLjE4LDYuOTEsMTMsLjExLjA3LjIyLjE0LjMzLjIyLjg1LjY0LDEuNDEsMS42NSwxLjQxLDIuOHYuNjVoMy45N3YtLjY1YzAtLjMzLS4wMy0uNjUtLjA3LS45OGguMDFsLTIuMDQtMTEuNjctLjg0LjEzLDEuMzksOC4wMWMtLjQxLS41NS0uOS0xLjA1LTEuNDYtMS40Ni0uMTgtLjEzLS4zNy0uMjYtLjU2LS4zNy0zLjE5LTIuMi01LjA5LTUuOC01LjA5LTkuNjcsMC02LjQ3LDUuMjYtMTEuNzQsMTEuNzMtMTEuNzRzMTEuNzMsNS4yNywxMS43MywxMS43NGMwLDMuNzktMS44Myw3LjM0LTQuOTEsOS41NC0uMzcuMjEtLjcyLjQ1LTEuMDUuNzItLjQ0LjM2LS44My43Ni0xLjE2LDEuMmwxLjM5LTcuOTUtLjg1LS4xLTEuOTIsMTAuOThjLS4wMy4xMi0uMDQuMjUtLjA2LjM4bC0uMDUuMjZzMCwuMDYtLjAxLjA4bC0uMDIuMjV2MS4zMWgzLjk2di0xLjA4Yy4xMS0uOTIuNTctMS43MiwxLjI1LTIuMjguMTktLjE1LjM5LS4yOS42MS0uNCw0LjEtMi44NCw2Ljc4LTcuNTYsNi43OC0xMi45MSwwLTguNjctNy4wMy0xNS43LTE1LjY5LTE1LjdaIi8+CiAgICAgIDxyZWN0IGNsYXNzPSJjbHMtMSIgeD0iODMuNjYiIHk9IjQ5LjQ1IiB3aWR0aD0iMTQuMDkiIGhlaWdodD0iMy45NyIvPgogICAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iODMuNjYgNDMuNzkgODMuNjYgNDcuNzYgOTcuNzUgNDcuNzYgOTcuNzUgNDMuNzkgODcuNjMgNDMuNzkgODMuNjYgNDMuNzkiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNOTAuNTcsMjUuMzRjLjcsMCwxLjMzLjM2LDEuNjkuOTcuNzgsMS4zMywyLjExLDIuMjQsMy42LDIuNTNsLjg1LjEuNi0zLjQ0Yy0uMTQuMDQtLjI5LjA2LS40NS4wNi0uMTUsMC0uMjktLjAyLS40Mi0uMDUtLjUzLS4xMS0uOTgtLjQ0LTEuMjctLjkzLS45Ni0xLjYyLTIuNzItMi42Mi00LjYtMi42MnMtMy42NCwxLTQuNiwyLjYyYy0uMjQuNDEtLjYuNy0xLjAzLjg1LS4yLjA4LS40My4xMi0uNjYuMTItLjA2LDAtLjEyLDAtLjE4LS4wMWwuNTksMy4zOC44NC0uMTNjMS4zOC0uMzUsMi42LTEuMjMsMy4zNC0yLjQ4LjM2LS42MS45OS0uOTcsMS42OS0uOTdaIi8+CiAgICAgIDxyZWN0IGNsYXNzPSJjbHMtMSIgeT0iMTAuMjgiIHdpZHRoPSI0Ljc2IiBoZWlnaHQ9IjMwLjAzIi8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIzMi41MiAzMS42NCAxNS40OSAxMC4yOCAxMS44IDEwLjI4IDExLjggNDAuMyAxNi42NSA0MC4zIDE2LjY1IDE5LjEyIDMzLjY4IDQwLjMgMzcuMzIgNDAuMyAzNy4zMiAxMC4yOCAzMi41MiAxMC4yOCAzMi41MiAzMS42NCIvPgogICAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iNjUuMTQgMzEuNjQgNDguMTEgMTAuMjggNDQuNDIgMTAuMjggNDQuNDIgNDAuMyA0OS4yNyA0MC4zIDQ5LjI3IDE5LjEyIDY2LjMgNDAuMyA2OS45NCA0MC4zIDY5Ljk0IDEwLjI4IDY1LjE0IDEwLjI4IDY1LjE0IDMxLjY0Ii8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIxMzEuMjcgMTAuMjggMTIxLjY2IDM0LjY5IDExMi4wOSAxMC4yOCAxMDYuNjkgMTAuMjggMTE5LjE3IDQwLjQzIDEyNC4xOSA0MC40MyAxMzYuNjMgMTAuMjggMTMxLjI3IDEwLjI4Ii8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTIyNi4wNywxMi4wNmMtLjExLS4wNy0uMjItLjE0LS4zMy0uMjItLjg1LS42NC0xLjQxLTEuNjctMS40MS0yLjgyVjBoLTMuOTZ2OS4wMmMwLDIuMzUsMS4xMiw0LjYsMyw2LjAxLjE4LjE1LjM2LjI3LjU2LjM5LDMuMTMsMi4xNyw1LjAyLDUuNzIsNS4wOCw5LjUzLS4yOC0uMTctLjUxLS40LS42OS0uNjktLjk2LTEuNjQtMi43Mi0yLjY1LTQuNi0yLjY1cy0zLjY0LDEuMDEtNC42MSwyLjY0Yy0uMzYuNjEtLjk5Ljk4LTEuNjkuOThzLTEuMzMtLjM2LTEuNjktLjk3Yy0uOTYtMS42NC0yLjczLTIuNjUtNC42MS0yLjY1cy0zLjY1LDEuMDEtNC42LDIuNjRjLS4yMy4zOS0uNTcuNjktLjk4Ljg0LjAyLTMuOCwxLjg1LTcuMzQsNC45MS05LjU1LjM3LS4yMS43Mi0uNDUsMS4wNS0uNzIsMS40OC0xLjIzLDIuNDMtMi45OCwyLjY2LTQuOWwuMDMtLjI0VjBoLTMuOTd2OS40NGMtLjExLjkyLS41NywxLjc0LTEuMjUsMi4zLS4yLjE2LS40LjI5LS42Mi40LTQuMSwyLjg1LTYuNzgsNy42LTYuNzgsMTMsMCw4LjczLDcuMDMsMTUuOCwxNS43LDE1LjhzMTUuNy03LjA3LDE1LjctMTUuOGMwLTUuNDUtMi43NC0xMC4yNS02LjkxLTEzLjA5Wk0yMTcuMjksMzYuOTVjLTUuMzEsMC05LjgxLTMuNTgtMTEuMjUtOC40NiwxLjQxLS4zMywyLjY1LTEuMjMsMy40MS0yLjUuMzYtLjYxLjk5LS45OCwxLjY5LS45OHMxLjMzLjM3LDEuNjkuOThjLjk2LDEuNjIsMi43MywyLjY0LDQuNjEsMi42NHMzLjY0LTEuMDIsNC42LTIuNjRjLjM2LS42MS45OS0uOTgsMS42OS0uOThzMS4zMy4zNywxLjY5Ljk4Yy43LDEuMiwxLjg0LDIuMDUsMy4xMywyLjQzLTEuNDEsNC45My01LjkzLDguNTMtMTEuMjYsOC41M1oiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTQ3LjU1LDEwLjI4bC0xMy40NywzMC4wM2g1LjFsMi44My02LjNoMTYuMjVsMi44OCw2LjNoNS4xbC0xMy40Ny0zMC4wM2gtNS4yM1pNMTQzLjgyLDI5LjYzbDYuMzUtMTQuMjksNi4zNSwxNC4yOWgtMTIuNjlaIi8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIxNjMuNDEgMTQuNjEgMTczLjI4IDE0LjYxIDE3My4yOCA0MC4zMSAxNzguMTMgNDAuMzEgMTc4LjEzIDE0LjYxIDE4Ny45NSAxNC42MSAxODcuOTUgMTAuMjggMTYzLjQxIDEwLjI4IDE2My40MSAxNC42MSIvPgogICAgICA8cmVjdCBjbGFzcz0iY2xzLTEiIHg9IjE5MS44NSIgeT0iMTAuMjgiIHdpZHRoPSI0Ljc2IiBoZWlnaHQ9IjMwLjAzIi8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIyNTguNzkgMzEuNjQgMjQxLjc2IDEwLjI4IDIzOC4wNyAxMC4yOCAyMzguMDcgNDAuMyAyNDIuOTIgNDAuMyAyNDIuOTIgMTkuMTIgMjU5Ljk1IDQwLjMgMjYzLjU5IDQwLjMgMjYzLjU5IDEwLjI4IDI1OC43OSAxMC4yOCAyNTguNzkgMzEuNjQiLz4KICAgICAgPHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjI4Ni42MyAxMC4yOCAyODEuODIgMTAuMjggMjgxLjgyIDQwLjMgMzAyLjQ1IDQwLjMgMzAyLjQ1IDM1Ljg1IDI4Ni42MyAzNS44NSAyODYuNjMgMTAuMjgiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzk0LjE1LDMwLjk3Yy0uMzMtNi4yNS02LjAyLTcuOTEtMTIuMDItOC43NC0zLjk1LS41Ni03LjI5LTEuMzctNy4yOS00LjI5czIuOTItNC41NSw2Ljk1LTQuNTVjMy4xMy4wNCw2LjAxLDEuMjksNy40MiwzLjM0bDMuNjUtMi40NGMtMi41My00LjAzLTYuODYtNS4wNi0xMS4yLTUuMDYtNS40LDAtMTEuNjIsMi40LTExLjU4LDguNjIsMCw2LjQzLDUuNjYsNy45NCwxMS42Miw4Ljc1LDQuMi41Niw3LjY4LDEuNjcsNy42OCw0LjkzLDAsMy43OC0zLjk5LDQuOTgtNy41OSw0Ljk4cy03LjIxLTEuMjktOS4zNS00LjkzbC0zLjYsMi40YzIuNzQsNS4wNiw3LjE2LDYuODIsMTIuOTEsNi44Mi41NiwwLDEuMTEtLjAzLDEuNjYtLjA3LDIuMi4wNyw2LjM0LTEuNDksNy40Ni0yLjI5LDQuMS0yLjksMy4xNS03LjM0LDMuMjgtNy40OFoiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzE4LjIsMTAuMjhsLTEzLjQ3LDMwLjAzaDUuMTFsMi44My02LjNoMTYuMjZsMi44Nyw2LjNoNS4xbC0xMy40Ny0zMC4wM2gtNS4yM1pNMzE0LjQ2LDI5LjYzbDYuMzUtMTQuMjksNi4zNSwxNC4yOWgtMTIuNjlaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTM2MC40NywyNC44MmMyLjgzLTEuMTYsNC4xNi0zLjQzLDQuMTYtNS45NiwwLTUuOTYtNC41MS04LjU4LTEwLjIxLTguNThoLTEzLjc3djMwLjAzaDEzLjc3YzUuOTIsMCwxMS4xNS0yLjAyLDExLjE1LTguNTgsMC0yLjI3LTEuNS01LjgzLTUuMS02LjlaTTM0NS40MSwxNC42MWg5LjAxYzMuNiwwLDUuNDUsMi4yMyw1LjQ1LDQuMzMsMCwyLjM2LTEuOCwzLjc4LTUuNCwzLjc4aC05LjA1di04LjExWk0zNTQuNDIsMzUuODVoLTkuMDF2LTguODRoOS4wNWMyLjc0LDAsNi4zMSwxLjQ2LDYuMzEsNC42OHMtMy42OSw0LjE2LTYuMzUsNC4xNloiLz4KICAgIDwvZz4KICAgIDxnPgogICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik00MDUuNzMsMzYuMDJoMTkuMTZ2NC42OGgtMjQuMTR2LTcuNTZjMC01LjcxLDQuNDctOS4wMiwxMi4xNi05LjAyLDQuMTIsMCw2LjkyLTEuODUsNi45Mi00LjYsMC0zLjAxLTIuNDUtNC43Ny02LjYyLTQuNzdzLTcuMDQsMS43Ni03LjEzLDQuNTFoLTUuMTVjLjM0LTUuNjcsNC45LTkuMDIsMTIuMjktOS4wMnMxMS42OCwzLjUyLDExLjY4LDkuMTljMCw2LjAxLTQuMTcsOS4xOS0xMS45NCw5LjE5LTQuNTEsMC03LjIyLDEuNjgtNy4yMiw0LjUxdjIuODhaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTQyOC4wNiwyOC41OXYtNS44OGMwLTcuNTYsNS4yOC0xMi42NywxMy4wNi0xMi42N3MxMy4wNiw1LjExLDEzLjA2LDEyLjY3djUuODhjMCw3LjUyLTUuMjgsMTIuNjMtMTMuMDYsMTIuNjNzLTEzLjA2LTUuMTEtMTMuMDYtMTIuNjNaTTQ0OS4xMSwyOC41OXYtNS44OGMwLTQuNzItMy4xOC03LjktNy45OS03LjlzLTcuOTksMy4xOC03Ljk5LDcuOXY1Ljg4YzAsNC43MiwzLjE4LDcuOSw3Ljk5LDcuOXM3Ljk5LTMuMTgsNy45OS03LjlaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTQ2Mi4yNSwzNi4wMmgxOS4xNnY0LjY4aC0yNC4xNHYtNy41NmMwLTUuNzEsNC40Ny05LjAyLDEyLjE2LTkuMDIsNC4xMiwwLDYuOTItMS44NSw2LjkyLTQuNiwwLTMuMDEtMi40NS00Ljc3LTYuNjItNC43N3MtNy4wNCwxLjc2LTcuMTMsNC41MWgtNS4xNWMuMzQtNS42Nyw0LjktOS4wMiwxMi4yOS05LjAyczExLjY4LDMuNTIsMTEuNjgsOS4xOWMwLDYuMDEtNC4xNyw5LjE5LTExLjk0LDkuMTktNC41MSwwLTcuMjIsMS42OC03LjIyLDQuNTF2Mi44OFoiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNTA1Ljg0LDEwLjY0djIuODhsLTEzLjkyLDI3LjE5aC01Ljc1bDEzLjE5LTI1LjM0aC0xNi40MXYtNC43MmgyMi44OVoiLz4KICAgIDwvZz4KICA8L2c+Cjwvc3ZnPg==" alt="Innovation Labs" width="208" height="22">
+    </a>
+    <span class="chip"><span>Test<span class="long"> artifact</span></span></span>
+    <span class="nav__spacer"></span>
+    <nav aria-label="Challenge sections">
+      <ul class="nav__links">
+        <li><a href="#challenge">Challenge</a></li>
+        <li><a href="#problems">Problems</a></li>
+        <li><a href="#criteria">Criteria</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#checklist">Checklist</a></li>
+      </ul>
+      <details class="menu">
+        <summary aria-label="Menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </summary>
+        <div class="menu__panel">
+          <a href="#challenge">Challenge</a>
+          <a href="#problems">Problems</a>
+          <a href="#criteria">Criteria</a>
+          <a href="#process">Process</a>
+          <a href="#checklist">Checklist</a>
+          <a href="#start">Start</a>
+        </div>
+      </details>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- 1 · HERO -->
+  <section class="hero" id="top" aria-labelledby="h-hero">
+    <div class="wrap hero__grid">
+      <div class="hero__copy">
+        <div class="hero__kickers">
+          <p class="kicker">Innovation Labs · Challenge</p>
+          <span class="chip chip--test">Fictional · test page</span>
+        </div>
+        <h1 class="display-hero" id="h-hero">
+          Build for
+          <span class="beat"><span class="mark">real<svg class="mark__line" viewBox="0 0 120 14" preserveAspectRatio="none" aria-hidden="true"><path d="M3 9 C 22 2, 40 13, 62 7 S 100 3, 117 9" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg></span> problems.</span>
+        </h1>
+        <p class="lead">A short challenge for students who would rather solve something than pitch something.</p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="#checklist">
+            See what to submit
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+          </a>
+          <a class="btn btn--secondary" href="#process">How it works</a>
+        </div>
+      </div>
+      <div class="hero__art">
+        <img class="hero__mark" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTGF5ZXJfMiIgZGF0YS1uYW1lPSJMYXllciAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2aWV3Qm94PSIwIDAgMzI4LjAzIDE3My45MSI+CiAgPGRlZnM+CiAgICA8c3R5bGU+CiAgICAgIC5jbHMtMSB7CiAgICAgICAgZmlsbDogdXJsKCNsaW5lYXItZ3JhZGllbnQpOwogICAgICB9CiAgICA8L3N0eWxlPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJsaW5lYXItZ3JhZGllbnQiIHgxPSItMjQuNjUiIHkxPSIyMi41NCIgeDI9IjM3NC4yMiIgeTI9IjE3OS40NSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMwMDk1YWMiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIuNDIiIHN0b3AtY29sb3I9IiMwMTczN2QiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIuOCIgc3RvcC1jb2xvcj0iIzAyNTk1OCIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMwMzUwNGIiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxnIGlkPSJMYXllcl8xLTIiIGRhdGEtbmFtZT0iTGF5ZXIgMSI+CiAgICA8cGF0aCBpZD0iTWFrZWl0cmVhbF9ncmFkaWVudF8yIiBkYXRhLW5hbWU9Ik1ha2VpdHJlYWwgZ3JhZGllbnQgMiIgY2xhc3M9ImNscy0xIiBkPSJNMjkuMTksNjIuNTZ2LTIzLjQ5YzAtNS43OS0zLjAzLTExLjAzLTguOTktMTEuMDNzLTkuMzQsNS4yNC05LjM0LDExLjAzdjIzLjQ5SDBWMTguNjFoMTAuMDVsLjgsNS4zNGMyLjMxLTQuNDUsNy4zOC02LjA1LDExLjU2LTYuMDUsNS4yNSwwLDEwLjUsMi4xNCwxMi45OSw4LjE5LDMuOTItNi4yMyw4Ljk5LTguMDEsMTQuNjgtOC4wMSwxMi40NSwwLDE4LjU5LDcuNjYsMTguNTksMjAuODJ2MjMuNjdoLTEwLjg1di0yMy42N2MwLTUuNzgtMi40MS0xMC42OC04LjI3LTEwLjY4cy05LjUyLDUuMDctOS41MiwxMC44NnYyMy40OWgtMTAuODVaTTExNC41NCwxOC43aDEwLjQxdjQzLjg2aC0xMC4yM2wtLjU0LTYuNGMtMi40OSw1LjE2LTkuMzQsNy42NS0xNC4yMyw3Ljc0LTEyLjk5LjA5LTIyLjU5LTcuOTItMjIuNTktMjMuM3MxMC4wNS0yMy4wNCwyMi44Ni0yMi45NmM1Ljg3LDAsMTEuNDcsMi43NiwxMy45Nyw3LjExbC4zNS02LjA1Wk04OC4yMSw0MC41OWMwLDguMzYsNS43OCwxMy4zNCwxMi45OSwxMy4zNCwxNy4wOCwwLDE3LjA4LTI2LjYsMC0yNi42LTcuMjEsMC0xMi45OSw0Ljg5LTEyLjk5LDEzLjI2Wk0xNDQuNzQuMzd2MzUuOTVsMTQuNzYtMTcuNjJoMTIuOTl2LjYybC0xNy44OCwyMC4wMiwyMC4zNywyMi40MXYuOGgtMTMuMDhsLTE3LjE3LTE5Ljg0djE5Ljg0aC0xMC44NlYuMzdoMTAuODZaTTE4OS4yNCw0NC41Yy43Miw1LjQzLDUuNDMsOS4zNCwxMy4wOCw5LjM0LDQsMCw5LjI1LTEuNTEsMTEuNzQtNC4wOWw2Ljk0LDYuODVjLTQuNjMsNC44LTEyLjE5LDcuMTItMTguODYsNy4xMi0xNS4xMywwLTI0LjExLTkuMzQtMjQuMTEtMjMuNHM5LjA4LTIyLjk2LDIzLjMxLTIyLjk2LDIzLjg0LDkuMDgsMjIuMTUsMjcuMTRoLTM0LjI2Wk0yMTMuMDgsMzUuNTFjLS43MS01LjY5LTUuMTYtOC41My0xMS4zOS04LjUzLTUuODcsMC0xMC42OCwyLjg0LTEyLjI4LDguNTNoMjMuNjdaTTI2MS43LDYuMzNjMCw4LjQ1LTEyLjgxLDguNDUtMTIuODEsMHMxMi44MS04LjQ1LDEyLjgxLDBaTTI0OS44NiwxOC41M3Y0NC4wNGgxMC44NlYxOC41M2gtMTAuODZaTTI4NS44Miw2LjMzdjEyLjQ2aDEyLjF2OS4zNGgtMTIuMTl2MTguOTVjMCw0LjE4LDIuMzIsNi4yMyw1LjY5LDYuMjMsMS43LDAsMy42NS0uNTQsNS4yNS0xLjMzbDMuMDIsOS4yNWMtMy4xMSwxLjI1LTUuNjksMS43Ny04Ljk4LDEuODctOS41Mi4zNS0xNS43NS01LjA3LTE1Ljc1LTE2LjAydi0xOC45NWgtOC4xOXYtOS4zNGg4LjE5VjcuNDlsMTAuODYtMS4xNlpNMjIuNDcsNzkuMDhsMS42OSwxMC42NGM3LjA4LTExLjM4LDE2LjYxLTEzLjA2LDI1Ljk1LTEzLjA2czE4LjY2LDMuNzIsMjMuNyw4Ljc3bC0xMC4yNiwxOS43OWMtNC42Ny0zLjkyLTguOTctNS45Ny0xNi40My01Ljk3LTExLjk1LDAtMjIuOTUsNi4zNC0yMi45NSwyMy4zM3Y0OC41M0gxLjM4di05Mi4wM2gyMS4xWk0xMDEuODYsMTMzLjIyYzEuNDksMTEuMzgsMTEuMzgsMTkuNTksMjcuNDMsMTkuNTksOC40MSwwLDE5LjQxLTMuMTYsMjQuNjQtOC41N2wxNC41NiwxNC4zNmMtOS43MSwxMC4wOC0yNS41OCwxNC45NC0zOS41OCwxNC45NC0zMS43NCwwLTUwLjU4LTE5LjYxLTUwLjU4LTQ5LjA5czE5LjA0LTQ4LjE3LDQ4LjkxLTQ4LjE3LDUwLjAyLDE5LjA0LDQ2LjQ4LDU2Ljk0aC03MS44NlpNMTUxLjg4LDExNC4zNmMtMS40OS0xMS45NS0xMC44Mi0xNy45LTIzLjg5LTE3LjktMTIuMzMsMC0yMi40LDUuOTYtMjUuNzYsMTcuOWg0OS42NlpNMjY0LjMxLDc5LjA4aDIxLjg0djkyLjAzaC0yMS40NmwtMS4xMi0xMy40NGMtNS4yMywxMC44Mi0xOS41OSwxNi4wNS0yOS44NywxNi4yMy0yNy4yNS4xOC00Ny40MS0xNi42MS00Ny40MS00OC45czIxLjA4LTQ4LjM1LDQ3Ljk3LTQ4LjE3YzEyLjMzLDAsMjQuMDgsNS43OSwyOS4zLDE0LjkzbC43NC0xMi42OVpNMjA5LjA2LDEyNS4wMWMwLDE3LjU0LDEyLjEzLDI4LDI3LjI1LDI4LDM1Ljg0LDAsMzUuODQtNTUuODEsMC01NS44MS0xNS4xMiwwLTI3LjI1LDEwLjI2LTI3LjI1LDI3LjgxWk0zMjguMDMsNDAuNjN2MTMwLjQ5aC0yMi41OVY0MC42M2gyMi41OVoiLz4KICA8L2c+Cjwvc3ZnPg==" alt="" width="328" height="174">
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · THE CHALLENGE + WHO IT'S FOR -->
+  <section class="sec" id="challenge" aria-labelledby="h-challenge">
+    <div class="wrap split">
+      <div class="statement">
+        <p class="kicker">The challenge</p>
+        <h2 class="display-page" id="h-challenge">Find a real problem. Understand it. <span class="beat">Show how you’d start.</span></h2>
+        <p class="lead">We’re not asking for a startup, a prototype or a pitch. We’re asking for a clear problem, proof that you looked at it with your own eyes, and a first step you could take next week.</p>
+      </div>
+      <aside class="who" aria-labelledby="h-who">
+        <h3 class="kicker" id="h-who">Who it’s for</h3>
+        <ul class="ticks">
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M8 12.4l2.7 2.7 5.5-5.7" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Students from any programme, year or discipline.</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M8 12.4l2.7 2.7 5.5-5.7" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Solo, or in a small team.</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M8 12.4l2.7 2.7 5.5-5.7" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>No startup idea or prototype needed. One honest conversation is a good start.</span>
+          </li>
+        </ul>
+        <p class="note">Eligibility is illustrative for this test page.</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 3 · THREE EXAMPLE PROBLEM SPACES -->
+  <section class="sec sec--alt" id="problems" aria-labelledby="h-problems">
+    <div class="wrap">
+      <div class="sec__head">
+        <p class="kicker">Example problems</p>
+        <h2 class="headline" id="h-problems">Strong problems start with <span class="beat">a person and a place.</span></h2>
+        <p class="lead">Three problem spaces to show the level of detail we mean. They are illustrations, not briefs from real organisations, and you don’t have to pick one.</p>
+      </div>
+      <ol class="spaces">
+        <li class="space">
+          <span class="space__letter" aria-hidden="true">A</span>
+          <div class="space__body">
+            <p class="meta">Who has it · Students and staff who can’t use stairs</p>
+            <h3 class="title">A step-free route through campus</h3>
+            <p>Route information is patchy or out of date, so people plan detours or skip the trip.</p>
+          </div>
+          <div class="space__start">
+            <p class="label">Start by</p>
+            <p>Walking one route with someone who uses it every day. Note where it breaks.</p>
+          </div>
+        </li>
+        <li class="space">
+          <span class="space__letter" aria-hidden="true">B</span>
+          <div class="space__body">
+            <p class="meta">Who has it · Small canteens, cafés and people nearby</p>
+            <h3 class="title">Surplus food at closing time</h3>
+            <p>Good portions get binned at the end of the day, with no easy way to reach people who could use them.</p>
+          </div>
+          <div class="space__start">
+            <p class="label">Start by</p>
+            <p>Spending one closing shift in a kitchen. Count what leaves, and where it goes.</p>
+          </div>
+        </li>
+        <li class="space">
+          <span class="space__letter" aria-hidden="true">C</span>
+          <div class="space__body">
+            <p class="meta">Who has it · Small volunteer groups and their coordinators</p>
+            <h3 class="title">Shifts that slip through the cracks</h3>
+            <p>Scheduling lives in chat threads and spreadsheets, so shifts get missed and the same few people cover.</p>
+          </div>
+          <div class="space__start">
+            <p class="label">Start by</p>
+            <p>Asking a coordinator to show last month’s schedule. Find out who covered the gaps.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 4 · WHAT WE ARE LOOKING FOR -->
+  <section class="sec sec--deep on-brand" id="criteria" aria-labelledby="h-criteria">
+    <div class="wrap">
+      <div class="look">
+        <div class="look__head">
+          <p class="kicker">The criteria</p>
+          <h2 class="headline" id="h-criteria">We’re looking for <span class="beat">a clear problem,</span> not a clever idea.</h2>
+          <p class="lead">Four questions we’d ask of every brief. If you can answer yes to most of them, you’re in good shape.</p>
+        </div>
+        <ol class="criteria">
+          <li>
+            <span class="criteria__n" aria-hidden="true">01</span>
+            <h3 class="title">A real person</h3>
+            <p>Can you name who has the problem, and talk to them this week?</p>
+          </li>
+          <li>
+            <span class="criteria__n" aria-hidden="true">02</span>
+            <h3 class="title">Something you can observe</h3>
+            <p>Can you watch it happen, rather than imagine it?</p>
+          </li>
+          <li>
+            <span class="criteria__n" aria-hidden="true">03</span>
+            <h3 class="title">A real cost</h3>
+            <p>Does it cost someone time, money, trust or safety?</p>
+          </li>
+          <li>
+            <span class="criteria__n" aria-hidden="true">04</span>
+            <h3 class="title">A small first step</h3>
+            <p>Could you start with what you have, within a week?</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="rewrite">
+        <p class="kicker">One quick rewrite</p>
+        <div class="rewrite__cards">
+          <div class="rcard rcard--was">
+            <p class="label">Instead of</p>
+            <p class="rcard__q">“An app that helps volunteers manage shifts.”</p>
+            <p class="note">Starts with a solution.</p>
+          </div>
+          <div class="rcard rcard--try">
+            <p class="label">Try</p>
+            <p class="rcard__q">“Small volunteer groups lose shifts because scheduling is split across chat threads and a spreadsheet.”</p>
+            <p class="note">Starts with a person, a place and what goes wrong.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · PROCESS -->
+  <section class="sec" id="process" aria-labelledby="h-process">
+    <div class="wrap">
+      <div class="sec__head">
+        <p class="kicker">How it works</p>
+        <h2 class="headline" id="h-process">Four steps. <span class="beat">Start with a conversation.</span></h2>
+      </div>
+      <ol class="steps">
+        <li class="step step--now">
+          <span class="tag">You start here</span>
+          <span class="step__n" aria-hidden="true">1</span>
+          <h3 class="title">Pick a problem</h3>
+          <p>Choose one you’ve seen first-hand or can get close to. Write it in a single sentence.</p>
+          <p class="meta">Sample · week 1</p>
+        </li>
+        <li class="step">
+          <span class="step__n" aria-hidden="true">2</span>
+          <h3 class="title">Talk to someone who has it</h3>
+          <p>Listen more than you explain. Notice what they do today, not what they say they’d use.</p>
+          <p class="meta">Sample · weeks 1–2</p>
+        </li>
+        <li class="step">
+          <span class="step__n" aria-hidden="true">3</span>
+          <h3 class="title">Write the brief</h3>
+          <p>One page: the problem, who has it, what you saw and your first step.</p>
+          <p class="meta">Sample · week 3</p>
+        </li>
+        <li class="step">
+          <span class="step__n" aria-hidden="true">4</span>
+          <h3 class="title">Submit and hear back</h3>
+          <p>Send it in. A person reads it properly and replies with feedback.</p>
+          <p class="meta">Sample · week 4</p>
+        </li>
+      </ol>
+      <p class="note">Timings are placeholders for this test page.</p>
+    </div>
+  </section>
+
+  <!-- 6 · SUBMISSION CHECKLIST -->
+  <section class="sec sec--tint" id="checklist" aria-labelledby="h-checklist">
+    <div class="wrap split">
+      <div class="check-side">
+        <p class="kicker">Before you submit</p>
+        <h2 class="headline" id="h-checklist">One page. <span class="beat">Six things.</span></h2>
+        <p class="lead">Tick them off as you go. Plain text is fine. Nothing here is saved or sent anywhere.</p>
+        <div class="progress">
+          <p id="check-status" aria-live="polite">Tick each item as it’s ready.</p>
+          <div class="meter" aria-hidden="true"><span id="check-bar"></span></div>
+        </div>
+        <div class="optional">
+          <span class="label">Not required</span>
+          <span class="chip chip--plain">Prototype</span>
+          <span class="chip chip--plain">Pitch deck</span>
+          <span class="chip chip--plain">Logo</span>
+          <span class="chip chip--plain">Business plan</span>
+        </div>
+        <p class="note">Format and rules are placeholders for this test page.</p>
+      </div>
+      <div class="checks" role="group" aria-label="Submission checklist">
+        <label class="check">
+          <input type="checkbox">
+          <span class="check__text"><strong>The problem, in one sentence</strong><span>Who has it, what goes wrong, and what it costs them.</span></span>
+        </label>
+        <label class="check">
+          <input type="checkbox">
+          <span class="check__text"><strong>Who you spoke to</strong><span>At least one real conversation. Names are optional, notes are welcome.</span></span>
+        </label>
+        <label class="check">
+          <input type="checkbox">
+          <span class="check__text"><strong>What you saw</strong><span>Something you observed first-hand, in your own words.</span></span>
+        </label>
+        <label class="check">
+          <input type="checkbox">
+          <span class="check__text"><strong>How people cope today</strong><span>The workarounds, tools or habits already in use.</span></span>
+        </label>
+        <label class="check">
+          <input type="checkbox">
+          <span class="check__text"><strong>Your first small step</strong><span>What you could do in the next two weeks, with what you have.</span></span>
+        </label>
+        <label class="check">
+          <input type="checkbox">
+          <span class="check__text"><strong>Who’s involved</strong><span>You, your team if you have one, and how to reach you.</span></span>
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · CLOSING CTA + WHAT HAPPENS NEXT -->
+  <section class="sec sec--close on-brand" id="start" aria-labelledby="h-start">
+    <div class="wrap close">
+      <div class="close__copy">
+        <p class="kicker">Start here</p>
+        <h2 class="headline" id="h-start">Start with <span class="beat">one sentence.</span></h2>
+        <p class="lead">Fill in the three blanks. If the sentence feels specific, you’re onto something. If it feels vague, talk to someone and try again.</p>
+        <div class="next">
+          <div class="next__head">
+            <h3 class="kicker">What happens next</h3>
+            <span class="chip chip--sample">Sample</span>
+          </div>
+          <ol>
+            <li><span aria-hidden="true">1</span><span>A person reads your brief. A form doesn’t score it.</span></li>
+            <li><span aria-hidden="true">2</span><span>You get short written feedback.</span></li>
+            <li><span aria-hidden="true">3</span><span>The strongest problems may be invited to a working session.</span></li>
+          </ol>
+          <p class="note">All of this is illustrative. Nothing on this page is a real process.</p>
+        </div>
+      </div>
+
+      <form class="starter" id="starter" aria-labelledby="h-starter" novalidate>
+        <div class="starter__head">
+          <h3 class="kicker" id="h-starter" style="color:var(--teal-ink)">Your problem, in one sentence</h3>
+          <span class="hand" aria-hidden="true">counts as step one</span>
+        </div>
+        <div class="field">
+          <label for="f-who">Who has the problem?</label>
+          <input id="f-who" type="text" maxlength="90" autocomplete="off" placeholder="e.g. small volunteer groups" enterkeyhint="next">
+        </div>
+        <div class="field">
+          <label for="f-what">What goes wrong?</label>
+          <input id="f-what" type="text" maxlength="110" autocomplete="off" placeholder="e.g. lose shifts because scheduling is scattered" enterkeyhint="next">
+        </div>
+        <div class="field">
+          <label for="f-cost">What does it cost them?</label>
+          <input id="f-cost" type="text" maxlength="90" autocomplete="off" placeholder="e.g. time, goodwill and volunteers" enterkeyhint="done">
+        </div>
+        <p class="preview is-empty" id="preview" aria-live="polite">Your sentence will appear here.</p>
+        <div class="starter__actions">
+          <button class="btn btn--primary" type="button" id="copy">Copy my sentence</button>
+          <button class="btn btn--quiet" type="button" id="clear">Clear</button>
+        </div>
+        <p class="note" id="starter-status" aria-live="polite">Nothing you type here is saved or sent.</p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot on-brand">
+  <div class="wrap foot__grid">
+    <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTGF5ZXJfMiIgZGF0YS1uYW1lPSJMYXllciAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MDUuODQgNTMuNDIiPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuY2xzLTEgewogICAgICAgIGZpbGw6ICNmZmY7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDxnIGlkPSJMYXllcl8xLTIiIGRhdGEtbmFtZT0iTGF5ZXIgMSI+CiAgICA8ZyBpZD0ibG9nb19JTF8yMDI0X2Z1bGxfLV9wcmltYXJ5IiBkYXRhLW5hbWU9ImxvZ28gSUwgMjAyNCBmdWxsIC0gcHJpbWFyeSI+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTkwLjcxLDkuNzJjLTguNjcsMC0xNS43LDcuMDMtMTUuNywxNS43LDAsNS40MSwyLjc0LDEwLjE4LDYuOTEsMTMsLjExLjA3LjIyLjE0LjMzLjIyLjg1LjY0LDEuNDEsMS42NSwxLjQxLDIuOHYuNjVoMy45N3YtLjY1YzAtLjMzLS4wMy0uNjUtLjA3LS45OGguMDFsLTIuMDQtMTEuNjctLjg0LjEzLDEuMzksOC4wMWMtLjQxLS41NS0uOS0xLjA1LTEuNDYtMS40Ni0uMTgtLjEzLS4zNy0uMjYtLjU2LS4zNy0zLjE5LTIuMi01LjA5LTUuOC01LjA5LTkuNjcsMC02LjQ3LDUuMjYtMTEuNzQsMTEuNzMtMTEuNzRzMTEuNzMsNS4yNywxMS43MywxMS43NGMwLDMuNzktMS44Myw3LjM0LTQuOTEsOS41NC0uMzcuMjEtLjcyLjQ1LTEuMDUuNzItLjQ0LjM2LS44My43Ni0xLjE2LDEuMmwxLjM5LTcuOTUtLjg1LS4xLTEuOTIsMTAuOThjLS4wMy4xMi0uMDQuMjUtLjA2LjM4bC0uMDUuMjZzMCwuMDYtLjAxLjA4bC0uMDIuMjV2MS4zMWgzLjk2di0xLjA4Yy4xMS0uOTIuNTctMS43MiwxLjI1LTIuMjguMTktLjE1LjM5LS4yOS42MS0uNCw0LjEtMi44NCw2Ljc4LTcuNTYsNi43OC0xMi45MSwwLTguNjctNy4wMy0xNS43LTE1LjY5LTE1LjdaIi8+CiAgICAgIDxyZWN0IGNsYXNzPSJjbHMtMSIgeD0iODMuNjYiIHk9IjQ5LjQ1IiB3aWR0aD0iMTQuMDkiIGhlaWdodD0iMy45NyIvPgogICAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iODMuNjYgNDMuNzkgODMuNjYgNDcuNzYgOTcuNzUgNDcuNzYgOTcuNzUgNDMuNzkgODcuNjMgNDMuNzkgODMuNjYgNDMuNzkiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNOTAuNTcsMjUuMzRjLjcsMCwxLjMzLjM2LDEuNjkuOTcuNzgsMS4zMywyLjExLDIuMjQsMy42LDIuNTNsLjg1LjEuNi0zLjQ0Yy0uMTQuMDQtLjI5LjA2LS40NS4wNi0uMTUsMC0uMjktLjAyLS40Mi0uMDUtLjUzLS4xMS0uOTgtLjQ0LTEuMjctLjkzLS45Ni0xLjYyLTIuNzItMi42Mi00LjYtMi42MnMtMy42NCwxLTQuNiwyLjYyYy0uMjQuNDEtLjYuNy0xLjAzLjg1LS4yLjA4LS40My4xMi0uNjYuMTItLjA2LDAtLjEyLDAtLjE4LS4wMWwuNTksMy4zOC44NC0uMTNjMS4zOC0uMzUsMi42LTEuMjMsMy4zNC0yLjQ4LjM2LS42MS45OS0uOTcsMS42OS0uOTdaIi8+CiAgICAgIDxyZWN0IGNsYXNzPSJjbHMtMSIgeT0iMTAuMjgiIHdpZHRoPSI0Ljc2IiBoZWlnaHQ9IjMwLjAzIi8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIzMi41MiAzMS42NCAxNS40OSAxMC4yOCAxMS44IDEwLjI4IDExLjggNDAuMyAxNi42NSA0MC4zIDE2LjY1IDE5LjEyIDMzLjY4IDQwLjMgMzcuMzIgNDAuMyAzNy4zMiAxMC4yOCAzMi41MiAxMC4yOCAzMi41MiAzMS42NCIvPgogICAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iNjUuMTQgMzEuNjQgNDguMTEgMTAuMjggNDQuNDIgMTAuMjggNDQuNDIgNDAuMyA0OS4yNyA0MC4zIDQ5LjI3IDE5LjEyIDY2LjMgNDAuMyA2OS45NCA0MC4zIDY5Ljk0IDEwLjI4IDY1LjE0IDEwLjI4IDY1LjE0IDMxLjY0Ii8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIxMzEuMjcgMTAuMjggMTIxLjY2IDM0LjY5IDExMi4wOSAxMC4yOCAxMDYuNjkgMTAuMjggMTE5LjE3IDQwLjQzIDEyNC4xOSA0MC40MyAxMzYuNjMgMTAuMjggMTMxLjI3IDEwLjI4Ii8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTIyNi4wNywxMi4wNmMtLjExLS4wNy0uMjItLjE0LS4zMy0uMjItLjg1LS42NC0xLjQxLTEuNjctMS40MS0yLjgyVjBoLTMuOTZ2OS4wMmMwLDIuMzUsMS4xMiw0LjYsMyw2LjAxLjE4LjE1LjM2LjI3LjU2LjM5LDMuMTMsMi4xNyw1LjAyLDUuNzIsNS4wOCw5LjUzLS4yOC0uMTctLjUxLS40LS42OS0uNjktLjk2LTEuNjQtMi43Mi0yLjY1LTQuNi0yLjY1cy0zLjY0LDEuMDEtNC42MSwyLjY0Yy0uMzYuNjEtLjk5Ljk4LTEuNjkuOThzLTEuMzMtLjM2LTEuNjktLjk3Yy0uOTYtMS42NC0yLjczLTIuNjUtNC42MS0yLjY1cy0zLjY1LDEuMDEtNC42LDIuNjRjLS4yMy4zOS0uNTcuNjktLjk4Ljg0LjAyLTMuOCwxLjg1LTcuMzQsNC45MS05LjU1LjM3LS4yMS43Mi0uNDUsMS4wNS0uNzIsMS40OC0xLjIzLDIuNDMtMi45OCwyLjY2LTQuOWwuMDMtLjI0VjBoLTMuOTd2OS40NGMtLjExLjkyLS41NywxLjc0LTEuMjUsMi4zLS4yLjE2LS40LjI5LS42Mi40LTQuMSwyLjg1LTYuNzgsNy42LTYuNzgsMTMsMCw4LjczLDcuMDMsMTUuOCwxNS43LDE1LjhzMTUuNy03LjA3LDE1LjctMTUuOGMwLTUuNDUtMi43NC0xMC4yNS02LjkxLTEzLjA5Wk0yMTcuMjksMzYuOTVjLTUuMzEsMC05LjgxLTMuNTgtMTEuMjUtOC40NiwxLjQxLS4zMywyLjY1LTEuMjMsMy40MS0yLjUuMzYtLjYxLjk5LS45OCwxLjY5LS45OHMxLjMzLjM3LDEuNjkuOThjLjk2LDEuNjIsMi43MywyLjY0LDQuNjEsMi42NHMzLjY0LTEuMDIsNC42LTIuNjRjLjM2LS42MS45OS0uOTgsMS42OS0uOThzMS4zMy4zNywxLjY5Ljk4Yy43LDEuMiwxLjg0LDIuMDUsMy4xMywyLjQzLTEuNDEsNC45My01LjkzLDguNTMtMTEuMjYsOC41M1oiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTQ3LjU1LDEwLjI4bC0xMy40NywzMC4wM2g1LjFsMi44My02LjNoMTYuMjVsMi44OCw2LjNoNS4xbC0xMy40Ny0zMC4wM2gtNS4yM1pNMTQzLjgyLDI5LjYzbDYuMzUtMTQuMjksNi4zNSwxNC4yOWgtMTIuNjlaIi8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIxNjMuNDEgMTQuNjEgMTczLjI4IDE0LjYxIDE3My4yOCA0MC4zMSAxNzguMTMgNDAuMzEgMTc4LjEzIDE0LjYxIDE4Ny45NSAxNC42MSAxODcuOTUgMTAuMjggMTYzLjQxIDEwLjI4IDE2My40MSAxNC42MSIvPgogICAgICA8cmVjdCBjbGFzcz0iY2xzLTEiIHg9IjE5MS44NSIgeT0iMTAuMjgiIHdpZHRoPSI0Ljc2IiBoZWlnaHQ9IjMwLjAzIi8+CiAgICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSIyNTguNzkgMzEuNjQgMjQxLjc2IDEwLjI4IDIzOC4wNyAxMC4yOCAyMzguMDcgNDAuMyAyNDIuOTIgNDAuMyAyNDIuOTIgMTkuMTIgMjU5Ljk1IDQwLjMgMjYzLjU5IDQwLjMgMjYzLjU5IDEwLjI4IDI1OC43OSAxMC4yOCAyNTguNzkgMzEuNjQiLz4KICAgICAgPHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjI4Ni42MyAxMC4yOCAyODEuODIgMTAuMjggMjgxLjgyIDQwLjMgMzAyLjQ1IDQwLjMgMzAyLjQ1IDM1Ljg1IDI4Ni42MyAzNS44NSAyODYuNjMgMTAuMjgiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzk0LjE1LDMwLjk3Yy0uMzMtNi4yNS02LjAyLTcuOTEtMTIuMDItOC43NC0zLjk1LS41Ni03LjI5LTEuMzctNy4yOS00LjI5czIuOTItNC41NSw2Ljk1LTQuNTVjMy4xMy4wNCw2LjAxLDEuMjksNy40MiwzLjM0bDMuNjUtMi40NGMtMi41My00LjAzLTYuODYtNS4wNi0xMS4yLTUuMDYtNS40LDAtMTEuNjIsMi40LTExLjU4LDguNjIsMCw2LjQzLDUuNjYsNy45NCwxMS42Miw4Ljc1LDQuMi41Niw3LjY4LDEuNjcsNy42OCw0LjkzLDAsMy43OC0zLjk5LDQuOTgtNy41OSw0Ljk4cy03LjIxLTEuMjktOS4zNS00LjkzbC0zLjYsMi40YzIuNzQsNS4wNiw3LjE2LDYuODIsMTIuOTEsNi44Mi41NiwwLDEuMTEtLjAzLDEuNjYtLjA3LDIuMi4wNyw2LjM0LTEuNDksNy40Ni0yLjI5LDQuMS0yLjksMy4xNS03LjM0LDMuMjgtNy40OFoiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzE4LjIsMTAuMjhsLTEzLjQ3LDMwLjAzaDUuMTFsMi44My02LjNoMTYuMjZsMi44Nyw2LjNoNS4xbC0xMy40Ny0zMC4wM2gtNS4yM1pNMzE0LjQ2LDI5LjYzbDYuMzUtMTQuMjksNi4zNSwxNC4yOWgtMTIuNjlaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTM2MC40NywyNC44MmMyLjgzLTEuMTYsNC4xNi0zLjQzLDQuMTYtNS45NiwwLTUuOTYtNC41MS04LjU4LTEwLjIxLTguNThoLTEzLjc3djMwLjAzaDEzLjc3YzUuOTIsMCwxMS4xNS0yLjAyLDExLjE1LTguNTgsMC0yLjI3LTEuNS01LjgzLTUuMS02LjlaTTM0NS40MSwxNC42MWg5LjAxYzMuNiwwLDUuNDUsMi4yMyw1LjQ1LDQuMzMsMCwyLjM2LTEuOCwzLjc4LTUuNCwzLjc4aC05LjA1di04LjExWk0zNTQuNDIsMzUuODVoLTkuMDF2LTguODRoOS4wNWMyLjc0LDAsNi4zMSwxLjQ2LDYuMzEsNC42OHMtMy42OSw0LjE2LTYuMzUsNC4xNloiLz4KICAgIDwvZz4KICAgIDxnPgogICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik00MDUuNzMsMzYuMDJoMTkuMTZ2NC42OGgtMjQuMTR2LTcuNTZjMC01LjcxLDQuNDctOS4wMiwxMi4xNi05LjAyLDQuMTIsMCw2LjkyLTEuODUsNi45Mi00LjYsMC0zLjAxLTIuNDUtNC43Ny02LjYyLTQuNzdzLTcuMDQsMS43Ni03LjEzLDQuNTFoLTUuMTVjLjM0LTUuNjcsNC45LTkuMDIsMTIuMjktOS4wMnMxMS42OCwzLjUyLDExLjY4LDkuMTljMCw2LjAxLTQuMTcsOS4xOS0xMS45NCw5LjE5LTQuNTEsMC03LjIyLDEuNjgtNy4yMiw0LjUxdjIuODhaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTQyOC4wNiwyOC41OXYtNS44OGMwLTcuNTYsNS4yOC0xMi42NywxMy4wNi0xMi42N3MxMy4wNiw1LjExLDEzLjA2LDEyLjY3djUuODhjMCw3LjUyLTUuMjgsMTIuNjMtMTMuMDYsMTIuNjNzLTEzLjA2LTUuMTEtMTMuMDYtMTIuNjNaTTQ0OS4xMSwyOC41OXYtNS44OGMwLTQuNzItMy4xOC03LjktNy45OS03LjlzLTcuOTksMy4xOC03Ljk5LDcuOXY1Ljg4YzAsNC43MiwzLjE4LDcuOSw3Ljk5LDcuOXM3Ljk5LTMuMTgsNy45OS03LjlaIi8+CiAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTQ2Mi4yNSwzNi4wMmgxOS4xNnY0LjY4aC0yNC4xNHYtNy41NmMwLTUuNzEsNC40Ny05LjAyLDEyLjE2LTkuMDIsNC4xMiwwLDYuOTItMS44NSw2LjkyLTQuNiwwLTMuMDEtMi40NS00Ljc3LTYuNjItNC43N3MtNy4wNCwxLjc2LTcuMTMsNC41MWgtNS4xNWMuMzQtNS42Nyw0LjktOS4wMiwxMi4yOS05LjAyczExLjY4LDMuNTIsMTEuNjgsOS4xOWMwLDYuMDEtNC4xNyw5LjE5LTExLjk0LDkuMTktNC41MSwwLTcuMjIsMS42OC03LjIyLDQuNTF2Mi44OFoiLz4KICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNTA1Ljg0LDEwLjY0djIuODhsLTEzLjkyLDI3LjE5aC01Ljc1bDEzLjE5LTI1LjM0aC0xNi40MXYtNC43MmgyMi44OVoiLz4KICAgIDwvZz4KICA8L2c+Cjwvc3ZnPg==" alt="Innovation Labs" width="227" height="24">
+    <p><strong>Test artifact.</strong> “Build for real problems” is an illustrative challenge made to try the Innovation Labs design system. It is not a real or announced programme. Examples, rules and timings are placeholders, and nothing here can be applied for.</p>
+    <a href="#top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var doc = document;
+
+  /* mobile menu: close on link, outside click, Escape */
+  var menu = doc.querySelector('.menu');
+  if (menu) {
+    menu.addEventListener('click', function (e) {
+      if (e.target.closest && e.target.closest('a')) { menu.open = false; }
+    });
+    doc.addEventListener('click', function (e) {
+      if (menu.open && !menu.contains(e.target)) { menu.open = false; }
+    });
+    doc.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && menu.open) { menu.open = false; menu.querySelector('summary').focus(); }
+    });
+  }
+
+  /* current section in the desktop nav */
+  var ids = ['challenge', 'problems', 'criteria', 'process', 'checklist'];
+  var links = {};
+  [].forEach.call(doc.querySelectorAll('.nav__links a'), function (a) { links[a.getAttribute('href').slice(1)] = a; });
+  function setCurrent(id) {
+    Object.keys(links).forEach(function (k) {
+      if (k === id) { links[k].setAttribute('aria-current', 'true'); } else { links[k].removeAttribute('aria-current'); }
+    });
+  }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { setCurrent(en.target.id); } });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    ids.forEach(function (id) { var el = doc.getElementById(id); if (el) { io.observe(el); } });
+    ['top', 'start'].forEach(function (id) {
+      var el = doc.getElementById(id);
+      if (el) { new IntersectionObserver(function (es) { es.forEach(function (en) { if (en.isIntersecting) { setCurrent(''); } }); }, { rootMargin: '-40% 0px -55% 0px' }).observe(el); }
+    });
+  }
+
+  /* checklist progress */
+  var boxes = [].slice.call(doc.querySelectorAll('.check input'));
+  var status = doc.getElementById('check-status');
+  var bar = doc.getElementById('check-bar');
+  function updateChecks() {
+    var n = boxes.filter(function (b) { return b.checked; }).length;
+    bar.style.width = (n / boxes.length * 100) + '%';
+    if (n === 0) { status.textContent = 'Tick each item as it’s ready.'; }
+    else if (n === boxes.length) { status.textContent = 'All six are ready. In a real challenge, this is when you’d submit.'; }
+    else { status.textContent = n + ' of ' + boxes.length + ' ready'; }
+  }
+  boxes.forEach(function (b) { b.addEventListener('change', updateChecks); });
+
+  /* one-sentence starter */
+  var fWho = doc.getElementById('f-who'), fWhat = doc.getElementById('f-what'), fCost = doc.getElementById('f-cost');
+  var preview = doc.getElementById('preview'), note = doc.getElementById('starter-status');
+  var form = doc.getElementById('starter');
+  var idle = 'Nothing you type here is saved or sent.';
+  var sentence = '', complete = false;
+  function clean(s) { return s.replace(/\s+/g, ' ').replace(/[\s.]+$/, '').trim(); }
+  function build() {
+    var w = clean(fWho.value), a = clean(fWhat.value), c = clean(fCost.value);
+    complete = !!(w && a && c);
+    if (!w && !a && !c) {
+      sentence = ''; preview.textContent = 'Your sentence will appear here.'; preview.className = 'preview is-empty'; return;
+    }
+    var s = (w || '[who]') + ' ' + (a || '[what goes wrong]') + ', which costs them ' + (c || '[what it costs]') + '.';
+    sentence = s.charAt(0).toUpperCase() + s.slice(1);
+    preview.textContent = sentence; preview.className = 'preview';
+  }
+  [fWho, fWhat, fCost].forEach(function (f) { f.addEventListener('input', function () { build(); note.textContent = idle; }); });
+  form.addEventListener('submit', function (e) { e.preventDefault(); });
+  doc.getElementById('clear').addEventListener('click', function () {
+    fWho.value = fWhat.value = fCost.value = ''; build(); note.textContent = idle; fWho.focus();
+  });
+  doc.getElementById('copy').addEventListener('click', function () {
+    if (!complete) { note.textContent = 'Fill in all three blanks first.'; return; }
+    function selectIt() {
+      var r = doc.createRange(); r.selectNodeContents(preview);
+      var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      note.textContent = 'Selected. Press Ctrl+C or Cmd+C to copy it.';
+    }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(sentence).then(function () { note.textContent = 'Copied. Paste it wherever you draft your brief.'; }, selectIt);
+      } else { selectIt(); }
+    } catch (err) { selectIt(); }
+  });
+})();
+</script>
+</body>
+</html>
