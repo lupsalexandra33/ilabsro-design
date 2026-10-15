@@ -29,9 +29,9 @@ It also shows how the system handles practical guidance while preserving factual
 
 ## Files
 
-- `index.html` — generated one-pager
+- `better-ai-context.pdf` — generated one-pager
 - `prompt.md` — exact generation prompt
-- `assets/` — one-pager-specific assets, if applicable
+- `README.md` — artifact documentation
 
 ## Notes
 
