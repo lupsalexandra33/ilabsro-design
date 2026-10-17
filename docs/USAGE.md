@@ -56,9 +56,11 @@ Purple is the default accent. Yellow is an optional alternate accent when reques
 
 Never use white text on a yellow accent fill; use the dark `--ax-on` token.
 
-## Humanizer
+## Humanizer (external, optional)
 
-The public Humanizer skill is an optional final copy pass. Do not run it automatically on factual tables, labels, citations, source quotes or numbers. Prefer it for narrative copy after structure is approved.
+Humanizer is not bundled with `ilabsro-design`. If it is available separately in the active Claude environment, it may be used as an optional final copy pass.
+
+Do not run it automatically on factual tables, labels, citations, source quotes or numbers. Prefer it for narrative copy after structure is approved.
 
 ## Rule of one
 
