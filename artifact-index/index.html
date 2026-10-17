@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="en"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Innovation Labs Artifact Index</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Everything Innovation Labs has built, explored and documented, in one place: what exists, what kind of thing it is, what it is for and where to open it.">
@@ -701,9 +701,247 @@ html.viewer-open{overflow:hidden}
   .v-cap{display:none}
   .v-bar{padding:10px 0 8px}
 }
+/* a document with page images: the pages stack and scroll (used when `pages` is present) */
+.v-fig.document.paged{display:block;overflow:auto;padding:2px 0 22px}
+
+/* ============================================================
+   Added in this version (schema 4): onboarding.
+   Hero -> Start here -> How it works -> Examples -> Reference -> Explore.
+   Same IL tokens; no new colours. Skill names are always mono.
+   ============================================================ */
+
+/* shared: skill chips, code, small buttons ------------------ */
+.sk{display:inline-flex;align-items:center;padding:2px 9px;border-radius:var(--radius-pill);border:1px solid var(--line-strong);background:var(--surface);color:var(--teal-ink);font-family:var(--mono);font-size:12px;line-height:1.5;letter-spacing:.01em;text-transform:none;font-weight:500;white-space:nowrap}
+.sk[data-role="output"]{background:var(--surface-tint);border-color:var(--surface-tint)}
+a.sk:hover{border-color:var(--action);color:var(--action)}
+.sks{display:inline-flex;flex-wrap:wrap;gap:6px;vertical-align:middle}
+code{font-family:var(--mono);font-size:.86em;padding:1px 5px;border-radius:4px;background:var(--surface-tint);color:var(--teal-ink);overflow-wrap:anywhere}
+.pbtn{display:inline-flex;align-items:center;gap:7px;min-height:34px;padding:0 13px;border-radius:var(--radius-pill);border:1.5px solid var(--line-strong);background:var(--surface);color:var(--ink);font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.pbtn:hover{background:var(--action-soft)}
+.pbtn svg{width:14px;height:14px;flex:none}
+.pbtn.done{border-color:var(--positive);color:var(--positive)}
+.ph{background:var(--ax-tint);color:var(--ax-ink);border-radius:3px;padding:0 2px}
+.ping{animation:ping 1.4s ease-out 1}
+@keyframes ping{0%{box-shadow:0 0 0 0 var(--ax-soft),0 0 0 2px var(--ax)}100%{box-shadow:0 0 0 14px transparent,0 0 0 2px transparent}}
+.alias{display:block;height:0;overflow:hidden}
+.nw{white-space:nowrap}
+
+/* hero ------------------------------------------------------ */
+.hero h1{font-size:clamp(2.3rem,4.8vw,4.25rem);line-height:1.02;letter-spacing:-.04em;text-wrap:balance}
+.hero h1 span{display:inline}
+.hero h1 .a{font-size:1em;line-height:inherit;letter-spacing:inherit;font-weight:700;color:var(--ink);margin:0}
+.hero h1 .b{color:var(--teal-ink)}
+.hero .lede{max-width:24em;font-size:clamp(1.1rem,1.8vw,1.45rem);line-height:1.38}
+.hero-sum{margin-top:18px;color:var(--ink-subtle);display:flex;flex-wrap:wrap;gap:4px 10px}
+.hero-sum i{font-style:normal;opacity:.55}
+.hero .hero-q{margin-top:26px;font-size:14.5px}
+.hero-q a,.deeper a,.planner-note a,.walk a.tl{color:var(--action);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+.ask-wrap{position:relative}
+.hero-l{position:relative;z-index:2;min-width:0}
+@media (min-width:1101px){.ask-wrap .hero-orn{left:-130px;bottom:-84px;width:190px}}
+.ask-wrap .hand{right:10px;top:-38px}
+.ask{position:relative;z-index:1;margin:0;background:var(--plate);color:var(--plate-ink);border-radius:var(--radius-panel);border:1px solid var(--plate-line);box-shadow:var(--shadow-raised);overflow:hidden}
+.ask-h{display:flex;justify-content:space-between;gap:12px;padding:14px 22px;color:var(--plate-muted);border-bottom:1px solid var(--plate-line)}
+.ask ol{margin:0}
+.ask-row{display:grid;grid-template-columns:22px minmax(0,1fr);gap:6px 12px;padding:16px 22px;border-bottom:1px solid var(--plate-line)}
+.ask-n{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--bright);line-height:1.6}
+.ask-k{color:var(--plate-muted);margin-bottom:6px}
+.ask-q{margin:0;font-size:14.5px;line-height:1.5;white-space:pre-line;color:var(--plate-ink)}
+.ask-q .ell{color:var(--plate-muted)}
+.ask .sk{background:transparent;border-color:var(--plate-line);color:var(--bright)}
+.ask .sk[data-role="output"]{background:rgba(255,255,255,.08)}
+.ask-shot{display:block;width:100%;padding:0;border:0;background:#fff;border-radius:10px;overflow:hidden;cursor:zoom-in;box-shadow:0 0 0 1px var(--plate-line)}
+.ask-shot img{width:100%;height:auto}
+.ask-f{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 22px;color:var(--plate-muted)}
+.ask-f a{color:var(--bright);font-weight:500}
+.ask-f a:hover{text-decoration:underline;text-underline-offset:3px}
+.ask :focus-visible{outline-color:var(--bright)}
+
+/* explore: the registry-by-kind ledger, laid out as a band ------- */
+.ledger.wide{margin:0 0 26px;box-shadow:none}
+.ledger.wide ul{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--plate-line)}
+.ledger.wide li{background:var(--plate)}
+.ledger.wide .lrow{height:100%;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"n a" "t t";align-items:end;gap:10px 8px;padding:18px 20px;border-bottom:0}
+.ledger.wide .ln{grid-area:n}
+.ledger.wide .la{grid-area:a}
+.ledger.wide .lt{grid-area:t}
+.ledger.wide .lrow[aria-pressed="true"]::before{left:0;right:0;top:0;bottom:auto;width:auto;height:4px}
+
+/* start here ------------------------------------------------ */
+.define{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 18px;align-items:baseline;max-width:880px;margin:-6px 0 28px;padding:16px 22px;border-radius:var(--radius-lg);background:var(--ax-tint);color:var(--ink)}
+.define .mono{color:var(--ax-ink);font-weight:600}
+.define p:last-child{font-size:15.5px}
+.define b{font-weight:600}
+.make{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.mk{position:relative;display:flex;flex-direction:column;gap:12px;min-width:0;padding:22px 22px 20px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);scroll-margin-top:calc(var(--nav-height) + 24px)}
+.mk-h{display:flex;align-items:center;gap:12px}
+.mk-ic{flex:none;width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:var(--surface-tint);color:var(--teal-ink)}
+.mk-ic svg{width:22px;height:22px}
+.mk h3{font-size:1.3rem;line-height:1.15;letter-spacing:-.02em;font-weight:700}
+.mk-uses{color:var(--ink-subtle);display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px}
+.mk-when{color:var(--ink-muted);font-size:14.5px;line-height:1.5}
+.sp{margin-top:auto;display:flex;flex-direction:column;gap:10px;padding:14px 16px 12px;border-radius:var(--radius-md);background:var(--surface-alt);border:1px solid var(--line-soft)}
+.sp-k{display:flex;justify-content:space-between;align-items:center;gap:8px;color:var(--ink-subtle)}
+.sp-t{font-size:13.5px;line-height:1.55;color:var(--ink)}
+.sp .pbtn{align-self:flex-start}
+.mk-ex{font-size:13.5px;color:var(--ink-muted)}
+.mk-ex a{color:var(--action);font-weight:500}
+.mk-ex a:hover{text-decoration:underline;text-underline-offset:3px}
+.mk.unsure{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:14px 36px;align-items:start;border-style:dashed;border-color:var(--line-control);background:var(--surface-alt)}
+.mk.unsure .mk-l{display:flex;flex-direction:column;gap:12px;min-width:0}
+.mk.unsure .sp{background:var(--surface);margin-top:0}
+.mk.unsure h3{font-size:1.45rem}
+
+.first{margin-top:40px;padding:30px 32px 26px;border-radius:var(--radius-panel);background:var(--surface-alt);border:1px solid var(--line)}
+.first-h{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:6px 24px;margin-bottom:24px}
+.first-h h3{font-size:1.5rem;line-height:1.15;letter-spacing:-.02em;font-weight:700}
+.first-h p{color:var(--ink-muted);font-size:15px}
+.steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:24px}
+.steps li{position:relative;display:flex;flex-direction:column;gap:7px;padding-top:46px;min-width:0}
+.steps .n{position:absolute;top:0;left:0;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--action);color:var(--on-action);font-family:var(--mono);font-size:13px;font-weight:600}
+.steps li:not(:last-child)::after{content:"";position:absolute;top:16px;left:42px;right:-14px;height:1.5px;background:var(--line-strong)}
+.steps b{font-weight:600;font-size:15.5px;line-height:1.3;text-wrap:balance}
+.steps p{font-size:14px;line-height:1.5;color:var(--ink-muted)}
+.planner-note{display:flex;gap:14px;align-items:flex-start;margin-top:26px;padding-top:20px;border-top:1px solid var(--line);font-size:15.5px;line-height:1.5}
+.planner-note .mk-ic{width:36px;height:36px;border-radius:10px;background:var(--ax-tint);color:var(--ax-ink)}
+.planner-note .mk-ic svg{width:19px;height:19px}
+
+/* how it works --------------------------------------------- */
+.flow{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1fr) minmax(0,1.05fr) minmax(0,1.6fr) minmax(0,.95fr);gap:30px;align-items:start}
+.fl{position:relative;display:flex;flex-direction:column;gap:10px;min-width:0;padding:20px 20px 18px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface)}
+.fl:not(:last-child)::after{content:"";position:absolute;top:30px;right:-21px;width:10px;height:10px;border-top:2px solid var(--teal);border-right:2px solid var(--teal);transform:rotate(45deg)}
+.fl.opt{border-style:dashed;border-color:var(--line-control)}
+.fl.core{background:var(--surface-tint);border-color:var(--line-strong)}
+.fl.core .sk[data-role="output"]{background:var(--surface);border-color:var(--line-strong)}
+.fl-tag{color:var(--ink-subtle)}
+.fl.opt .fl-tag{color:var(--ax-ink)}
+.fl h3{font-size:1.08rem;line-height:1.2;letter-spacing:-.01em;font-weight:700;overflow-wrap:anywhere}
+.fl h3 code{font-size:.9em;padding:0;background:none}
+.fl-q{font-weight:600;font-size:15px;line-height:1.3;color:var(--ax-ink);text-wrap:balance}
+.fl p{font-size:13.5px;line-height:1.5;color:var(--ink-muted)}
+.fl .tl{font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--action)}
+.fl-subs{display:flex;flex-direction:column;gap:14px}
+.fl-sub{display:flex;flex-direction:column;gap:7px;padding-top:14px;border-top:1px solid var(--line)}
+.fl-sub:first-child{padding-top:2px;border-top:0}
+.fl-sub .k{color:var(--ink-subtle)}
+.rule{margin-top:22px;color:var(--ink-subtle);display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline}
+.rule b{color:var(--ink);font-weight:600}
+.rule i{font-style:normal;opacity:.55}
+.rule a{color:var(--action);text-decoration:underline;text-underline-offset:3px}
+.how-sys{margin-top:34px}
+.how-sys .plate.sys.p6{width:100%}
+.deeper{margin-top:20px;max-width:46em;color:var(--ink-muted);font-size:15px}
+
+/* examples: one case per featured entry -------------------- */
+.cases{display:flex;flex-direction:column}
+.case{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:26px 52px;padding:46px 0;border-top:1px solid var(--line);scroll-margin-top:calc(var(--nav-height) + 16px)}
+.case:first-child{border-top:0;padding-top:4px}
+.case-vis{position:sticky;top:calc(var(--nav-height) + env(safe-area-inset-top,0px) + 24px);align-self:start;display:flex;flex-direction:column;gap:14px;min-width:0}
+.case-vis .mat{--mat-h:clamp(230px,25vw,330px);border-radius:var(--radius-lg);border:1px solid var(--line);padding:22px;--mh:calc(var(--mat-h) - 44px)}
+.shotbtn{display:flex;align-items:center;justify-content:center;width:100%;height:100%;margin:0;padding:0;border:0;background:none;border-radius:9px;cursor:pointer}
+.shotbtn:hover .shot{box-shadow:0 0 0 2px var(--teal),var(--shot-shadow)}
+.case-act{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px}
+.case-act .btn{padding:10px 18px;font-size:14.5px}
+.case-act .sl{color:var(--ink-muted);border-bottom:1px solid var(--line-strong)}
+.case-act .sl:hover{color:var(--action);border-bottom-color:var(--action)}
+.case-body{min-width:0;display:flex;flex-direction:column;gap:12px}
+.case h3{font-size:clamp(1.6rem,2.5vw,2.1rem);line-height:1.08;letter-spacing:-.025em;font-weight:700}
+.case h3 a,.case h3 button.t{color:inherit;border:0;background:none;padding:0;font:inherit;letter-spacing:inherit;text-align:inherit;cursor:pointer}
+.case h3 a:hover,.case h3 button.t:hover{color:var(--teal-ink)}
+.case .desc{max-width:44em}
+.prov{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 16px;margin:4px 0 2px;padding:14px 16px;border-radius:var(--radius-md);background:var(--surface-alt);font-size:14px}
+.prov dt{color:var(--ink-subtle);padding-top:2px}
+.prov dd{min-width:0;color:var(--ink)}
+.prov dd .note{display:block;color:var(--ink-muted);font-size:13px;margin-top:2px}
+.prov a{color:var(--action);border-bottom:1px solid var(--line-strong)}
+.prov .pv{color:var(--ink-subtle);margin-left:4px}
+.walk-h{margin-top:10px;font-size:1.08rem;font-weight:700;letter-spacing:-.01em}
+.walk{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.walk>li{display:grid;grid-template-columns:168px minmax(0,1fr);gap:6px 20px;padding:15px 0;border-bottom:1px solid var(--line)}
+.wk{display:flex;align-items:baseline;gap:10px;color:var(--ink-subtle)}
+.wk b{font-family:var(--mono);font-weight:600;color:var(--ax-ink);font-size:12px}
+.wv{min-width:0;display:flex;flex-direction:column;gap:10px;font-size:15px;line-height:1.5}
+.wv .muted{color:var(--ink-muted);font-size:14px}
+.prompt{border:1px solid var(--line);border-radius:var(--radius-md);background:var(--surface-alt);overflow:hidden}
+.prompt.similar{border-style:dashed;border-color:var(--line-control);background:var(--surface)}
+.prompt-h{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:4px 12px;padding:9px 14px;border-bottom:1px solid var(--line);color:var(--ink-subtle)}
+.prompt-h b{color:var(--ink);font-weight:600}
+.prompt-h a{color:var(--action)}
+.prompt-t{margin:0;padding:14px 16px;font-family:var(--mono);font-size:12.5px;line-height:1.62;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--ink);tab-size:2}
+.prompt.clip .prompt-t{max-height:11.5em;overflow:hidden;-webkit-mask-image:linear-gradient(#000 55%,transparent);mask-image:linear-gradient(#000 55%,transparent)}
+.prompt-a{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 12px;border-top:1px solid var(--line)}
+.prompt-a .lines{color:var(--ink-subtle);margin-left:auto}
+.noprompt{display:flex;flex-direction:column;gap:4px}
+.noprompt b{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--caution);font-weight:600}
+
+/* reference / lineage -------------------------------------- */
+.ref{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,9fr);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;background:var(--surface)}
+.ref-tile{position:relative;min-height:240px;display:grid;place-items:center;background:var(--plate);color:var(--bright);overflow:hidden}
+.ref-tile img{position:absolute;right:-26px;bottom:-34px;width:120px;opacity:.85}
+.ref-tile .lab{color:var(--bright);font-weight:600}
+.ref-tile .lab::before,.ref-tile .lab::after{border-color:var(--bright)}
+.ref-body{display:flex;flex-direction:column;gap:12px;padding:26px 30px 24px;min-width:0}
+.ref-top{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;color:var(--ink-subtle)}
+.notmade{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:var(--radius-pill);background:var(--caution-soft);color:var(--caution);font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.ref h3{font-size:clamp(1.4rem,2.2vw,1.8rem);line-height:1.12;letter-spacing:-.02em;font-weight:700}
+.ref dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 18px;font-size:14.5px}
+.ref dt{color:var(--ink-subtle);padding-top:2px}
+.ref dd{color:var(--ink-muted);min-width:0}
+.ref .btn{align-self:flex-start;margin-top:4px}
+
+/* library rows: who made it --------------------------------- */
+.made{display:flex;flex-wrap:wrap;align-items:center;gap:5px 8px;color:var(--ink-subtle);margin-top:2px}
+.made .sk{font-size:11.5px;padding:1px 8px}
+.made.not{color:var(--caution)}
+
+@media (max-width:1100px){
+  .ask-wrap{max-width:640px}
+  .ask-wrap .hand{display:none}
+  .flow{grid-template-columns:minmax(0,1fr);gap:26px}
+  .fl:not(:last-child)::after{top:auto;right:auto;left:30px;bottom:-19px;transform:rotate(135deg)}
+  .fl-subs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+  .fl-sub,.fl-sub:first-child{padding-top:0;border-top:0}
+}
+@media (max-width:1023px){
+  .make{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mk.unsure{grid-template-columns:minmax(0,1fr)}
+  .steps{grid-template-columns:minmax(0,1fr);gap:18px}
+  .steps li{padding:0 0 0 48px}
+  .steps li:not(:last-child)::after{top:38px;bottom:-14px;left:15.25px;right:auto;width:1.5px;height:auto}
+  .case{grid-template-columns:minmax(0,1fr);gap:22px}
+  .case-vis{position:static}
+  .ref{grid-template-columns:minmax(0,1fr)}
+  .ref-tile{min-height:150px}
+}
+@media (max-width:760px){
+  .make{grid-template-columns:minmax(0,1fr)}
+  .define{grid-template-columns:minmax(0,1fr);padding:14px 16px}
+  .first{padding:22px 18px 20px}
+  .fl-subs{grid-template-columns:minmax(0,1fr)}
+  .fl-sub{padding-top:14px;border-top:1px solid var(--line)}
+  .fl-sub:first-child{padding-top:2px;border-top:0}
+  .walk>li{grid-template-columns:minmax(0,1fr)}
+  .prov{grid-template-columns:minmax(0,1fr);gap:2px 0}
+  .prov dd+dt{margin-top:8px}
+  .ref dl{grid-template-columns:minmax(0,1fr);gap:2px 0}
+  .ref dd+dt{margin-top:8px}
+  .ref-body{padding:22px 20px}
+  .ask-row{padding:14px 18px}
+  .ask-h,.ask-f{padding:12px 18px}
+}
+@media (max-width:360px){
+  .bar .wrap{gap:10px}
+  .bar .logo{height:15px}
+  .seg button{padding:4px 9px}
+}
+@media (max-width:420px){
+  .hero h1{font-size:2.15rem}
+  .ledger.wide .lrow{padding:14px 16px}
+}
 
 </style>
-<a class="skip" href="#library">Skip to the library</a>
+<a class="skip" href="#start">Skip to Start here</a>
+<a class="skip" href="#library">Skip to the full library</a>
 
 <header class="bar" data-bar>
   <div class="wrap">
@@ -712,9 +950,9 @@ html.viewer-open{overflow:hidden}
       <span class="brand-tag mono">Artifact Index</span>
     </a>
     <nav class="bar-nav" aria-label="Sections">
-      <a href="#selected" data-spy="selected">Selected</a>
-      <a href="#library" data-spy="library">Library</a>
-      <a href="#about">Registry</a>
+      <a href="#start" data-spy="start">Start here</a>
+      <a href="#examples" data-spy="examples">Examples</a>
+      <a href="#library" data-spy="library">Explore</a>
     </nav>
     <div class="bar-ctl">
       <!-- Present Mode mounts a button here later (see window.ILA_UI). -->
@@ -735,43 +973,92 @@ html.viewer-open{overflow:hidden}
 
   <section class="hero" data-step="0" data-step-id="cover" aria-labelledby="h-title">
     <div class="wrap">
-      <div>
-        <p class="lab mono">Working library &middot; Studio archive</p>
-        <h1 id="h-title"><span class="a">Innovation Labs</span><span class="b">Artifact Index</span></h1>
-        <p class="lede">Everything we&rsquo;ve built, explored and documented. <em>In one place.</em></p>
-        <p class="hero-q">A curated library of what exists, what kind of thing it is, what it is for and where to open it.</p>
+      <div class="hero-l">
+        <p class="lab mono">Artifact Index &middot; Innovation Labs Design</p>
+        <h1 id="h-title"><span class="a">See what <span class="nw">ilabsro-design</span> can make,</span> <span class="b">and how to use it.</span></h1>
+        <p class="lede">An Innovation Labs plugin for Claude. It makes websites, presentations, one-pagers, social content, content plans and brand visuals, all from <em>one shared design system</em>.</p>
+        <p class="hero-sum mono" id="hero-sum"></p>
         <div class="hero-cta">
-          <a class="btn" href="#library">Browse the library <span aria-hidden="true">&darr;</span></a>
-          <a class="btn ghost" href="#selected">Selected work</a>
+          <a class="btn" href="#start">Start here <span aria-hidden="true">&darr;</span></a>
+          <a class="btn ghost" href="#examples">Browse examples</a>
           <span class="keyhint mono">Search <kbd>/</kbd></span>
         </div>
+        <p class="hero-q">It is also the studio&rsquo;s working library: every example made so far, plus the systems and docs behind them, each with one place to open it. <a href="#library">Explore everything</a></p>
       </div>
-      <div class="ledger-wrap">
+      <div class="ask-wrap">
         <img class="hero-orn" src="assets/elements/hex-gold.svg" alt="" width="210" height="242">
-        <p class="hand" aria-hidden="true">pick a kind, or just scroll</p>
-        <div class="ledger" id="ledger" role="group" aria-label="Registry by kind. Choose one to filter the library."></div>
+        <p class="hand" aria-hidden="true">a real one, from below</p>
+        <figure class="ask" id="ask" aria-labelledby="ask-cap"></figure>
       </div>
     </div>
   </section>
 
-  <section class="sec" id="selected" data-step="1" data-step-id="selected" aria-labelledby="h-selected">
+  <section class="sec" id="start" data-step="1" data-step-id="start" aria-labelledby="h-start">
     <div class="wrap">
       <div class="sec-h">
-        <p class="lab mono">Selected</p>
-        <h2 id="h-selected">A few places to start.</h2>
-        <p id="sel-note">A handful of entries from across the work. The full registry is below.</p>
+        <p class="lab mono">Start here</p>
+        <h2 id="h-start">What do you want to make?</h2>
+        <p>Pick the closest one. Each card names the skill Claude uses for it and gives you a prompt to start from.</p>
       </div>
-      <div class="plates" id="plates"></div>
+      <div class="define" id="define"></div>
+      <ul class="make" id="make"></ul>
+
+      <div class="first" aria-labelledby="h-first">
+        <div class="first-h">
+          <h3 id="h-first">Your first time in Claude</h3>
+          <p>Five steps. That is the whole workflow.</p>
+        </div>
+        <ol class="steps" id="steps"></ol>
+        <p class="planner-note" id="planner-note"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="how" data-step="2" data-step-id="how" aria-labelledby="h-how">
+    <div class="wrap">
+      <div class="sec-h">
+        <p class="lab mono">How it works</p>
+        <h2 id="h-how">One request, a few skills, one design system.</h2>
+        <p>You never need all ten skills at once. Each kind of skill answers one question, and most jobs use one or two.</p>
+      </div>
+      <ol class="flow" id="flow" aria-label="How the skills fit together"></ol>
+      <p class="rule mono" id="rule"></p>
+      <div class="how-sys" id="sys"></div>
+      <p class="deeper" id="deeper"></p>
+    </div>
+  </section>
+
+  <section class="sec" id="examples" data-step="3" data-step-id="examples" aria-labelledby="h-examples">
+    <span class="alias" id="selected" aria-hidden="true"></span>
+    <div class="wrap">
+      <div class="sec-h">
+        <p class="lab mono">Examples</p>
+        <h2 id="h-examples">See what it can make.</h2>
+        <p id="sel-note">Real outputs from the repository, each with the skills its README credits, the original prompt where one was archived, and what the skills decided.</p>
+      </div>
+      <div class="cases" id="plates"></div>
+    </div>
+  </section>
+
+  <section class="sec" id="lineage" data-step-id="lineage" aria-labelledby="h-lineage">
+    <div class="wrap">
+      <div class="sec-h">
+        <p class="lab mono">Reference &middot; visual lineage</p>
+        <h2 id="h-lineage">The look, before the plugin.</h2>
+        <p>Earlier work in the same visual family. The plugin later turned this look into a system.</p>
+      </div>
+      <div class="refs" id="refs"></div>
     </div>
   </section>
 
   <section class="sec" id="library" data-step-id="library" aria-labelledby="h-library">
     <div class="wrap">
       <div class="sec-h">
-        <p class="lab mono">Library</p>
-        <h2 id="h-library">The full registry.</h2>
-        <p>Grouped by what the work is about. Filter by kind from the ledger above, or by format here.</p>
+        <p class="lab mono">Explore</p>
+        <h2 id="h-library">Everything in one place.</h2>
+        <p>The full registry: examples, workflows, references, systems and docs. Choose a kind, filter by category or format, or search.</p>
       </div>
+      <div class="ledger wide" id="ledger" role="group" aria-label="Registry by kind. Choose one to filter the library."></div>
     </div>
     <div class="toolbar" id="toolbar">
       <div class="wrap tb">
@@ -794,12 +1081,13 @@ html.viewer-open{overflow:hidden}
   </section>
 
 </main>
+<p class="sr" id="copy-live" role="status" aria-live="polite"></p>
 
 <footer class="foot" id="about" data-step-id="end">
   <div class="wrap">
     <div>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 505.84 53.42" fill="currentColor" class="logo" aria-hidden="true" focusable="false"><g><g><path d="M90.71,9.72c-8.67,0-15.7,7.03-15.7,15.7,0,5.41,2.74,10.18,6.91,13,.11.07.22.14.33.22.85.64,1.41,1.65,1.41,2.8v.65h3.97v-.65c0-.33-.03-.65-.07-.98h.01l-2.04-11.67-.84.13,1.39,8.01c-.41-.55-.9-1.05-1.46-1.46-.18-.13-.37-.26-.56-.37-3.19-2.2-5.09-5.8-5.09-9.67,0-6.47,5.26-11.74,11.73-11.74s11.73,5.27,11.73,11.74c0,3.79-1.83,7.34-4.91,9.54-.37.21-.72.45-1.05.72-.44.36-.83.76-1.16,1.2l1.39-7.95-.85-.1-1.92,10.98c-.03.12-.04.25-.06.38l-.05.26s0,.06-.01.08l-.02.25v1.31h3.96v-1.08c.11-.92.57-1.72,1.25-2.28.19-.15.39-.29.61-.4,4.1-2.84,6.78-7.56,6.78-12.91,0-8.67-7.03-15.7-15.69-15.7Z"/><rect x="83.66" y="49.45" width="14.09" height="3.97"/><polygon points="83.66 43.79 83.66 47.76 97.75 47.76 97.75 43.79 87.63 43.79 83.66 43.79"/><path d="M90.57,25.34c.7,0,1.33.36,1.69.97.78,1.33,2.11,2.24,3.6,2.53l.85.1.6-3.44c-.14.04-.29.06-.45.06-.15,0-.29-.02-.42-.05-.53-.11-.98-.44-1.27-.93-.96-1.62-2.72-2.62-4.6-2.62s-3.64,1-4.6,2.62c-.24.41-.6.7-1.03.85-.2.08-.43.12-.66.12-.06,0-.12,0-.18-.01l.59,3.38.84-.13c1.38-.35,2.6-1.23,3.34-2.48.36-.61.99-.97,1.69-.97Z"/><rect y="10.28" width="4.76" height="30.03"/><polygon points="32.52 31.64 15.49 10.28 11.8 10.28 11.8 40.3 16.65 40.3 16.65 19.12 33.68 40.3 37.32 40.3 37.32 10.28 32.52 10.28 32.52 31.64"/><polygon points="65.14 31.64 48.11 10.28 44.42 10.28 44.42 40.3 49.27 40.3 49.27 19.12 66.3 40.3 69.94 40.3 69.94 10.28 65.14 10.28 65.14 31.64"/><polygon points="131.27 10.28 121.66 34.69 112.09 10.28 106.69 10.28 119.17 40.43 124.19 40.43 136.63 10.28 131.27 10.28"/><path d="M226.07,12.06c-.11-.07-.22-.14-.33-.22-.85-.64-1.41-1.67-1.41-2.82V0h-3.96v9.02c0,2.35,1.12,4.6,3,6.01.18.15.36.27.56.39,3.13,2.17,5.02,5.72,5.08,9.53-.28-.17-.51-.4-.69-.69-.96-1.64-2.72-2.65-4.6-2.65s-3.64,1.01-4.61,2.64c-.36.61-.99.98-1.69.98s-1.33-.36-1.69-.97c-.96-1.64-2.73-2.65-4.61-2.65s-3.65,1.01-4.6,2.64c-.23.39-.57.69-.98.84.02-3.8,1.85-7.34,4.91-9.55.37-.21.72-.45,1.05-.72,1.48-1.23,2.43-2.98,2.66-4.9l.03-.24V0h-3.97v9.44c-.11.92-.57,1.74-1.25,2.3-.2.16-.4.29-.62.4-4.1,2.85-6.78,7.6-6.78,13,0,8.73,7.03,15.8,15.7,15.8s15.7-7.07,15.7-15.8c0-5.45-2.74-10.25-6.91-13.09ZM217.29,36.95c-5.31,0-9.81-3.58-11.25-8.46,1.41-.33,2.65-1.23,3.41-2.5.36-.61.99-.98,1.69-.98s1.33.37,1.69.98c.96,1.62,2.73,2.64,4.61,2.64s3.64-1.02,4.6-2.64c.36-.61.99-.98,1.69-.98s1.33.37,1.69.98c.7,1.2,1.84,2.05,3.13,2.43-1.41,4.93-5.93,8.53-11.26,8.53Z"/><path d="M147.55,10.28l-13.47,30.03h5.1l2.83-6.3h16.25l2.88,6.3h5.1l-13.47-30.03h-5.23ZM143.82,29.63l6.35-14.29,6.35,14.29h-12.69Z"/><polygon points="163.41 14.61 173.28 14.61 173.28 40.31 178.13 40.31 178.13 14.61 187.95 14.61 187.95 10.28 163.41 10.28 163.41 14.61"/><rect x="191.85" y="10.28" width="4.76" height="30.03"/><polygon points="258.79 31.64 241.76 10.28 238.07 10.28 238.07 40.3 242.92 40.3 242.92 19.12 259.95 40.3 263.59 40.3 263.59 10.28 258.79 10.28 258.79 31.64"/><polygon points="286.63 10.28 281.82 10.28 281.82 40.3 302.45 40.3 302.45 35.85 286.63 35.85 286.63 10.28"/><path d="M394.15,30.97c-.33-6.25-6.02-7.91-12.02-8.74-3.95-.56-7.29-1.37-7.29-4.29s2.92-4.55,6.95-4.55c3.13.04,6.01,1.29,7.42,3.34l3.65-2.44c-2.53-4.03-6.86-5.06-11.2-5.06-5.4,0-11.62,2.4-11.58,8.62,0,6.43,5.66,7.94,11.62,8.75,4.2.56,7.68,1.67,7.68,4.93,0,3.78-3.99,4.98-7.59,4.98s-7.21-1.29-9.35-4.93l-3.6,2.4c2.74,5.06,7.16,6.82,12.91,6.82.56,0,1.11-.03,1.66-.07,2.2.07,6.34-1.49,7.46-2.29,4.1-2.9,3.15-7.34,3.28-7.48Z"/><path d="M318.2,10.28l-13.47,30.03h5.11l2.83-6.3h16.26l2.87,6.3h5.1l-13.47-30.03h-5.23ZM314.46,29.63l6.35-14.29,6.35,14.29h-12.69Z"/><path d="M360.47,24.82c2.83-1.16,4.16-3.43,4.16-5.96,0-5.96-4.51-8.58-10.21-8.58h-13.77v30.03h13.77c5.92,0,11.15-2.02,11.15-8.58,0-2.27-1.5-5.83-5.1-6.9ZM345.41,14.61h9.01c3.6,0,5.45,2.23,5.45,4.33,0,2.36-1.8,3.78-5.4,3.78h-9.05v-8.11ZM354.42,35.85h-9.01v-8.84h9.05c2.74,0,6.31,1.46,6.31,4.68s-3.69,4.16-6.35,4.16Z"/></g><g><path d="M405.73,36.02h19.16v4.68h-24.14v-7.56c0-5.71,4.47-9.02,12.16-9.02,4.12,0,6.92-1.85,6.92-4.6,0-3.01-2.45-4.77-6.62-4.77s-7.04,1.76-7.13,4.51h-5.15c.34-5.67,4.9-9.02,12.29-9.02s11.68,3.52,11.68,9.19c0,6.01-4.17,9.19-11.94,9.19-4.51,0-7.22,1.68-7.22,4.51v2.88Z"/><path d="M428.06,28.59v-5.88c0-7.56,5.28-12.67,13.06-12.67s13.06,5.11,13.06,12.67v5.88c0,7.52-5.28,12.63-13.06,12.63s-13.06-5.11-13.06-12.63ZM449.11,28.59v-5.88c0-4.72-3.18-7.9-7.99-7.9s-7.99,3.18-7.99,7.9v5.88c0,4.72,3.18,7.9,7.99,7.9s7.99-3.18,7.99-7.9Z"/><path d="M462.25,36.02h19.16v4.68h-24.14v-7.56c0-5.71,4.47-9.02,12.16-9.02,4.12,0,6.92-1.85,6.92-4.6,0-3.01-2.45-4.77-6.62-4.77s-7.04,1.76-7.13,4.51h-5.15c.34-5.67,4.9-9.02,12.29-9.02s11.68,3.52,11.68,9.19c0,6.01-4.17,9.19-11.94,9.19-4.51,0-7.22,1.68-7.22,4.51v2.88Z"/><path d="M505.84,10.64v2.88l-13.92,27.19h-5.75l13.19-25.34h-16.41v-4.72h22.89Z"/></g></g></svg>
-      <p>The working library for Innovation Labs. Sites, decks, carousels, visuals, workflows and systems, each with one place to open it.</p>
+      <p>What the ilabsro-design plugin can make, how to ask Claude for it, and the working library of everything made so far: sites, decks, one-pagers, carousels, visuals, workflows and systems.</p>
     </div>
     <div>
       <h4 class="mono">Registry</h4>
@@ -867,21 +1155,44 @@ html.viewer-open{overflow:hidden}
  *   cta         optional label for the primary action (for example "View one-pager")
  *   media       optional: open the entry in the built-in viewer instead of leaving the page.
  *                 {type:'image',    src, w, h, alt, source}
- *                 {type:'document', pages:[{src, w, h, alt}], pdf, source}
+ *                 {type:'document', pdf, embed, pages?, source}
  *                 {type:'carousel', frames:[{src, w, h, alt}], source}
- *               The files are the committed originals (documents: page renders of the PDF),
- *               published next to this page because the Artifact frame only loads its own files.
+ *               Images and frames are the committed originals in generated-examples/, loaded from raw GitHub.
  *               source = repository page for provenance, shown as "View source".
  *               pdf    = direct file URL for the original PDF, shown as "Open PDF".
+ *               embed  = the URL the viewer frames for a document. raw.githubusercontent.com refuses
+ *                        to be framed (X-Frame-Options: deny), so this is the jsDelivr mirror of the same file.
+ *               pages  = optional page images [{src, w, h, alt}]; when present they are shown instead of the frame.
  *               caption (optional) replaces the description line in the viewer footer.
  *   hint        optional small note under the Open link (for example, no hosted page yet)
  *   links       optional secondary links [{label, href}]
  *   preview     {src, w, h, alt, fit?, pos?}, real pixel size so boxes keep the ratio
  *   tags        search words
- *   featured    true = shown in "Selected" (kept in step with PRESENT.order)
- *   updated     YYYY-MM-DD, date of the last repo commit touching the source
+ *   featured    true = shown in "See what it can make" (kept in step with PRESENT.order)
+ *   updated     YYYY-MM-DD, date of the last repo commit touching the source.
+ *               Left out for entries that do not live in the repository.
  *   stats       system entries only: {skills, elements, grounds, designSystem}
  *   statsNote   optional one line under the stats
+ *
+ * Provenance fields (schema 4). Only what a committed file says; nothing is inferred.
+ *   referenceType  generated-example = a committed output made with the plugin
+ *                  pre-plugin        = external work in the same visual family, made before the plugin
+ *   skills         skill ids credited in the example's README (see SKILLS)
+ *   provenance     {madeWith, evidence, evidenceHref, basis, brief?, briefHref?, pluginVersion?, note?}
+ *                  madeWith: 'ilabsro-design' | 'pre-plugin'. evidence = the README that credits the skills.
+ *                  basis = what it was built from. Pre-plugin entries carry {author, context, verified, why}.
+ *   promptStatus   'archived' (a prompt.md is committed) | 'not-archived'
+ *   promptSource   {status, path, href} of the committed prompt.md
+ *   originalPrompt the prompt.md text, copied verbatim. Never edited, never written by hand.
+ *   promptExcerpt  optional verbatim slice of originalPrompt (used in the hero)
+ *   similarPrompt  optional prompt written for this page when none was archived.
+ *                  Always shown as "Try a similar prompt", never as the original.
+ *   walkthrough    {asked, decided, result, tryOwn, next}: "How this became this" for featured examples.
+ *                  asked = a one-line summary of the prompt (null when none was archived),
+ *                  next  = the GUIDE.make card to start from.
+ *
+ * Onboarding (schema 4): SKILLS, ROLES and GUIDE above ENTRIES drive "Start here" and
+ * "How it works". GUIDE.make holds the starter prompts (written for this page, not archived).
  *
  * Not indexed on purpose: raw strategy sources, research and private notes,
  * event scripts, Notion material, event photography, internal test plans and
@@ -893,12 +1204,13 @@ html.viewer-open{overflow:hidden}
   var REPO = 'https://github.com/lupsalexandra33/ilabsro-design';
   var META = {
     title: 'Innovation Labs Artifact Index',
-    tagline: "Everything we've built, explored and documented. In one place.",
+    tagline: 'See what ilabsro-design can make, and how to use it.',
     registry: 'This page',
-    schema: 3,
-    generated: '2026-10-15',
+    schema: 4,
+    generated: '2026-10-17',
     repo: REPO,
-    source: 'main @ ad4dca2'
+    source: 'main @ 2ea9a6c',
+    plugin: { id: 'ilabsro-design', name: 'Innovation Labs Design', version: '0.5.0', designSystem: '0.4' }
   };
 
   var KINDS = [
@@ -927,12 +1239,249 @@ html.viewer-open{overflow:hidden}
     { id: 'documentation', label: 'Documentation', cta: 'Read doc' }
   ];
 
+  /* Onboarding (schema 4): the skills, the question each kind of skill answers, and the
+     "Start here" / "How it works" content. Rendered by the page, like ENTRIES. */
+  var SKILLS = [
+    {
+      "id": "website-maker",
+      "role": "output",
+      "version": "0.4.0",
+      "does": "Websites and microsites",
+      "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/skills/website-maker/SKILL.md"
+    },
+    {
+      "id": "presentation-maker",
+      "role": "output",
+      "version": "0.4.0",
+      "does": "Presentation decks",
+      "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/skills/presentation-maker/SKILL.md"
+    },
+    {
+      "id": "one-pager-maker",
+      "role": "output",
+      "version": "0.4.0",
+      "does": "One-pagers and printable briefs",
+      "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/skills/one-pager-maker/SKILL.md"
+    },
+    {
+      "id": "insta-post-maker",
+      "role": "output",
+      "version": "0.5.0",
+      "does": "Instagram carousels, posts and stories",
+      "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/skills/insta-post-maker/SKILL.md"
+    },
+    {
+      "id": "content-planner",
+      "role": "planning",
+      "version": "0.1.1-draft",
+      "does": "Grounded content options, then a brief",
+      "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/skills/content-planner/SKILL.md"
+    },
+    {
+      "id": "brand-image-maker",
+      "role": "visual",
+      "version": "0.1.1",
+      "does": "Custom diagrams and illustrations",
+      "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/skills/brand-image-maker/SKILL.md"
+    },
+    {
+      "id": "brand-elements",
+      "role": "assets",
+      "version": "0.4.0",
+      "does": "Accent, branded ground and official elements",
+      "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/skills/brand-elements/SKILL.md"
+    },
+    {
+      "id": "formal-lens",
+      "role": "lens",
+      "version": "0.2.0",
+      "does": "Credible, concise, partner-ready",
+      "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/skills/formal-lens/SKILL.md"
+    },
+    {
+      "id": "friendly-lens",
+      "role": "lens",
+      "version": "0.2.0",
+      "does": "Warm, clear, conversational",
+      "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/skills/friendly-lens/SKILL.md"
+    },
+    {
+      "id": "jokey-lens",
+      "role": "lens",
+      "version": "0.2.0",
+      "does": "Restrained, smart playfulness",
+      "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/skills/jokey-lens/SKILL.md"
+    }
+  ];
+
+  var ROLES = [
+    {
+      "id": "planning",
+      "label": "Planner",
+      "question": "What is worth saying?",
+      "note": "Optional. Reads your material, proposes a few grounded options with the source excerpt for each, then waits for you to choose."
+    },
+    {
+      "id": "output",
+      "label": "Output skills",
+      "question": "What am I making?",
+      "note": "One per job. Each knows its format: layout, pacing, page count, responsive behaviour."
+    },
+    {
+      "id": "lens",
+      "label": "Tone lenses",
+      "question": "How should it sound?",
+      "note": "Zero or one. A lens changes the voice; facts, numbers and structure stay the same."
+    },
+    {
+      "id": "visual",
+      "label": "Custom visuals",
+      "question": "How should the custom visual think and look?",
+      "note": "A hand-drawn diagram, a narrative illustration or an event glow. Works inside another output or on its own."
+    },
+    {
+      "id": "assets",
+      "label": "Brand assets",
+      "question": "Reusable Innovation Labs visual assets",
+      "note": "Picks the accent, a branded ground and usually one official element from the shared library."
+    }
+  ];
+
+  var GUIDE = {
+    "skill": "A skill is a set of Innovation Labs-specific instructions Claude can use for a particular kind of job.",
+    "skillMore": "You don’t have to know their names. Describe what you want and Claude picks the matching one.",
+    "plannerNote": "Not sure what the output should be? Start with content-planner. It proposes grounded directions first, then waits for you to choose.",
+    "hero": {
+      "example": "idea-meets-real-users"
+    },
+    "system": "ilabsro-design",
+    "showcase": "plugin-showcase",
+    "make": [
+      {
+        "id": "website",
+        "label": "Website",
+        "skill": "website-maker",
+        "icon": "website",
+        "example": "strategy-hub",
+        "when": "When people need to explore something on their own: a programme, a challenge, a strategy.",
+        "prompt": "Build an Innovation Labs microsite from the attached notes about [programme or event]. It should explain what it is, who it’s for, how it works and how to take part. Make it mobile-first and easy to scan. Don’t invent dates, names or numbers that aren’t in the notes."
+      },
+      {
+        "id": "presentation",
+        "label": "Presentation",
+        "skill": "presentation-maker",
+        "icon": "deck",
+        "example": "route-deck",
+        "when": "When you’ll tell a story live, one idea at a time, to a room or a partner.",
+        "prompt": "Turn the attached notes into a short Innovation Labs presentation for [audience]. One idea per slide, about 8 slides, ending with what we want them to do next. Keep the copy short and use only facts from the notes."
+      },
+      {
+        "id": "one-pager",
+        "label": "One-pager",
+        "skill": "one-pager-maker",
+        "icon": "page",
+        "example": "vision-one-pager",
+        "when": "When the point has to fit on one page someone can save, print or forward.",
+        "prompt": "Make a formal Innovation Labs one-pager for [a potential partner] from the attached document. It must fit on exactly one page. Lead with the core proposition, keep only what matters for their decision, and don’t invent numbers or commitments."
+      },
+      {
+        "id": "social",
+        "label": "Social",
+        "skill": "insta-post-maker",
+        "icon": "social",
+        "example": "context-engineering",
+        "when": "When an idea should work as an Instagram carousel, post or story.",
+        "prompt": "Create an Innovation Labs Instagram carousel for early-stage founders about this idea: [your idea in one sentence]. One thought per slide, very short copy, and simple hand-drawn diagrams where they explain faster than text. Take a clear position, but don’t overclaim."
+      },
+      {
+        "id": "planner",
+        "label": "I’m not sure what the content should be yet",
+        "skill": "content-planner",
+        "icon": "plan",
+        "example": "content-workflow",
+        "when": "When you have material but don’t know yet what’s worth saying, or in which format.",
+        "prompt": "Use content-planner on the attached [report, event notes or strategy doc]. Find what’s worth turning into content for [audience]. For each option, show the exact source excerpt it comes from and the formats you’d recommend. Then stop and let me choose the idea and the format."
+      }
+    ],
+    "steps": [
+      {
+        "title": "Open Claude with Innovation Labs Design enabled",
+        "text": "That’s the plugin’s name in Claude. Turning it on brings all of its skills with it."
+      },
+      {
+        "title": "Attach or paste your source material",
+        "text": "Do this whenever the work depends on real information: notes, documents, figures, photos. The skills build on what you give them and are told not to invent facts, names or numbers."
+      },
+      {
+        "title": "Tell Claude what you want to make",
+        "text": "Say the format, who it’s for and what it should leave people with. Plain language works."
+      },
+      {
+        "title": "Let Claude pick the skill, or pick it yourself",
+        "text": "Claude can choose the relevant skill automatically. To be explicit, name it in your message or select it, for example /ilabsro-design:website-maker."
+      },
+      {
+        "title": "Review, correct and iterate",
+        "text": "Treat the first version as a draft. Check it against your source, say what to change and ask again."
+      }
+    ],
+    "flow": [
+      {
+        "id": "source",
+        "label": "Source or idea",
+        "tag": "You bring",
+        "text": "Notes, documents, figures, photos, or one idea in a sentence. What the output says comes from here."
+      },
+      {
+        "id": "planning",
+        "label": "content-planner",
+        "tag": "When needed",
+        "roles": [
+          "planning"
+        ],
+        "link": "content-workflow"
+      },
+      {
+        "id": "output",
+        "label": "Output skill",
+        "tag": "One per job",
+        "roles": [
+          "output"
+        ]
+      },
+      {
+        "id": "support",
+        "label": "Voice and visual support",
+        "tag": "Optional",
+        "roles": [
+          "lens",
+          "visual",
+          "assets"
+        ]
+      },
+      {
+        "id": "review",
+        "label": "Human review",
+        "tag": "Always",
+        "question": "Is it right?",
+        "text": "You check it against the source, correct what’s off and ask again. Nothing is published for you."
+      }
+    ],
+    "rule": [
+      "One output skill",
+      "zero or one tone lens",
+      "one design system",
+      "one accent per artifact"
+    ]
+  };
+
   /* status label -> tone used for the dot in the UI */
   var STATUS_TONE = {
     'Live': 'live',
     'Validated': 'live',
     'Prototype': 'wip',
-    'Example': 'calm'
+    'Example': 'calm',
+    'Pre-plugin': 'calm'
   };
 
   var ENTRIES = [
@@ -945,6 +1494,31 @@ html.viewer-open{overflow:hidden}
     "format": "website",
     "status": "Live",
     "href": "https://ilabsro-design-website.vercel.app/",
+    "referenceType": "generated-example",
+    "skills": [
+      "website-maker"
+    ],
+    "provenance": {
+      "madeWith": "ilabsro-design",
+      "evidence": "generated-examples/website/strategy-hub/README.md",
+      "evidenceHref": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/generated-examples/website/strategy-hub/README.md",
+      "basis": "The Innovation Labs 2027 source material, attached when it was made. The source itself is not published here.",
+      "pluginVersion": "v0.4"
+    },
+    "promptStatus": "archived",
+    "promptSource": {
+      "status": "archived",
+      "path": "generated-examples/website/strategy-hub/prompt.md",
+      "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/generated-examples/website/strategy-hub/prompt.md"
+    },
+    "originalPrompt": "Use the `website-maker` skill from the `ilabsro-design` plugin.\nCreate an Innovation Labs 2027 Strategy Hub from the attached source material.\nThe artifact should work as a source-rich strategic website rather than a presentation or dashboard.\nRequirements:\n\n* begin with a clear overview of the 2027 direction;\n* include a route / journey view when the source supports a chronological or strategic sequence;\n* use a calm horizontal serpentine route on wider screens;\n* adapt the route into a vertical journey on portrait mobile;\n* use numbered stops and clear labels;\n* keep the same stop order wherever the route is represented inside this artifact;\n* allow users to move from the overview into deeper sections;\n* use continuous editorial sections rather than a dense dashboard/card-grid;\n* keep caveats, uncertainty and source qualifications close to the relevant content;\n* do not create a standalone “Open Threads”, “Open Questions” or “Loose Ends” section unless explicitly present in the source;\n* do not invent facts, numbers, quotes, decisions or names.\n\nVisual direction:\n\n* use the bundled Innovation Labs design system;\n* Light mode should feel bright, teal-led and editorial;\n* Night mode should also work;\n* the map / route must remain calm and route-focused;\n* do NOT use decorative mesh, particle fields or the presentation network on the map;\n* use gradients only where appropriate for branded bands / hero areas, not as constant decoration;\n* keep cards restrained and use hierarchy, spacing and typography before effects.\n\nResponsive behavior:\n\n* use a fluid layout rather than desktop-only fixed sizing;\n* preserve readable text widths;\n* let grids collapse naturally;\n* avoid content squeezing or horizontal overflow.\n\nBuild the Strategy Hub artifact directly. /ilabsro-design:website-maker",
+    "walkthrough": {
+      "asked": "A strategy website built from the attached 2027 material: an overview first, a route view where the source supports one, deeper sections after, and nothing invented.",
+      "decided": "It used website-maker’s Strategy Hub pattern. The hero keeps the fixed 2027 line, “Analog first. AI second.”, a calm ten-stop route sits beside it, and source-backed sections follow, in Light and Night.",
+      "result": "A live microsite you can walk through.",
+      "tryOwn": "Copy the prompt, attach your own material and change what the overview should cover.",
+      "next": "website"
+    },
     "links": [
       {
         "label": "Reference build",
@@ -981,6 +1555,24 @@ html.viewer-open{overflow:hidden}
     "status": "Live",
     "href": "https://ilabsro-design-build-for-real-probl.vercel.app/",
     "cta": "Open site",
+    "referenceType": "generated-example",
+    "skills": [
+      "website-maker",
+      "brand-elements"
+    ],
+    "provenance": {
+      "madeWith": "ilabsro-design",
+      "evidence": "generated-examples/website/build-for-real-problems/README.md",
+      "evidenceHref": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/generated-examples/website/build-for-real-problems/README.md",
+      "basis": "A fictional challenge written into the prompt. Not a real Innovation Labs programme."
+    },
+    "promptStatus": "archived",
+    "promptSource": {
+      "status": "archived",
+      "path": "generated-examples/website/build-for-real-problems/prompt.md",
+      "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/generated-examples/website/build-for-real-problems/prompt.md"
+    },
+    "originalPrompt": "Use the `website-maker`, `brand-elements` and relevant Innovation Labs design-system guidance from the `ilabsro-design` plugin.\n\nBuild a complete standalone Innovation Labs challenge microsite.\n\nThis is a capability test.\nDo NOT reuse the Strategy Hub route-first layout.\n\nScenario:\nInnovation Labs is launching a fictional challenge called:\n\n“Build for real problems.”\n\nPurpose:\nA compact campaign / challenge page that helps a student understand:\n- what the challenge is;\n- who it is for;\n- what a good problem looks like;\n- what participants should submit;\n- how the process works;\n- what happens next.\n\nThis is an illustrative test artifact, not a real announced Innovation Labs programme.\n\nMark fictional/test-specific details appropriately so the page cannot be mistaken for a real active campaign.\n\nContent direction:\n- strong campaign hero;\n- short challenge statement;\n- 3 examples of strong problem spaces;\n- “what we are looking for” section;\n- a simple 4-step participation process;\n- submission checklist;\n- closing CTA area.\n\nDesign direction:\n- recognizably Innovation Labs;\n- editorial and campaign-like rather than documentation-heavy;\n- mobile-first;\n- use strong type, branded whitespace and selective IL brand elements;\n- use teal as the anchor;\n- choose one semantic accent;\n- do not use the Strategy Hub route map;\n- do not create a generic startup landing page;\n- vary section layouts;\n- keep the content concise and scannable.\n\nTechnical:\n- create the artifact directly as a self-contained static HTML output;\n- responsive desktop/mobile;\n- accessible focus states and contrast;\n- no external framework required;\n- use bundled IL assets where appropriate.\n\nAt the end, tell me which plugin/design-system decisions you used and what is deliberately different from the Strategy Hub.",
     "preview": {
       "src": "previews/build-for-real-problems.jpg",
       "w": 1280,
@@ -1005,6 +1597,25 @@ html.viewer-open{overflow:hidden}
     "format": "deck",
     "status": "Live",
     "href": "https://ilabsro-design-presentation.vercel.app/",
+    "referenceType": "generated-example",
+    "skills": [
+      "presentation-maker"
+    ],
+    "provenance": {
+      "madeWith": "ilabsro-design",
+      "evidence": "generated-examples/presentation/route-deck/README.md",
+      "evidenceHref": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/generated-examples/presentation/route-deck/README.md",
+      "basis": "The Innovation Labs 2027 strategy, as its README records. The source itself is not published here."
+    },
+    "promptStatus": "not-archived",
+    "similarPrompt": "Use presentation-maker to turn the attached strategy notes into a pitch-style Innovation Labs deck. If the material describes a journey or a sequence of stages, open with the route and show on later slides which stop they belong to. Use only facts from the notes and end with where people can go deeper.",
+    "walkthrough": {
+      "asked": null,
+      "decided": "presentation-maker prefers a route-first story when the source is a journey. Slide one lays out the 2027 route and later slides carry the stop they belong to. The playable mesh is a presentation-only treatment.",
+      "result": "A live 21-slide deck.",
+      "tryOwn": "Start from the presentation starter prompt and attach your own notes.",
+      "next": "presentation"
+    },
     "links": [
       {
         "label": "Reference build",
@@ -1042,6 +1653,26 @@ html.viewer-open{overflow:hidden}
     "status": "Live",
     "href": "https://ilabsro-design-learning-environment.vercel.app/#s1",
     "cta": "Open deck",
+    "referenceType": "generated-example",
+    "skills": [
+      "presentation-maker",
+      "brand-image-maker",
+      "brand-elements"
+    ],
+    "provenance": {
+      "madeWith": "ilabsro-design",
+      "evidence": "generated-examples/presentation/learning-environment/README.md",
+      "evidenceHref": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/generated-examples/presentation/learning-environment/README.md",
+      "basis": "A fictional scenario written into the prompt. Not an official partner deck.",
+      "pluginVersion": "v0.5.0"
+    },
+    "promptStatus": "archived",
+    "promptSource": {
+      "status": "archived",
+      "path": "generated-examples/presentation/learning-environment/prompt.md",
+      "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/generated-examples/presentation/learning-environment/prompt.md"
+    },
+    "originalPrompt": "Use the `presentation-maker`, `brand-image-maker`, `brand-elements` and relevant Innovation Labs design-system guidance from the `ilabsro-design` plugin.\n\nBuild a complete standalone Innovation Labs presentation.\n\nThis is a capability-test artifact.\n\nScenario:\nCreate a fictional 7-slide conversation deck around the question:\n\n“What does a useful startup learning environment actually teach?”\n\nAudience:\nA potential university or ecosystem partner who wants to understand the learning philosophy quickly.\n\nThis is illustrative content, not an official Innovation Labs partner deck.\n\nDo NOT reuse the existing 2027 Route Deck structure.\nDo NOT use the route as the main navigation or storytelling device.\n\nSuggested narrative:\n\nSlide 1\nOpening question:\n“What does a useful startup learning environment actually teach?”\n\nSlide 2\nThe common mistake:\nteaching startup theatre instead of learning behaviour.\n\nSlide 3\nStart with real problems:\nobserve something real before inventing the solution.\n\nSlide 4\nThink before using AI:\nthe founder produces the first answer.\n\nSlide 5\nChallenge assumptions:\nusers, evidence and AI can pressure-test the thinking.\n\nSlide 6\nBuild, review, iterate:\nlearning happens through correction, not performance.\n\nSlide 7\nWhat a partner makes possible:\naccess to people, contexts, expertise and places where founders can learn from reality.\n\nDesign direction:\n- recognizably Innovation Labs;\n- presentation-first, not a website squeezed into slides;\n- one primary idea per slide;\n- choose a coherent storytelling pattern that is NOT route-first;\n- use custom diagrams or narrative illustrations where they communicate faster than copy;\n- keep copy concise;\n- allow composition to vary meaningfully across slides;\n- use teal as the anchor and one semantic accent;\n- mobile/laptop friendly;\n- avoid generic consulting-deck aesthetics;\n- avoid repeating eyebrow + headline + body on every slide.\n\nFactual boundaries:\n- this is illustrative;\n- do not invent Innovation Labs statistics;\n- do not invent research findings;\n- do not imply this is an approved partner proposition;\n- do not invent partner commitments or programme outcomes.\n\nTechnical:\n- build the presentation directly;\n- responsive for desktop and mobile viewing;\n- preserve accessible contrast and navigation;\n- use bundled Innovation Labs assets where appropriate.\n\nAt the end, explain in one short paragraph:\n1. which presentation pattern you chose;\n2. why it differs from the existing Route Deck.\n\nBuild the deck directly.",
     "preview": {
       "src": "previews/learning-environment.jpg",
       "w": 1280,
@@ -1067,9 +1698,35 @@ html.viewer-open{overflow:hidden}
     "format": "one-pager",
     "status": "Example",
     "cta": "View one-pager",
+    "referenceType": "generated-example",
+    "skills": [
+      "one-pager-maker",
+      "formal-lens"
+    ],
+    "provenance": {
+      "madeWith": "ilabsro-design",
+      "evidence": "generated-examples/one-pager/2027-vision/README.md",
+      "evidenceHref": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/generated-examples/one-pager/2027-vision/README.md",
+      "basis": "The Innovation Labs 2027 strategy material, attached when it was made. The source itself is not published here."
+    },
+    "promptStatus": "archived",
+    "promptSource": {
+      "status": "archived",
+      "path": "generated-examples/one-pager/2027-vision/prompt.md",
+      "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/generated-examples/one-pager/2027-vision/prompt.md"
+    },
+    "originalPrompt": "Use the `one-pager-maker` and `formal-lens` skills from the `ilabsro-design` plugin.\n\nCreate a formal Innovation Labs one-pager from the attached source material.\n\nThis must be exactly ONE PAGE.\n\nPriorities:\n- communicate the core proposition quickly;\n- preserve only the most decision-relevant information;\n- compress or remove lower-priority content rather than spilling onto a second page;\n- maintain clear hierarchy and generous enough spacing to remain readable;\n- use concise formal language;\n- preserve facts and uncertainty exactly as supported by the source;\n- do not invent names, numbers, quotes, outcomes or commitments.\n\nVisual direction:\n- follow the bundled Innovation Labs design system;\n- use a clean Light-mode foundation;\n- teal remains the primary brand signal;\n- a restrained branded header or closing band is allowed;\n- decorative brand elements are not required;\n- do not make it look like a social post or presentation slide.\n\nDo not reuse an artifact URL found inside source material.\nOnly include a final URL if it is explicitly supplied for this output.\n\nBuild and export the one-pager directly.\n\nAgain: the final document must contain exactly one page./ilabsro-design:one-pager-maker /ilabsro-design:formal-lens",
+    "walkthrough": {
+      "asked": "A formal one-pager from the attached strategy material: exactly one page, only decision-relevant information, nothing invented.",
+      "decided": "one-pager-maker held it to one A4 page: a headline band, a row of key figures, then short modules. formal-lens kept the voice concise and partner-ready.",
+      "result": "A one-page A4 PDF.",
+      "tryOwn": "Copy the prompt and attach your own document. Swap formal-lens for friendly-lens when the reader is a founder.",
+      "next": "one-pager"
+    },
     "media": {
       "type": "document",
       "pdf": "https://raw.githubusercontent.com/lupsalexandra33/ilabsro-design/main/generated-examples/one-pager/2027-vision/IL2027_Revamp_OnePager.pdf",
+      "embed": "https://cdn.jsdelivr.net/gh/lupsalexandra33/ilabsro-design@main/generated-examples/one-pager/2027-vision/IL2027_Revamp_OnePager.pdf",
       "source": "https://github.com/lupsalexandra33/ilabsro-design/tree/main/generated-examples/one-pager/2027-vision"
     },
     "preview": {
@@ -1086,7 +1743,39 @@ html.viewer-open{overflow:hidden}
       "formal",
       "one-pager-maker"
     ],
-    "updated": "2026-10-15"
+    "updated": "2026-10-15",
+    "featured": true
+  },
+  {
+    "id": "community-get-together-deck",
+    "title": "Community Get Together presentation",
+    "description": "A presentation in the same visual family as the plugin’s output, made before the current ilabsro-design plugin. Kept as a reference for where the look came from.",
+    "kind": "reference",
+    "category": "strategy",
+    "format": "deck",
+    "status": "Pre-plugin",
+    "scope": "External",
+    "href": "https://claude.ai/artifact/2izhCwS9SkdtEGdT9hCkQT",
+    "cta": "Open artifact",
+    "referenceType": "pre-plugin",
+    "provenance": {
+      "madeWith": "pre-plugin",
+      "author": "Flavia",
+      "context": "Presented by Flavia at the Community Get Together.",
+      "verified": "A Claude artifact titled “ilabsro_AnalogFirst-AISecond_route”. It is a slide deck whose opening headline reads “Analog first.”, set in Poppins, IBM Plex Mono and Caveat with the Innovation Labs teal palette and purple and yellow accents.",
+      "why": "It is part of the visual lineage the plugin later systematized. The same type families and teal palette are now written down in the design system, and website-maker keeps “Analog first. AI second.” as the fixed 2027 hero line."
+    },
+    "tags": [
+      "community get together",
+      "flavia",
+      "lineage",
+      "pre-plugin",
+      "external",
+      "analog first",
+      "route",
+      "presentation",
+      "slides"
+    ]
   },
   {
     "id": "context-engineering",
@@ -1096,6 +1785,34 @@ html.viewer-open{overflow:hidden}
     "category": "content",
     "format": "carousel",
     "status": "Validated",
+    "referenceType": "generated-example",
+    "skills": [
+      "insta-post-maker",
+      "brand-image-maker",
+      "brand-elements"
+    ],
+    "provenance": {
+      "madeWith": "ilabsro-design",
+      "evidence": "generated-examples/social/context-engineering/README.md",
+      "evidenceHref": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/generated-examples/social/context-engineering/README.md",
+      "basis": "A sanitized content brief derived from internal 2027 strategy material. The internal source is not published.",
+      "brief": "generated-examples/social/context-engineering/brief.md",
+      "briefHref": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/generated-examples/social/context-engineering/brief.md"
+    },
+    "promptStatus": "archived",
+    "promptSource": {
+      "status": "archived",
+      "path": "generated-examples/social/context-engineering/prompt.md",
+      "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/generated-examples/social/context-engineering/prompt.md"
+    },
+    "originalPrompt": "# Generation prompt\n\nUse the `insta-post-maker`, `brand-image-maker` and `brand-elements` skills from the `ilabsro-design` plugin.\n\nCreate an Innovation Labs Instagram carousel based on the approved content brief below.\n\nThis is a validated example of the updated social art direction.\n\n## Human-selected visual direction\n\n- visual mode: handdrawn-diagram\n- complexity: very-simple\n- tone: smart + playful\n\n## Goal\n\nHelp the audience understand that better AI output depends substantially on the quality and specificity of the material and domain context they bring, not only on how they word the prompt.\n\nLeave them with one practical habit:\n\n**feed AI real source material, then question what comes back.**\n\n## Audience\n\nEarly-stage founders and builders who use AI tools for startup work.\n\n## Selected theme\n\nOutput quality depends more on the real material and domain knowledge you bring into the interaction than on repeatedly polishing prompt wording.\n\n## Selected angle\n\n**Stop polishing prompts. Start feeding evidence.**\n\nThis is generated editorial framing, not source language.\n\n## Key message\n\nPractitioner guidance suggests that AI output improves when the user brings real evidence, corrections and iteration into the interaction.\n\nPrompt wording may matter, but it should not be treated as the only or primary lever.\n\n## Content requirements\n\nThe final carousel must preserve:\n\n1. Prompt wording may matter; do not claim that it does not matter.\n2. Real material, evidence, correction and iteration should be central to the message.\n3. The practical habit has two parts:\n   - bring real source material;\n   - interrogate and challenge the output.\n4. Use the term **context engineering** as the name for this habit.\n5. Preserve a quiet evidence note explaining that this framing comes from practitioner literature rather than peer-reviewed scientific research.\n\n## Content boundaries\n\nDo not:\n\n- say that prompt wording is irrelevant;\n- present the claim as scientifically proven;\n- describe it as peer-reviewed research;\n- invent statistics, percentages or study results;\n- define additional technical concepts that are not part of this brief;\n- attribute quotations to a specific author;\n- name, rank or compare AI models;\n- claim Innovation Labs has scientifically validated the principle;\n- imply that an illustrative example is a real founder case;\n- introduce unrelated research topics.\n\n## Suggested information structure\n\nUse a simple multi-slide progression such as:\n\n1. Common assumption: better wording produces better output.\n2. Reframe: wording matters, but what you bring into the interaction matters more.\n3. What improves the interaction: real evidence, corrections and iteration.\n4. Illustrative comparison: thin input versus input grounded in real material.\n5. Practical habit: feed real sources, then question the response.\n6. Name the habit: context engineering.\n7. Quiet evidence note.\n8. Closing takeaway worth saving.\n\nThis is information guidance, not a rigid visual template.\n\n## Visual and execution requirements\n\n- build the carousel directly;\n- keep one primary thought per slide;\n- use more slides if that makes each frame simpler;\n- do not default to eyebrow + large headline + paragraph on every slide;\n- let drawings, arrows, simple schemas and workshop-like visual language carry part of the explanation;\n- sticky-note shapes are allowed when useful, but should not become the default visual primitive;\n- keep embedded text in generated visuals very short;\n- use varied hand-drawn visual grammar across the carousel;\n- the style should feel imperfect, intentional and workshop-like rather than like a polished corporate infographic;\n- use Innovation Labs colours;\n- preserve the approved factual boundaries;\n- do not turn non-critical evidence notes into large disclaimer boxes;\n- source/evidence attribution may be quiet or placed in the closing material;\n- the post may take a clear editorial position as long as it does not strengthen unsupported factual claims;\n- keep the result recognizably Innovation Labs.\n\nFirst give a one-sentence summary of the chosen carousel structure.\n\nThen generate the carousel directly.",
+    "walkthrough": {
+      "asked": "An Instagram carousel built on an approved content brief. A person chose the visual direction: hand-drawn diagrams, very simple, smart and playful.",
+      "decided": "insta-post-maker paced it as 11 frames with one thought each. brand-image-maker drew the diagrams that carry most of the explanation. The evidence note stays small, on the last frame.",
+      "result": "An 11-frame carousel at 1080 × 1350.",
+      "tryOwn": "For your own topic, start with content-planner to get a brief, then hand the brief to insta-post-maker the same way.",
+      "next": "planner"
+    },
     "media": {
       "type": "carousel",
       "frames": [
@@ -1193,6 +1910,25 @@ html.viewer-open{overflow:hidden}
     "category": "content",
     "format": "carousel",
     "status": "Validated",
+    "referenceType": "generated-example",
+    "skills": [
+      "insta-post-maker",
+      "brand-image-maker",
+      "brand-elements"
+    ],
+    "provenance": {
+      "madeWith": "ilabsro-design",
+      "evidence": "generated-examples/social/source-before-prompt/README.md",
+      "evidenceHref": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/generated-examples/social/source-before-prompt/README.md",
+      "basis": "One idea written into the prompt."
+    },
+    "promptStatus": "archived",
+    "promptSource": {
+      "status": "archived",
+      "path": "generated-examples/social/source-before-prompt/prompt.md",
+      "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/generated-examples/social/source-before-prompt/prompt.md"
+    },
+    "originalPrompt": "Use the insta-post-maker, brand-image-maker and brand-elements skills from the ilabsro-design plugin.\n\nCreate a short Innovation Labs Instagram carousel for this idea:\n\n“People often try to get better AI output by polishing the prompt, when the bigger gain usually comes from bringing better source material and then questioning the response.”\n\nHuman-selected visual direction:\n- visual mode: handdrawn-diagram\n- complexity: very-simple\n- tone: smart + playful\n\nImportant:\n- build the carousel directly;\n- keep one primary thought per slide;\n- use more slides if that makes the explanation simpler;\n- do not default to eyebrow + large headline + paragraph on every slide;\n- use drawings, arrows, simple comparisons, sticky notes and workshop-like diagram language;\n- keep embedded text very short;\n- preserve recognizably Innovation Labs colours and feel;\n- the post may take a clear editorial position, but do not overclaim.\n\nFirst give a one-sentence summary of the chosen structure, then generate the carousel directly.",
     "media": {
       "type": "carousel",
       "frames": [
@@ -1267,9 +2003,31 @@ html.viewer-open{overflow:hidden}
     "format": "one-pager",
     "status": "Validated",
     "cta": "View one-pager",
+    "referenceType": "generated-example",
+    "skills": [
+      "one-pager-maker",
+      "brand-image-maker",
+      "brand-elements"
+    ],
+    "provenance": {
+      "madeWith": "ilabsro-design",
+      "evidence": "generated-examples/one-pager/better-ai-context/README.md",
+      "evidenceHref": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/generated-examples/one-pager/better-ai-context/README.md",
+      "basis": "A topic, audience and factual boundaries written into the prompt.",
+      "pluginVersion": "v0.5.0",
+      "note": "The archived PDF is a two-page browser print; the takeaway runs onto page 2."
+    },
+    "promptStatus": "archived",
+    "promptSource": {
+      "status": "archived",
+      "path": "generated-examples/one-pager/better-ai-context/prompt.md",
+      "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/generated-examples/one-pager/better-ai-context/prompt.md"
+    },
+    "originalPrompt": "Use the `one-pager-maker`, `brand-image-maker`, `brand-elements` and relevant Innovation Labs design-system guidance from the `ilabsro-design` plugin.\n\nCreate a standalone Innovation Labs one-pager.\n\nThis is a capability-test artifact.\n\nTopic:\n\n“Better AI output starts with better context.”\n\nCore idea:\nPrompt wording can matter, but a major practical gain comes from bringing real source material, useful constraints, corrections and human review into the interaction.\n\nAudience:\nEarly-stage founders and builders using AI for startup work.\n\nGoal:\nCreate a useful one-page explainer someone could save, share or use during a workshop.\n\nContent direction:\n\n1. One strong opening statement.\n2. A simple explanation of what “better context” means.\n3. A visual comparison:\n   thin input vs rich input.\n4. Three practical ingredients:\n   - real material;\n   - constraints / domain context;\n   - correction and iteration.\n5. One practical habit:\n   feed it real material, then question what comes back.\n6. A short closing takeaway.\n\nDesign direction:\n- recognizably Innovation Labs;\n- editorial rather than corporate;\n- print-safe;\n- strong typography and whitespace;\n- use teal as the anchor;\n- choose one semantic accent;\n- use a custom diagram or illustration if it communicates faster than another text block;\n- do not make every section a card;\n- avoid a dense report layout;\n- avoid generic AI imagery.\n\nFactual boundaries:\n- do not say prompt wording does not matter;\n- do not call the claim scientifically proven;\n- do not invent statistics or studies;\n- do not compare specific AI models;\n- keep any evidence limitation visually quiet rather than turning it into the main message.\n\nAdd a small note stating that this is an illustrative capability-test artifact.\n\nTechnical:\n- create the artifact directly;\n- one page only;\n- print-safe;\n- readable on screen;\n- use bundled Innovation Labs assets where appropriate.\n\nAt the end, explain the main layout decision in one short paragraph.",
     "media": {
       "type": "document",
       "pdf": "https://raw.githubusercontent.com/lupsalexandra33/ilabsro-design/main/generated-examples/one-pager/better-ai-context/better-ai-context.pdf",
+      "embed": "https://cdn.jsdelivr.net/gh/lupsalexandra33/ilabsro-design@main/generated-examples/one-pager/better-ai-context/better-ai-context.pdf",
       "source": "https://github.com/lupsalexandra33/ilabsro-design/tree/main/generated-examples/one-pager/better-ai-context"
     },
     "preview": {
@@ -1319,8 +2077,7 @@ html.viewer-open{overflow:hidden}
       "process",
       "mvp"
     ],
-    "updated": "2026-10-14",
-    "featured": true
+    "updated": "2026-10-14"
   },
   {
     "id": "idea-meets-real-users",
@@ -1331,6 +2088,32 @@ html.viewer-open{overflow:hidden}
     "format": "visual",
     "status": "Validated",
     "scope": "Narrative",
+    "referenceType": "generated-example",
+    "skills": [
+      "brand-image-maker",
+      "brand-elements"
+    ],
+    "provenance": {
+      "madeWith": "ilabsro-design",
+      "evidence": "generated-examples/visuals/idea-meets-real-users/README.md",
+      "evidenceHref": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/generated-examples/visuals/idea-meets-real-users/README.md",
+      "basis": "One idea written into the prompt. No source document."
+    },
+    "promptStatus": "archived",
+    "promptSource": {
+      "status": "archived",
+      "path": "generated-examples/visuals/idea-meets-real-users/prompt.md",
+      "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/generated-examples/visuals/idea-meets-real-users/prompt.md"
+    },
+    "originalPrompt": "Use the `brand-image-maker` and `brand-elements` skills from the `ilabsro-design` plugin.\n\nCreate one standalone Innovation Labs visual.\n\nIdea:\n“A founder arrives with an idea they are very sure about.\nAfter talking to real users, the idea changes shape.”\n\nHuman-selected direction:\n- visual mode: narrative-illustration\n- complexity: very-simple\n- tone: smart + playful\n\nGoal:\nCommunicate the idea through one simple scene or visual metaphor.\n\nImportant:\n- the visual should explain the idea without needing a paragraph;\n- use simplified characters, objects or symbolic props;\n- make the transformation/change visible;\n- use Innovation Labs colors;\n- smart humor is welcome;\n- very little embedded text;\n- do not use a corporate infographic;\n- do not use sticky notes unless they genuinely help;\n- do not create photorealistic people;\n- do not create glossy generic AI art;\n- do not copy a specific old brochure illustration or copyrighted character;\n- keep it simple enough to work as a social visual or presentation insert.\n\nGenerate the visual directly.",
+    "promptExcerpt": "Create one standalone Innovation Labs visual.\n\nIdea:\n“A founder arrives with an idea they are very sure about.\nAfter talking to real users, the idea changes shape.”",
+    "walkthrough": {
+      "asked": "One visual for one idea: a founder’s idea changes shape after talking to real users. A person chose the direction: narrative illustration, very simple, smart and playful.",
+      "decided": "brand-image-maker told it as a single scene: a square idea goes in, three users react, a round idea comes out, with one short handwritten label.",
+      "result": "One standalone image, 3840 × 2160.",
+      "tryOwn": "Copy the prompt and replace the idea in quotes with your own.",
+      "next": null
+    },
     "media": {
       "type": "image",
       "src": "https://raw.githubusercontent.com/lupsalexandra33/ilabsro-design/main/generated-examples/visuals/idea-meets-real-users/output.png",
@@ -1364,6 +2147,24 @@ html.viewer-open{overflow:hidden}
     "format": "visual",
     "status": "Validated",
     "scope": "Conceptual",
+    "referenceType": "generated-example",
+    "skills": [
+      "brand-image-maker"
+    ],
+    "provenance": {
+      "madeWith": "ilabsro-design",
+      "evidence": "generated-examples/visuals/ai-as-you-sharpen/README.md",
+      "evidenceHref": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/generated-examples/visuals/ai-as-you-sharpen/README.md",
+      "basis": "One idea written into the prompt.",
+      "pluginVersion": "v0.5.0"
+    },
+    "promptStatus": "archived",
+    "promptSource": {
+      "status": "archived",
+      "path": "generated-examples/visuals/ai-as-you-sharpen/prompt.md",
+      "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/generated-examples/visuals/ai-as-you-sharpen/prompt.md"
+    },
+    "originalPrompt": "Use the brand-image-maker skill from the ilabsro-design plugin.\n\nCreate a visual for this idea:\n\n“Your first answer should come from you. AI should challenge it, not replace it.”\n\nChoose the most suitable Innovation Labs visual direction yourself.\n\nImportant:\n- keep the image simple;\n- make the logic sharper than a generic “before and after”;\n- the visual should clearly show that the human brings the first answer;\n- AI should pressure-test, challenge or question that answer;\n- the improved answer should still feel like it belongs to the human;\n- avoid random decorative metaphor details that do not strengthen the point;\n- keep embedded text short;\n- keep it recognizably Innovation Labs.\n\nFirst explain your chosen direction in one short sentence, then generate the visual directly.",
     "media": {
       "type": "image",
       "src": "https://raw.githubusercontent.com/lupsalexandra33/ilabsro-design/main/generated-examples/visuals/ai-as-you-sharpen/output.png",
@@ -1397,6 +2198,24 @@ html.viewer-open{overflow:hidden}
     "format": "visual",
     "status": "Validated",
     "scope": "Conceptual",
+    "referenceType": "generated-example",
+    "skills": [
+      "brand-image-maker"
+    ],
+    "provenance": {
+      "madeWith": "ilabsro-design",
+      "evidence": "generated-examples/visuals/test-my-thinking/README.md",
+      "evidenceHref": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/generated-examples/visuals/test-my-thinking/README.md",
+      "basis": "One idea written into the prompt.",
+      "pluginVersion": "v0.5.0"
+    },
+    "promptStatus": "archived",
+    "promptSource": {
+      "status": "archived",
+      "path": "generated-examples/visuals/test-my-thinking/prompt.md",
+      "href": "https://github.com/lupsalexandra33/ilabsro-design/blob/main/generated-examples/visuals/test-my-thinking/prompt.md"
+    },
+    "originalPrompt": "Use the brand-image-maker skill from the ilabsro-design plugin.\n\nCreate a visual for this idea:\n\n“Don’t ask AI to think instead of you. Ask it to test the thinking you already did.”\n\nDo not ask me to choose a visual mode, complexity or tone.\n\nChoose the most suitable Innovation Labs visual direction yourself based on the idea.\n\nImportant:\n- keep it simple, useful and recognizably Innovation Labs;\n- prefer one clear visual metaphor;\n- avoid generic ‘robot helping human’ clichés;\n- keep text inside the visual very short;\n- make the distinction between “replace thinking” and “test thinking” easy to understand at a glance.\n\nExplain your selected direction in one short sentence, then generate the visual directly.",
     "media": {
       "type": "image",
       "src": "https://raw.githubusercontent.com/lupsalexandra33/ilabsro-design/main/generated-examples/visuals/test-my-thinking/output.png",
@@ -1582,8 +2401,7 @@ html.viewer-open{overflow:hidden}
       "grounds": 5,
       "designSystem": "0.4"
     },
-    "statsNote": "One output skill, up to one tone lens, optional brand elements.",
-    "featured": true
+    "statsNote": "One output skill, up to one tone lens, optional brand elements."
   },
   {
     "id": "plugin-showcase",
@@ -1658,18 +2476,16 @@ html.viewer-open{overflow:hidden}
   "order": [
     "strategy-hub",
     "route-deck",
+    "vision-one-pager",
     "context-engineering",
-    "idea-meets-real-users",
-    "content-workflow",
-    "ilabsro-design"
+    "idea-meets-real-users"
   ],
   "notes": {
     "strategy-hub": "The programme as a route you can walk.",
     "route-deck": "The same story, told live.",
+    "vision-one-pager": "The whole case on one page.",
     "context-engineering": "An idea turned into something you can swipe.",
-    "idea-meets-real-users": "One picture, no paragraph.",
-    "content-workflow": "How source material becomes briefs.",
-    "ilabsro-design": "The system that makes the rest."
+    "idea-meets-real-users": "One picture, no paragraph."
   }
 };
 
@@ -1693,16 +2509,17 @@ html.viewer-open{overflow:hidden}
   /* default label of the primary action when an entry opens in the viewer */
   var VIEW_CTA = { image: 'View image', document: 'View document', carousel: 'View carousel' };
   function ctaOf(e) { return e.cta || (e.media ? VIEW_CTA[e.media.type] : lookup(FORMATS, e.format).cta); }
-  /* secondary links, in order: original PDF, repository source, then the entry's own */
+  /* secondary links, in order: original PDF, repository source, archived prompt, then the entry's own */
   function linksOf(e) {
     var out = [], m = e.media;
     if (m && m.pdf) { out.push({ label: 'Open PDF', href: m.pdf }); }
     if (m && m.source) { out.push({ label: 'View source', href: m.source }); }
+    if (e.promptSource && e.promptSource.href) { out.push({ label: 'Prompt', href: e.promptSource.href }); }
     return out.concat(e.links || []);
   }
   function matches(e, q) {
     if (!q) { return true; }
-    var hay = [e.title, e.description, e.kind, e.category, e.format, e.status, e.scope || '', (e.tags || []).join(' ')].join(' ').toLowerCase();
+    var hay = [e.title, e.description, e.kind, e.category, e.format, e.status, e.scope || '', (e.tags || []).join(' '), (e.skills || []).join(' ')].join(' ').toLowerCase();
     return q.toLowerCase().split(/\s+/).every(function (t) { return hay.indexOf(t) !== -1; });
   }
   function counts() {
@@ -1712,27 +2529,43 @@ html.viewer-open{overflow:hidden}
     return c;
   }
   function lastUpdated() {
-    return ENTRIES.reduce(function (m, e) { return e.updated > m ? e.updated : m; }, '');
+    return ENTRIES.reduce(function (m, e) { return e.updated && e.updated > m ? e.updated : m; }, '');
+  }
+  /* the skills an archived prompt selected by name, for example "/ilabsro-design:website-maker" */
+  function slashSkills(e) {
+    var out = [], re = /\/ilabsro-design:([a-z-]+)/g, mm;
+    while (e.originalPrompt && (mm = re.exec(e.originalPrompt))) { out.push(mm[1]); }
+    return out;
+  }
+  function featured() {
+    return PRESENT.order.map(byId).filter(Boolean);
   }
   function presentSteps() {
-    var steps = [{ type: 'cover', id: 'cover', title: META.title }];
+    var steps = [{ type: 'cover', id: 'cover', title: META.title },
+      { type: 'section', id: 'start', title: 'Start here' },
+      { type: 'section', id: 'how', title: 'How it works' }];
     PRESENT.order.forEach(function (id) {
       var e = byId(id);
       if (e) { steps.push({ type: 'artifact', id: id, title: e.title, note: PRESENT.notes[id] || '' }); }
     });
-    steps.push({ type: 'section', id: 'library', title: 'Library' });
+    steps.push({ type: 'section', id: 'lineage', title: 'Reference' });
+    steps.push({ type: 'section', id: 'library', title: 'Explore' });
     return steps;
   }
 
   root.ILA_REGISTRY = {
     META: META, KINDS: KINDS, CATEGORIES: CATEGORIES, FORMATS: FORMATS,
     STATUS_TONE: STATUS_TONE, ENTRIES: ENTRIES, PRESENT: PRESENT,
+    SKILLS: SKILLS, ROLES: ROLES, GUIDE: GUIDE,
     byId: byId, top: top, typeLabel: typeLabel, metaParts: metaParts,
     isLocal: isLocal, ctaOf: ctaOf, linksOf: linksOf, matches: matches, counts: counts,
-    lastUpdated: lastUpdated, presentSteps: presentSteps,
+    lastUpdated: lastUpdated, presentSteps: presentSteps, slashSkills: slashSkills, featured: featured,
     kind: function (id) { return lookup(KINDS, id); },
     category: function (id) { return lookup(CATEGORIES, id); },
-    format: function (id) { return lookup(FORMATS, id); }
+    format: function (id) { return lookup(FORMATS, id); },
+    skill: function (id) { return lookup(SKILLS, id); },
+    role: function (id) { return lookup(ROLES, id); },
+    make: function (id) { return lookup(GUIDE.make, id); }
   };
 })(window);
 
@@ -1752,7 +2585,6 @@ html.viewer-open{overflow:hidden}
 
   /* ---------- small helpers ---------- */
   var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  var WORDS = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'];
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function pad(n) { return (n < 10 ? '0' : '') + n; }
   function fmtDate(s) { var p = s.split('-'); return +p[2] + ' ' + MONTHS[+p[1] - 1] + ' ' + p[0]; }
@@ -1774,6 +2606,29 @@ html.viewer-open{overflow:hidden}
     var out = '<span class="meta mono"><span>' + esc(p[0]) + '</span><i>·</i><span>' + esc(p[1]) + '</span>';
     if (p[2]) { out += '<i>·</i><span class="st" data-tone="' + tone(e) + '"><b class="dot" aria-hidden="true"></b>' + esc(p[2]) + '</span>'; }
     return out + '</span>';
+  }
+  /* skill names, slash commands and [placeholders] get their own styling inside running text */
+  var SKILL_RE = new RegExp('(/ilabsro-design:[a-z-]+|\\b(?:' + R.SKILLS.map(function (s) { return s.id; }).join('|') + ')\\b)', 'g');
+  function rich(s) { return esc(s).replace(SKILL_RE, '<code>$1</code>'); }
+  function withPlaceholders(s) { return esc(s).replace(/\[[^\]]+\]/g, '<mark class="ph">$&</mark>'); }
+  function skillChip(id, opts) {
+    var s = R.skill(id); if (!s) { return ''; }
+    if (opts && opts.plain) { return '<span class="sk" data-role="' + s.role + '">' + esc(s.id) + '</span>'; }
+    return '<a class="sk" data-role="' + s.role + '" href="' + esc(s.href) + '" target="_blank" rel="noopener" title="Read the ' + esc(s.id) + ' instructions">' + esc(s.id) + '<span class="sr"> (skill instructions, opens in a new tab)</span></a>';
+  }
+  function skillChips(ids, opts) { return '<span class="sks">' + (ids || []).map(function (id) { return skillChip(id, opts); }).join('') + '</span>'; }
+  var ICONS = {
+    website: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 8.5h18M6 6.25h.01M8.5 6.25h.01"/>',
+    deck: '<rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 16v4M8 20h8M10.5 8.2v3.6l3-1.8z"/>',
+    page: '<path d="M6 3h8.5L18 6.5V21H6z"/><path d="M14 3v4h4M9 11h6M9 14h6M9 17h4"/>',
+    social: '<rect x="6.5" y="3" width="11" height="18" rx="2"/><rect x="9" y="6" width="6" height="7.5" rx="1"/><path d="M10.5 17.5h3"/>',
+    plan: '<path d="M4 6h9M4 10h6M4 14h5"/><circle cx="16" cy="15" r="3.5"/><path d="m18.6 17.6 2.4 2.4"/>',
+    copy: '<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"/>',
+    check: '<path d="m5 12.5 4.5 4.5L19 7.5"/>'
+  };
+  function icon(name) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' + (ICONS[name] || '') + '</svg>'; }
+  function copyBtn(kind, id, label) {
+    return '<button type="button" class="pbtn" data-copy="' + kind + ':' + esc(id) + '">' + icon('copy') + '<span>' + esc(label || 'Copy prompt') + '</span></button>';
   }
   function shot(e, opts) {
     var p = e.preview, cover = p.fit === 'cover', r = (p.w / p.h).toFixed(4);
@@ -1812,11 +2667,88 @@ html.viewer-open{overflow:hidden}
     $('#ledger').innerHTML = html;
   }
 
-  /* ---------- selected ---------- */
-  function openLine(e) {
-    return '<div class="pfoot"><p class="open mono" aria-hidden="true">' + esc(R.ctaOf(e)) + ' ' + arrowOf(e) + '</p>' +
-      (e.hint ? '<p class="hint">' + esc(e.hint) + '</p>' : '') + '</div>';
+  /* ---------- hero: one real request, end to end ---------- */
+  function renderHero() {
+    var G = R.GUIDE, e = R.byId(G.hero.example), box = $('#ask');
+    $('#hero-sum').innerHTML = [R.SKILLS.length + ' skills', 'one shared design system', 'websites, decks, one-pagers and social']
+      .map(esc).join(' <i aria-hidden="true">·</i> ');
+    if (!e || !e.promptExcerpt || !e.preview) { box.hidden = true; return; }
+    var p = e.preview;
+    box.innerHTML = '<figcaption class="ask-h mono" id="ask-cap"><span>A real request</span><span>' + esc(e.title) + '</span></figcaption>' +
+      '<ol>' +
+      '<li class="ask-row"><span class="ask-n" aria-hidden="true">1</span><div><p class="ask-k mono">What we asked</p>' +
+        '<blockquote class="ask-q">' + esc(e.promptExcerpt) + ' <span class="ell" aria-label="(continues)">…</span></blockquote></div></li>' +
+      '<li class="ask-row"><span class="ask-n" aria-hidden="true">2</span><div><p class="ask-k mono">Claude used</p>' + skillChips(e.skills, { plain: true }) + '</div></li>' +
+      '<li class="ask-row"><span class="ask-n" aria-hidden="true">3</span><div><p class="ask-k mono">What came back</p>' +
+        '<button type="button" class="ask-shot" data-view="' + esc(e.id) + '" aria-haspopup="dialog">' +
+        '<img src="' + esc(p.src) + '" width="' + p.w + '" height="' + p.h + '" alt="' + esc(p.alt) + '" decoding="async">' +
+        '<span class="sr"> (opens the viewer)</span></button></div></li>' +
+      '</ol>' +
+      '<div class="ask-f mono"><span>Quoted from prompt.md</span><a href="#ex-' + esc(e.id) + '">How it was made ↓</a></div>';
   }
+
+  /* ---------- start here ---------- */
+  function renderStart() {
+    var G = R.GUIDE;
+    $('#define').innerHTML = '<p class="mono">New to skills?</p><p><b>' + esc(G.skill) + '</b> ' + esc(G.skillMore) + '</p>';
+    $('#make').innerHTML = G.make.map(function (c) {
+      var ex = c.example ? R.byId(c.example) : null, unsure = c.id === 'planner';
+      var head = '<div class="mk-h"><span class="mk-ic">' + icon(c.icon) + '</span><h3>' + esc(c.label) + '</h3></div>' +
+        '<p class="mk-uses mono">Skill ' + skillChip(c.skill) + '</p>' +
+        '<p class="mk-when">' + esc(c.when) + '</p>';
+      var exl = '';
+      if (ex && ex.featured) {
+        exl = '<p class="mk-ex">Example: <a href="#ex-' + esc(ex.id) + '">' + esc(ex.title) + ' ↓</a></p>';
+      } else if (ex && ex.href) {
+        exl = '<p class="mk-ex">See it in practice: <a' + linkAttrs(ex.href) + '>' + esc(ex.title) + ' ' + arrow(ex.href) + newTab(ex.href) + '</a></p>';
+      }
+      var sp = '<div class="sp"><p class="sp-k mono"><span>Starter prompt</span>' + (unsure ? '<span>Fill in the [brackets]</span>' : '') + '</p>' +
+        '<p class="sp-t">' + withPlaceholders(c.prompt) + '</p>' + copyBtn('starter', c.id) + '</div>';
+      if (unsure) { return '<li class="mk unsure" id="make-' + c.id + '"><div class="mk-l">' + head + exl + '</div>' + sp + '</li>'; }
+      return '<li class="mk" id="make-' + c.id + '">' + head + sp + exl + '</li>';
+    }).join('');
+    $('#steps').innerHTML = G.steps.map(function (s, i) {
+      return '<li><span class="n" aria-hidden="true">' + (i + 1) + '</span><b>' + esc(s.title) + '</b><p>' + rich(s.text) + '</p></li>';
+    }).join('');
+    $('#planner-note').innerHTML = '<span class="mk-ic">' + icon('plan') + '</span><span>' + rich(G.plannerNote) +
+      ' <a href="#make-planner">Its starter prompt ↑</a></span>';
+  }
+
+  /* ---------- how it works ---------- */
+  function skillsOfRole(role) { return R.SKILLS.filter(function (s) { return s.role === role; }).map(function (s) { return s.id; }); }
+  function renderHow() {
+    var G = R.GUIDE;
+    $('#flow').innerHTML = G.flow.map(function (f) {
+      var opt = f.id === 'planning' || f.id === 'support', core = f.id === 'output', body = '';
+      var roles = (f.roles || []).map(R.role).filter(Boolean);
+      if (roles.length === 1) {
+        var r = roles[0], ids = skillsOfRole(r.id);
+        body += '<p class="fl-q">' + esc(r.question) + '</p>';
+        if (!(ids.length === 1 && ids[0] === f.label)) { body += skillChips(ids); }
+        body += '<p>' + rich(r.note) + '</p>';
+      } else if (roles.length > 1) {
+        body += '<div class="fl-subs">' + roles.map(function (r) {
+          return '<div class="fl-sub"><p class="k mono">' + esc(r.label) + '</p><p class="fl-q">' + esc(r.question) + '</p>' +
+            skillChips(skillsOfRole(r.id)) + '<p>' + rich(r.note) + '</p></div>';
+        }).join('') + '</div>';
+      }
+      if (f.question) { body += '<p class="fl-q">' + esc(f.question) + '</p>'; }
+      if (f.text) { body += '<p>' + rich(f.text) + '</p>'; }
+      if (f.link) {
+        var le = R.byId(f.link);
+        if (le && le.href) { body += '<a class="tl"' + linkAttrs(le.href) + '>See the workflow prototype ' + arrow(le.href) + newTab(le.href) + '</a>'; }
+      }
+      return '<li class="fl' + (opt ? ' opt' : '') + (core ? ' core' : '') + '"><p class="fl-tag mono">' + esc(f.tag) + '</p><h3>' + rich(f.label) + '</h3>' + body + '</li>';
+    }).join('');
+    var use = R.byId('usage');
+    $('#rule').innerHTML = '<b>Rule of one</b> <i aria-hidden="true">·</i> ' + G.rule.map(esc).join(' <i aria-hidden="true">·</i> ') +
+      (use ? ' <i aria-hidden="true">·</i> <a' + linkAttrs(use.href) + '>Usage guide ' + arrow(use.href) + newTab(use.href) + '</a>' : '');
+    var sys = R.byId(G.system);
+    $('#sys').innerHTML = sys ? sysPlate(sys, 'The plugin', null, 'plate p6') : '';
+    var show = R.byId(G.showcase);
+    $('#deeper').innerHTML = show ? 'For the system in depth (its visual language, workflows, modes and design decisions), open the <a' + linkAttrs(show.href) + '>Plugin Showcase ' + arrow(show.href) + newTab(show.href) + '</a>. This page stays practical: what to ask for, and what has been made.' : '';
+  }
+
   var STAT_LABELS = [['skills', 'skills', ''], ['elements', 'brand elements', ''], ['grounds', 'branded grounds', ''], ['designSystem', 'design system', 'v']];
   function sysPlate(e, n, step, cls) {
     var st = e.stats || {};
@@ -1826,30 +2758,104 @@ html.viewer-open{overflow:hidden}
     var more = (e.links || []).map(function (l) {
       return '<a class="sl mono"' + linkAttrs(l.href) + '>' + esc(l.label) + ' ' + arrow(l.href) + newTab(l.href) + '</a>';
     }).join('');
-    return '<article class="' + cls + ' sys" data-artifact-id="' + e.id + '" data-step="' + step + '" data-cat="' + e.category + '">' +
+    return '<article class="' + cls + ' sys" data-artifact-id="' + e.id + '"' + (step === null ? '' : ' data-step="' + step + '"') + ' data-cat="' + e.category + '">' +
       '<img class="sys-orn" src="assets/elements/ring-mesh.svg" alt="" width="150" height="108">' +
       '<img class="sys-orn2" src="assets/elements/star.svg" alt="" width="34" height="34">' +
-      '<div class="sys-l"><p class="idx mono"><span>' + n + '</span>' + metaLine(e) + '</p>' +
+      '<div class="sys-l"><p class="idx mono"><span>' + esc(n) + '</span>' + metaLine(e) + '</p>' +
       '<h3>' + esc(e.title) + '</h3>' +
       '<p class="desc">' + esc(e.description) + '</p>' +
       '<div class="sys-act"><a class="btn light"' + linkAttrs(e.href) + '>' + esc(R.ctaOf(e)) + ' <span aria-hidden="true">' + arrow(e.href) + '</span>' + newTab(e.href) + '</a>' + more + '</div></div>' +
       '<div class="sys-r"><p class="sys-cap mono">Inside</p><ul class="sys-grid">' + cells + '</ul>' +
       (e.statsNote ? '<p class="sys-note mono">' + esc(e.statsNote) + '</p>' : '') + '</div></article>';
   }
+
+  /* ---------- examples: "See what it can make" ---------- */
+  function primary(e, cls) {
+    var label = esc(R.ctaOf(e));
+    if (e.media) {
+      return '<button type="button" class="' + cls + '" data-view="' + esc(e.id) + '" aria-haspopup="dialog">' + label + ' <span aria-hidden="true">→</span><span class="sr"> (opens the viewer)</span></button>';
+    }
+    return '<a class="' + cls + '"' + linkAttrs(e.href) + '>' + label + ' <span aria-hidden="true">' + arrow(e.href) + '</span>' + newTab(e.href) + '</a>';
+  }
+  function baseName(path) { return path.split('/').pop(); }
+  function promptBlock(e) {
+    var t = e.originalPrompt, lines = t.split('\n').length, clip = lines > 10 || t.length > 700, pid = 'pt-' + e.id;
+    var src = e.promptSource;
+    return '<div class="prompt' + (clip ? ' clip' : '') + '">' +
+      '<div class="prompt-h mono"><b>Original prompt</b><a href="' + esc(src.href) + '" target="_blank" rel="noopener">' + esc(baseName(src.path)) + ' in the repo ↗<span class="sr"> (opens in a new tab)</span></a></div>' +
+      '<pre class="prompt-t" id="' + pid + '">' + esc(t) + '</pre>' +
+      '<div class="prompt-a">' + (clip ? '<button type="button" class="pbtn" data-expand="' + pid + '" aria-expanded="false" aria-controls="' + pid + '">Show the full prompt</button>' : '') +
+      copyBtn('prompt', e.id) + '<span class="lines mono">' + lines + ' lines</span></div></div>';
+  }
+  function similarBlock(e) {
+    return '<div class="noprompt"><b>Original prompt not archived</b><p class="muted">The repository keeps this output and its README, but no prompt.md.</p></div>' +
+      (e.similarPrompt ? '<div class="prompt similar"><div class="prompt-h mono"><b>Try a similar prompt</b><span>Written for this page, not the original</span></div>' +
+        '<pre class="prompt-t">' + esc(e.similarPrompt) + '</pre><div class="prompt-a">' + copyBtn('similar', e.id) + '</div></div>' : '');
+  }
+  function howSelected(e) {
+    var slash = R.slashSkills(e);
+    if (e.promptStatus !== 'archived') { return 'Credited in the example’s README. The prompt that selected them was not archived.'; }
+    if (slash.length) { return 'Named in the prompt, and selected explicitly with ' + slash.map(function (s) { return '<code>/ilabsro-design:' + esc(s) + '</code>'; }).join(' and ') + '.'; }
+    return 'Named in the prompt.';
+  }
+  function caseHtml(e, i) {
+    var w = e.walkthrough || {}, pv = e.provenance || {}, n = pad(i + 1), step = 4 + i;
+    var visual = e.preview ? (e.media
+      ? '<button type="button" class="shotbtn" data-view="' + esc(e.id) + '" tabindex="-1" aria-hidden="true">' + shot(e, { alt: true, eager: i < 2 }) + '</button>'
+      : '<a class="shotbtn"' + linkAttrs(e.href) + ' tabindex="-1" aria-hidden="true">' + shot(e, { alt: true, eager: i < 2 }) + '</a>') : '';
+    var more = R.linksOf(e).filter(function (l) { return !(e.promptSource && l.href === e.promptSource.href); }).map(function (l) {
+      return '<a class="sl mono"' + linkAttrs(l.href) + '>' + esc(l.label) + ' ' + arrow(l.href) + newTab(l.href) + '</a>';
+    }).join('');
+    var prov = '<dl class="prov">' +
+      '<dt class="mono">Made with</dt><dd>' + skillChips(e.skills) + (pv.pluginVersion ? ' <span class="pv mono">plugin ' + esc(pv.pluginVersion) + '</span>' : '') + '</dd>' +
+      (pv.basis ? '<dt class="mono">Built from</dt><dd>' + rich(pv.basis) +
+        (pv.briefHref ? ' <span class="note">Brief: <a href="' + esc(pv.briefHref) + '" target="_blank" rel="noopener">' + esc(baseName(pv.brief)) + ' ↗<span class="sr"> (opens in a new tab)</span></a></span>' : '') + '</dd>' : '') +
+      (pv.evidenceHref ? '<dt class="mono">Record</dt><dd><a href="' + esc(pv.evidenceHref) + '" target="_blank" rel="noopener">' + esc(baseName(pv.evidence)) + ' ↗<span class="sr"> (opens in a new tab)</span></a>' +
+        '<span class="note">The example’s README, which credits the skills.' + (pv.note ? ' ' + esc(pv.note) : '') + '</span></dd>' : '') +
+      '</dl>';
+    var walk = '';
+    if (e.walkthrough) {
+      var plural = (e.skills || []).length > 1;
+      var next = w.next ? R.make(w.next) : null;
+      walk = '<h4 class="walk-h">How this became this</h4><ol class="walk">' +
+        '<li><div class="wk mono"><b>1</b>What we asked</div><div class="wv">' +
+          (w.asked ? '<p>' + rich(w.asked) + '</p>' : '') +
+          (e.promptStatus === 'archived' && e.originalPrompt ? promptBlock(e) : similarBlock(e)) + '</div></li>' +
+        '<li><div class="wk mono"><b>2</b>Skills Claude used</div><div class="wv">' + skillChips(e.skills) + '<p class="muted">' + howSelected(e) + '</p></div></li>' +
+        '<li><div class="wk mono"><b>3</b>What the skill' + (plural ? 's' : '') + ' decided</div><div class="wv"><p>' + rich(w.decided || '') + '</p></div></li>' +
+        '<li><div class="wk mono"><b>4</b>Result</div><div class="wv"><p>' + rich(w.result || '') + '</p></div></li>' +
+        '<li><div class="wk mono"><b>5</b>Try your own</div><div class="wv"><p>' + rich(w.tryOwn || '') +
+          (next ? ' <a class="tl" href="#make-' + esc(next.id) + '">Starter prompt: ' + esc(next.id === 'planner' ? 'content-planner' : next.label) + ' ↑</a>' : '') + '</p></div></li>' +
+        '</ol>';
+    }
+    return '<article class="case" id="ex-' + esc(e.id) + '" data-artifact-id="' + esc(e.id) + '" data-step="' + step + '" data-cat="' + e.category + '" aria-labelledby="ex-t-' + esc(e.id) + '">' +
+      '<div class="case-vis"><div class="mat matbg">' + visual + '</div>' +
+        '<div class="case-act">' + primary(e, 'btn') + more + '</div>' +
+        (e.hint ? '<p class="hint">' + esc(e.hint) + '</p>' : '') + '</div>' +
+      '<div class="case-body"><p class="idx mono"><span>' + n + '</span>' + metaLine(e) + '</p>' +
+        '<h3 id="ex-t-' + esc(e.id) + '">' + esc(e.title) + '</h3>' +
+        '<p class="desc">' + esc(e.description) + '</p>' + prov + walk + '</div></article>';
+  }
   function renderPlates() {
-    var html = '';
-    R.PRESENT.order.forEach(function (id, i) {
-      var e = R.byId(id); if (!e) { return; }
-      var n = pad(i + 1), step = i + 2, cls = 'plate p' + (i + 1);
-      if (e.stats) { html += sysPlate(e, n, step, cls); return; }
-      html += '<article class="' + cls + '" data-artifact-id="' + e.id + '" data-step="' + step + '" data-cat="' + e.category + '">' +
-        '<div class="mat matbg">' + shot(e, { alt: true, eager: true }) + '</div>' +
-        '<div class="pbody"><p class="idx mono"><span>' + n + '</span>' + metaLine(e) + '</p>' +
-        '<h3>' + stretch(e) + '</h3>' +
-        '<p class="desc">' + esc(e.description) + '</p>' + openLine(e) + '</div></article>';
-    });
-    $('#plates').innerHTML = html;
-    $('#sel-note').textContent = (WORDS[N] || N) + ' entries from across the work. The full registry is below.';
+    $('#plates').innerHTML = R.featured().map(caseHtml).join('');
+  }
+
+  /* ---------- reference / visual lineage ---------- */
+  function renderRefs() {
+    var list = ALL.filter(function (e) { return e.referenceType === 'pre-plugin'; });
+    $('#lineage').hidden = !list.length;
+    $('#refs').innerHTML = list.map(function (e) {
+      var pv = e.provenance || {};
+      return '<article class="ref" id="ref-' + esc(e.id) + '" data-artifact-id="' + esc(e.id) + '" data-cat="' + e.category + '">' +
+        '<div class="ref-tile" aria-hidden="true"><img src="assets/elements/hex-gold.svg" alt="" width="120" height="138"><span class="lab mono">Pre-plugin</span></div>' +
+        '<div class="ref-body"><p class="ref-top"><span class="mono">Reference artifact · pre-plugin</span><span class="notmade">Where the look started</span></p>' +
+        '<h3>' + esc(e.title) + '</h3><p class="desc">' + esc(e.description) + '</p>' +
+        '<dl>' +
+          (pv.context ? '<dt class="mono">Context</dt><dd>' + esc(pv.context) + '</dd>' : '') +
+          (pv.verified ? '<dt class="mono">What we checked</dt><dd>' + esc(pv.verified) + '</dd>' : '') +
+          (pv.why ? '<dt class="mono">Why it’s here</dt><dd>' + rich(pv.why) + '</dd>' : '') +
+        '</dl>' + primary(e, 'btn ghost') + '</div></article>';
+    }).join('');
   }
 
   /* ---------- library ---------- */
@@ -1890,20 +2896,26 @@ html.viewer-open{overflow:hidden}
       (dark ? '<img src="assets/elements/hex-gold.svg" alt="" width="62" height="72">' : '') +
       '<span class="lab mono">' + esc(R.typeLabel(e)) + '</span></div></div>';
   }
+  /* who made it: the skills its README credits; pre-plugin references are marked as such */
+  function madeLine(e) {
+    if (e.skills && e.skills.length) { return '<p class="made mono">Made with ' + skillChips(e.skills, { plain: true }) + '</p>'; }
+    if (e.referenceType === 'pre-plugin') { return '<p class="made not mono">Pre-plugin reference · where the look started</p>'; }
+    return '';
+  }
   function row(e, i) {
     var links = R.linksOf(e).map(function (l) { return '<a' + linkAttrs(l.href) + '>' + esc(l.label) + ' ' + arrow(l.href) + newTab(l.href) + '</a>'; }).join('');
     return '<li class="row" data-artifact-id="' + e.id + '" data-kind="' + e.kind + '" data-cat="' + e.category + '">' +
       '<span class="ri mono">' + pad(i + 1) + '</span>' + thumb(e) +
       '<div class="rmain">' + metaLine(e) +
       '<h3>' + stretch(e) + '</h3>' +
-      '<p class="desc">' + esc(e.description) + '</p>' +
+      '<p class="desc">' + esc(e.description) + '</p>' + madeLine(e) +
       (links ? '<p class="rlinks mono">' + links + '</p>' : '') + '</div>' +
       '<div class="rgo mono"><span class="open" aria-hidden="true">' + esc(R.ctaOf(e)) + ' ' + arrowOf(e) + '</span>' +
       (e.hint ? '<span class="hint">' + esc(e.hint) + '</span>' : '') +
-      '<time datetime="' + e.updated + '">' + fmtDate(e.updated) + '</time></div></li>';
+      (e.updated ? '<time datetime="' + e.updated + '">' + fmtDate(e.updated) + '</time>' : '') + '</div></li>';
   }
   function renderGroups() {
-    var html = '', shown = 0, step = 3 + N;
+    var html = '', shown = 0, step = 6 + N;
     CATS.forEach(function (c) {
       if (state.cat !== 'all' && state.cat !== c.id) { return; }
       var list = ALL.filter(function (e) { return e.category === c.id && pass(e); });
@@ -1986,10 +2998,21 @@ html.viewer-open{overflow:hidden}
       fig.scrollTo(0, 0);
       fig.textContent = '';
       if (m.type === 'document') {
-        if (m.pdf) {
+        if (m.pages && m.pages.length) {
+          /* page images, when the registry carries them: stacked, scrollable, zoomable */
+          fig.classList.add('paged');
+          m.pages.forEach(function (pg) {
+            var wrap = document.createElement('div');
+            wrap.className = 'v-page';
+            wrap.style.setProperty('--w', pg.w + 'px');
+            wrap.appendChild(pic(pg));
+            fig.appendChild(wrap);
+          });
+          fig.setAttribute('aria-label', cur.e.title + ', ' + m.pages.length + (m.pages.length === 1 ? ' page' : ' pages'));
+        } else if (m.embed || m.pdf) {
           var pdf = document.createElement('iframe');
           pdf.className = 'v-pdf-frame';
-          pdf.src = m.pdf + '#view=FitH';
+          pdf.src = (m.embed || m.pdf) + '#view=FitH';
           pdf.title = cur.e.title + ' PDF';
           pdf.setAttribute('loading', 'eager');
           fig.appendChild(pdf);
@@ -2116,7 +3139,8 @@ html.viewer-open{overflow:hidden}
 
     /* --- wiring (once) --- */
     if (dlg) {
-      dlg.addEventListener('close', done);
+      /* a close event that arrives after the viewer was reopened belongs to the old session: ignore it */
+      dlg.addEventListener('close', function () { if (!dlg.open) { done(); } });
       dlg.addEventListener('cancel', function (ev) { ev.preventDefault(); close(); });
       bClose.addEventListener('click', close);
       bPrev.addEventListener('click', function () { go(-1); });
@@ -2164,20 +3188,91 @@ html.viewer-open{overflow:hidden}
   })();
 
   /* ---------- events ---------- */
+  /* the ledger now sits right above the list, so it only scrolls when the toolbar is out of sight */
   function scrollToLibrary() {
-    var t = $('#library .sec-h');
-    if (t) { t.scrollIntoView({ block: 'start' }); }
+    var t = $('#toolbar'), r = t && t.getBoundingClientRect();
+    if (r && (r.top < 0 || r.top > window.innerHeight * 0.6)) { $('#library .sec-h').scrollIntoView({ block: 'start' }); }
   }
+  /* a short pulse on the card an in-page link points at, so the eye lands on it */
+  function ping(el) {
+    if (!el || !el.classList || !/\b(mk|case|ref)\b/.test(el.className)) { return; }
+    el.classList.remove('ping'); void el.offsetWidth; el.classList.add('ping');
+    setTimeout(function () { el.classList.remove('ping'); }, 1500);
+  }
+
+  /* ---------- copy + expand (prompts) ---------- */
+  function textFor(spec) {
+    var i = spec.indexOf(':'), kind = spec.slice(0, i), id = spec.slice(i + 1), e;
+    if (kind === 'starter') { e = R.make(id); return e ? e.prompt : ''; }
+    e = R.byId(id);
+    if (!e) { return ''; }
+    return kind === 'prompt' ? (e.originalPrompt || '') : kind === 'similar' ? (e.similarPrompt || '') : '';
+  }
+  function flash(btn, ok) {
+    var lab = btn.querySelector('span'), was = btn.getAttribute('data-label') || lab.textContent;
+    btn.setAttribute('data-label', was);
+    lab.textContent = ok ? 'Copied' : 'Selected: press Ctrl+C';
+    btn.classList.toggle('done', ok);
+    clearTimeout(btn._t);
+    btn._t = setTimeout(function () { lab.textContent = was; btn.classList.remove('done'); }, 2200);
+    var live = $('#copy-live'); if (live) { live.textContent = ok ? 'Copied to the clipboard.' : 'Could not copy automatically. The text is selected; press Control C or Command C.'; }
+  }
+  function selectNear(btn) {
+    var box = btn.closest('.prompt, .sp'), el = box && box.querySelector('.prompt-t, .sp-t');
+    if (!el || !window.getSelection) { return; }
+    var r = document.createRange(); r.selectNodeContents(el);
+    var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+  }
+  function copy(btn) {
+    var text = textFor(btn.getAttribute('data-copy'));
+    if (!text) { return; }
+    function legacy() {
+      var ta = document.createElement('textarea'), ok = false;
+      ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.top = '0'; ta.style.left = '0'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { ok = document.execCommand('copy'); } catch (err) { ok = false; }
+      document.body.removeChild(ta);
+      btn.focus({ preventScroll: true });
+      if (ok) { flash(btn, true); } else { selectNear(btn); flash(btn, false); }
+    }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { flash(btn, true); }, legacy);
+        return;
+      }
+    } catch (err) {}
+    legacy();
+  }
+  function expand(btn) {
+    var pre = document.getElementById(btn.getAttribute('data-expand')), box = pre && pre.closest('.prompt');
+    if (!box) { return; }
+    var open = btn.getAttribute('aria-expanded') !== 'true';
+    box.classList.toggle('clip', !open);
+    btn.setAttribute('aria-expanded', String(open));
+    btn.textContent = open ? 'Show less' : 'Show the full prompt';
+    if (!open) { var r = box.getBoundingClientRect(); if (r.top < 0) { box.scrollIntoView({ block: 'start' }); } }
+  }
+
   document.addEventListener('click', function (ev) {
     var t = ev.target.closest('button, a');
     if (!t) { return; }
     if (t.matches('a[href^="#"]')) {
-      /* in-page anchors scroll by hand so the framed page is never navigated */
+      /* in-page anchors scroll by hand so the framed page is never navigated; focus follows for keyboard users */
       var target = document.getElementById(t.getAttribute('href').slice(1));
-      if (target) { ev.preventDefault(); target.scrollIntoView({ block: 'start' }); }
+      if (target) {
+        ev.preventDefault();
+        target.scrollIntoView({ block: 'start' });
+        if (!target.hasAttribute('tabindex') && !/^(A|BUTTON|INPUT|SELECT|TEXTAREA)$/.test(target.tagName)) { target.setAttribute('tabindex', '-1'); }
+        try { target.focus({ preventScroll: true }); } catch (err) {}
+        ping(target);
+      }
       return;
     }
-    if (t.hasAttribute('data-view')) {
+    if (t.hasAttribute('data-copy')) {
+      copy(t);
+    } else if (t.hasAttribute('data-expand')) {
+      expand(t);
+    } else if (t.hasAttribute('data-view')) {
       Viewer.open(t.getAttribute('data-view'), t);
     } else if (t.matches('.lrow')) {
       var k = t.getAttribute('data-kind');
@@ -2240,17 +3335,19 @@ html.viewer-open{overflow:hidden}
   }
 
   /* ---------- scroll-spy ---------- */
+  /* section -> nav item: onboarding sections light "Start here", the reference sits with "Examples" */
+  var SPY = { start: 'start', how: 'start', examples: 'examples', lineage: 'examples', library: 'library' };
   function spy() {
     var links = $$('[data-spy]');
     if (!('IntersectionObserver' in window)) { return; }
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         if (!en.isIntersecting) { return; }
-        var id = en.target.id;
+        var id = SPY[en.target.id];
         links.forEach(function (l) { if (l.getAttribute('data-spy') === id) { l.setAttribute('aria-current', 'true'); } else { l.removeAttribute('aria-current'); } });
       });
     }, { rootMargin: '-30% 0px -60% 0px' });
-    ['selected', 'library'].forEach(function (id) { var s = document.getElementById(id); if (s) { io.observe(s); } });
+    Object.keys(SPY).forEach(function (id) { var s = document.getElementById(id); if (s) { io.observe(s); } });
     var hero = $('.hero');
     if (hero) {
       new IntersectionObserver(function (en) { if (en[0].isIntersecting) { links.forEach(function (l) { l.removeAttribute('aria-current'); }); } }, { rootMargin: '-40% 0px -40% 0px' }).observe(hero);
@@ -2258,8 +3355,11 @@ html.viewer-open{overflow:hidden}
   }
 
   /* ---------- boot ---------- */
-  $('#library').setAttribute('data-step', String(2 + N));
-  renderLedger(); renderPlates(); renderFooter(); render(); syncControls(); spy();
+  /* Present Mode order: cover 0, start 1, how 2, examples 3, the featured cases 4..3+N, reference, library, groups */
+  $('#lineage').setAttribute('data-step', String(4 + N));
+  $('#library').setAttribute('data-step', String(5 + N));
+  renderHero(); renderStart(); renderHow(); renderPlates(); renderRefs();
+  renderLedger(); renderFooter(); render(); syncControls(); spy();
 
   /* Present Mode hooks (no UI yet). A future Present button reads these:
      the ordered steps, the registry they come from, and a way to jump. */
