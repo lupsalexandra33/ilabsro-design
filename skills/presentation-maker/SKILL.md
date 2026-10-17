@@ -1,7 +1,7 @@
 ---
 name: presentation-maker
 description: Turn Innovation Labs strategy or program material into a pitch-like route-aware presentation using the IL v0.4 design system and links to deeper source material.
-version: 0.4.0
+version: 0.4.1
 ---
 
 # Innovation Labs Presentation Maker
@@ -130,4 +130,23 @@ Do not reuse a historical artifact URL from source/reference material as the fin
 ## References
 
 - `references/pitch-structure.md`
-- `examples/IL2027_pitch.html` as the current v0.4 route-first reference implementation, including portrait/landscape adaptation, accent switching and optional `Lead the room` behavior.
+- `examples/index.html` as the current v0.4 route-first reference implementation, including portrait/landscape adaptation, accent switching and optional `Lead the room` behavior.
+
+## Bundled examples
+
+When a concrete presentation reference would materially help, consult `../../docs/EXAMPLES.md` and at most 1–2 relevant examples under `../../generated-examples/presentation/`.
+
+Use bundled examples to understand:
+
+- the relationship between request, constraints and result;
+- the expected quality bar;
+- presentation pacing and slide-level hierarchy;
+- how different narrative structures can remain recognizably Innovation Labs.
+
+Examples are references, not templates.
+
+Do not mechanically copy their slide sequence, wording, facts, URLs, route structure or composition into a new deck.
+
+In particular, do not assume every Innovation Labs presentation should use route-first storytelling. Use a route only when the source genuinely supports a meaningful journey, sequence or set of stages.
+
+Current source material, the current request and the current skill rules always take priority.

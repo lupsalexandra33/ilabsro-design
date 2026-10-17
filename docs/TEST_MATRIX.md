@@ -1,4 +1,4 @@
-# Test matrix — v0.5
+# Test matrix — v0.5.1
 
 Run each test in a fresh chat. First test with only the plugin installed; then repeat core tests with the native Innovation Labs Design System selected. Both should remain recognizably the same brand.
 
@@ -17,6 +17,69 @@ Run each test in a fresh chat. First test with only the plugin installed; then r
 | Story sequence | “Create 4 connected event stories from these photos.” | insta-post-maker | Safe zones; concise overlays; varied but coherent photo integration; people not obscured |
 | Brand element modifier | “Use a yellow accent and an appropriate official element.” | brand-elements + one output skill | Selects a meaningful asset/ground; does not change facts or information architecture; no decorative pile-up |
 | Lens isolation | “Rewrite only the tone; do not redesign.” | one lens | Content facts and visual brief remain unchanged |
+| First-time-user onboarding | “I have never used this plugin before. Explain how I should use it to make an Innovation Labs social post.” | usage guidance + relevant social skill | Uses bundled usage guidance; explains skills in plain language; gives a sensible first workflow; does not require technical plugin knowledge |
+| Bundled-example reference | “Before making this new carousel, inspect one relevant bundled social example and explain what you are learning from it. Do not copy its layout or content.” | insta-post-maker + relevant bundled example | Can access `generated-examples/`; selects a relevant example; distinguishes reference from template; does not inherit facts, claims, URLs or exact composition |
+
+## v0.5.1 distribution checks
+
+### First-time-user onboarding
+
+Run with only the distributed plugin installed.
+
+Prompt:
+
+> I have never used Innovation Labs Design before. Explain how I should use it to make an Innovation Labs social post. Do not create anything yet.
+
+Pass only if Claude:
+
+- can use the bundled usage guidance;
+- explains what a skill is in plain language;
+- explains that the user may describe the desired outcome without already knowing skill names;
+- identifies an appropriate social workflow;
+- explains when source material should be supplied;
+- does not require access to the development repository.
+
+
+### Bundled-example access
+
+Run with only the distributed plugin installed.
+
+Prompt:
+
+> Before making this new carousel, inspect one relevant bundled social example and its archived prompt. Explain what you are learning from it without treating it as a template. Do not create the carousel yet. Tell me the exact bundled file paths you successfully read.
+
+Pass only if Claude:
+
+- can access `docs/EXAMPLES.md`;
+- can access a relevant path under `generated-examples/social/`;
+- can read the example README and archived prompt when available;
+- describes the example as a reference rather than a template;
+- does not inherit the example's facts, claims, URLs, wording or exact composition;
+- can report the actual bundled paths it inspected.
+
+
+### Distribution boundary
+
+The distributed plugin should be sufficient for the two tests above without bundling the development surfaces.
+
+The runtime package should include:
+
+- `.claude-plugin/`;
+- `skills/`;
+- `design-system/`;
+- `assets/`;
+- `generated-examples/`;
+- `docs/USAGE.md`;
+- `docs/EXAMPLES.md`;
+- `README.md`.
+
+It should not require:
+
+- `artifact-index/`;
+- `showcase/`;
+- `scripts/`;
+- Git history;
+- access to the full development repository.
 
 ## Responsive checks
 

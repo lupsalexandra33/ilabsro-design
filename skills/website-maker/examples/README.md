@@ -1,6 +1,6 @@
 # Website reference example
 
-`IL2027_strategy_hub.html` is the current v0.4 Strategy Hub reference supplied/generated in Flavia's refreshed direction.
+`index.html` is the current v0.4 Strategy Hub reference.
 
 Study it for:
 - one shell with Map + Hub views;

@@ -2,13 +2,36 @@
 
 Innovation Labs design and content plugin for creating consistent websites, presentations, one-pagers, social content, standalone visuals and source-grounded content plans.
 
-**Plugin version:** `v0.5.0`
+**Plugin version:** `v0.5.1`
 
 The project packages Innovation Labs visual language, reusable brand elements, artifact-making skills, content planning and voice guidance into one working system.
 
 The goal is not to generate one fixed template.
 
 The goal is to make different Innovation Labs artifacts feel recognizably related while still allowing each format and story to choose the structure that fits it.
+
+---
+
+## What the distributed plugin includes
+
+The Claude-distributed plugin is designed to be usable without access to the full development repository.
+
+The runtime package includes:
+
+- the 10 plugin skills under `skills/`;
+- the portable Innovation Labs design system under `design-system/`;
+- shared reusable brand assets under `assets/`;
+- validated capability references under `generated-examples/`;
+- first-time usage guidance in `docs/USAGE.md`;
+- the curated example index in `docs/EXAMPLES.md`.
+
+The bundled generated examples are **references, not canonical templates**.
+
+They exist so Claude can inspect the relationship between a request, its constraints and a successful output when a concrete example would materially help.
+
+Claude should use only a small number of relevant examples for a task and must not mechanically inherit their facts, wording, URLs, layout or composition.
+
+Current source material, the current request and the current skill rules always take priority.
 
 ---
 
@@ -192,7 +215,7 @@ The current design-system token version may remain different from the plugin ver
 For example:
 
 ```text
-Plugin: v0.5.0
+Plugin: v0.5.1
 Design system / portable tokens: v0.4
 ```
 
@@ -226,6 +249,19 @@ The examples are intentionally varied.
 They are not intended to demonstrate one canonical layout.
 
 Instead, they test whether the system can generate different artifact archetypes while remaining recognizably Innovation Labs.
+
+The generated examples are also bundled with the distributed plugin as capability references.
+
+Where available, an example may include:
+
+- `README.md` — what the artifact tests and why it was kept;
+- `prompt.md` — the archived generation prompt;
+- `brief.md` — a documented downstream brief when one exists;
+- the generated output itself.
+
+Not every historical example has every provenance file. Missing prompts must not be reconstructed or presented as original prompts.
+
+See `docs/EXAMPLES.md` for the curated map between examples, skills and intended use.
 
 Current example families include:
 
@@ -436,6 +472,7 @@ ilabsro-design/
 │
 ├── docs/
 │   ├── content-workflow/
+│   ├── EXAMPLES.md
 │   ├── PLUGIN_ARCHITECTURE.md
 │   ├── TEST_MATRIX.md
 │   └── USAGE.md
@@ -472,7 +509,7 @@ showcase/
 = plugin capability showcase
 
 docs/
-= workflows and technical documentation
+= usage guidance, example index, workflows and technical documentation
 ```
 
 Original generated outputs should not be unnecessarily duplicated inside the Artifact Index or Showcase.
@@ -554,7 +591,7 @@ Validation is about whether the artifact is useful as a reference for the system
 
 Current plugin version:
 
-`v0.5.0`
+`v0.5.1`
 
 Current plugin scope:
 

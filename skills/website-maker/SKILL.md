@@ -1,7 +1,7 @@
 ---
 name: website-maker
 description: Build Innovation Labs Strategy Hubs, route/map previews and connected web artifacts from source material using the portable IL v0.4 design system.
-version: 0.4.0
+version: 0.4.1
 ---
 
 # Innovation Labs Website Maker
@@ -123,4 +123,23 @@ Start with one responsive layer rather than breakpoint patches.
 
 - `references/website-patterns.md`
 - `references/map-proposal-pattern.md`
-- `examples/IL2027_strategy_hub.html` as the current v0.4 reference implementation: one shell, Map + Hub views, a shared full/mini-map stop model and fluid responsive behavior.
+- `examples/index.html` as the current v0.4 reference implementation: one shell, Map + Hub views, a shared full/mini-map stop model and fluid responsive behavior.
+
+## Bundled examples
+
+When a concrete website reference would materially help, consult `../../docs/EXAMPLES.md` and at most 1–2 relevant examples under `../../generated-examples/website/`.
+
+Use bundled examples to understand:
+
+- the relationship between request, constraints and result;
+- the expected quality bar;
+- website-specific structure and responsive behaviour;
+- how different website archetypes can still remain recognizably Innovation Labs.
+
+Examples are references, not templates.
+
+Do not mechanically copy their layout, wording, facts, URLs, route structure or composition into a new artifact.
+
+In particular, do not assume every Innovation Labs website should use the Strategy Hub route-first structure.
+
+Current source material, the current request and the current skill rules always take priority.

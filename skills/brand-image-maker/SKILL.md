@@ -1,7 +1,7 @@
 ---
 name: brand-image-maker
 description: "Create Innovation Labs custom visuals from an approved content brief using controllable hand-drawn, narrative illustration or event-glow directions."
-version: "0.1.1"
+version: "0.1.2"
 ---
 
 # Innovation Labs Brand Image Maker
@@ -271,6 +271,26 @@ If direct image generation is unavailable, produce a concise generation brief co
 - explicit negative constraints.
 
 Do not output a long creative essay.
+
+## Bundled examples
+
+When a concrete visual reference would materially help, consult `../../docs/EXAMPLES.md` and at most 1–2 relevant examples under `../../generated-examples/visuals/`.
+
+Use bundled examples to understand:
+
+- how an abstract idea can become a visual structure;
+- how visual mode, complexity and tone affect the result;
+- how much text is appropriate inside the image;
+- the expected quality bar for Innovation Labs custom visuals;
+- how different explanatory patterns can still remain recognizably Innovation Labs.
+
+Examples are references, not templates.
+
+Do not mechanically copy their characters, metaphors, labels, wording, facts, layout or composition into a new visual.
+
+Do not assume that a previous visual mode is the right one for the current task. Choose the mode that best fits the current idea unless the human has already selected one.
+
+Current source material, the current request, human-selected controls and the current skill rules always take priority.
 
 ## Handoff
 

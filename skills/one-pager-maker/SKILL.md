@@ -1,7 +1,7 @@
 ---
 name: one-pager-maker
 description: Create concise Innovation Labs one-pagers for partners, founders or internal use with exact page-count control and the shared IL v0.4 design system.
-version: 0.4.0
+version: 0.4.1
 ---
 
 # Innovation Labs One-Pager Maker
@@ -57,3 +57,22 @@ Examples:
 
 - `references/one-pager-pattern.md`
 - `examples/IL2027_vision_onepager.html` for content-density reference only. Follow v0.4 Design System rules over any deprecated treatment in the example.
+
+## Bundled examples
+
+When a concrete one-pager reference would materially help, consult `../../docs/EXAMPLES.md` and at most 1–2 relevant examples under `../../generated-examples/one-pager/`.
+
+Use bundled examples to understand:
+
+- the relationship between request, constraints and result;
+- the expected quality bar;
+- editorial hierarchy and information compression;
+- how different one-page artifacts can remain recognizably Innovation Labs.
+
+Examples are references, not templates.
+
+Do not mechanically copy their wording, facts, URLs, section structure, diagrams or composition into a new artifact.
+
+In particular, do not assume every one-pager should follow the 2027 Vision partner-brief structure. Choose the information architecture that best fits the current audience, source and purpose.
+
+Current source material, the current request and the current skill rules always take priority.

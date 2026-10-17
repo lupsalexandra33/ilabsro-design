@@ -1,6 +1,6 @@
 # Presentation reference example
 
-`IL2027_pitch.html` is the current v0.4 route-first presentation reference supplied/generated in Flavia's refreshed direction.
+`index.html` is the current v0.4 route-first presentation reference.
 
 Study it for:
 - route on slide one;
