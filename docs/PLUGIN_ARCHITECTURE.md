@@ -14,6 +14,7 @@ ilabsro-design/
 │   ├── INNOVATION_LABS_DESIGN_SYSTEM.md
 │   ├── TOKENS.css
 │   ├── BRAND_ELEMENTS.md
+│   ├── AI_TELLS.md
 │   ├── COMPONENT_CATALOG.md
 │   ├── CLAUDE_DESIGN_SETUP.md
 │   └── SYNC_NOTES.md
@@ -25,6 +26,7 @@ ilabsro-design/
 │   ├── content-planner/
 │   ├── brand-image-maker/
 │   ├── brand-elements/
+│   ├── human-pass/
 │   ├── formal-lens/
 │   ├── friendly-lens/
 │   └── jokey-lens/
@@ -47,6 +49,7 @@ Social-only mascot PNGs remain inside `skills/insta-post-maker/assets/brand-elem
 - Custom image layer: optional `brand-image-maker` when an artifact needs a generated diagram, illustration or atmospheric visual.
 - Tone lens: zero or one of `formal-lens`, `friendly-lens`, `jokey-lens`.
 - Visual modifier: optional `brand-elements`.
+- Final check: `human-pass` on the copy and `human-pass/scripts/design_tells.py` on the output (AI tells in `design-system/AI_TELLS.md`).
 - Design System: bundled v0.4 rules; native Claude Design System may mirror them when available.
 
 The plugin intentionally does not bundle connectors, agents or hooks. Its job is reusable design behavior and portable assets.

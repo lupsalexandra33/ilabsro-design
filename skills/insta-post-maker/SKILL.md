@@ -17,6 +17,7 @@ The output must feel editorial, human, recognizably IL and social-native. It sho
 1. Read `../../design-system/INNOVATION_LABS_DESIGN_SYSTEM.md`.
 2. Read `../../design-system/TOKENS.css`.
 3. Read `../../design-system/BRAND_ELEMENTS.md`.
+   Read `../../design-system/AI_TELLS.md`: the patterns Innovation Labs never ships (generic icon tiles, emoji, glassmorphism, em dashes, Inter/Geist/Space Grotesk, three feature cards, bento grids, fake terminals, "it's not X, it's Y", placeholder demos, purple-on-black, glow orbs, dot grids, sparkles, arrow-nudge CTAs, big hover motion, rainbow color). Before delivering, run `python3 ../human-pass/scripts/design_tells.py <output>` and fix every finding that isn't a documented IL exception.
 4. Ground every factual claim in the user's supplied material. Never invent names, quotes, winners, numbers or outcomes.
 5. Study `references/social-2026/` for composition behavior, not literal layouts.
 6. If `brand-elements` is selected, treat it as a modifier for accent, branded ground and official shared assets.
@@ -336,6 +337,10 @@ Choose the strongest emotional image for the cover when possible. Do not use pho
 - preserve top/bottom safe zones;
 - photo-led is encouraged for event content;
 - a story may be more immediate and less card-like than a feed carousel.
+
+## Final copy check
+
+Before showing a draft, run the visible frame copy and the caption through `../human-pass/SKILL.md`. Rewrite flagged lines through the active lens. Frame copy is short by design, so the gate is zero lexicon hits and zero unresolved structural flags, not the detect score.
 
 ## Decision logic
 

@@ -16,6 +16,7 @@ Read:
 - `../../design-system/INNOVATION_LABS_DESIGN_SYSTEM.md`
 - `../../design-system/TOKENS.css`
 - `../../design-system/BRAND_ELEMENTS.md`
+- `../../design-system/AI_TELLS.md` (patterns IL never ships; applies to every element choice)
 
 Shared assets live in:
 - `../../assets/brand-elements/`

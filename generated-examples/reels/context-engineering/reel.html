@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Context engineering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Caveat:wght@400;600;700&display=block">
+<link rel="stylesheet" href="kit/il-reel-kit.css">
+<style>
+  /* Source: generated-examples/social/context-engineering/brief.md (approved IL brief).
+     Family: handwritten / human teaching. Lens: friendly. Ending: pig. */
+  .col { position: absolute; left: 90px; width: 900px; }
+  .line { display: inline-block; }
+
+  /* S1 — the polishing loop */
+  #s1 .hook { top: 400px; font-size: 104px; }
+  #s1 .card { top: 820px; padding: 48px 52px 60px; }
+  #s1 .card .il-body { font-size: 48px; }
+  #s1 .card .il-mono { margin-bottom: 26px; }
+  #s1 .v { display: block; margin: 0 0 22px; }
+  #s1 .v span { display: inline; }
+  #s1 .again { position: absolute; right: 30px; bottom: -86px; transform-origin: 50% 50%; }
+
+  /* S2 — wording is one part */
+  #s2 .say { top: 440px; display: flex; flex-direction: column; gap: 8px; }
+  #s2 #bar { position: absolute; left: 110px; top: 880px; width: 860px; height: 300px; }
+  #s2 .cell-a { position: absolute; left: 110px; top: 880px; width: 230px; height: 300px; display: grid; place-items: center; }
+  #s2 .cell-b { position: absolute; left: 340px; top: 880px; width: 630px; height: 300px; display: grid; place-items: center; }
+  #s2 .cell-a .il-hand-sm { font-size: 60px; }
+  #s2 .cell-b .il-hand { font-size: 200px; color: var(--teal); }
+  #s2 .cap { top: 1260px; font-size: 48px; }
+
+  /* S3 — bring the real material */
+  #s3 .head { top: 380px; }
+  #s3 .il-sticky { position: absolute; width: 400px; font-size: 66px; padding: 30px 34px; }
+  #s3 .n1 { left: 100px; top: 600px; } #s3 .n2 { left: 570px; top: 630px; }
+  #s3 .n3 { left: 120px; top: 900px; } #s3 .n4 { left: 572px; top: 930px; }
+  #s3 .tag { top: 1230px; }
+  #s3 .then { top: 1320px; font-size: 76px; }
+
+  /* S4 — question what comes back */
+  #s4 .head { top: 330px; }
+  #s4 .card { top: 690px; padding: 44px 56px 36px; }
+  #s4 .row .il-body { font-size: 47px; }
+  #s4 .row { margin-bottom: 30px; }
+  #s4 .row .il-body { color: var(--ink); }
+  #s4 .row .il-hand-sm { margin: 8px 0 0 6px; font-size: 60px; }
+  #s4 .loop { top: 1420px; font-size: 72px; }
+
+  /* S5 — name the habit */
+  #s5 .pre { top: 470px; }
+  #s5 .name { top: 590px; font-size: 150px; line-height: .92; }
+  #s5 .body { top: 1060px; font-size: 50px; }
+  #s5 .note { top: 1440px; }
+</style>
+</head>
+<body>
+<div class="il-stage">
+
+  <section class="il-scene il-ground-alt" id="s1">
+    <h1 class="il-h1 col hook" id="hook">Still polishing<br>the prompt?</h1>
+    <div class="il-card col card" id="pcard">
+      <p class="il-mono" data-quiet>Prompt</p>
+      <p class="il-body v"><span id="v1">Write a go-to-market plan.</span></p>
+      <p class="il-body v"><span id="v2">Write a detailed go-to-market plan.</span></p>
+      <p class="il-body v"><span id="v3">Act as an expert. Write a detailed, step-by-step go-to-market plan.</span></p>
+      <p class="il-hand-sm again" id="again">again?</p>
+    </div>
+  </section>
+
+  <section class="il-scene il-ground-white" id="s2">
+    <div class="col say">
+      <h2 class="il-h2" id="w1">Wording helps.</h2>
+      <h2 class="il-h2 il-teal" id="w2">It's only part of it.</h2>
+    </div>
+    <div id="bar"></div>
+    <svg class="il-abs" style="left:0;top:0;overflow:visible" width="1080" height="1920" viewBox="0 0 1080 1920">
+      <path id="divider" d="M340,886 C343,960 337,1070 341,1174" fill="none" stroke="var(--teal)" stroke-width="9" stroke-linecap="round"/>
+    </svg>
+    <div class="cell-a"><p class="il-hand-sm" id="wording">wording</p></div>
+    <div class="cell-b"><p class="il-hand" id="qm">?</p></div>
+    <p class="il-body col cap" id="cap2">The rest is what you bring.</p>
+  </section>
+
+  <section class="il-scene il-ground-tint" id="s3">
+    <h2 class="il-h2 col head" id="h3">Bring the real material.</h2>
+    <div class="il-sticky n1" id="n1">interview<br>notes</div>
+    <div class="il-sticky n2" id="n2">source<br>documents</div>
+    <div class="il-sticky n3" id="n3">competitor<br>pages</div>
+    <div class="il-sticky teal n4" id="n4">your<br>constraints</div>
+    <p class="il-mono col tag" id="tag">Examples, not a checklist</p>
+    <p class="il-hand-sm col then" id="then">now it has something real to work with</p>
+  </section>
+
+  <section class="il-scene il-ground-white" id="s4">
+    <h2 class="il-h2 col head" id="h4">Then <span class="line" id="q">question</span><br>what comes back.</h2>
+    <div class="il-card col card" id="acard">
+      <p class="il-mono" data-quiet style="margin-bottom:26px">First answer · illustrative</p>
+      <div class="row"><p class="il-body"><span class="line" id="a1">Target every small business.</span></p><p class="il-hand-sm" id="m1">who exactly?</p></div>
+      <div class="row"><p class="il-body"><span class="line" id="a2">Grow 10x in year one.</span><!-- il-allow-tell: deliberately bad illustrative AI answer, struck out on screen --></p><p class="il-hand-sm" id="m2">says who?</p></div>
+      <div class="row"><p class="il-body"><span class="line" id="a3">Launch on three channels.</span></p><p class="il-hand-sm" id="m3">why these three?</p></div>
+    </div>
+    <p class="il-hand-sm col loop" id="loop">correct it, ask again, repeat</p>
+  </section>
+
+  <section class="il-scene il-ground-alt" id="s5">
+    <p class="il-h3 col pre" style="color:var(--ink-muted)" id="pre">This habit has a name:</p>
+    <p class="il-hand col name" id="name"><span class="line" id="nm1">context</span><br><span class="line" id="nm2">engineering</span></p>
+    <p class="il-body col body" id="body5">Better material in. Better questions back. <span style="color:var(--ink)">You still make the call.</span></p>
+    <p class="il-note col note" id="note5">Based on practitioner guidance, not a formal study.</p>
+  </section>
+
+  <section class="il-scene" id="outro"></section>
+</div>
+<script src="kit/il-reel-kit.js"></script>
+<script>
+const B = { s1: 0, s2: 5.6, s3: 10.6, s4: 16.5, s5: 24.7, outro: 30.7 };
+const END = 33.0;
+ILReel.run({ duration: END, fps: 30, title: 'Context engineering', family: 'handwritten', ending: 'pig' }, async (r) => {
+  // scenes: each new scene fades in over the previous, the previous cuts once covered
+  const order = ['s1', 's2', 's3', 's4', 's5'];
+  order.forEach((id, i) => {
+    const next = B[order[i + 1]] ?? B.outro;
+    r.scene('#' + id, B[id], next + 0.45, { enter: i === 0 ? 'cut' : 'fade', exit: 'cut', inDur: 0.45 });
+  });
+
+  // S1 — hook visible from frame 0; the prompt gets polished, struck, polished again
+  r.read('#hook', 0, B.s2, 'hook');
+  r.read('#v1', 0, B.s2, 's1');
+  r.mark('strike', '#v1', { t: 0.9, color: 'var(--ink-subtle)', width: 7 });
+  r.write('#v2', 1.25, 0.75, 'linear');
+  r.mark('strike', '#v2', { t: 2.25, color: 'var(--ink-subtle)', width: 7 });
+  r.write('#v3', 2.5, 1.1, 'linear');
+  // #v3 is texture: its length is the point, nobody has to read all of it
+  r.tween('#again', { t: 3.55, dur: 0.01, from: { rotate: -7 }, to: { rotate: -7 } });
+  r.write('#again', 3.55, 0.55);
+
+  // S2 — wording is one slice; the rest is a question mark
+  r.appear('#w1', B.s2 + 0.25);
+  r.appear('#w2', B.s2 + 0.8);
+  r.read('#w1', B.s2 + 0.25, B.s3, 's2'); r.read('#w2', B.s2 + 0.8, B.s3, 's2');
+  r.mark('box', '#bar', { t: B.s2 + 1.3, pad: 0, dur: 0.85, seed: 4 });
+  r.draw('#divider', B.s2 + 2.1, 0.3);
+  r.write('#wording', B.s2 + 2.35, 0.5);
+  r.write('#qm', B.s2 + 2.7, 0.35);
+  r.appear('#cap2', B.s2 + 2.8, { y: 16 });
+  r.read('#cap2', B.s2 + 2.8, B.s3 + 0.45, 's2');
+
+  // S3 — the question mark gets filled with real material
+  r.appear('#h3', B.s3 + 0.2);
+  r.read('#h3', B.s3 + 0.2, B.s4, 's3');
+  const notes = [['#n1', -3.2], ['#n2', 2.6], ['#n3', 1.8], ['#n4', -2.2]];
+  notes.forEach(([id, rot], i) => {
+    const t = B.s3 + 0.9 + i * 0.48;
+    r.tween(id, { t, dur: 0.5, from: { opacity: 0, y: 60, rotate: rot * 3, scale: 0.92 }, to: { opacity: 1, y: 0, rotate: rot, scale: 1 }, ease: 'settle' });
+    r.read(id, t, B.s4, 'note');
+  });
+  r.appear('#tag', B.s3 + 3.0, { y: 10 });
+  r.write('#then', B.s3 + 3.2, 1.2);
+  r.read('#then', B.s3 + 3.2, B.s4 + 0.45, 's3');
+
+  // S4 — interrogate the first answer: circle, strike, underline, each with a margin question
+  r.appear('#h4', B.s4 + 0.2);
+  r.read('#h4', B.s4 + 0.2, B.s5, 's4');
+  r.mark('highlight', '#q', { t: B.s4 + 0.85, color: 'rgba(114, 236, 231, .85)' });
+  r.appear('#acard', B.s4 + 1.0, { y: 30 });
+  r.read('#acard', B.s4 + 1.0, B.s5, 'answer');
+  r.mark('circle', '#a1', { t: B.s4 + 1.9, pad: 8, seed: 11 });
+  r.write('#m1', B.s4 + 2.45, 0.55);
+  r.mark('strike', '#a2', { t: B.s4 + 3.25 });
+  r.write('#m2', B.s4 + 3.6, 0.45);
+  r.mark('underline', '#a3', { t: B.s4 + 4.3 });
+  r.write('#m3', B.s4 + 4.65, 0.6);
+  r.write('#loop', B.s4 + 5.0, 0.9);
+  r.read('#loop', B.s4 + 5.0, B.s5 + 0.45, 's4');
+
+  // S5 — name the practice, keep the human in charge, quiet evidence note
+  r.appear('#pre', B.s5 + 0.25, { y: 14 });
+  r.read('#pre', B.s5 + 0.25, B.outro, 's5');
+  r.write('#nm1', B.s5 + 0.8, 0.6);
+  r.write('#nm2', B.s5 + 1.35, 0.95);
+  r.read('#name', B.s5 + 0.8, B.outro, 's5');
+  r.mark('underline', '#nm2', { t: B.s5 + 2.4, width: 11, offset: -4, seed: 3 });
+  r.appear('#body5', B.s5 + 2.0, { y: 18 });
+  r.read('#body5', B.s5 + 2.0, B.outro + 0.3, 's5');
+  r.appear('#note5', B.s5 + 2.9, { y: 10 });
+  r.read('#note5', B.s5 + 2.9, B.outro + 0.3, 'evidence note');
+
+  // Signature
+  r.outro('#outro', { t: B.outro, variant: 'pig' });
+});
+</script>
+</body>
+</html>

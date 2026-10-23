@@ -11,6 +11,7 @@ Use when the user asks for a strategy presentation, pitch-style story, live deck
 ## Before building
 
 1. Read `../../design-system/INNOVATION_LABS_DESIGN_SYSTEM.md`, `../../design-system/TOKENS.css` and `../../design-system/BRAND_ELEMENTS.md`.
+   Read `../../design-system/AI_TELLS.md`: the patterns Innovation Labs never ships (generic icon tiles, emoji, glassmorphism, em dashes, Inter/Geist/Space Grotesk, three feature cards, bento grids, fake terminals, "it's not X, it's Y", placeholder demos, purple-on-black, glow orbs, dot grids, sparkles, arrow-nudge CTAs, big hover motion, rainbow color). Before delivering, run `python3 ../human-pass/scripts/design_tells.py <output>` and fix every finding that isn't a documented IL exception.
 2. Read `references/pitch-structure.md`.
 3. Ground every factual claim in supplied source material.
 4. If a Strategy Hub URL is supplied, plan a clear final/recurring path into it.

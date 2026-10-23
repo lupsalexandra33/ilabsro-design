@@ -14,8 +14,8 @@ try:
     data = json.loads(manifest.read_text())
     if data.get('name') != 'ilabsro-design':
         errors.append('plugin name must be ilabsro-design')
-    if data.get('version') != '0.5.1':
-        errors.append('plugin version must be 0.5.1')
+    if data.get('version') != '0.7.0':
+        errors.append('plugin version must be 0.7.0')
 except Exception as e:
     errors.append(f'plugin.json invalid: {e}')
 
@@ -45,6 +45,7 @@ required = [
     'one-pager-maker',
     'insta-post-maker',
     'reels-maker',
+    'human-pass',
     'content-planner',
     'brand-image-maker',
     'brand-elements',
@@ -201,9 +202,9 @@ if errors:
     sys.exit(1)
 
 print(
-    f'OK: plugin manifest v0.5.1 valid; '
+    f'OK: plugin manifest v0.7.0 valid; '
     f'{len(found)} skills found; '
     f'{svg_count} shared SVG brand elements; '
     f'{len(found_example_families)} generated-example families; '
-    f'v0.5.1 required files present.'
+    f'v0.7.0 required files present.'
 )
