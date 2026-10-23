@@ -44,6 +44,7 @@ required = [
     'presentation-maker',
     'one-pager-maker',
     'insta-post-maker',
+    'reels-maker',
     'content-planner',
     'brand-image-maker',
     'brand-elements',

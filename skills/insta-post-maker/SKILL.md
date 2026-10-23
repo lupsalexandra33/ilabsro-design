@@ -8,6 +8,8 @@ version: 0.5.1
 
 Use when the user wants Innovation Labs social output for Instagram: carousels, feed posts, stories, recaps, teasers, announcements or a lightweight animated concept.
 
+Scope: this skill owns static Instagram posts, carousels, static Stories and lightweight motion concepts for static assets. For a finished vertical short-form video or Instagram Reel, use reels-maker instead. Choose by requested output, not by topic: announcements and lessons may be static or video.
+
 The output must feel editorial, human, recognizably IL and social-native. It should not feel like a Strategy Hub card resized for Instagram or a generic Canva conference template.
 
 ## Read first

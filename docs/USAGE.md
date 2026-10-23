@@ -80,6 +80,7 @@ The main output skills are:
 - `presentation-maker` — presentation decks;
 - `one-pager-maker` — one-page explainers and partner briefs;
 - `insta-post-maker` — social posts and carousels.
+- `reels-maker` — educational and promotional Instagram Reels, with complete MP4 production when supported.
 
 You may name the skill explicitly, but you can also describe the desired result and let Claude choose the appropriate one.
 

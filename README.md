@@ -56,7 +56,7 @@ Generated and validated examples live in:
 
 ## Skills
 
-The plugin currently contains **10 skills**.
+The plugin currently contains **11 skills**.
 
 ### Artifact makers
 
@@ -119,6 +119,25 @@ It prefers:
 - custom drawings and diagrams;
 - concise copy;
 - avoiding repetitive eyebrow + headline + paragraph layouts.
+
+---
+
+#### `reels-maker`
+
+Creates educational and promotional Innovation Labs Instagram Reels, with complete, review-ready MP4 output when supported.
+
+It focuses on:
+
+- hook-first storytelling and strong viewer retention;
+- educational handwritten explainers with human-first motion;
+- natural, iMessage-inspired conversations for announcements and teasers;
+- progressive drawings, annotations and meaningful animations;
+- concise, human-sounding text-on-screen copy;
+- automatic selection of visual styles and communication lenses;
+- teal-first branding and controlled use of official brand assets;
+- recognizable Innovation Labs endings with the official logo and branded elements;
+- adapting existing content into engaging short-form videos;
+- avoiding generic AI-generated aesthetics, repetitive templates and unnecessary motion effects.
 
 ---
 
@@ -596,7 +615,7 @@ Current plugin version:
 Current plugin scope:
 
 ```text
-10 skills
+11 skills
 16 shared SVG brand elements
 multiple artifact formats
 source-grounded content planning

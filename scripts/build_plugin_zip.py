@@ -138,6 +138,9 @@ def validate_sources() -> None:
         if not path.is_file():
             fail(f"missing runtime documentation: docs/{filename}")
 
+    if not (ROOT / "skills" / "reels-maker" / "SKILL.md").is_file():
+        fail("missing runtime skill: skills/reels-maker/SKILL.md")
+
 
 def collect_files() -> list[tuple[Path, str]]:
     files: list[tuple[Path, str]] = []
