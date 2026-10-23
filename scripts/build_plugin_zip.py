@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PLUGIN_MANIFEST = ROOT / ".claude-plugin" / "plugin.json"
 
 EXPECTED_PLUGIN_NAME = "ilabsro-design"
-EXPECTED_PLUGIN_VERSION = "0.5.1"
+EXPECTED_PLUGIN_VERSION = "0.7.0"
 
 RUNTIME_DIRECTORIES = [
     ".claude-plugin",
@@ -137,6 +137,9 @@ def validate_sources() -> None:
 
         if not path.is_file():
             fail(f"missing runtime documentation: docs/{filename}")
+
+    if not (ROOT / "skills" / "reels-maker" / "SKILL.md").is_file():
+        fail("missing runtime skill: skills/reels-maker/SKILL.md")
 
 
 def collect_files() -> list[tuple[Path, str]]:

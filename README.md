@@ -2,7 +2,7 @@
 
 Innovation Labs design and content plugin for creating consistent websites, presentations, one-pagers, social content, standalone visuals and source-grounded content plans.
 
-**Plugin version:** `v0.5.1`
+**Plugin version:** `v0.7.0`
 
 The project packages Innovation Labs visual language, reusable brand elements, artifact-making skills, content planning and voice guidance into one working system.
 
@@ -18,7 +18,7 @@ The Claude-distributed plugin is designed to be usable without access to the ful
 
 The runtime package includes:
 
-- the 10 plugin skills under `skills/`;
+- the 12 plugin skills under `skills/`;
 - the portable Innovation Labs design system under `design-system/`;
 - shared reusable brand assets under `assets/`;
 - validated capability references under `generated-examples/`;
@@ -56,7 +56,7 @@ Generated and validated examples live in:
 
 ## Skills
 
-The plugin currently contains **10 skills**.
+The plugin currently contains **12 skills**.
 
 ### Artifact makers
 
@@ -119,6 +119,33 @@ It prefers:
 - custom drawings and diagrams;
 - concise copy;
 - avoiding repetitive eyebrow + headline + paragraph layouts.
+
+---
+
+#### `reels-maker`
+
+Creates educational and promotional Innovation Labs Instagram Reels, with complete, review-ready MP4 output when supported.
+
+It focuses on:
+
+- hook-first storytelling and strong viewer retention;
+- educational handwritten explainers with human-first motion;
+- natural, iMessage-inspired conversations for announcements and teasers;
+- progressive drawings, annotations and meaningful animations;
+- concise, human-sounding text-on-screen copy;
+- automatic selection of visual styles and communication lenses;
+- teal-first branding and controlled use of official brand assets;
+- recognizable Innovation Labs endings with the official logo and branded elements;
+- adapting existing content into engaging short-form videos;
+- avoiding generic AI-generated aesthetics, repetitive templates and unnecessary motion effects.
+
+Production runs on the bundled **IL Reel Kit** (`skills/reels-maker/production/`): a deterministic HTML timeline with IL motion primitives (handwriting reveal, hand-drawn marks, chat thread, signature outro), rendered by Playwright + ffmpeg to a 1080×1920 H.264 MP4 with covers, a contact sheet and a lint report for reading time, safe zone, type size and hook. It is a toolkit, not a template: every Reel's concept and layout are written fresh.
+
+Companion plugin: **`ilabsro-instagram`** decides what to post, when and with which hook (`ig-ship`, `ig-plan`, `ig-caption`, …) and calls these skills for every visual. Brand rules stay here.
+
+#### `human-pass`
+
+A final copy check for every output maker. It strips machine fingerprints (invisible characters, em dashes, stock phrases) and flags the Innovation Labs voice rules: no exclamation marks, no emoji, sentence case, no hype or certainty claims the source doesn't support. The scripts are adapted from the MIT-licensed `instagram-agent-skill` by Jake Schincariol (license file included). They run locally on Python 3 and upload nothing.
 
 ---
 
@@ -448,6 +475,8 @@ ilabsro-design/
 │   ├── presentation-maker/
 │   ├── one-pager-maker/
 │   ├── insta-post-maker/
+│   ├── reels-maker/          (+ production/ — IL Reel Kit)
+│   ├── human-pass/           (+ scripts/ — humanize.py, detect.py, slop.json)
 │   ├── content-planner/
 │   ├── brand-image-maker/
 │   ├── brand-elements/
@@ -460,6 +489,7 @@ ilabsro-design/
 │   ├── presentation/
 │   ├── one-pager/
 │   ├── social/
+│   ├── reels/
 │   └── visuals/
 │
 ├── artifact-index/
@@ -596,8 +626,9 @@ Current plugin version:
 Current plugin scope:
 
 ```text
-10 skills
+12 skills
 16 shared SVG brand elements
+rendered Reels (MP4) via the IL Reel Kit
 multiple artifact formats
 source-grounded content planning
 custom visual generation

@@ -11,6 +11,7 @@ Use for Innovation Labs websites, interactive strategy references, Strategy Hubs
 ## Before building
 
 1. Read `../../design-system/INNOVATION_LABS_DESIGN_SYSTEM.md`, `../../design-system/TOKENS.css` and `../../design-system/BRAND_ELEMENTS.md` as the portable visual contract.
+   Read `../../design-system/AI_TELLS.md`: the patterns Innovation Labs never ships (generic icon tiles, emoji, glassmorphism, em dashes, Inter/Geist/Space Grotesk, three feature cards, bento grids, fake terminals, "it's not X, it's Y", placeholder demos, purple-on-black, glow orbs, dot grids, sparkles, arrow-nudge CTAs, big hover motion, rainbow color). Before delivering, run `python3 ../human-pass/scripts/design_tells.py <output>` and fix every finding that isn't a documented IL exception.
 2. If the native **Innovation Labs** Design System is available, use it as the editor/runtime representation of the same rules; it must not override the bundled source with contradictory styling.
 3. Ground all copy in supplied source material. Do not invent research, dates, quotes, people or outcomes.
 4. Read `references/website-patterns.md`.

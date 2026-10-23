@@ -341,6 +341,26 @@ through
 Inspect this example when a short carousel needs to explain one clear idea with very little text and simple visual metaphors.
 
 
+## Reels
+
+### Context engineering (Reel)
+
+**Path**
+
+`generated-examples/reels/context-engineering/`
+
+**Skills**
+
+`reels-maker` + `friendly-lens` + `human-pass`
+
+**Use when**
+
+You need a reference for the IL Reel Kit: how a handwritten-family Reel is structured in `reel.html`, how marks and writing carry the teaching, how the lint and the signature ending work, and what a review-ready render looks like.
+
+**Do not inherit**
+
+The copy, beat sequence, sticky-note composition or timing. They belong to this brief.
+
 ## Standalone visuals
 
 ### Idea meets real users

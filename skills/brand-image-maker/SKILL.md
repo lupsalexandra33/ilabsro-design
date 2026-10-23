@@ -17,6 +17,7 @@ It does **not** decide the content strategy and it does **not** assemble the fin
 1. Read `../../design-system/INNOVATION_LABS_DESIGN_SYSTEM.md`.
 2. Read `../../design-system/TOKENS.css`.
 3. Read `../../design-system/BRAND_ELEMENTS.md`.
+   Read `../../design-system/AI_TELLS.md`: the patterns Innovation Labs never ships (generic icon tiles, emoji, glassmorphism, em dashes, Inter/Geist/Space Grotesk, three feature cards, bento grids, fake terminals, "it's not X, it's Y", placeholder demos, purple-on-black, glow orbs, dot grids, sparkles, arrow-nudge CTAs, big hover motion, rainbow color). Before delivering, run `python3 ../human-pass/scripts/design_tells.py <output>` and fix every finding that isn't a documented IL exception.
 4. Treat the approved content brief as authoritative for message, facts and boundaries.
 5. If a user supplies visual references, study their visual behavior but do not copy a specific illustration or layout literally.
 

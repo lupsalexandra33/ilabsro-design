@@ -17,6 +17,7 @@ The refreshed Strategy Hub and route-first presentation are reference implementa
 5. **Playful, in small doses.** One handwritten `hand` note, one arrow, one official brand element or one interactive flourish is usually enough. Do not pile motifs.
 6. **Theme and accent change mood, never structure.** Light/Night and purple/yellow accent share the same layout, hierarchy and information.
 7. **Style information, never manufacture it.** Never invent figures, quotes, research findings or names. Mark estimates and plans as such ("about", dashed marks, `caution`).
+8. **Never look AI-generated.** The patterns in `AI_TELLS.md` (generic icon tiles, emoji, glassmorphism, em dashes, default AI fonts, three-card rows, bento grids, fake terminals, "it's not X, it's Y", placeholder demos, purple-on-black, glow orbs, dot grids, sparkles, arrow-nudge CTAs, big hover motion, rainbow color) are out in every format. This file's own specified versions (mesh grounds, 1–3px lift, semantic purple, route stops) are the only exceptions.
 
 ## Voice and content
 

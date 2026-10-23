@@ -339,7 +339,10 @@ State that downstream generation must preserve the approved message, source cont
 
 For social execution, the normal handoff is:
 
-`content-planner` → human approval → `insta-post-maker`
+`content-planner` -> human approval -> `insta-post-maker` (static)
+                                    -> `reels-maker` (video MP4)
+
+For Reel handoff, provide the approved angle, key point, intended audience, verified source details, caveats, CTA constraints and any approved photos or footage. Let reels-maker select the time-based narrative, copy lens, scene construction, motion, official branding and final MP4 export. An explicit direct user request for a Reel with a sufficient brief does not need an additional planning approval step.
 
 The downstream skill owns:
 

@@ -80,6 +80,7 @@ The main output skills are:
 - `presentation-maker` — presentation decks;
 - `one-pager-maker` — one-page explainers and partner briefs;
 - `insta-post-maker` — social posts and carousels.
+- `reels-maker` — educational and promotional Instagram Reels, rendered to MP4 with the bundled IL Reel Kit (needs Node, Playwright/Chromium and ffmpeg).
 
 You may name the skill explicitly, but you can also describe the desired result and let Claude choose the appropriate one.
 
@@ -89,6 +90,7 @@ You may name the skill explicitly, but you can also describe the desired result 
 Use:
 
 - `formal-lens`, `friendly-lens` or `jokey-lens` when the voice matters;
+- `human-pass` as the final copy check before a draft is shown;
 - `brand-image-maker` when the artifact needs a custom diagram, illustration or visual concept;
 - `brand-elements` when reusable Innovation Labs visual assets or branded treatments are useful.
 
@@ -212,7 +214,7 @@ Never use white text on a yellow accent fill; use the dark `--ax-on` token.
 
 ## Humanizer (external, optional)
 
-Humanizer is not bundled with `ilabsro-design`. If it is available separately in the active Claude environment, it may be used as an optional final copy pass.
+`human-pass` is bundled with `ilabsro-design` as the final copy pass (see `skills/human-pass/SKILL.md`).
 
 Do not run it automatically on factual tables, labels, citations, source quotes or numbers. Prefer it for narrative copy after structure is approved.
 

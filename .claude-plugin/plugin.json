@@ -1,8 +1,8 @@
 {
   "name": "ilabsro-design",
   "displayName": "Innovation Labs Design",
-  "version": "0.5.1",
-  "description": "Portable Innovation Labs design and content plugin for websites, presentations, one-pagers, social content, source-grounded content planning, custom brand visuals, brand elements and tone lenses.",
+  "version": "0.7.0",
+  "description": "Portable Innovation Labs design and content plugin for websites, presentations, one-pagers, social posts and carousels, rendered Instagram Reels (MP4), source-grounded content planning, custom brand visuals, brand elements, tone lenses and a human-pass copy check.",
   "author": {
     "name": "Innovation Labs"
   },
@@ -15,6 +15,10 @@
     "social",
     "content",
     "visuals",
-    "brand"
+    "brand",
+    "reels",
+    "video",
+    "instagram",
+    "motion"
   ]
 }

@@ -181,7 +181,7 @@ button{font:inherit;color:inherit}
 .hero .btn.ghost:hover{background:rgba(255,255,255,.14)}
 .stagelist{display:flex;flex-wrap:wrap;gap:8px;margin-top:clamp(18px, 2.4vw, 30px)}
 .stagelist span{padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.34);color:rgba(255,255,255,.92);font:600 var(--fs-xs)/1 var(--mono);letter-spacing:.06em;text-transform:uppercase}
-.miniMap{min-width:0;border:1px solid rgba(255,255,255,.28);border-radius:clamp(18px, 2vw, 24px);background:rgba(255,255,255,.11);padding:clamp(14px, 1.8vw, 20px);backdrop-filter:blur(8px)}
+.miniMap{min-width:0;border:1px solid rgba(255,255,255,.28);border-radius:clamp(18px, 2vw, 24px);background:rgba(255,255,255,.11);padding:clamp(14px, 1.8vw, 20px)}
 .miniHead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:6px}
 .miniHead strong{font-size:var(--fs-body)}
 .miniHead a{color:#fff;font-weight:700;font-size:var(--fs-sm)}
@@ -292,7 +292,7 @@ button{font:inherit;color:inherit}
 .blk .tile{min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:clamp(14px, 1.6vw, 18px)}
 .blk .tile b{display:block;font-size:clamp(20px, 1vw + 16px, 26px);line-height:1.15;color:var(--accent);font-variant-numeric:tabular-nums}
 .blk .tile span{color:var(--muted);font-size:var(--fs-sm)}
-.blk .quote,.blk .hlbox,.blk .sumbox{margin-top:20px;padding:var(--pad);background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--teal);border-radius:var(--r)}
+.blk .quote,.blk .hlbox,.blk .sumbox{margin-top:20px;padding:var(--pad);background:var(--panel);border:1px solid var(--line);border-radius:var(--r)}
 .blk .hlbox{max-width:none}
 .blk .sumcols{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--gap);margin-top:12px}
 @media (min-width:760px){.blk .sumcols{grid-template-columns:repeat(3,minmax(0,1fr))}}
@@ -363,7 +363,7 @@ button{font:inherit;color:inherit}
   .rs .ch{border-radius:0 0 12px 12px}
   .rs .ar{display:none}
 }
-.rsb .bl{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--gap);padding:var(--pad);background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--teal);border-radius:var(--r)}
+.rsb .bl{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--gap);padding:var(--pad);background:var(--panel);border:1px solid var(--line);border-radius:var(--r)}
 .rsb .bl h2{margin-top:0}
 .rsb .bl p{color:var(--muted)}
 .rsb .bl ul{list-style:none;padding:0;display:grid;gap:8px}
@@ -686,7 +686,7 @@ function select(i){
   document.getElementById('dText').textContent=s.body;
   const dl=document.getElementById('dLink');dl.href=s.href||('#'+(s.ref||s.section));dl.textContent=s.href?s.linklabel:'Read in the Hub: '+secLabel(s.section);if(s.href){dl.target='_blank';dl.rel='noopener'}else{dl.removeAttribute('target')}
   document.getElementById('prevStop').disabled=current===0;document.getElementById('nextStop').disabled=current===N-1;
-  document.getElementById('miniCap').innerHTML='<div class="w">Stop '+(current+1)+' of '+N+' · '+esc(s.when)+'</div><h3>'+s.title+'</h3><p>'+esc(s.body)+'</p>'+(s.href?'<a href="'+s.href+'" target="_blank" rel="noopener">'+s.linklabel+' &rarr;</a>':'<a href="#'+(s.ref||s.section)+'">Open in Hub: '+secLabel(s.section)+' &rarr;</a>');
+  document.getElementById('miniCap').innerHTML='<div class="w">Stop '+(current+1)+' of '+N+' · '+esc(s.when)+'</div><h3>'+s.title+'</h3><p>'+esc(s.body)+'</p>'+(s.href?'<a href="'+s.href+'" target="_blank" rel="noopener">'+s.linklabel+' &#8599;</a>':'<a href="#'+(s.ref||s.section)+'">Open in Hub: '+secLabel(s.section)+'</a>');
 }
 document.getElementById('prevStop').addEventListener('click',()=>select(current-1));
 document.getElementById('nextStop').addEventListener('click',()=>select(current+1));
